@@ -63,6 +63,8 @@ public class InGame : MonoBehaviour {
 
     public JSONNode NodeTileHistory = JSON.Parse("{}"); // 히스토리 
     public int SnapSeq = 0;
+
+    public SpriteRenderer _moonBG, _moon;
     
 
     Vector3 punchScale = new Vector3(1.05f, 1.05f, 1.05f);
@@ -73,6 +75,8 @@ public class InGame : MonoBehaviour {
 
     public int currentScore = 0;
     int tempCollectScore = 0;
+
+    public static float _spriteFadeTime = 0.6f;
 
     #region 조작 후 무빙용 변수들 
     int targetH = -1;
@@ -86,6 +90,9 @@ public class InGame : MonoBehaviour {
     private void Awake() {
         main = this;
         ShowInGameUIs(false);
+
+        _moon.gameObject.SetActive(false);
+        _moonBG.gameObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -177,6 +184,9 @@ public class InGame : MonoBehaviour {
         StartCoroutine(DelayingStartSession());
 
         AudioAssistant.main.PlayMusic("InBGM", true);
+
+
+        WaitRedMoon(); // 레드문 대기 
     }
 
     IEnumerator DelayingStartSession() {
@@ -830,7 +840,7 @@ public class InGame : MonoBehaviour {
     }
 
     IEnumerator DelayedAsked() {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         isPlaying = true;
     }
 
@@ -1254,7 +1264,7 @@ public class InGame : MonoBehaviour {
             return;
         }
 
-        isPlaying = false;
+        
         // 메세지창 호출 
         PageManager.main.OpenDoubleButtonMessage(Message.AskCleanItemUse, ProcessClean, CallDelayedRecoverState);
     }
@@ -1301,7 +1311,7 @@ public class InGame : MonoBehaviour {
             return;
 
 
-        isPlaying = false;
+        
         // 메세지창 호출 
         PageManager.main.OpenDoubleButtonMessage(Message.AskBackItemUse, ProcessBack, CallDelayedRecoverState);
     }
@@ -1442,6 +1452,139 @@ public class InGame : MonoBehaviour {
         StartCoroutine(Zooming());
     }
 
+    #endregion
+
+    #region Red Moon 
+    void WaitRedMoon() {
+        StopCoroutine(RedMoonWaiting());
+        StartCoroutine(RedMoonWaiting());
+    }
+
+    IEnumerator RedMoonWaiting() {
+        yield return null;
+
+        // 4분~5분 대기 
+        yield return new WaitForSeconds(Random.Range(240f, 300f));
+
+
+        if (!isPlaying)
+            yield break;
+
+        if (_moon.gameObject.activeSelf)
+            yield break;
+
+
+        AppearRedMoon();
+
+
+    }
+
+
+    /// <summary>
+    /// 레드문 등장 
+    /// </summary>
+    public void AppearRedMoon() {
+        FadeInUnitySprite(_moonBG, 2);
+        FadeInUnitySprite(_moon, 2.5f);
+    }
+
+
+    /// <summary>
+    /// 레드문 터치 
+    /// </summary>
+    public void OnClickRedMoon() {
+        //PageManager.main.OpenMessage()
+        int itemRange = Random.Range(0, 100);
+        int valueRange = Random.Range(0, 100);
+
+        if (itemRange < 50)
+            PierSystem.currentRedMoonItem = "back";
+        else if (itemRange >= 50 && itemRange < 75)
+            PierSystem.currentRedMoonItem = "upgrader";
+        else
+            PierSystem.currentRedMoonItem = "cleaner";
+
+
+        if (valueRange < 50)
+            PierSystem.currentRedMoonValue = 1;
+        else if (valueRange >= 50 && valueRange < 85)
+            PierSystem.currentRedMoonValue = 2;
+        else
+            PierSystem.currentRedMoonValue = 3;
+
+        // 아이템 종류, 개수 계산 끝
+
+        // 유저에게 물어봅니다. 
+        PageManager.main.OpenDoubleButtonMessage(Message.RedMoonOpen, ShowRedMoonWatch, DisappearRedMoon);
+        
+
+
+    }
+
+    /// <summary>
+    /// 광고 오픈 
+    /// </summary>
+    void ShowRedMoonWatch() {
+        Debug.Log("ShowRedMoonWatch");
+        AdsControl.main.ShowWatchAd(GetRedMoonItem);
+    }
+
+    /// <summary>
+    /// 실제 아이템 획득
+    /// </summary>
+    void GetRedMoonItem() {
+
+        Debug.Log(">> GetRedMoonItem << ");
+
+        if (PierSystem.currentRedMoonItem == "back") {
+            PierSystem.main.itemBack += PierSystem.currentRedMoonValue;
+        }
+        else if (PierSystem.currentRedMoonItem == "upgrader") {
+            PierSystem.main.itemUpgrade += PierSystem.currentRedMoonValue;
+        }
+        else if (PierSystem.currentRedMoonItem == "cleaner") {
+            PierSystem.main.itemCleaner += PierSystem.currentRedMoonValue;
+        }
+
+        ItemCounter.RefreshItems();
+    }
+
+    void DisappearRedMoon() {
+        Debug.Log("DisappearRedMoon");
+
+        FadeOutUnitySprite(_moonBG, 1);
+        FadeOutUnitySprite(_moon, 1.5f);
+    }
+
+    #endregion
+
+
+    #region Unity Sprite Renderer 
+
+    public static void FadeInUnitySprite(SpriteRenderer sp, float time = 0) {
+        sp.gameObject.SetActive(true);
+        sp.color = ConstBox.colorTransparent;
+
+        if (time == 0)
+            sp.DOColor(ConstBox.colorOrigin, _spriteFadeTime);
+        else
+            sp.DOColor(ConstBox.colorOrigin, time);
+    }
+
+    public static void FadeOutUnitySprite(SpriteRenderer sp, float time = 0) {
+        sp.gameObject.SetActive(true);
+        sp.color = ConstBox.colorOrigin;
+
+        if (time == 0)
+            sp.DOColor(ConstBox.colorTransparent, _spriteFadeTime).OnComplete(() => main.OnCompleteWithInactive(sp.gameObject));
+        else
+            sp.DOColor(ConstBox.colorTransparent, time).OnComplete(() => main.OnCompleteWithInactive(sp.gameObject));
+    }
+
+
+    public void OnCompleteWithInactive(GameObject obj) {
+        obj.SetActive(false);
+    }
     #endregion
 
 }

@@ -10,7 +10,8 @@ public enum UILayerEnum {
     Store,
     Option,
     Lang,
-    Progress
+    Progress,
+    SurprisePack
 }
 
 public class UILayer : MonoBehaviour {

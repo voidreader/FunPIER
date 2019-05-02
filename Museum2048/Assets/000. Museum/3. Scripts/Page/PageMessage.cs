@@ -7,7 +7,8 @@ public enum Message {
     NoMoreMove, // 이동할거리 없음 
     AskCleanItemUse,
     AskBackItemUse,
-    InGameQuit
+    InGameQuit,
+    RedMoonOpen
 }
 
 public class PageMessage : UILayer {
@@ -50,6 +51,11 @@ public class PageMessage : UILayer {
 
             case Message.InGameQuit:
                 lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT33);
+                SetDoubleButton();
+                break;
+
+            case Message.RedMoonOpen:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT41);
                 SetDoubleButton();
                 break;
 

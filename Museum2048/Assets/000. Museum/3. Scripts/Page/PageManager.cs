@@ -25,6 +25,7 @@ public class PageManager : MonoBehaviour
 
 
 
+
     public void OpenPage(UILayerEnum p) {
         OpenPage(p, delegate { });
     }
@@ -85,6 +86,8 @@ public class PageManager : MonoBehaviour
     public void OpenOption() {
         OpenPage(UILayerEnum.Option);
     }
+
+    
     
     #endregion
 

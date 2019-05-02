@@ -8,6 +8,11 @@ public class PierSystem : MonoBehaviour {
 
     public static PierSystem main = null;
 
+    // 레드문 관련 
+    public static string currentRedMoonItem = string.Empty;
+    public static int currentRedMoonValue = 0;
+        
+
     readonly string SaveData = "SaveData";
 
     // 아이템 개수 

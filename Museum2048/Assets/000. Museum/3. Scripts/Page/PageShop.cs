@@ -40,7 +40,7 @@ public class PageShop : UILayer {
     /// <summary>
     /// 
     /// </summary>
-    string GetLocalizedPrice(string p) {
+    public static string GetLocalizedPrice(string p) {
         foreach (Product product in IAPControl.main.Controller.products.all) {
 
             if(product.definition.id == p) {

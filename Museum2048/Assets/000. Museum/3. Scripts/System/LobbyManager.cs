@@ -118,6 +118,12 @@ public class LobbyManager : MonoBehaviour {
             SplashClean(0.1f); // 스플래시 클린.
 
             AudioAssistant.main.PlayMusic("LobbyBGM", true);
+
+
+            // 깜짝패키지 오픈
+            // 하루에 한번만 오픈 
+            if(!ES2.Exists(ConstBox.KeySavedSurprisePack) || ES2.Load<int>(ConstBox.KeySavedSurprisePack) != System.DateTime.Now.DayOfYear)
+                PageManager.main.OpenPage(UILayerEnum.SurprisePack);
         }
 
 
