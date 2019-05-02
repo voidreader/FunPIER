@@ -108,6 +108,10 @@ public class InGame : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Z)) {
             StartZoom(tiles[2, 3].transform);
         }
+
+        if(Input.GetKeyDown(KeyCode.R)) {
+            AppearRedMoon();
+        }
     }
 
     /// <summary>

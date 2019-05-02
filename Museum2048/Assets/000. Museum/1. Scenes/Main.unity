@@ -1140,7 +1140,7 @@ Transform:
   m_GameObject: {fileID: 73631489}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0015612802, y: 0.0015612802, z: 0.0015612802}
+  m_LocalScale: {x: 0.0015625, y: 0.0015625, z: 0.0015625}
   m_Children:
   - {fileID: 1602290306}
   - {fileID: 1384485020}
@@ -1834,7 +1834,7 @@ GameObject:
   - component: {fileID: 122002269}
   m_Layer: 9
   m_Name: Moon
-  m_TagString: Untagged
+  m_TagString: RedMoon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3566,6 +3566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 885238579}
+  bgCamera: {fileID: 1849558034}
 --- !u!114 &238539503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3854,7 +3855,7 @@ Transform:
   m_Children:
   - {fileID: 1443253381}
   m_Father: {fileID: 1823433062}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &256996435
 GameObject:
@@ -24763,8 +24764,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1142925416}
   - {fileID: 254360963}
+  - {fileID: 1142925416}
   - {fileID: 855975152}
   m_Father: {fileID: 939847696}
   m_RootOrder: 0

@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour {
     public static bool itemInput = false;
 
     public Camera mainCamera;
+    public Camera bgCamera;
 
     Touch touch; // 터치 체크용
     Vector2 pressPos;
@@ -17,12 +18,13 @@ public class InputManager : MonoBehaviour {
 
 
     // 레이케스트용 
+    Vector2 point;
     private Ray ray;
     private RaycastHit hit;
     private LayerMask mask;
     GameObject hitTile;
     TileCtrl tile;
-
+    RaycastHit2D hit2D;
 
 
     private void Awake() {
@@ -64,11 +66,15 @@ public class InputManager : MonoBehaviour {
         }
         */
 
+        // 레드문 클릭 체크 
+        if (CheckRedMoonInput())
+            return;
 
-
-
-        CheckSwipe();
-        CheckMouseSwipe();
+        if(Application.isEditor)
+            CheckMouseSwipe();
+        else
+            CheckSwipe();
+        
 
 
 
@@ -105,6 +111,46 @@ public class InputManager : MonoBehaviour {
 
         }
     }
+
+
+    /// <summary>
+    ///  레드문 입력 
+    /// </summary>
+    bool CheckRedMoonInput() {
+
+        if (GetInputDown()) {
+            point = bgCamera.ScreenPointToRay(GetInputPosition()).origin;
+            // mask = 1 << LayerMask.NameToLayer("BG");
+
+            hit2D = Physics2D.Raycast(point, Vector2.zero);
+
+            if (hit2D.transform == null)
+                return false;
+
+            if (!hit2D.transform.CompareTag("RedMoon"))
+                return false;
+
+            InGame.main.OnClickRedMoon();
+            return true;
+
+            /*
+            if (Physics2D.Raycast(point, out hit, 20f, mask)) { // 레드문 터치 체크 
+                hitTile = hit.transform.gameObject;
+
+                if (!hitTile.CompareTag("RedMoon"))
+                    return false;
+
+                InGame.main.OnClickRedMoon();
+                return true;
+
+            }
+            */
+
+        }
+
+        return false;
+    }
+
 
     /// <summary>
     /// 모바일 기기 터치 체크 
