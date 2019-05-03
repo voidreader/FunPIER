@@ -25,6 +25,8 @@ public class InputManager : MonoBehaviour {
     GameObject hitTile;
     TileCtrl tile;
     RaycastHit2D hit2D;
+    RaycastHit2D hitArea;
+    public bool _isAreaHit = false;
 
 
     private void Awake() {
@@ -51,35 +53,29 @@ public class InputManager : MonoBehaviour {
         if (PageManager.main.pageStack.Count > 0)
             return;
 
-        /*
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            InGame.main.MoveTiles(Moving.Up);
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            InGame.main.MoveTiles(Moving.Down);
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow)) {
-            InGame.main.MoveTiles(Moving.Left);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow)) {
-            InGame.main.MoveTiles(Moving.Right);
-        }
-        */
+        if (LobbyManager.isAnimation)
+            return;
 
         // 레드문 클릭 체크 
         if (CheckRedMoonInput())
             return;
 
+        /*
         if(Application.isEditor)
             CheckMouseSwipe();
         else
             CheckSwipe();
-        
+        */
+
+        CheckSwipeArea();
+
+
 
 
 
     }
 
+    #region 아이템 입력 대기 
 
     /// <summary>
     ///  아이템 입력 대기 (업그레이더만)
@@ -112,6 +108,9 @@ public class InputManager : MonoBehaviour {
         }
     }
 
+    #endregion
+
+    #region 레드문 입력 대기 
 
     /// <summary>
     ///  레드문 입력 
@@ -149,6 +148,50 @@ public class InputManager : MonoBehaviour {
         }
 
         return false;
+    }
+
+    #endregion
+
+    void CheckSwipeArea() {
+        
+        if(GetInputDown()) {
+            point = bgCamera.ScreenPointToRay(GetInputPosition()).origin;
+            hitArea = Physics2D.Raycast(point, Vector2.zero);
+
+            if(hitArea.transform == null || !hitArea.transform.CompareTag("Area")) {
+                _isAreaHit = false;
+                return;
+            }
+
+            _isAreaHit = true;
+            pressPos = GetInputPosition(); // 입력 위치 
+        }
+
+        if(GetInputUp()) {
+            if (!_isAreaHit)
+                return;
+
+            endPos = GetInputPosition();
+            currentSwipe = endPos - pressPos;
+
+            if (Vector3.Distance(endPos, pressPos) < 10) {
+                _isAreaHit = false;
+                return;
+            }
+
+            if (endPos.x > pressPos.x && endPos.y > pressPos.y)
+                InGame.main.MoveTiles(Moving.Right);
+            else if (endPos.x < pressPos.x && endPos.y > pressPos.y)
+                InGame.main.MoveTiles(Moving.Up);
+            else if (endPos.x < pressPos.x && endPos.y < pressPos.y)
+                InGame.main.MoveTiles(Moving.Left);
+            else if (endPos.x > pressPos.x && endPos.y < pressPos.y)
+                InGame.main.MoveTiles(Moving.Down);
+
+            _isAreaHit = false;
+
+        }
+
     }
 
 

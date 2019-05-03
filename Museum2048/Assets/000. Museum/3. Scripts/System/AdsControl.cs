@@ -253,12 +253,21 @@ public class AdsControl : MonoBehaviour
     /// 동영상 광고 플레이 
     /// </summary>
     public void ShowWatchAd(Action callback) {
+
+        OnWatchedAd = callback;
+
+        if (Application.isEditor) {
+            OnWatchedAd();
+            OnWatchedAd = delegate { };
+            return;
+        }
+
         if (!this.rewardedAd.IsLoaded())
             return;
 
         this.rewardedAd.Show();
 
-        OnWatchedAd = callback;
+        
     }
 
     /// <summary>

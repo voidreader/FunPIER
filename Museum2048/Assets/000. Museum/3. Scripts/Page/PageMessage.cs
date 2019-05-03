@@ -76,6 +76,11 @@ public class PageMessage : UILayer {
     }
 
     public void OnClickYES() {
+
+        if (LobbyManager.isAnimation)
+            return;
+
+
         OnYes();
         OnYes = delegate { };
 

@@ -138,7 +138,7 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT38", "깜짝 패키지", ""));
 			Rows.Add( new MLocalRow("TEXT39", "광고\n없애기", ""));
 			Rows.Add( new MLocalRow("TEXT40", "창을 닫으면 오늘은 더 이상 구매할 수 없습니다.", ""));
-			Rows.Add( new MLocalRow("TEXT41", "레드문이 떠올랐습니다.\n광고를 보고 {0}을 {1}개 받으시겠습니가?", ""));
+			Rows.Add( new MLocalRow("TEXT41", "레드문이 떠올랐습니다.\n광고를 보고 아이템을 받겠습니까?\n\n랜덤한 아이템을 최대 3개까지 획득할 수 있습니다.", ""));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

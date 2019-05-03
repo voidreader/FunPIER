@@ -70,6 +70,13 @@ public class LobbyManager : MonoBehaviour {
     }
 
     /// <summary>
+    /// 광고 없애기 구매 
+    /// </summary>
+    public void BuyNoAds() {
+        IAPControl.main.Purchase("noads_m2048");
+    }
+
+    /// <summary>
     /// 이전에 플레이 하던 게임이 있는지 체크 
     /// </summary>
     bool CheckNeedResumeGame() {
@@ -218,12 +225,17 @@ public class LobbyManager : MonoBehaviour {
         if (themeIndex <= 0)
             return;
 
-        listStructs[themeIndex].transform.DOMoveX(-20, 0.5f);
+        if (LobbyManager.isAnimation)
+            return;
+
+        LobbyManager.isAnimation = true;
+
+        listStructs[themeIndex].transform.DOMoveX(-20, 0.65f);
         themeIndex--;
 
         listStructs[themeIndex].transform.position = new Vector3(20, structPosY, 0);
         listStructs[themeIndex].gameObject.SetActive(true);
-        listStructs[themeIndex].transform.DOMoveX(0, 1f);
+        listStructs[themeIndex].transform.DOMoveX(0, 0.65f).OnComplete(OnCompleteThemeMove); ;
 
         PierSystem.main.themeIndex = themeIndex;
         PierSystem.main.SaveProfile(); // 저장
@@ -240,12 +252,17 @@ public class LobbyManager : MonoBehaviour {
         if (themeIndex+1 >= listStructs.Count)
             return;
 
-        listStructs[themeIndex].transform.DOMoveX(20, 0.5f);
+        if (LobbyManager.isAnimation)
+            return;
+
+        LobbyManager.isAnimation = true;
+
+        listStructs[themeIndex].transform.DOMoveX(20, 0.65f);
         themeIndex++;
 
         listStructs[themeIndex].transform.position = new Vector3(-20, structPosY, 0);
         listStructs[themeIndex].gameObject.SetActive(true);
-        listStructs[themeIndex].transform.DOMoveX(0, 1f);
+        listStructs[themeIndex].transform.DOMoveX(0, 0.65f).OnComplete(OnCompleteThemeMove);
 
         PierSystem.main.themeIndex = themeIndex;
         PierSystem.main.SaveProfile(); // 저장
@@ -255,6 +272,12 @@ public class LobbyManager : MonoBehaviour {
         CheckLeftRightButton();
 
     }
+
+
+    void OnCompleteThemeMove() {
+        LobbyManager.isAnimation = false;
+    }
+
 
     /// <summary>
     /// 테마 이동 버튼 제어

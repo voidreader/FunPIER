@@ -108,6 +108,10 @@ public class UILayer : MonoBehaviour {
 
     }
 
+    IEnumerator Closing() {
+        yield return null;
+    }
+
 
     /// <summary>
     /// 닫히기 직전 추가로직

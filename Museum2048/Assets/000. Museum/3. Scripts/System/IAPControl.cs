@@ -96,6 +96,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         bool validPurchase = true;
         var validator = new CrossPlatformValidator(GooglePlayTangle.Data(), AppleTangle.Data(), Application.identifier);
 
+        LobbyManager.isAnimation = false;
+
         try {
             // On Google Play, result has a single product ID.
             // On Apple stores, receipts contain multiple products.
@@ -121,6 +123,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
         Debug.Log(">> OnPurchaseFailed :: " + p.ToString());
+
+        LobbyManager.isAnimation = false;
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
@@ -144,6 +148,12 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     /// </summary>
     /// <param name="productid"></param>
     public void Purchase(string productid) {
+
+        if (LobbyManager.isAnimation)
+            return;
+
+        LobbyManager.isAnimation = true;
+
         controller.InitiatePurchase(productid);
     }
 
