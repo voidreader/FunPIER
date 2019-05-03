@@ -97,6 +97,7 @@ public class InGame : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start()  {
+        StarsRoutineStart(); // 별 루틴
     }
 
     void Update() {
@@ -158,9 +159,9 @@ public class InGame : MonoBehaviour {
 
         
         SnapSeq = 0;
-
-
         currentScore = 0;
+        isChipMoving = false;
+        isPostProcessMove = false;
 
         SetProgressUI(); // 진척도 
         SetHighScore(); // 하이스코어
@@ -191,6 +192,7 @@ public class InGame : MonoBehaviour {
 
 
         WaitRedMoon(); // 레드문 대기 
+
     }
 
     IEnumerator DelayingStartSession() {
@@ -274,6 +276,9 @@ public class InGame : MonoBehaviour {
 
         tileDaddy.SetActive(false);
         InGame.main.ShowInGameUIs(false);
+
+        _moon.gameObject.SetActive(false);
+        _moonBG.gameObject.SetActive(false);
 
         LobbyManager.main.LobbyFrom2048();
         InitCamera();
@@ -729,14 +734,15 @@ public class InGame : MonoBehaviour {
     /// </summary>
     public void MoveTiles(Moving move) {
 
-        if (isChipMoving)
+        if (isChipMoving) {
+            Debug.Log(">> Can't move! isChipMoving is true!");
             return;
+        }
 
-        if (isPostProcessMove)
+        if (isPostProcessMove) {
+            Debug.Log(">> Can't move! isPostProcessMove is true!");
             return;
-
-        if (!isPlaying)
-            return;
+        }
 
         switch(move) {
             case Moving.Up:
@@ -1215,6 +1221,7 @@ public class InGame : MonoBehaviour {
         isMoved = true;
         isChipMoving = true;
         Chip c = currentTile.chip; // null로 바꿀꺼라서 미리 복사 
+        isChipMoving = true;
 
         StartCoroutine(LockMoveRoutine());
 
@@ -1243,7 +1250,7 @@ public class InGame : MonoBehaviour {
     }
 
     IEnumerator LockMoveRoutine() {
-        isChipMoving = true;
+        
         yield return new WaitForSeconds(MovingTime);
         yield return null;
         isChipMoving = false;
@@ -1458,7 +1465,48 @@ public class InGame : MonoBehaviour {
 
     #endregion
 
-    #region Red Moon 
+    #region Red Moon  & BG Effect
+
+    void StarsRoutineStart() {
+        StartCoroutine(ShootingStarRoutine());
+        StartCoroutine(TwinkleStarRoutine());
+    }
+
+
+    IEnumerator ShootingStarRoutine() {
+
+        yield return new WaitForSeconds(Random.Range(6f, 11f));
+
+        while (true) {
+
+            PoolManager.Pools[ConstBox.poolSpriteEffect].Spawn(ConstBox.SpriteEffectShootingStar, Vector3.zero, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.2f));
+            PoolManager.Pools[ConstBox.poolSpriteEffect].Spawn(ConstBox.SpriteEffectShootingStar, Vector3.zero, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(1.5f, 3f));
+            PoolManager.Pools[ConstBox.poolSpriteEffect].Spawn(ConstBox.SpriteEffectShootingStar, Vector3.zero, Quaternion.identity);
+
+
+            yield return new WaitForSeconds(Random.Range(6f, 15f));
+
+        }
+    }
+
+    IEnumerator TwinkleStarRoutine() {
+
+        yield return new WaitForSeconds(Random.Range(3f, 7f));
+
+        while (true) {
+
+            PoolManager.Pools[ConstBox.poolSpriteEffect].Spawn(ConstBox.SpriteEffectTwinkleStar, Vector3.zero, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(1.5f, 3f));
+            PoolManager.Pools[ConstBox.poolSpriteEffect].Spawn(ConstBox.SpriteEffectTwinkleStar, Vector3.zero, Quaternion.identity);
+
+
+            yield return new WaitForSeconds(Random.Range(10f, 20f));
+
+        }
+    }
+
     void WaitRedMoon() {
         StopCoroutine(RedMoonWaiting());
         StartCoroutine(RedMoonWaiting());
@@ -1538,7 +1586,7 @@ public class InGame : MonoBehaviour {
     /// </summary>
     void GetRedMoonItem() {
 
-        Debug.Log(">> GetRedMoonItem << ");
+        Debug.Log(">> GetRedMoonItem :: " + PierSystem.currentRedMoonItem);
 
         if (PierSystem.currentRedMoonItem == "back") {
             PierSystem.main.itemBack += PierSystem.currentRedMoonValue;
@@ -1551,6 +1599,9 @@ public class InGame : MonoBehaviour {
         }
 
         ItemCounter.RefreshItems();
+        PierSystem.main.SaveProfile();
+
+        Debug.Log(">> GetRedMoonItem :: " + PierSystem.currentRedMoonValue);
     }
 
     void DisappearRedMoon() {

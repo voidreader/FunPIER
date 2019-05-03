@@ -21,9 +21,8 @@ public class AdsControl : MonoBehaviour
     bool _isCoolingPauseAds = false;
 
     public Action OnWatchedAd = delegate { };
-    
-    
-    
+
+    public bool IsCoolingPauseAds { get => _isCoolingPauseAds; set => _isCoolingPauseAds = value; }
 
     private void Awake() {
         main = this;
@@ -184,7 +183,7 @@ public class AdsControl : MonoBehaviour
 
         if(this.interstitial.IsLoaded()) {
             this.interstitial.Show();
-            _isCoolingPauseAds = true;
+            IsCoolingPauseAds = true;
         }
     }
 
@@ -262,12 +261,16 @@ public class AdsControl : MonoBehaviour
             return;
         }
 
-        if (!this.rewardedAd.IsLoaded())
+        if (!this.rewardedAd.IsLoaded()) {
+            Debug.Log("admob rewarded ad is not ready");
             return;
+        }
 
         this.rewardedAd.Show();
+        IsCoolingPauseAds = true;
 
-        
+
+
     }
 
     /// <summary>
@@ -331,7 +334,7 @@ public class AdsControl : MonoBehaviour
         if (pause) // 활성화될때에만 로직 실행
             return;
 
-        if (_isCoolingPauseAds) {
+        if (IsCoolingPauseAds) {
             StartCoroutine(CoolingPauseADs());
             return;
         }
@@ -344,6 +347,6 @@ public class AdsControl : MonoBehaviour
 
     IEnumerator CoolingPauseADs() {
         yield return new WaitForSeconds(3);
-        _isCoolingPauseAds = false;
+        IsCoolingPauseAds = false;
     }
 }

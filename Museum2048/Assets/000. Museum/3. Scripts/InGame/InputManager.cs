@@ -153,7 +153,11 @@ public class InputManager : MonoBehaviour {
     #endregion
 
     void CheckSwipeArea() {
-        
+
+        if (!Application.isEditor && Input.touches.Length <= 0)
+            return;
+    
+       
         if(GetInputDown()) {
             point = bgCamera.ScreenPointToRay(GetInputPosition()).origin;
             hitArea = Physics2D.Raycast(point, Vector2.zero);

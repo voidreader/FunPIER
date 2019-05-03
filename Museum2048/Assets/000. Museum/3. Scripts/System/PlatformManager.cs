@@ -82,6 +82,10 @@ public class PlatformManager : MonoBehaviour
     /// 플랫폼별 서비스 처리 
     /// </summary>
     public void InitPlatformService() {
+
+        Debug.Log("!!! InitPlatformService Start... ");
+
+
 #if UNITY_ANDROID
         InitGooglePlay();
 #else
@@ -167,6 +171,8 @@ public class PlatformManager : MonoBehaviour
     /// <param name="a"></param>
     public void UnlockAchievements(MIMAchievement a) {
 
+        Debug.Log(">> UnlockAchievements called :: " + a.ToString());
+
 
         string targetID = string.Empty;
 
@@ -203,6 +209,9 @@ public class PlatformManager : MonoBehaviour
                 break;
 
         }
+
+        Debug.Log(">> UnlockAchievements targetID :: " + targetID);
+
         #endregion
 
 #if UNITY_ANDROID
@@ -353,6 +362,9 @@ public class PlatformManager : MonoBehaviour
     /// 구글 플레이 로그인 
     /// </summary>
     public void InitGooglePlay() {
+
+        Debug.Log(">>InitGooglePlay << ");
+
         int responce = AN_GoogleApiAvailability.IsGooglePlayServicesAvailable();
         if (responce == AN_ConnectionResult.SUCCESS) {
             // All good you can use GMS API
@@ -391,8 +403,17 @@ public class PlatformManager : MonoBehaviour
     /// 구글플레이 로그인
     /// </summary>
     void SignInGooglePlay() {
-        if (IsGooglePlaySignIn())
+
+        Debug.Log(">>SignInGooglePlay called ");
+
+        if (IsGooglePlaySignIn()) {
+            UpdateGooglePlayAccount(AN_GoogleSignIn.GetLastSignedInAccount());
             return;
+        }
+
+
+
+        Debug.Log(">>SignInGooglePlay Start ");
 
         AN_GoogleSignInOptions.Builder builder = new AN_GoogleSignInOptions.Builder(AN_GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
         builder.RequestId();
@@ -503,6 +524,9 @@ public class PlatformManager : MonoBehaviour
         var leaderboards = AN_Games.GetLeaderboardsClient();
         leaderboards.GetAllLeaderboardsIntent((result) => {
             if (result.IsSucceeded) {
+
+                AdsControl.main.IsCoolingPauseAds = true;
+
                 var intent = result.Intent;
                 AN_ProxyActivity proxy = new AN_ProxyActivity();
                 proxy.StartActivityForResult(intent, (intentResult) => {
@@ -532,6 +556,9 @@ public class PlatformManager : MonoBehaviour
         var client = AN_Games.GetAchievementsClient();
         client.GetAchievementsIntent((result) => {
             if (result.IsSucceeded) {
+
+                AdsControl.main.IsCoolingPauseAds = true;
+
                 var intent = result.Intent;
                 AN_ProxyActivity proxy = new AN_ProxyActivity();
                 proxy.StartActivityForResult(intent, (intentResult) => {
@@ -578,6 +605,8 @@ public class PlatformManager : MonoBehaviour
     void LoadGooglePlayAchievements() {
 
         Debug.Log(">> LoadGooglePlayAchievements <<");
+
+
         _googlePlayAchievementClient = AN_Games.GetAchievementsClient();
 
         _googlePlayAchievementClient.Load(false, (result) => {

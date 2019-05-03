@@ -68,7 +68,8 @@ public class PierSystem : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
-
+        // 플랫폼 
+        PlatformManager.main.InitPlatformService();
 
         // listMuseums[0].transform.position = posCarMuseum;
     }
@@ -202,7 +203,7 @@ public class PierSystem : MonoBehaviour {
     #endregion
 
 
-    #region
+    #region 공통 메소드 
 
     public static JSONNode GetEmptyNode() {
         return JSON.Parse("{}");
@@ -235,6 +236,24 @@ public class PierSystem : MonoBehaviour {
 
         return string.Empty;
     }
+
+    public static Vector3 GetBGSpriteEffectRandomPosition() {
+
+        int updown = Random.Range(0, 2);
+        if (updown == 0) { // 상
+            return new Vector3(Random.Range(-3f, 0.7f), Random.Range(1.7f, 5f), 0);
+        }
+        else {
+            return new Vector3(Random.Range(-2.6f, 2.6f), Random.Range(-5.2f, -4.2f), 0);
+        }
+
+        // 상하를 나눈다. 
+        // 상 y : 1.7~5, x 0.7 ~ -3
+        // 하 y: -4.2~ -5.2 , x: -2.7, 2.7
+
+        
+    }
+
     #endregion
 
     #region 테마별 정보 가져오기

@@ -127,20 +127,38 @@ public class LobbyManager : MonoBehaviour {
             AudioAssistant.main.PlayMusic("LobbyBGM", true);
 
 
-            // 깜짝패키지 오픈
-            // 하루에 한번만 오픈 
-            if(!ES2.Exists(ConstBox.KeySavedSurprisePack) || ES2.Load<int>(ConstBox.KeySavedSurprisePack) != System.DateTime.Now.DayOfYear)
-                PageManager.main.OpenPage(UILayerEnum.SurprisePack);
+
         }
-
-
-        // 플랫폼 
-        PlatformManager.main.InitPlatformService();
-            
-
 
         yield return StartCoroutine(DelayedInit());
     }
+
+
+    /// <summary>
+    /// 서프라이즈팩 오픈 
+    /// </summary>
+    void CheckSurprisePack() {
+
+        if (PierSystem.main.NoAds > 0)
+            return;
+
+        if (!IAPControl.IsInitialized)
+            return;
+
+        int dayofyear = 0;
+        if (!ES2.Exists(ConstBox.KeySavedSurprisePack))
+            dayofyear = -1;
+        else
+            dayofyear = ES2.Load<int>(ConstBox.KeySavedSurprisePack);
+
+
+        // 깜짝패키지 오픈
+        // 하루에 한번만 오픈 
+        if (!ES2.Exists(ConstBox.KeySavedSurprisePack) || dayofyear != System.DateTime.Now.DayOfYear) {
+            PageManager.main.OpenPage(UILayerEnum.SurprisePack);
+        }
+    }
+
 
 
     IEnumerator DelayedInit() {
@@ -162,8 +180,12 @@ public class LobbyManager : MonoBehaviour {
         bgLobby.SetActive(flag);
         bgInGame.SetActive(!flag);
 
-        if (flag)
+        if (flag) {
             CheckLeftRightButton();
+
+
+            CheckSurprisePack();
+        }
 
     }
 
@@ -419,6 +441,9 @@ public class LobbyManager : MonoBehaviour {
 
         // 로비 UI
         ShowLobbyUI(true);
+
+
+
     }
 
     public void TestUpgrade() {
