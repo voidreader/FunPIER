@@ -12,6 +12,7 @@ public class AudioAssistant : MonoBehaviour {
 	AudioSource music;
 	AudioSource sfx;
     AudioSource loopingSFX;
+    AudioSource lowSFX;
 
 	public float musicVolume {
         get {
@@ -59,6 +60,7 @@ public class AudioAssistant : MonoBehaviour {
         music = sources[0];
         sfx = sources[1];
         loopingSFX = sources[2];
+        lowSFX = sources[3];
 
         // Initialize
         sfxVolume = sfxVolume;
@@ -180,6 +182,16 @@ public class AudioAssistant : MonoBehaviour {
         }
     }
 
+    public static void LowShot(string clip) {
+        Sound sound = main.GetSoundByName(clip);
+        if (sound != null) {
+            if (sound.clips.Count == 0)
+                return;
+
+            // mixBuffer.Add(clip);
+            main.lowSFX.PlayOneShot(sound.clips[0]);
+        }
+    }
 
 
     // Turn on/off music

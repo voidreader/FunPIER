@@ -42,6 +42,8 @@ public class GameOverCtrl : MonoBehaviour {
         _btnReplay.gameObject.SetActive(false);
 
         _rate.SetActive(false);
+
+        InGame.main.DisappearRedMoon();
     }
 
 
@@ -72,6 +74,8 @@ public class GameOverCtrl : MonoBehaviour {
 
         Init();
 
+
+
         // 게임을 플레이 하기 전, PreviousStep과 비교해서 축하를 할지 위로를 할지. 
         if (PierSystem.main.GetPreviousProgress(InGame.currentTheme) < InGame.main.currentThemeStep) { // 축하 
 
@@ -99,9 +103,11 @@ public class GameOverCtrl : MonoBehaviour {
 
     IEnumerator GameOverRoutine() {
 
+        Debug.Log(" >> GameOverRoutine Start , highscore :: " + PierSystem.main.GetHighScore(InGame.currentTheme));
+        Debug.Log(" >> GameOverRoutine Start , currentScore :: " + InGame.main.currentScore);
 
         // 하이스코어 처리
-        if(PierSystem.main.GetHighScore(InGame.currentTheme) < InGame.main.currentScore) {
+        if (PierSystem.main.GetHighScore(InGame.currentTheme) < InGame.main.currentScore) {
             PlatformManager.main.SubmitScore(InGame.currentTheme, InGame.main.currentScore);
             PierSystem.main.SetHighScore(InGame.currentTheme, InGame.main.currentScore);
         }

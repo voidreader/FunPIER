@@ -82,6 +82,11 @@ public class InGame : MonoBehaviour {
     int targetH = -1;
     int targetW = -1;
     bool exitCheck = false;
+
+    // 사운드 생성 용도
+    bool moveShotCheck = false;
+    bool mergeShotCheck = false; 
+
     #endregion
 
 
@@ -263,16 +268,18 @@ public class InGame : MonoBehaviour {
     /// </summary>
     public void CloseSession() {
 
-        /*
-        if (isPlaying)
-            return;
-        */
+        StartCoroutine(ClosingSession());
 
+
+    }
+
+    IEnumerator ClosingSession() {
         Debug.Log("CloseSession");
 
         isPlaying = false;
 
         PoolManager.Pools[ConstBox.poolIngame].DespawnAll();
+        ES2.Delete(ConstBox.KeySavedTileHistory); // 스냅샷 삭제 
 
         tileDaddy.SetActive(false);
         InGame.main.ShowInGameUIs(false);
@@ -280,12 +287,13 @@ public class InGame : MonoBehaviour {
         _moon.gameObject.SetActive(false);
         _moonBG.gameObject.SetActive(false);
 
+        yield return new WaitForSeconds(0.05f);
+
         LobbyManager.main.LobbyFrom2048();
         InitCamera();
 
-        ES2.Delete(ConstBox.KeySavedTileHistory); // 스냅샷 삭제 
+        
     }
-
 
 
     /// <summary>
@@ -515,6 +523,12 @@ public class InGame : MonoBehaviour {
     public void MergeCheck(int id) {
         int step = GetStepByID(id);
 
+        if(!mergeShotCheck) {
+            mergeShotCheck = true;
+            AudioAssistant.LowShot("Merge");
+        }
+
+
         // Debug.Log("New Merge rasied! :: " + id);
 
         // 현 단계보다 낮거나 같은 경우는 아무것도 하지 않음 
@@ -743,6 +757,10 @@ public class InGame : MonoBehaviour {
             Debug.Log(">> Can't move! isPostProcessMove is true!");
             return;
         }
+
+        // 사운드 체크용 두개의 boolean.
+        moveShotCheck = false;
+        mergeShotCheck = false;
 
         switch(move) {
             case Moving.Up:
@@ -1247,6 +1265,11 @@ public class InGame : MonoBehaviour {
         }
 
         
+        if(!moveShotCheck) {
+            moveShotCheck = true;
+            AudioAssistant.LowShot("Move");
+        }
+        
     }
 
     IEnumerator LockMoveRoutine() {
@@ -1604,7 +1627,11 @@ public class InGame : MonoBehaviour {
         Debug.Log(">> GetRedMoonItem :: " + PierSystem.currentRedMoonValue);
     }
 
-    void DisappearRedMoon() {
+    public void DisappearRedMoon() {
+
+        if (!_moon.gameObject.activeSelf)
+            return;
+
         Debug.Log("DisappearRedMoon");
 
         FadeOutUnitySprite(_moonBG, 1);

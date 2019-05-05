@@ -11,7 +11,8 @@ public enum UILayerEnum {
     Option,
     Lang,
     Progress,
-    SurprisePack
+    SurprisePack,
+    Tutorial
 }
 
 public class UILayer : MonoBehaviour {
@@ -88,8 +89,10 @@ public class UILayer : MonoBehaviour {
     /// 창 닫기
     /// </summary>
     public void Close() {
-        if (LobbyManager.isAnimation)
+        if (LobbyManager.isAnimation) {
+            Debug.Log("Close is stopped. isAnimation is true");
             return;
+        }
 
         // 스택 체크 후 스택에서 제거
         if(PageManager.main != null && PageManager.main.pageStack.Contains(this)) {
@@ -101,7 +104,7 @@ public class UILayer : MonoBehaviour {
 
         this.gameObject.SetActive(false);
 
-        LobbyManager.isAnimation = false;
+        // LobbyManager.isAnimation = false;
 
         OnClose();
         OnClose = delegate { };

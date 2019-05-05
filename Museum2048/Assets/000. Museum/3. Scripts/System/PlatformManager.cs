@@ -101,6 +101,8 @@ public class PlatformManager : MonoBehaviour
     /// <param name="score"></param>
     public void SubmitScore(Theme t, int score) {
 
+        Debug.Log(">> Submit LB Score :: " + t.ToString() + " / " + score);
+
 #if UNITY_ANDROID
         switch(t) {
             case Theme.Car:
@@ -478,6 +480,9 @@ public class PlatformManager : MonoBehaviour
     /// <param name="id"></param>
     public void GetGooglePlayLeaderScore(string id) {
         AN_LeaderboardsClient leaderboard = AN_Games.GetLeaderboardsClient();
+
+        
+
         leaderboard.LoadCurrentPlayerLeaderboardScore(id, (result) => {
 
             if(result.IsSucceeded) {
@@ -485,12 +490,15 @@ public class PlatformManager : MonoBehaviour
                 // 하이 스코어에 대한 처리 
                 if(id == leaderboardCarID) {
                     PierSystem.main.carHighScore = (int)result.Data.RawScore;
+                    Debug.Log("Get Car leaderboard score :: " + PierSystem.main.carHighScore);
                 }
                 else if(id == leaderboardWineID) {
                     PierSystem.main.wineHighScore = (int)result.Data.RawScore;
+                    Debug.Log("Get Wine leaderboard score :: " + PierSystem.main.wineHighScore);
                 }
                 else if (id == leaderboardVikingID) {
                     PierSystem.main.vikingHighScore = (int)result.Data.RawScore;
+                    Debug.Log("Get Viking leaderboard score :: " + PierSystem.main.vikingHighScore);
                 }
 
                 PierSystem.main.SaveProfile();
@@ -505,6 +513,11 @@ public class PlatformManager : MonoBehaviour
     /// <param name="id"></param>
     /// <param name="score"></param>
     public void SubmitGooglePlayLeaderboard(string id, int score) {
+
+        if (!IsGooglePlaySignIn()) {
+            return;
+        }
+
         var leaderboards = AN_Games.GetLeaderboardsClient();
         leaderboards.SubmitScore(id, score);
     }

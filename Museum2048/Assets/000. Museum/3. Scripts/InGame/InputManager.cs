@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour {
 
     public Camera mainCamera;
     public Camera bgCamera;
+    public Camera UICamera;
 
     Touch touch; // 터치 체크용
     Vector2 pressPos;
@@ -156,9 +157,21 @@ public class InputManager : MonoBehaviour {
 
         if (!Application.isEditor && Input.touches.Length <= 0)
             return;
-    
-       
-        if(GetInputDown()) {
+
+
+        
+        if (GetInputDown()) {
+            // UI Camera 선 체크
+            point = UICamera.ScreenPointToRay(GetInputPosition()).origin;
+            mask = 1 << LayerMask.NameToLayer("UI");
+            if (Physics.Raycast(ray, out hit, 20f, mask)) {
+                if (hit.transform != null) {
+                    _isAreaHit = false;
+                    return;
+                }
+            }
+            
+
             point = bgCamera.ScreenPointToRay(GetInputPosition()).origin;
             hitArea = Physics2D.Raycast(point, Vector2.zero);
 
