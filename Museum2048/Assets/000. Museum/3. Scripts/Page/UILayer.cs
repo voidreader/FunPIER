@@ -22,6 +22,7 @@ public class UILayer : MonoBehaviour {
     public Action OnOpen = delegate { };  // 오픈 후 콜백
 
     UISprite _frame = null;
+    UISprite _bg = null;
     UISprite[] _sprites;
 
     Vector3 _lowerPos = new Vector3(0, -30, 0);
@@ -93,6 +94,8 @@ public class UILayer : MonoBehaviour {
             Debug.Log("Close is stopped. isAnimation is true");
             return;
         }
+
+        AudioAssistant.Shot("Negative");
 
         // 스택 체크 후 스택에서 제거
         if(PageManager.main != null && PageManager.main.pageStack.Contains(this)) {

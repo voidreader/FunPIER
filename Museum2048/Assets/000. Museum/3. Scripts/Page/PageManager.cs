@@ -87,7 +87,13 @@ public class PageManager : MonoBehaviour
         OpenPage(UILayerEnum.Option);
     }
 
-    
+    public void OpenTutorial() {
+        OpenPage(UILayerEnum.Tutorial);
+    }
+
+    public void OpenLang() {
+        OpenPage(UILayerEnum.Lang);
+    }
     
     #endregion
 
