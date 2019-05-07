@@ -563,13 +563,15 @@ public class InGame : MonoBehaviour {
     IEnumerator ClearRoutine() {
         yield return null;
 
+        AudioAssistant.main.PlayMusic("Final");
+
         for (int h = 0; h < HEIGHT; h++) {
             for (int w = 0; w < WIDTH; w++) {
 
                 if(tiles[h,w].chip != null && GetStepByID(tiles[h,w].chip.id) == currentThemeMaxStep) {
                     StartZoom(tiles[h, w].transform);
                     // 회전 처리 
-                    tiles[h, w].RotateChip();
+                    // tiles[h, w].RotateChip();
                 }
 
             }

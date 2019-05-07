@@ -3614,6 +3614,7 @@ MonoBehaviour:
   lblCurrentProgress: {fileID: 1701000984}
   lblTotalProgress: {fileID: 1337700666}
   btnNoAds: {fileID: 2031177252}
+  tutorialButton: {fileID: 629500013}
   splash: {fileID: 1832273645}
   lobbyPanel: {fileID: 1104691450}
   lobbyBottomGroup: {fileID: 1349532086}
@@ -12789,7 +12790,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885238577}
   m_LocalRotation: {x: 0.13624257, y: -0.8615606, z: 0.3110847, w: 0.37732968}
-  m_LocalPosition: {x: 11.034238, y: 8.542463, z: 9.984484}
+  m_LocalPosition: {x: 11.32, y: 8.87, z: 10.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2015858580}
@@ -25847,6 +25848,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fb9eda448196834db4b35d70e61fd9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AdminPlay: 1
   currentLang: 23
   itemCleaner: 0
   itemUpgrade: 0
@@ -25948,6 +25950,15 @@ MonoBehaviour:
   - name: InBGM
     clips:
     - {fileID: 8300000, guid: 778c510c3ea7d6f46a5f04ac197c8b3a, type: 3}
+  - name: Win
+    clips:
+    - {fileID: 8300000, guid: 09eb8e319b1a6c64fb36b451b315f99c, type: 3}
+  - name: Lose
+    clips:
+    - {fileID: 8300000, guid: d14e8ef48b3b19e419b528cb43c8f8da, type: 3}
+  - name: Final
+    clips:
+    - {fileID: 8300000, guid: 4a32e82ffe660244c8e889a1bf495b92, type: 3}
   sounds:
   - name: SFXFirework2
     clips:
@@ -25997,6 +26008,9 @@ MonoBehaviour:
   - name: Tail2
     clips:
     - {fileID: 8300000, guid: 999d8d7b3fd034c498dbcf800b0bb2d4, type: 3}
+  - name: Confetti
+    clips:
+    - {fileID: 8300000, guid: 9c2512203e498144abe51d42cf90a6cd, type: 3}
   mute: 0
   quiet_mode: 0
 --- !u!82 &1801886464

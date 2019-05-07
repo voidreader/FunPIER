@@ -125,9 +125,6 @@ public class LobbyManager : MonoBehaviour {
             SplashClean(0.1f); // 스플래시 클린.
 
             AudioAssistant.main.PlayMusic("LobbyBGM", true);
-
-
-
         }
 
         yield return StartCoroutine(DelayedInit());
@@ -184,7 +181,7 @@ public class LobbyManager : MonoBehaviour {
             CheckLeftRightButton();
 
 
-            CheckSurprisePack();
+            // CheckSurprisePack();
         }
 
     }
@@ -454,6 +451,7 @@ public class LobbyManager : MonoBehaviour {
 
         // 로비 UI
         ShowLobbyUI(true);
+        AudioAssistant.main.PlayMusic("LobbyBGM", true);
 
 
 

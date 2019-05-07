@@ -14,6 +14,7 @@ public class PierSystem : MonoBehaviour {
         
 
     readonly string SaveData = "SaveData";
+    public bool AdminPlay = false;
     public SystemLanguage currentLang = SystemLanguage.Korean;
 
     // 아이템 개수 

@@ -101,7 +101,10 @@ public class InputManager : MonoBehaviour {
                 if (tile.chip.id >= 512)
                     return;
 
-                tile.UpgradeChip(); // 업그레이드 처리.
+                if (PierSystem.main.AdminPlay)
+                    tile.UpgradeFinal();
+                else 
+                    tile.UpgradeChip(); // 업그레이드 처리.
                 // InGame에 업그레이드가 완료되었다고 처리
                 InGame.main.OnCompleteItemUpgrade();
             }

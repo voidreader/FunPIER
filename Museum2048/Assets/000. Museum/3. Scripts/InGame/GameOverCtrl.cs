@@ -81,6 +81,9 @@ public class GameOverCtrl : MonoBehaviour {
 
             Debug.Log("Congratulation!!");
 
+            AudioAssistant.main.PlayMusic("Win");
+            
+
             _lblCong.text = PierSystem.GetLocalizedText(MLocal.rowIds.TEXT19);
             _lblResultInfo.text = PierSystem.GetLocalizedText(MLocal.rowIds.TEXT20);
 
@@ -89,7 +92,7 @@ public class GameOverCtrl : MonoBehaviour {
         else { // 더 진행하지 못하고 Game Over
 
             Debug.Log("Game Over!!");
-
+            AudioAssistant.main.PlayMusic("Lose");
             _lblCong.text = PierSystem.GetLocalizedText(MLocal.rowIds.TEXT27);
             _lblResultInfo.text = PierSystem.GetLocalizedText(MLocal.rowIds.TEXT28);
 
@@ -232,15 +235,19 @@ public class GameOverCtrl : MonoBehaviour {
 
         yield return new WaitForSeconds(1);
 
+        AudioAssistant.Shot("Confetti");
         PoolManager.Pools[ConstBox.poolIngame].Spawn(_confettiRainbow, new Vector3(-2f, 4f), Quaternion.identity);
         yield return new WaitForSeconds(0.1f);
 
+        AudioAssistant.Shot("Confetti");
         PoolManager.Pools[ConstBox.poolIngame].Spawn(_confettiOrangeGreen, new Vector3(2.5f, 4.5f), Quaternion.identity);
         yield return new WaitForSeconds(0.35f);
 
+        AudioAssistant.Shot("Confetti");
         PoolManager.Pools[ConstBox.poolIngame].Spawn(_confettiOrangeGreen, new Vector3(-1.5f, -0.5f), Quaternion.identity);
         yield return new WaitForSeconds(0.4f);
 
+        AudioAssistant.Shot("Confetti");
         PoolManager.Pools[ConstBox.poolIngame].Spawn(_confettiRainbow, new Vector3(2.2f, 2f), Quaternion.identity);
     }
 }

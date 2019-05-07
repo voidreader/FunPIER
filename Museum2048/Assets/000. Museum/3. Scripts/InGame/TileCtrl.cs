@@ -112,6 +112,22 @@ public class TileCtrl : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// Admin 용도, 최종 칩으로 강제 업그레이드
+    /// </summary>
+    public void UpgradeFinal() {
+        if (!chip)
+            return;
+
+
+        id = PierSystem.GetIDByStep(PierSystem.main.GetMaxProgress(InGame.currentTheme));
+        PoolManager.Pools[ConstBox.poolIngame].Despawn(chip.transform);
+
+        chip = PoolManager.Pools[ConstBox.poolIngame].Spawn(InGame.GetSpawnChipPrefabName(id)).GetComponent<Chip>();
+        ChipInit();
+        InGame.main.MergeCheck(id);
+    }
+
     public Vector3 GetChipPosition() {
 
         return chipPos;

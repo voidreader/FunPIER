@@ -14,6 +14,9 @@ using SA.Android.GMS.Games;
 using SA.Android.App;
 #endif
 
+
+using Facebook.Unity;
+
 /// <summary>
 /// 업적 종류
 /// </summary>
@@ -65,14 +68,7 @@ public class PlatformManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()    {
 
-        // 초기화
-#if UNITY_ANDROID
-        leaderboardCarID = "CgkIgYf6gpcYEAIQCg";
-        leaderboardWineID = "CgkIgYf6gpcYEAIQCw";
-        leaderboardVikingID = "CgkIgYf6gpcYEAIQDA";
-#else
-
-#endif
+        InitFacebook(); // 페이스북 초기화
 
     }
 
@@ -654,5 +650,127 @@ public class PlatformManager : MonoBehaviour
 
 
 #endif
-#endregion
+    #endregion
+
+
+
+    #region Facebook 
+
+    void InitFacebook() {
+        if (!FB.IsInitialized) {
+            // Initialize the Facebook SDK
+            FB.Init(InitCallback, OnHideUnity);
+        }
+        else {
+            // Already initialized, signal an app activation App Event
+            FB.ActivateApp();
+        }
+    }
+
+    private void InitCallback() {
+        if (FB.IsInitialized) {
+            // Signal an app activation App Event
+            FB.ActivateApp();
+            // Continue with Facebook SDK
+            // ...
+        }
+        else {
+            Debug.Log("Failed to Initialize the Facebook SDK");
+        }
+    }
+
+
+    private void OnHideUnity(bool isGameShown) {
+        if (!isGameShown) {
+            // Pause the game - we will need to hide
+            Time.timeScale = 0;
+        }
+        else {
+            // Resume the game - we're getting focus again
+            Time.timeScale = 1;
+        }
+    }
+
+    /// <summary>
+    /// 페이스북 로그인 
+    /// </summary>
+    public void LoginFacebook() {
+        var perms = new List<string>() { "public_profile", "email" };
+        FB.LogInWithReadPermissions(perms, AuthCallback);
+    }
+
+    private void AuthCallback(ILoginResult result) {
+        if (FB.IsLoggedIn) {
+            // AccessToken class will have session details
+            var aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
+            // Print current access token's User ID
+            Debug.Log(aToken.UserId);
+            // Print current access token's granted permissions
+            foreach (string perm in aToken.Permissions) {
+                Debug.Log(perm);
+            }
+        }
+        else {
+            Debug.Log("User cancelled login");
+        }
+    }
+
+    public void ShareLink() {
+        Debug.Log("Called ShareLink ");
+
+        //로그인이 안되어있으면    
+        if (!FB.IsLoggedIn) {
+            // PierSystem.Instance.OpenMessageUnion(CommonMessage.NeedFacebookLogin, string.Empty);
+            return;
+        }
+
+        string address = string.Empty;
+
+        /*
+        lang = UILocalization.main.GetLanguage();
+        string address = string.Empty;
+
+        if (lang != "Korean") {
+            address = "http://invite.tokidokifrenzies.com/invite/tokidokileveleng" + level.ToString() + ".html";
+            Debug.Log("English address is made");
+        }
+        else {
+            address = "http://invite.tokidokifrenzies.com/invite/tokidokilevelkor" + level.ToString() + ".html";
+            Debug.Log("Korean address is made");
+        }
+
+        */
+
+        Debug.Log("Level Clear Share Link :: " + address);
+
+
+
+
+        // Share Link
+        FB.ShareLink(
+            new System.Uri(address),
+            callback: ShareCallback);
+    }
+
+
+    /// <summary>
+    /// 레벨클리어 공유 콜백
+    /// </summary>
+    /// <param name="result"></param>
+    void ShareCallback(IResult result) {
+
+        Debug.Log("Done, Level Clear Share");
+        Debug.Log(result.RawResult);
+
+        if (result.Cancelled || !string.IsNullOrEmpty(result.Error)) {
+            return;
+        }
+        // 공유 완료 후 서버 통신. 
+        // PierSystem.Instance.PostFBLevelShare();
+    }
+
+
+
+
+    #endregion
 }
