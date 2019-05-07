@@ -17,7 +17,7 @@ public class LobbyManager : MonoBehaviour {
     public UILabel lblTotalProgress; // 전체 진척도 
     public GameObject btnNoAds; // 광고없애기 버튼 
 
-
+    public GameObject tutorialButton; // 튜토리얼 버튼 
 
     public UISprite splash;
 
@@ -236,7 +236,20 @@ public class LobbyManager : MonoBehaviour {
 
         themeProgressBar.value = (float)PierSystem.main.GetCurrentProgress(currentTheme) / (float)PierSystem.main.GetMaxProgress(currentTheme);
 
+        // 튜토리얼 버튼은 자동차에서만 등장 
+        if(currentTheme == Theme.Car) {
+            tutorialButton.transform.localScale = Vector3.zero;
+            tutorialButton.SetActive(true);
+            tutorialButton.transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
+        }
+        else {
+            tutorialButton.transform.DOScale(0, 0.2f).SetEase(Ease.InBack).OnComplete(()=>OnScaleZero(tutorialButton));
+        }
 
+    }
+
+    void OnScaleZero(GameObject obj) {
+        obj.SetActive(false);
     }
 
 
@@ -446,9 +459,12 @@ public class LobbyManager : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// 테스트 업그레이드 로직 
+    /// </summary>
     public void TestUpgrade() {
         MuseumStruct target = GetCurrentMuseumStruct();
-        target.UpgradeMuseum(11);
+        target.UpgradeMuseum(PierSystem.main.GetMaxProgress(target.theme));
     }
 
 

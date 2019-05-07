@@ -580,8 +580,9 @@ GameObject:
   m_Component:
   - component: {fileID: 37034205}
   - component: {fileID: 37034206}
+  - component: {fileID: 37034207}
   m_Layer: 5
-  m_Name: Label
+  m_Name: TEXT16
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -671,6 +672,19 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
+--- !u!114 &37034207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37034204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19662a8b13168984299765611a00513a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textID: 15
 --- !u!1 &46324821
 GameObject:
   m_ObjectHideFlags: 0
@@ -6075,7 +6089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &418092028
 Transform:
   m_ObjectHideFlags: 0
@@ -8820,6 +8834,7 @@ GameObject:
   - component: {fileID: 629500017}
   - component: {fileID: 629500016}
   - component: {fileID: 629500015}
+  - component: {fileID: 629500019}
   m_Layer: 5
   m_Name: btnTutorial
   m_TagString: Untagged
@@ -8883,7 +8898,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 238539504}
+    mMethodName: OpenTutorial
+    mParameters: []
+    oneShot: 0
 --- !u!65 &629500017
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8953,6 +8972,22 @@ MonoBehaviour:
   mSpriteName: popicon_tuto
   mFixedAspect: 0
   mFillCenter: 1
+--- !u!114 &629500019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629500013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1001 &635468600
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10619,6 +10654,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pageType: 2
+  _sfxInactive: {fileID: 95007654}
+  _bgmInactive: {fileID: 1356984250}
+  _lblSFX: {fileID: 1054602778}
+  _lblBGM: {fileID: 2009367925}
 --- !u!1 &749445529
 GameObject:
   m_ObjectHideFlags: 0
@@ -10714,7 +10753,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 737607148}
+    mMethodName: OnClickTutorial
+    mParameters: []
+    oneShot: 0
 --- !u!65 &749445534
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10998,8 +11041,9 @@ GameObject:
   m_Component:
   - component: {fileID: 761201912}
   - component: {fileID: 761201913}
+  - component: {fileID: 761201914}
   m_Layer: 5
-  m_Name: Label
+  m_Name: TEXT15
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11089,6 +11133,19 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
+--- !u!114 &761201914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 761201911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19662a8b13168984299765611a00513a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textID: 14
 --- !u!1 &767821837
 GameObject:
   m_ObjectHideFlags: 0
@@ -16655,7 +16712,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 737607148}
+    mMethodName: OnClickBGM
+    mParameters: []
+    oneShot: 0
 --- !u!65 &1201424545
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17708,8 +17769,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1249943577}
   - component: {fileID: 1249943578}
+  - component: {fileID: 1249943579}
   m_Layer: 5
-  m_Name: lblTitle (1)
+  m_Name: TEXT17
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17799,6 +17861,19 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
+--- !u!114 &1249943579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249943576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19662a8b13168984299765611a00513a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textID: 16
 --- !u!1 &1261040223
 GameObject:
   m_ObjectHideFlags: 0
@@ -20156,7 +20231,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3005
+  startingRenderQueue: 3002
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 0
@@ -20285,12 +20360,12 @@ PrefabInstance:
     - target: {fileID: 4674756186014134202, guid: b866318c69fdedf43bf75794234e8340,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 313
+      value: 290
       objectReference: {fileID: 0}
     - target: {fileID: 4674756186014134202, guid: b866318c69fdedf43bf75794234e8340,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 312
+      value: 280
       objectReference: {fileID: 0}
     - target: {fileID: 4674756186014134202, guid: b866318c69fdedf43bf75794234e8340,
         type: 3}
@@ -20363,7 +20438,8 @@ PrefabInstance:
       propertyPath: onClick.Array.data[0].mMethodName
       value: Close
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6918685922772223771, guid: b866318c69fdedf43bf75794234e8340, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b866318c69fdedf43bf75794234e8340, type: 3}
 --- !u!4 &1397065785 stripped
 Transform:
@@ -25481,7 +25557,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 737607148}
+    mMethodName: OnClickLang
+    mParameters: []
+    oneShot: 0
 --- !u!65 &1787261439
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28326,7 +28406,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 737607148}
+    mMethodName: OnClickSFX
+    mParameters: []
+    oneShot: 0
 --- !u!65 &1892062967
 BoxCollider:
   m_ObjectHideFlags: 0

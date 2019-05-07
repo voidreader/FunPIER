@@ -100,7 +100,8 @@ static public class NGUITools
 
 		mLastClip = clip;
 		mLastTimestamp = time;
-		volume *= soundVolume;
+        // volume *= soundVolume;
+        volume = AudioAssistant.main.sfxVolume;
 
 		if (clip != null && volume > 0.01f)
 		{
