@@ -23,14 +23,19 @@ public class LobbyManager : MonoBehaviour {
 
     
     public GameObject lobbyPanel;
-    public Transform lobbyBottomGroup;
+
+    public Transform lobbyBottomGroup, lobbyTopGroup, inGameTopGroup, inGameBottomGroup;
+    
+    
+
+
     // public UIButton playButton;
     public UIButton btnThemeLeft; // 테마 좌우
     public UIButton btnThemeRight; // 테마 좌우 
     public int themeIndex = 0;
 
     public List<MuseumStruct> listStructs; // 로비 뮤지엄 구조물들.
-    readonly float structPosY = -6;
+    readonly float structPosY = -4.5f;
 
     #region 파티클 
     public ParticleSystem _Firework1, _Firework2, _Firework3;
@@ -56,10 +61,22 @@ public class LobbyManager : MonoBehaviour {
             isTallScreen = true;
 
 
-        if (isTallScreen)
-            lobbyBottomGroup.transform.localPosition = new Vector3(0, -650, 0);
-        else
-            lobbyBottomGroup.transform.localPosition = new Vector3(0, -550, 0);
+        if (isTallScreen) {
+
+            lobbyTopGroup.localPosition = new Vector3(0, 620, 0);
+            inGameTopGroup.localPosition = new Vector3(0, 620, 0);
+
+            lobbyBottomGroup.localPosition = new Vector3(0, -520, 0);
+            inGameBottomGroup.localPosition = new Vector3(0, -520, 0);
+            
+        }
+        else {
+            lobbyTopGroup.localPosition = new Vector3(0, 580, 0);
+            inGameTopGroup.localPosition = new Vector3(0, 580, 0);
+
+            lobbyBottomGroup.localPosition = new Vector3(0, -450, 0);
+            inGameBottomGroup.localPosition = new Vector3(0, -450, 0);
+        }
 
     }
 

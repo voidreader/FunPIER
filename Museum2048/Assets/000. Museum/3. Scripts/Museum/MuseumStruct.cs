@@ -143,6 +143,28 @@ public class MuseumStruct : MonoBehaviour {
             case Theme.Viking:
                 // _baseTransform.localEulerAngles = new Vector3(-90, 0, 0);
                 _baseTransform.localEulerAngles = new Vector3(-90, 20, 0);
+
+                listStep1[1].transform.DOKill();
+                listStep1[1].transform.localPosition = new Vector3(-0.01997795f, -0.02931089f, 0.007697856f);
+
+                listStep2[1].transform.DOKill();
+                listStep2[1].transform.localPosition = new Vector3(-0.02914677f, -0.0004445457f, 0.02021695f);
+
+                listStep3[1].transform.DOKill();
+                listStep3[1].transform.localPosition = new Vector3(0.03229805f, 0.0245434f, 0.004921727f);
+
+                listStep4[1].transform.DOKill();
+                listStep4[1].transform.localPosition = Vector3.zero;
+
+                listStep5[0].transform.DOKill();
+                listStep5[0].transform.localEulerAngles = Vector3.zero;
+
+                listStep5[1].transform.DOKill();
+                listStep5[1].transform.localPosition = Vector3.zero;
+
+                listStep10[0].transform.DOKill();
+                listStep10[0].transform.localEulerAngles = Vector3.zero;
+
                 break;
 
         }
@@ -296,10 +318,10 @@ public class MuseumStruct : MonoBehaviour {
         }
 
         switch (theme) {
-            #region Theme Car
+            
             case Theme.Car:
-
-                if(step == 2) {
+                #region Theme Car
+                if (step == 2) {
                     if(listStep2.Count > 0 && listStep2[0].gameObject.activeSelf) {
                         listStep2[0].transform.DOKill();
                         listStep2[0].transform.localPosition = new Vector3(2.09504f, 5.568235f, 0.12691f);
@@ -345,6 +367,7 @@ public class MuseumStruct : MonoBehaviour {
                 break;
 
             case Theme.Wine:
+                #region 
                 if(step == 1) {
                     listStep1[1].transform.DOKill();
                     listStep1[2].transform.DOKill();
@@ -395,6 +418,31 @@ public class MuseumStruct : MonoBehaviour {
                     listStep10[0].transform.DOLocalMoveZ(0.09f, 4).SetLoops(-1, LoopType.Yoyo);
                         
                 }
+                #endregion
+
+                break;
+
+            case Theme.Viking:
+
+                if(step == 1) {
+                    listStep1[1].transform.DOKill();
+                    listStep1[1].transform.localPosition = new Vector3(-0.01997795f, -0.02931089f, 0.007697856f);
+                    listStep1[1].transform.DOLocalMoveZ(0.0018f, 3f).SetLoops(-1, LoopType.Yoyo);
+                }
+
+                if (step == 2) {
+                    listStep2[1].transform.DOKill();
+                    listStep2[1].transform.localPosition = new Vector3(-0.02914677f, -0.0004445457f, 0.02021695f);
+                    listStep2[1].transform.DOLocalMoveZ(0.0631f, 2.5f).SetLoops(-1, LoopType.Yoyo);
+                }
+
+                if (step == 3) {
+                    listStep3[1].transform.DOKill();
+                    listStep3[1].transform.localPosition = new Vector3(0.03229805f, 0.0245434f, 0.004921727f);
+                    listStep3[1].transform.DOLocalMoveZ(-0.0019f, 1.5f).SetLoops(-1, LoopType.Yoyo);
+                }
+
+                
 
                 break;
         }

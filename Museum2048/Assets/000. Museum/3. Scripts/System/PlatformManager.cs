@@ -657,6 +657,8 @@ public class PlatformManager : MonoBehaviour
     #region Facebook 
 
     void InitFacebook() {
+        Debug.Log(">> Init Facebook Called");
+
         if (!FB.IsInitialized) {
             // Initialize the Facebook SDK
             FB.Init(InitCallback, OnHideUnity);
@@ -673,6 +675,8 @@ public class PlatformManager : MonoBehaviour
             FB.ActivateApp();
             // Continue with Facebook SDK
             // ...
+
+            Debug.Log("FB is initialized");
         }
         else {
             Debug.Log("Failed to Initialize the Facebook SDK");
@@ -695,8 +699,18 @@ public class PlatformManager : MonoBehaviour
     /// 페이스북 로그인 
     /// </summary>
     public void LoginFacebook() {
-        var perms = new List<string>() { "public_profile", "email" };
-        FB.LogInWithReadPermissions(perms, AuthCallback);
+
+        if (!FB.IsInitialized)
+            return;
+
+        if (!FB.IsLoggedIn) {
+
+            var perms = new List<string>() { "public_profile", "email" };
+            FB.LogInWithReadPermissions(perms, AuthCallback);
+            return;
+        }
+
+        // 
     }
 
     private void AuthCallback(ILoginResult result) {
