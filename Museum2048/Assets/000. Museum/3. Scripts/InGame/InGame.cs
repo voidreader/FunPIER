@@ -71,7 +71,7 @@ public class InGame : MonoBehaviour {
     readonly int WIDTH = 4;
     readonly int HEIGHT = 4;
     public float DragGap = 0.5f;
-    public float MovingTime = 0.3f;
+    public float MovingTime = 0.25f;
 
     public int currentScore = 0;
     int tempCollectScore = 0;
@@ -1541,11 +1541,13 @@ public class InGame : MonoBehaviour {
         yield return null;
 
         // 4분~5분 대기 
-        yield return new WaitForSeconds(Random.Range(240f, 300f));
+        yield return new WaitForSeconds(Random.Range(180f, 240f));
 
 
-        if (!isPlaying)
-            yield break;
+        while(!isPlaying) {
+            yield return null;
+        }
+
 
         if (_moon.gameObject.activeSelf)
             yield break;

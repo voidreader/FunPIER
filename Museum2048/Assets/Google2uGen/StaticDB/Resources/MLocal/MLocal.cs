@@ -108,10 +108,10 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT8", "클리너", "CLEANER"));
 			Rows.Add( new MLocalRow("TEXT9", "특별한 패키지", "Special Package"));
 			Rows.Add( new MLocalRow("TEXT10", "순위", "Rank"));
-			Rows.Add( new MLocalRow("TEXT11", "효과음 켜기", "SFX ON"));
-			Rows.Add( new MLocalRow("TEXT12", "효과음 끄기", "SFX OFF"));
-			Rows.Add( new MLocalRow("TEXT13", "배경음악 켜기", "BGM ON"));
-			Rows.Add( new MLocalRow("TEXT14", "배경음악 끄기", "BGM OFF"));
+			Rows.Add( new MLocalRow("TEXT11", "효과음 ON", "SFX ON"));
+			Rows.Add( new MLocalRow("TEXT12", "효과음 OFF", "SFX OFF"));
+			Rows.Add( new MLocalRow("TEXT13", "배경음악 ON", "BGM ON"));
+			Rows.Add( new MLocalRow("TEXT14", "배경음악 OFF", "BGM OFF"));
 			Rows.Add( new MLocalRow("TEXT15", "언어 설정", "LANGUAGE"));
 			Rows.Add( new MLocalRow("TEXT16", "도움말(튜토리얼)", "Help(Tutorial)"));
 			Rows.Add( new MLocalRow("TEXT17", "설정", "Option"));
@@ -119,7 +119,7 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT19", "축하합니다!", ""));
 			Rows.Add( new MLocalRow("TEXT20", "박물관이 더욱 다채로워졌어요!", ""));
 			Rows.Add( new MLocalRow("TEXT21", "다시하기", ""));
-			Rows.Add( new MLocalRow("TEXT22", "나가기", ""));
+			Rows.Add( new MLocalRow("TEXT22", "나가기", "Lobby"));
 			Rows.Add( new MLocalRow("TEXT23", "별점주기", ""));
 			Rows.Add( new MLocalRow("TEXT24", "『Midnight in Museum』을 즐기고 계신가요?", ""));
 			Rows.Add( new MLocalRow("TEXT25", "움직일 수 있는 블록이 없어요!", ""));
@@ -135,8 +135,8 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT35", "전시물", ""));
 			Rows.Add( new MLocalRow("TEXT36", "더 크고 멋진 전시품을 모아보세요!", ""));
 			Rows.Add( new MLocalRow("TEXT37", "모든 전시품을 획득하였습니다!\n다른 박물관 꾸미기에 도전하세요", ""));
-			Rows.Add( new MLocalRow("TEXT38", "깜짝 패키지", ""));
-			Rows.Add( new MLocalRow("TEXT39", "광고\n없애기", ""));
+			Rows.Add( new MLocalRow("TEXT38", "깜짝 패키지", "Surprise Pack"));
+			Rows.Add( new MLocalRow("TEXT39", "광고\n없애기", "No\nAds"));
 			Rows.Add( new MLocalRow("TEXT40", "창을 닫으면 오늘은 더 이상 구매할 수 없습니다.", ""));
 			Rows.Add( new MLocalRow("TEXT41", "레드문이 떠올랐습니다.\n광고를 보고 아이템을 받겠습니까?\n\n랜덤한 아이템을 최대 3개까지 획득할 수 있습니다.", ""));
 		}

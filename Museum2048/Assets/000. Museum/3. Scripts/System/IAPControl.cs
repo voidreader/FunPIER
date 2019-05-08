@@ -155,6 +155,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             return;
 
         LobbyManager.isAnimation = true;
+        AdsControl.main.IsCoolingPauseAds = true;
 
         controller.InitiatePurchase(productid);
     }

@@ -510,16 +510,16 @@ public class LobbyManager : MonoBehaviour {
         StartCoroutine(Splashing());
     }
 
-    public void SplashClean(float waitTime = 0.08f) {
+    public void SplashClean(float waitTime = 0.05f) {
         StartCoroutine(SplashingClean(waitTime));
     }
 
-    IEnumerator SplashingClean(float waitTime = 0.08f) {
+    IEnumerator SplashingClean(float waitTime = 0.05f) {
         splash.alpha = 1;
         splash.gameObject.SetActive(true);
 
         for (int i = 0; i < 20; i++) {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(waitTime);
             splash.alpha -= 0.05f;
         }
 
@@ -531,7 +531,7 @@ public class LobbyManager : MonoBehaviour {
         splash.gameObject.SetActive(true);
 
         for (int i = 0; i < 20; i++) {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.05f);
             splash.alpha += 0.05f;
         }
 
@@ -540,7 +540,7 @@ public class LobbyManager : MonoBehaviour {
 
     IEnumerator SplashingClear() {
         for (int i = 0; i < 20; i++) {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.05f);
             splash.alpha -= 0.05f;
         }
 
@@ -553,7 +553,7 @@ public class LobbyManager : MonoBehaviour {
         splash.gameObject.SetActive(true);
 
         for(int i=0; i<20; i++) {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.05f);
             splash.alpha += 0.05f;
         }
 
@@ -562,7 +562,7 @@ public class LobbyManager : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
 
         for (int i = 0; i < 20; i++) {
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.05f);
             splash.alpha -= 0.05f;
         }
 

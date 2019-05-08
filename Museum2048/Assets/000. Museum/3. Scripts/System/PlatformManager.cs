@@ -707,6 +707,7 @@ public class PlatformManager : MonoBehaviour
 
             var perms = new List<string>() { "public_profile", "email" };
             FB.LogInWithReadPermissions(perms, AuthCallback);
+            AdsControl.main.IsCoolingPauseAds = true;
             return;
         }
 
@@ -725,7 +726,8 @@ public class PlatformManager : MonoBehaviour
             }
         }
         else {
-            Debug.Log("User cancelled login");
+            Debug.Log("User cancelled login :: " + result.Error);
+            Debug.Log("Raw result :: " + result.RawResult);
         }
     }
 

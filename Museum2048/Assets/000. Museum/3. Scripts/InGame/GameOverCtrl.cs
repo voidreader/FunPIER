@@ -20,6 +20,7 @@ public class GameOverCtrl : MonoBehaviour {
     public ParticleSystem _confettiRainbow;
     public ParticleSystem _confettiGreenYellow;
     public ParticleSystem _confettiOrangeGreen;
+    public ParticleSystem _poof;
 
     // Start is called before the first frame update
     void Start() {
@@ -81,7 +82,7 @@ public class GameOverCtrl : MonoBehaviour {
 
             Debug.Log("Congratulation!!");
 
-            AudioAssistant.main.PlayMusic("Win");
+            AudioAssistant.main.PlayMusic("Win", false);
             
 
             _lblCong.text = PierSystem.GetLocalizedText(MLocal.rowIds.TEXT19);
@@ -92,7 +93,7 @@ public class GameOverCtrl : MonoBehaviour {
         else { // 더 진행하지 못하고 Game Over
 
             Debug.Log("Game Over!!");
-            AudioAssistant.main.PlayMusic("Lose");
+            AudioAssistant.main.PlayMusic("Lose", false);
             _lblCong.text = PierSystem.GetLocalizedText(MLocal.rowIds.TEXT27);
             _lblResultInfo.text = PierSystem.GetLocalizedText(MLocal.rowIds.TEXT28);
 
@@ -131,7 +132,7 @@ public class GameOverCtrl : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
 
         // if(isUpgrade) {
-            StartCoroutine(ConfettiRoutine());
+            
         // }
 
 
@@ -164,6 +165,8 @@ public class GameOverCtrl : MonoBehaviour {
             _btnHome.gameObject.SetActive(true);
             // _btnHome.transform.DOLocalMoveX(160, 0.4f);
 
+            StartCoroutine(ConfettiRoutine());
+
         }
         else {
 
@@ -174,6 +177,8 @@ public class GameOverCtrl : MonoBehaviour {
             _btnHome.transform.localPosition = new Vector3(170, 160, 0);
             _btnHome.gameObject.SetActive(true);
             _btnHome.transform.DOLocalMoveX(150, 0.4f).SetDelay(0.2f);
+
+            // StartCoroutine(PoofRoutine());
         }
 
         yield return new WaitForSeconds(0.5f);
@@ -250,4 +255,27 @@ public class GameOverCtrl : MonoBehaviour {
         AudioAssistant.Shot("Confetti");
         PoolManager.Pools[ConstBox.poolIngame].Spawn(_confettiRainbow, new Vector3(2.2f, 2f), Quaternion.identity);
     }
+
+    IEnumerator PoofRoutine() {
+        //DustDirtyPoof4
+
+        yield return new WaitForSeconds(1);
+
+        AudioAssistant.Shot("Confetti");
+        PoolManager.Pools[ConstBox.poolIngame].Spawn(_poof, new Vector3(-2f, 4f), Quaternion.identity);
+        yield return new WaitForSeconds(0.1f);
+
+        AudioAssistant.Shot("Confetti");
+        PoolManager.Pools[ConstBox.poolIngame].Spawn(_poof, new Vector3(2.5f, 4.5f), Quaternion.identity);
+        yield return new WaitForSeconds(0.35f);
+
+        AudioAssistant.Shot("Confetti");
+        PoolManager.Pools[ConstBox.poolIngame].Spawn(_poof, new Vector3(-1.5f, -0.5f), Quaternion.identity);
+        yield return new WaitForSeconds(0.4f);
+
+        AudioAssistant.Shot("Confetti");
+        PoolManager.Pools[ConstBox.poolIngame].Spawn(_poof, new Vector3(2.2f, 2f), Quaternion.identity);
+
+    }
 }
+
