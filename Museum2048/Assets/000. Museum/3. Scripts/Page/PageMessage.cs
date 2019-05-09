@@ -8,7 +8,10 @@ public enum Message {
     AskCleanItemUse,
     AskBackItemUse,
     InGameQuit,
-    RedMoonOpen
+    RedMoonOpen,
+    RedMoonArrange, 
+    GameStartWatch,
+    AdRemove, 
 }
 
 public class PageMessage : UILayer {

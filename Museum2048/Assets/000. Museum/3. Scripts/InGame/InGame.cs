@@ -85,12 +85,12 @@ public class InGame : MonoBehaviour {
 
     // 사운드 생성 용도
     bool moveShotCheck = false;
-    bool mergeShotCheck = false; 
+    bool mergeShotCheck = false;
 
     #endregion
 
 
-    // public TileCtrl[][] Tiles = new TileCtrl[4][4];
+    #region Awake Start Update
 
     private void Awake() {
         main = this;
@@ -100,12 +100,15 @@ public class InGame : MonoBehaviour {
         _moonBG.gameObject.SetActive(false);
     }
 
-    // Start is called before the first frame update
+    
     void Start()  {
-        StarsRoutineStart(); // 별 루틴
+        StarsRoutineStart(); // 별 루틴(배경 용도)
     }
 
     void Update() {
+
+        /* 이 부분은 테스트를 위한 로직 */
+
         if(Input.GetKeyDown(KeyCode.O)) {
             // GameOver();
             AskWhenNoMove();
@@ -119,6 +122,8 @@ public class InGame : MonoBehaviour {
             AppearRedMoon();
         }
     }
+
+    #endregion
 
     /// <summary>
     /// 
@@ -219,11 +224,12 @@ public class InGame : MonoBehaviour {
     }
 
     /// <summary>
-    /// 스코어 세팅 
+    /// 스코어 계산
     /// </summary>
     void SetScores() {
         tempCollectScore = 0;
 
+        // 전체 칩을 통해 수집
         for (int h = 0; h < HEIGHT; h++) {
             for (int w = 0; w < WIDTH; w++) {
                 if (tiles[h, w].chip != null) {
@@ -232,7 +238,7 @@ public class InGame : MonoBehaviour {
             }
         }
 
-        currentScore += tempCollectScore;
+        currentScore = tempCollectScore;
         lblCurrentScore.text = string.Format("{0:n0}", currentScore);
         lblCurrentScore.transform.localScale = Vector3.one;
         lblCurrentScore.transform.DOScale(1.1f, 0.1f).SetLoops(2, LoopType.Yoyo).OnComplete(() => OnCompletePunch(lblCurrentScore.transform));
