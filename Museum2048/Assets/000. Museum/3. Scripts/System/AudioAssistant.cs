@@ -23,6 +23,14 @@ public class AudioAssistant : MonoBehaviour {
         set {
             PlayerPrefs.SetFloat("Music Volume", value);
             PlayerPrefs.Save();
+
+            if (main != null) {
+
+                if (musicVolume <= 0)
+                    music.volume = 0;
+                else
+                    music.volume = 1;
+            }
         }
     }
 
@@ -35,6 +43,20 @@ public class AudioAssistant : MonoBehaviour {
         set {
             PlayerPrefs.SetFloat("SFX Volume", value);
             PlayerPrefs.Save();
+
+            if (main != null) {
+                if (sfxVolume <= 0) {
+                    sfx.volume = 0;
+                    loopingSFX.volume = 0;
+                    lowSFX.volume = 0;
+                }
+                else {
+                    sfx.volume = 1;
+                    loopingSFX.volume = 1;
+                    lowSFX.volume = 0.5f;
+                }
+            }
+
         }
     }
 

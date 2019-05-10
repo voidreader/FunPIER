@@ -36,11 +36,11 @@ public class PageOption : UILayer {
 
         // 배경음 
         if (AudioAssistant.main.musicVolume > 0) {
-            _lblSFX.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT13);
+            _lblBGM.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT13);
             _bgmInactive.SetActive(false);
         }
         else {
-            _lblSFX.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT14);
+            _lblBGM.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT14);
             _bgmInactive.SetActive(true);
         }
     }

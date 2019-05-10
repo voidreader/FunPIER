@@ -35,7 +35,7 @@ public class LobbyManager : MonoBehaviour {
     public int themeIndex = 0;
 
     public List<MuseumStruct> listStructs; // 로비 뮤지엄 구조물들.
-    readonly float structPosY = -4.5f;
+    readonly float structPosY = -4f;
 
     #region 파티클 
     public ParticleSystem _Firework1, _Firework2, _Firework3;
@@ -61,22 +61,7 @@ public class LobbyManager : MonoBehaviour {
             isTallScreen = true;
 
 
-        if (isTallScreen) {
 
-            lobbyTopGroup.localPosition = new Vector3(0, 620, 0);
-            inGameTopGroup.localPosition = new Vector3(0, 620, 0);
-
-            lobbyBottomGroup.localPosition = new Vector3(0, -520, 0);
-            inGameBottomGroup.localPosition = new Vector3(0, -520, 0);
-            
-        }
-        else {
-            lobbyTopGroup.localPosition = new Vector3(0, 580, 0);
-            inGameTopGroup.localPosition = new Vector3(0, 580, 0);
-
-            lobbyBottomGroup.localPosition = new Vector3(0, -450, 0);
-            inGameBottomGroup.localPosition = new Vector3(0, -450, 0);
-        }
 
     }
 
@@ -116,6 +101,39 @@ public class LobbyManager : MonoBehaviour {
         splash.alpha = 1;
         splash.gameObject.SetActive(true); // 일단 까맣게 만들어놓고 시작.
 
+        #region 해상도 대응 
+        if (isTallScreen) {
+
+            lobbyTopGroup.localPosition = new Vector3(0, 650, 0);
+            inGameTopGroup.localPosition = new Vector3(0, 650, 0);
+
+
+            if (PierSystem.main.NoAds > 0) { // 광고 없으면 UI가 내려간다.
+                lobbyBottomGroup.localPosition = new Vector3(0, -580, 0);
+                inGameBottomGroup.localPosition = new Vector3(0, -580, 0);
+            }
+            else {
+                lobbyBottomGroup.localPosition = new Vector3(0, -500, 0);
+                inGameBottomGroup.localPosition = new Vector3(0, -500, 0);
+            }
+
+
+        }
+        else {
+            lobbyTopGroup.localPosition = new Vector3(0, 580, 0);
+            inGameTopGroup.localPosition = new Vector3(0, 580, 0);
+
+            if (PierSystem.main.NoAds > 0) { // 광고 없으면 UI가 내려간다.
+                lobbyBottomGroup.localPosition = new Vector3(0, -550, 0);
+                inGameBottomGroup.localPosition = new Vector3(0, -550, 0);
+            }
+            else {
+                lobbyBottomGroup.localPosition = new Vector3(0, -450, 0);
+                inGameBottomGroup.localPosition = new Vector3(0, -450, 0);
+            }
+
+        }
+        #endregion
 
         // 기본 초기화 로직 
         // 박물관 구조물 초기화 

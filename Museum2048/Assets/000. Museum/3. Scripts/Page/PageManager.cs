@@ -42,11 +42,11 @@ public class PageManager : MonoBehaviour
     /// <summary>
     /// 메세지창 오픈 
     /// </summary>
-    public void OpenMessage(Message m, Action onClose) {
+    public void OpenMessage(Message m, Action onClose, string arg1 = "", string arg2 = "") {
         for (int i = 0; i < pages.Count; i++) {
             if(pages[i]._pageType == UILayerEnum.Message) {
                 pages[i].Init(UILayerEnum.Message, pagePanel, delegate { }, onClose);
-                pages[i].gameObject.GetComponent<PageMessage>().SetMessage(m);
+                pages[i].gameObject.GetComponent<PageMessage>().SetMessage(m,arg1, arg2);
             }
         }
     }
@@ -56,12 +56,12 @@ public class PageManager : MonoBehaviour
     /// </summary>
     /// <param name="m"></param>
     /// <param name="onYes"></param>
-    public void OpenDoubleButtonMessage(Message m, Action onYes, Action onClose) {
+    public void OpenDoubleButtonMessage(Message m, Action onYes, Action onClose, string arg1="", string arg2="") {
 
         for (int i = 0; i < pages.Count; i++) {
             if (pages[i]._pageType == UILayerEnum.Message) {
                 pages[i].Init(UILayerEnum.Message, pagePanel, delegate { }, onClose);
-                pages[i].gameObject.GetComponent<PageMessage>().SetMessage(m);
+                pages[i].gameObject.GetComponent<PageMessage>().SetMessage(m,arg1,arg2);
                 pages[i].gameObject.GetComponent<PageMessage>().OnYes = onYes;
             }
         }

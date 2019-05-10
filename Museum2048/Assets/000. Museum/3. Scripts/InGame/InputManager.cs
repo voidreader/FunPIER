@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour {
     public static InputManager main = null;
 
     public static bool itemInput = false;
+    public static bool inputLock = false;
 
     public Camera mainCamera;
     public Camera bgCamera;
@@ -75,6 +76,20 @@ public class InputManager : MonoBehaviour {
 
 
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void LockUIClose() {
+        inputLock = true;
+        StartCoroutine(WaitingUnlock());
+    }
+
+    IEnumerator WaitingUnlock() {
+        yield return new WaitForSeconds(0.3f);
+        inputLock = false;
+    }
+
 
     #region 아이템 입력 대기 
 
@@ -159,6 +174,9 @@ public class InputManager : MonoBehaviour {
     void CheckSwipeArea() {
 
         if (!Application.isEditor && Input.touches.Length <= 0)
+            return;
+
+        if (inputLock)
             return;
 
 

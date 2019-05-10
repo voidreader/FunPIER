@@ -8,6 +8,7 @@ public class PageTutorial : UILayer {
     public int _tutorialIndex = 0;
     public UISprite _image;
     public GameObject _btnLeft, _btnRight;
+    public UILabel _lblText;
 
     public override UILayer Init(UILayerEnum type, Transform parent, Action pOpen, Action pClose) {
 
@@ -39,10 +40,14 @@ public class PageTutorial : UILayer {
     }
 
     void SetTutorialImage() {
-        if (_tutorialIndex == 0)
+        if (_tutorialIndex == 0) {
             _image.spriteName = "tut_block";
-        else
+            _lblText.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT50);
+        }
+        else {
             _image.spriteName = "tut_redmoon";
+            _lblText.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT49);
+        }
 
     }
 

@@ -729,38 +729,34 @@ public class PlatformManager : MonoBehaviour
             Debug.Log("User cancelled login :: " + result.Error);
             Debug.Log("Raw result :: " + result.RawResult);
         }
+
     }
 
-    public void ShareLink() {
-        Debug.Log("Called ShareLink ");
+    public void RequestShareLink() {
+        PageManager.main.OpenDoubleButtonMessage(Message.ShareReward, CheckLogin, delegate { });
+    }
+
+    public void CheckLogin() {
+        Debug.Log("CheckLogin ShareLink ");
+
+
 
         //로그인이 안되어있으면    
         if (!FB.IsLoggedIn) {
-            // PierSystem.Instance.OpenMessageUnion(CommonMessage.NeedFacebookLogin, string.Empty);
+            var perms = new List<string>() { "public_profile", "email" };
+            FB.LogInWithReadPermissions(perms, ShareProcedure);
+            AdsControl.main.IsCoolingPauseAds = true;
             return;
         }
 
+
+    }
+
+    void ShareProcedure(ILoginResult result) {
         string address = string.Empty;
+        address = "http://invite.pier-showcase.com/invite/MiM2048.html";
 
-        /*
-        lang = UILocalization.main.GetLanguage();
-        string address = string.Empty;
-
-        if (lang != "Korean") {
-            address = "http://invite.tokidokifrenzies.com/invite/tokidokileveleng" + level.ToString() + ".html";
-            Debug.Log("English address is made");
-        }
-        else {
-            address = "http://invite.tokidokifrenzies.com/invite/tokidokilevelkor" + level.ToString() + ".html";
-            Debug.Log("Korean address is made");
-        }
-
-        */
-
-        Debug.Log("Level Clear Share Link :: " + address);
-
-
-
+        Debug.Log("ShareProcedure :: " + address);
 
         // Share Link
         FB.ShareLink(
@@ -775,14 +771,47 @@ public class PlatformManager : MonoBehaviour
     /// <param name="result"></param>
     void ShareCallback(IResult result) {
 
-        Debug.Log("Done, Level Clear Share");
+        Debug.Log("Share done.");
         Debug.Log(result.RawResult);
 
         if (result.Cancelled || !string.IsNullOrEmpty(result.Error)) {
             return;
         }
-        // 공유 완료 후 서버 통신. 
-        // PierSystem.Instance.PostFBLevelShare();
+
+        Debug.Log("Share reward.");
+
+        // 보상 부분 (레드문과 변수 공유)
+        int itemRange = Random.Range(0, 100);
+        int valueRange = Random.Range(0, 100);
+
+        if (itemRange < 50)
+            PierSystem.currentRedMoonItem = "back";
+        else if (itemRange >= 50 && itemRange < 75)
+            PierSystem.currentRedMoonItem = "upgrader";
+        else
+            PierSystem.currentRedMoonItem = "cleaner";
+
+
+        PierSystem.currentRedMoonValue = 3;
+        Debug.Log("Share reward :: " + PierSystem.currentRedMoonItem + "/" + PierSystem.currentRedMoonValue);
+
+        if (PierSystem.currentRedMoonItem == "back") {
+            PierSystem.main.itemBack += PierSystem.currentRedMoonValue;
+            PageManager.main.OpenMessage(Message.ItemGet, delegate { }, PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT6), PierSystem.currentRedMoonValue.ToString());
+        }
+        else if (PierSystem.currentRedMoonItem == "upgrader") {
+            PierSystem.main.itemUpgrade += PierSystem.currentRedMoonValue;
+            PageManager.main.OpenMessage(Message.ItemGet, delegate { }, PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT7), PierSystem.currentRedMoonValue.ToString());
+        }
+        else if (PierSystem.currentRedMoonItem == "cleaner") {
+            PierSystem.main.itemCleaner += PierSystem.currentRedMoonValue;
+            PageManager.main.OpenMessage(Message.ItemGet, delegate { }, PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT8), PierSystem.currentRedMoonValue.ToString());
+        }
+
+        ItemCounter.RefreshItems();
+        PierSystem.main.SaveProfile();
+
+
     }
 
 

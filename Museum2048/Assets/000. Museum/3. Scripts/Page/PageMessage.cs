@@ -12,6 +12,9 @@ public enum Message {
     RedMoonArrange, 
     GameStartWatch,
     AdRemove, 
+    ShareReward,
+    ItemGet,
+
 }
 
 public class PageMessage : UILayer {
@@ -33,7 +36,7 @@ public class PageMessage : UILayer {
     /// 메세지 세팅 
     /// </summary>
     /// <param name="m"></param>
-    public void SetMessage(Message m) {
+    public void SetMessage(Message m, string arg1 = "", string arg2 = "") {
         currentMessage = m;
 
         switch(currentMessage) {
@@ -58,9 +61,35 @@ public class PageMessage : UILayer {
                 break;
 
             case Message.RedMoonOpen:
-                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT41);
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT42) + "\n\n" + PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT41);
                 SetDoubleButton();
                 break;
+
+            case Message.RedMoonArrange:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT42) + "\n\n" + PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT43);
+                SetDoubleButton();
+                break;
+
+            case Message.GameStartWatch:
+                lblMessage.text = string.Format(PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT44), InGame.main.currentThemeStep);
+                SetDoubleButton();
+                break;
+
+            case Message.AdRemove:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT45);
+                SetSingleButton();
+                break;
+
+            case Message.ShareReward:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT47);
+                SetDoubleButton();
+                break;
+
+            case Message.ItemGet:
+                lblMessage.text = string.Format(PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT48), arg1, arg2);
+                SetSingleButton();
+                break;
+
 
         }
     }
@@ -83,11 +112,12 @@ public class PageMessage : UILayer {
         if (LobbyManager.isAnimation)
             return;
 
+        Close();
 
         OnYes();
         OnYes = delegate { };
 
-        Close();
+        
     }
 
 

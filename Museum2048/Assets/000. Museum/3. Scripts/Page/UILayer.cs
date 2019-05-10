@@ -96,6 +96,7 @@ public class UILayer : MonoBehaviour {
         }
 
         AudioAssistant.Shot("Negative");
+        InputManager.main.LockUIClose(); // 입력 막기.
 
         // 스택 체크 후 스택에서 제거
         if(PageManager.main != null && PageManager.main.pageStack.Contains(this)) {

@@ -71,7 +71,7 @@ public class InGame : MonoBehaviour {
     readonly int WIDTH = 4;
     readonly int HEIGHT = 4;
     public float DragGap = 0.5f;
-    public float MovingTime = 0.25f;
+    public float MovingTime = 0.15f;
 
     public int currentScore = 0;
     int tempCollectScore = 0;
@@ -150,7 +150,7 @@ public class InGame : MonoBehaviour {
 
     void InitCamera() {
         _mainCamera.transform.position = OriginCameraPos;
-        _mainCamera.orthographicSize = 12;
+        _mainCamera.orthographicSize = 13;
     }
 
     /// <summary>
@@ -188,7 +188,10 @@ public class InGame : MonoBehaviour {
             SetScores(); // 스코어 (타일 초기화 뒤에 나올것)
             SaveInGameSnapShot(); // 스냅샷 저장 
 
-            // 신규 게임일때.
+            // 신규 게임일때. 마지막 진척도에 따른 광고 보고 오브젝트 얻기 제안 
+            if(currentThemeStep != currentThemeMaxStep && currentThemeStep > 7) {
+                RequestStartWatch();
+            }
 
         }
 
@@ -393,6 +396,54 @@ public class InGame : MonoBehaviour {
             // SpawnSpotTiles.RemoveAt(index);
         }
     }
+
+
+    #region 광고 시청 제안 (정렬, 시작) 
+
+    /// <summary>
+    /// 시작할때 광고보고 N단계 블록 얻을래?
+    /// </summary>
+    public void RequestStartWatch() {
+        PageManager.main.OpenDoubleButtonMessage(Message.GameStartWatch, ShowStartWatch, delegate { });
+    }
+
+    /// <summary>
+    /// 광고 오픈 
+    /// </summary>
+    void ShowStartWatch () {
+        Debug.Log("ShowStartWatch");
+        AdsControl.main.ShowWatchAd(GetStartDisplay);
+    }
+
+    void GetStartDisplay() {
+
+        Debug.Log("GetStartDisplay");
+
+
+        Transform tr;
+        int index;
+        int id = PierSystem.GetIDByStep(currentThemeStep);
+
+        tr = PoolManager.Pools[ConstBox.poolIngame].Spawn(GetSpawnChipPrefabName(id));
+
+        
+
+
+        // tr을 랜덤한 타일 위치로 이동 
+        SpawnSpotTiles.Clear();
+        SpawnSpotTiles = ListTiles.Where(x => x.chip == null).ToList<TileCtrl>();
+
+        index = Random.Range(0, SpawnSpotTiles.Count);
+        SpawnSpotTiles[index].chip = tr.GetComponent<Chip>(); // 넣어주기 
+        SpawnSpotTiles[index].ChipInit(); // 칩 Init 
+
+    }
+
+
+
+
+    #endregion
+
 
     #region GetSpawnChipPrefabName
 
@@ -1299,12 +1350,18 @@ public class InGame : MonoBehaviour {
     /// 클린 아이템 클릭
     /// </summary>
     public void OnClickClean() {
+
+        if (_lblBottomMessage.gameObject.activeSelf)
+            return;
+
+        /*
         if (PierSystem.main.itemCleaner < 1) {
             PierSystem.main.itemCleaner += 5; // 임시로 5그냥 증가 처리 
             PierSystem.main.SaveProfile();
             ItemCounter.RefreshItems();
             return;
         }
+        */
 
         
         // 메세지창 호출 
@@ -1342,12 +1399,19 @@ public class InGame : MonoBehaviour {
     /// 1회 되돌리기
     /// </summary>
     public void OnClickBack() {
+
+        if (_lblBottomMessage.gameObject.activeSelf)
+            return;
+
+
+        /*
         if (PierSystem.main.itemBack < 1) {
             PierSystem.main.itemBack += 5; // 임시로 5그냥 증가 처리 
             PierSystem.main.SaveProfile();
             ItemCounter.RefreshItems();
             return;
         }
+        */
 
         if (NodeTileHistory == null ||  NodeTileHistory["history"].Count <= 1)
             return;
@@ -1456,7 +1520,7 @@ public class InGame : MonoBehaviour {
     float Zoom = 2.5f;
     float ZoomSize = 0.01f;
 
-    [SerializeField] Vector3 OriginCameraPos = new Vector3(11.03424f, 8.542463f, 9.984484f);
+    [SerializeField] Vector3 OriginCameraPos = new Vector3(10.9f, 8.87f, 10.25f);
     
 
 
@@ -1497,6 +1561,8 @@ public class InGame : MonoBehaviour {
     #endregion
 
     #region Red Moon  & BG Effect
+
+    bool _isMoonGoing = false;
 
     void StarsRoutineStart() {
         StartCoroutine(ShootingStarRoutine());
@@ -1546,22 +1612,20 @@ public class InGame : MonoBehaviour {
     IEnumerator RedMoonWaiting() {
         yield return null;
 
-        // 4분~5분 대기 
-        yield return new WaitForSeconds(Random.Range(180f, 240f));
+        while(true) {
+            // 일정 시간 대기 
+            yield return new WaitForSeconds(Random.Range(180f, 240f));
+
+            while (!isPlaying) {
+                yield return null;
+            }
 
 
-        while(!isPlaying) {
-            yield return null;
+            if (_moon.gameObject.activeSelf)
+                continue;
+
+            AppearRedMoon();
         }
-
-
-        if (_moon.gameObject.activeSelf)
-            yield break;
-
-
-        AppearRedMoon();
-
-
     }
 
 
@@ -1571,6 +1635,18 @@ public class InGame : MonoBehaviour {
     public void AppearRedMoon() {
         FadeInUnitySprite(_moonBG, 2);
         FadeInUnitySprite(_moon, 2.5f);
+
+        StartCoroutine(RedMoonRoutine());
+    }
+
+    /// <summary>
+    /// 붉은달이 떴다가 다시 돌아가는 시간. 
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator RedMoonRoutine() {
+        yield return new WaitForSeconds(30);
+
+        DisappearRedMoon();
     }
 
 
@@ -1623,12 +1699,15 @@ public class InGame : MonoBehaviour {
 
         if (PierSystem.currentRedMoonItem == "back") {
             PierSystem.main.itemBack += PierSystem.currentRedMoonValue;
+            PageManager.main.OpenMessage(Message.ItemGet, delegate { }, PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT6), PierSystem.currentRedMoonValue.ToString());
         }
         else if (PierSystem.currentRedMoonItem == "upgrader") {
             PierSystem.main.itemUpgrade += PierSystem.currentRedMoonValue;
+            PageManager.main.OpenMessage(Message.ItemGet, delegate { }, PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT7), PierSystem.currentRedMoonValue.ToString());
         }
         else if (PierSystem.currentRedMoonItem == "cleaner") {
             PierSystem.main.itemCleaner += PierSystem.currentRedMoonValue;
+            PageManager.main.OpenMessage(Message.ItemGet, delegate { }, PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT8), PierSystem.currentRedMoonValue.ToString());
         }
 
         ItemCounter.RefreshItems();
@@ -1637,19 +1716,30 @@ public class InGame : MonoBehaviour {
         Debug.Log(">> GetRedMoonItem :: " + PierSystem.currentRedMoonValue);
     }
 
+    /// <summary>
+    /// 레드문 사라지기 
+    /// </summary>
     public void DisappearRedMoon() {
 
         if (!_moon.gameObject.activeSelf)
             return;
 
+        if (_isMoonGoing)
+            return;
+
         Debug.Log("DisappearRedMoon");
+        _isMoonGoing = true;
 
         FadeOutUnitySprite(_moonBG, 1);
         FadeOutUnitySprite(_moon, 1.5f);
+        Invoke("RecoverMoonGoing", 1.5f);
+    }
+
+    void RecoverMoonGoing() {
+        _isMoonGoing = false;
     }
 
     #endregion
-
 
     #region Unity Sprite Renderer 
 
