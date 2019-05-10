@@ -183,6 +183,7 @@ public class InputManager : MonoBehaviour {
         
         if (GetInputDown()) {
             // UI Camera 선 체크
+            /*
             point = UICamera.ScreenPointToRay(GetInputPosition()).origin;
             mask = 1 << LayerMask.NameToLayer("UI");
             if (Physics.Raycast(ray, out hit, 20f, mask)) {
@@ -191,6 +192,7 @@ public class InputManager : MonoBehaviour {
                     return;
                 }
             }
+            */
             
 
             point = bgCamera.ScreenPointToRay(GetInputPosition()).origin;

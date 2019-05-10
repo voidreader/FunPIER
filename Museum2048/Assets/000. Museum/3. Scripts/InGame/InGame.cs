@@ -1354,14 +1354,32 @@ public class InGame : MonoBehaviour {
         if (_lblBottomMessage.gameObject.activeSelf)
             return;
 
-        /*
-        if (PierSystem.main.itemCleaner < 1) {
+        
+        if (PierSystem.main.itemCleaner < 1 && PierSystem.main.AdminPlay) {
             PierSystem.main.itemCleaner += 5; // 임시로 5그냥 증가 처리 
             PierSystem.main.SaveProfile();
             ItemCounter.RefreshItems();
             return;
         }
-        */
+
+        bool hasLv3Higher = false;
+        
+        // 최소 3단계 이상의 칩이 있어야한다.
+        for(int i=0; i<ListTiles.Count;i++) {
+            if (ListTiles[i].chip == null)
+                continue;
+
+            if(ListTiles[i].chip.id >= 8) {
+                hasLv3Higher = true;
+                break;
+            }
+        }
+
+        // 최소 3단계 이상의 오브젝트가 하나 이상 필요
+        if(!hasLv3Higher) {
+            PageManager.main.OpenMessage(Message.NeedLv3, delegate { });
+            return;
+        }
 
         
         // 메세지창 호출 
@@ -1544,8 +1562,8 @@ public class InGame : MonoBehaviour {
             _mainCamera.transform.position -= (dist_position * Time.deltaTime * Zoom);     // 마우스 휠로 화면확대 축소
             _mainCamera.orthographicSize -= ZoomSize;
 
-            Zoom *= 1.021f;
-            ZoomSize *= 1.021f;
+            Zoom *= 1.011f;
+            ZoomSize *= 1.011f;
 
             frameCount++;
             yield return null;

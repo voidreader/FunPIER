@@ -22,4 +22,22 @@ public class PageLang : UILayer {
     }
 
 
+    void GoTitle() {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+    }
+
+
+    public void OnClickKorean() {
+        PierSystem.main.currentLang = SystemLanguage.Korean;
+        PierSystem.main.SaveLanguage();
+        GoTitle();
+    }
+
+    public void OnClickEnglish() {
+        PierSystem.main.currentLang = SystemLanguage.English;
+        PierSystem.main.SaveLanguage();
+        GoTitle();
+    }
+
+
 }

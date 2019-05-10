@@ -14,6 +14,7 @@ public enum Message {
     AdRemove, 
     ShareReward,
     ItemGet,
+    NeedLv3,
 
 }
 
@@ -90,6 +91,10 @@ public class PageMessage : UILayer {
                 SetSingleButton();
                 break;
 
+            case Message.NeedLv3:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT52);
+                SetSingleButton();
+                break;
 
         }
     }

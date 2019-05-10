@@ -11,6 +11,8 @@ public static class ConstBox {
     public static readonly string KeySavedTileHistory = "SavedTileHistory"; // 타일 히스토리 저장 키 
     public static readonly string KeySavedPlayTheme = "SavedPlayTheme"; // 플레이중이던 theme
     public static readonly string KeySavedSurprisePack = "SavedPackDay"; // 서프라이즈 팩 오픈일자
+    public static readonly string KeySavedFacebookReward = "SavedFacebookShare"; // 페이스북 쉐어 일자
+    public static readonly string KeySavedLang = "SavedLang";
 
     public static readonly string ParticleConfettiRainbow = "ConfettiBlastRainbow";
     public static readonly string ParticleConfettiGreenYellow = "ConfettiBlastGreenYellow";

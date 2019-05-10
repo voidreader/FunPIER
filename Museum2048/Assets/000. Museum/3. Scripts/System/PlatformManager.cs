@@ -743,16 +743,22 @@ public class PlatformManager : MonoBehaviour
 
         //로그인이 안되어있으면    
         if (!FB.IsLoggedIn) {
+            Debug.Log("Need Facebook Login.. Go!");
             var perms = new List<string>() { "public_profile", "email" };
             FB.LogInWithReadPermissions(perms, ShareProcedure);
             AdsControl.main.IsCoolingPauseAds = true;
             return;
         }
-
+        else {
+            Debug.Log("Already login. Share!");
+            ShareProcedure(null);
+        }
 
     }
 
     void ShareProcedure(ILoginResult result) {
+
+        
         string address = string.Empty;
         address = "http://invite.pier-showcase.com/invite/MiM2048.html";
 

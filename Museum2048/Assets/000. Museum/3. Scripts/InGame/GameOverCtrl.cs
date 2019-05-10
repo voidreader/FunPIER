@@ -125,9 +125,9 @@ public class GameOverCtrl : MonoBehaviour {
         _lblCong.gameObject.SetActive(true);
         _lblCong.transform.DOLocalMoveY(460, 0.5f);
 
-        _lblResultInfo.transform.localPosition = new Vector3(0, 360, 0);
+        _lblResultInfo.transform.localPosition = new Vector3(0, 350, 0);
         _lblResultInfo.gameObject.SetActive(true);
-        _lblResultInfo.transform.DOLocalMoveY(390, 0.5f).SetDelay(0.2f);
+        _lblResultInfo.transform.DOLocalMoveY(380, 0.5f).SetDelay(0.2f);
 
         yield return new WaitForSeconds(0.5f);
 

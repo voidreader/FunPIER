@@ -79,12 +79,36 @@ public class PierSystem : MonoBehaviour {
 
 
     /// <summary>
-    /// 게임 Data 초기화 
+    /// 게임 Data 초기화 및 언어처리
     /// </summary>
     public void InitGameBaseData() {
         MaxCarMuseumStep = MData.Instance.GetRow(MData.rowIds.CAR_MUSEUM)._Step;
         MaxWineMuseumStep = MData.Instance.GetRow(MData.rowIds.WINE_MUSEUM)._Step;
         MaxVikingMuseumStep = MData.Instance.GetRow(MData.rowIds.VIKING_MUSEUM)._Step;
+
+
+        // 언어 처리 ! 중요
+        if(ES2.Exists(ConstBox.KeySavedLang)) {
+            currentLang = LoadLanguage();
+        } 
+        else {
+
+            if (Application.systemLanguage == SystemLanguage.Korean)
+                currentLang = SystemLanguage.Korean;
+            else
+                currentLang = SystemLanguage.English;
+        }
+
+        SaveLanguage();
+
+    }
+
+    public void SaveLanguage() {
+        ES2.Save<string>(currentLang.ToString(), ConstBox.KeySavedLang);
+    }
+
+    public SystemLanguage LoadLanguage() {
+        return (SystemLanguage)System.Enum.Parse(typeof(SystemLanguage), ES2.Load<string>(ConstBox.KeySavedLang));
     }
 
 
@@ -218,7 +242,7 @@ public class PierSystem : MonoBehaviour {
     /// <returns></returns>
     public static string GetLocalizedText(MLocal.rowIds rowid) {
 
-        if (Application.systemLanguage == SystemLanguage.Korean)
+        if (main.currentLang == SystemLanguage.Korean)
             return MLocal.Instance.GetRow(rowid)._Korean;
         else
             return MLocal.Instance.GetRow(rowid)._English;
