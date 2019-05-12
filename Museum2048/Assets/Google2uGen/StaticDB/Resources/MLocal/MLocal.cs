@@ -76,12 +76,12 @@ namespace Google2u
 		public enum rowIds {
 			TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT7, TEXT8, TEXT9, TEXT10, TEXT11, TEXT12, TEXT13, TEXT14, TEXT15, TEXT16, TEXT17, TEXT18
 			, TEXT19, TEXT20, TEXT21, TEXT22, TEXT23, TEXT24, TEXT25, TEXT26, TEXT27, TEXT28, TEXT29, TEXT30, TEXT31, TEXT32, TEXT33, TEXT34, TEXT35, TEXT36, TEXT37, TEXT38
-			, TEXT39, TEXT40, TEXT41, TEXT42, TEXT43, TEXT44, TEXT45, TEXT46, TEXT47, TEXT48, TEXT49, TEXT50, TEXT51, TEXT52
+			, TEXT39, TEXT40, TEXT41, TEXT42, TEXT43, TEXT44, TEXT45, TEXT46, TEXT47, TEXT48, TEXT49, TEXT50, TEXT51, TEXT52, TEXT53
 		};
 		public string [] rowNames = {
 			"TEXT1", "TEXT2", "TEXT3", "TEXT4", "TEXT5", "TEXT6", "TEXT7", "TEXT8", "TEXT9", "TEXT10", "TEXT11", "TEXT12", "TEXT13", "TEXT14", "TEXT15", "TEXT16", "TEXT17", "TEXT18"
 			, "TEXT19", "TEXT20", "TEXT21", "TEXT22", "TEXT23", "TEXT24", "TEXT25", "TEXT26", "TEXT27", "TEXT28", "TEXT29", "TEXT30", "TEXT31", "TEXT32", "TEXT33", "TEXT34", "TEXT35", "TEXT36", "TEXT37", "TEXT38"
-			, "TEXT39", "TEXT40", "TEXT41", "TEXT42", "TEXT43", "TEXT44", "TEXT45", "TEXT46", "TEXT47", "TEXT48", "TEXT49", "TEXT50", "TEXT51", "TEXT52"
+			, "TEXT39", "TEXT40", "TEXT41", "TEXT42", "TEXT43", "TEXT44", "TEXT45", "TEXT46", "TEXT47", "TEXT48", "TEXT49", "TEXT50", "TEXT51", "TEXT52", "TEXT53"
 		};
 		public System.Collections.Generic.List<MLocalRow> Rows = new System.Collections.Generic.List<MLocalRow>();
 
@@ -152,6 +152,7 @@ namespace Google2u
     "evels, \nthe more beautiful the museum."));
 			Rows.Add( new MLocalRow("TEXT51", "튜토리얼", "How to play"));
 			Rows.Add( new MLocalRow("TEXT52", "최소 Lv3 전시품이 하나 이상 존재해야 합니다", "At least one Lv3 exhibit must be present."));
+			Rows.Add( new MLocalRow("TEXT53", "개인정보 보호정책", "Privacy Policy"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

@@ -81,5 +81,7 @@ public class PageOption : UILayer {
         CheckVolumeState();
     }
 
-
+    public void OnClickPolicy() {
+        Application.OpenURL("http://pier-showcase.com/policy/m2048_privacy_policy.html");
+    }
 }
