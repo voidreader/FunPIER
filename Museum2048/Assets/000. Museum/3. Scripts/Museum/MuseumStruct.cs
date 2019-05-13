@@ -190,7 +190,7 @@ public class MuseumStruct : MonoBehaviour {
 
     IEnumerator UpgradeRoutine(int s) {
 
-        Debug.Log(">> UpgradeRoutine :: " + s);
+        Debug.Log(">> UpgradeRoutine :: " + s + "/" + maxStep);
         LobbyManager.isAnimation = true;
         InitObjectsTransform();
 
@@ -200,15 +200,18 @@ public class MuseumStruct : MonoBehaviour {
 
         LobbyManager.main.ShotFireworks(); // 불꽃놀이 시작 
 
-        for (int i = currentStep; i < s; i++) {
 
-            // 업적 체크
-            if (i == maxStep && theme == Theme.Car)
-                PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteCar);
-            else if (i == maxStep && theme == Theme.Wine)
-                PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteWine);
-            else if (i == maxStep && theme == Theme.Viking)
-                PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteViking);
+        // 업적 체크
+        if (s == maxStep && theme == Theme.Car)
+            PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteCar);
+        else if (s == maxStep && theme == Theme.Wine)
+            PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteWine);
+        else if (s == maxStep && theme == Theme.Viking)
+            PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteViking);
+
+
+
+        for (int i = currentStep; i < s; i++) {
 
 
             if (i > maxStep)

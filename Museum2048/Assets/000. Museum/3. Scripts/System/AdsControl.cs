@@ -257,7 +257,9 @@ public class AdsControl : MonoBehaviour
     /// </summary>
     public void ShowWatchAd(Action callback) {
 
+
         OnWatchedAd = callback;
+        
 
         if (Application.isEditor) {
             OnWatchedAd();
@@ -270,6 +272,9 @@ public class AdsControl : MonoBehaviour
             return;
         }
 
+        Debug.Log(">> ShowWatchAd << ");
+
+        IsCoolingPauseAds = true;
         this.rewardedAd.Show();
         IsCoolingPauseAds = true;
 
