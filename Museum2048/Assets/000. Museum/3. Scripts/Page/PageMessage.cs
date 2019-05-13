@@ -89,6 +89,10 @@ public class PageMessage : UILayer {
                 break;
 
             case Message.ItemGet:
+                Debug.Log(">> Iten Get #1 :: " + PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT48));
+                Debug.Log(">> Iten Get #3 :: " + arg1);
+                Debug.Log(">> Iten Get #3 :: " + arg2);
+
                 lblMessage.text = string.Format(PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT48), arg1, arg2);
                 SetSingleButton();
                 break;
