@@ -158,7 +158,7 @@ PlayerSettings:
     Android: pier.colombus.android.museum2048
     iOS: pier.colombus.ios.museum2048
   buildNumber:
-    iOS: 1
+    iOS: 3
   AndroidBundleVersionCode: 16
   AndroidMinSdkVersion: 21
   AndroidTargetSdkVersion: 0
@@ -643,7 +643,8 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    4: GAME_KIT_API_ENABLED
   platformArchitecture: {}
   scriptingBackend:
     Android: 1

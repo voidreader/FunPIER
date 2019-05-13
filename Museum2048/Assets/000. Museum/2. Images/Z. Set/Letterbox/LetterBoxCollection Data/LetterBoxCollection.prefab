@@ -50,16 +50,16 @@ MonoBehaviour:
   - name: pattern01
     boundsData:
     - {x: 0, y: 0, z: 0}
-    - {x: 2.56, y: 2.56, z: 0}
+    - {x: 1.024, y: 1.024, z: 0}
     untrimmedBoundsData:
     - {x: 0, y: 0, z: 0}
-    - {x: 2.56, y: 2.56, z: 0}
-    texelSize: {x: 0.01, y: 0.01}
+    - {x: 1.024, y: 1.024, z: 0}
+    texelSize: {x: 0.004, y: 0.004}
     positions:
-    - {x: -1.28, y: -1.28, z: 0}
-    - {x: 1.28, y: -1.28, z: 0}
-    - {x: -1.28, y: 1.28, z: 0}
-    - {x: 1.28, y: 1.28, z: 0}
+    - {x: -0.512, y: -0.512, z: 0}
+    - {x: 0.512, y: -0.512, z: 0}
+    - {x: -0.512, y: 0.512, z: 0}
+    - {x: 0.512, y: 0.512, z: 0}
     normals: []
     tangents: []
     uvs:
@@ -112,7 +112,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 50
-  buildKey: 1459666669
+  buildKey: 1450826610
   dataGuid: 207fb35386de64f468e2c2bdde7e251f
   managedSpriteCollection: 0
   hasPlatformData: 0

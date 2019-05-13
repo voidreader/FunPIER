@@ -101,6 +101,8 @@ public class LobbyManager : MonoBehaviour {
         splash.alpha = 1;
         splash.gameObject.SetActive(true); // 일단 까맣게 만들어놓고 시작.
 
+        ScissorCtrl.Instance.UpdateResolution();
+
         #region 해상도 대응 
         if (isTallScreen) {
 

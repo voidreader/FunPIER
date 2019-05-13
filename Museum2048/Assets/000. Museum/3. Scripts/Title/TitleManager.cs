@@ -28,6 +28,8 @@ public class TitleManager : MonoBehaviour {
             copyright.transform.localPosition = new Vector3(0, -620, 0);
 
         StartCoroutine(TitleRoutine());
+
+        ScissorCtrl.Instance.UpdateResolution();
     }
 
     IEnumerator TitleRoutine() {
