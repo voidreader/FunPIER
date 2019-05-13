@@ -154,6 +154,13 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         if (LobbyManager.isAnimation)
             return;
 
+        // 이미 광고 없애기 구매한 경우.
+        if(productid == "noads_m2048" && PierSystem.main.NoAds > 0) {
+            PageManager.main.OpenMessage(Message.AlreadyHaveNoAds, delegate { });
+            return;
+        }
+
+
         LobbyManager.isAnimation = true;
         AdsControl.main.IsCoolingPauseAds = true;
 
@@ -214,6 +221,11 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
 
         }
+
+#if UNITY_ANDROID
+        PageManager.main.OpenMessage(Message.PuchaseComplete, delegate { });
+
+#endif
 
         PierSystem.main.SaveProfile();
         ItemCounter.RefreshItems();

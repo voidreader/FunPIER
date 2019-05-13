@@ -15,6 +15,8 @@ public enum Message {
     ShareReward,
     ItemGet,
     NeedLv3,
+    PuchaseComplete,
+    AlreadyHaveNoAds
 
 }
 
@@ -96,6 +98,15 @@ public class PageMessage : UILayer {
                 SetSingleButton();
                 break;
 
+            case Message.PuchaseComplete:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT55);
+                SetSingleButton();
+                break;
+
+            case Message.AlreadyHaveNoAds:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT54);
+                SetSingleButton();
+                break;
         }
     }
 

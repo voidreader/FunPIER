@@ -764,6 +764,8 @@ public class PlatformManager : MonoBehaviour
 
         Debug.Log("ShareProcedure :: " + address);
 
+        AdsControl.main.IsCoolingPauseAds = true;
+
         // Share Link
         FB.ShareLink(
             new System.Uri(address),
