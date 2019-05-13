@@ -82,6 +82,7 @@ public class PageOption : UILayer {
     }
 
     public void OnClickPolicy() {
+        AdsControl.main.IsCoolingPauseAds = true;
         Application.OpenURL("http://pier-showcase.com/policy/m2048_privacy_policy.html");
     }
 }

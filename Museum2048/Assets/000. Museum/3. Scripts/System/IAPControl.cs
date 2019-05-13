@@ -197,6 +197,14 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                 PierSystem.main.itemCleaner += 10;
                 break;
 
+            case "onechance_m2048":
+                PierSystem.main.itemBack += 5;
+                PierSystem.main.itemUpgrade += 5;
+                PierSystem.main.itemCleaner += 5;
+                PierSystem.main.NoAds = 1;
+                AdsControl.main.NoAdsCheck();
+                break;
+
 
             case "noads_m2048":
                 PierSystem.main.NoAds = 1;
