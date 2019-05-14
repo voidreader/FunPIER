@@ -245,12 +245,24 @@ public class PlatformManager : MonoBehaviour
 
 
     public void OpenGameCenterLeaderboards() {
+
+        if(!IsGameCenterSignIn()) {
+            InitGameCenter();
+            return;
+        }
+
         ISN_GKGameCenterViewController viewController = new ISN_GKGameCenterViewController();
         viewController.ViewState = ISN_GKGameCenterViewControllerState.Leaderboards;
         viewController.Show();
     }
 
     public void OpenGameCenterAchievements() {
+
+        if (!IsGameCenterSignIn()) {
+            InitGameCenter();
+            return;
+        }
+
         ISN_GKGameCenterViewController viewController = new ISN_GKGameCenterViewController();
         viewController.ViewState = ISN_GKGameCenterViewControllerState.Achievements;
         viewController.Show();
