@@ -108,7 +108,11 @@ public class TileCtrl : MonoBehaviour {
 
         chip = PoolManager.Pools[ConstBox.poolIngame].Spawn(InGame.GetSpawnChipPrefabName(id)).GetComponent<Chip>();
         ChipInit();
+
+        InGame.main.mergeShotCheck = false;
         InGame.main.MergeCheck(id);
+
+
 
     }
 

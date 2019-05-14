@@ -86,7 +86,7 @@ public class InGame : MonoBehaviour {
 
     // 사운드 생성 용도
     bool moveShotCheck = false;
-    bool mergeShotCheck = false;
+    public bool mergeShotCheck = false;
 
     #endregion
 
@@ -103,6 +103,10 @@ public class InGame : MonoBehaviour {
 
     
     void Start()  {
+
+        // Debug.Log(string.Format(PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT48), "Back", "3"));
+        
+
         StarsRoutineStart(); // 별 루틴(배경 용도)
     }
 
@@ -582,6 +586,7 @@ public class InGame : MonoBehaviour {
     /// </summary>
     /// <param name="id"></param>
     public void MergeCheck(int id) {
+
         int step = GetStepByID(id);
 
         if(!mergeShotCheck) {
@@ -1548,6 +1553,9 @@ public class InGame : MonoBehaviour {
     /// '업그레이드' 아이템 사용 완료
     /// </summary>
     public void OnCompleteItemUpgrade() {
+
+        InputManager.itemInput = false;
+
         CancelBottomMessage();
 
         PierSystem.main.itemUpgrade--;
@@ -1765,6 +1773,15 @@ public class InGame : MonoBehaviour {
     void GetRedMoonItem() {
 
         Debug.Log(">> GetRedMoonItem :: " + PierSystem.currentRedMoonItem);
+        StartCoroutine(OpenItemGetMessageRoutine());
+
+    }
+
+    /// <summary>
+    /// 자꾸 튕겨서..
+    /// </summary>
+    IEnumerator OpenItemGetMessageRoutine() {
+        yield return new WaitForSeconds(0.1f);
 
         if (PierSystem.currentRedMoonItem == "back") {
             PierSystem.main.itemBack += PierSystem.currentRedMoonValue;

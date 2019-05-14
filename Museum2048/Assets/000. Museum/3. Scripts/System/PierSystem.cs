@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using Google2u;
+using CodeStage.AntiCheat.ObscuredTypes;
 
 public class PierSystem : MonoBehaviour {
 
@@ -18,19 +19,19 @@ public class PierSystem : MonoBehaviour {
     public SystemLanguage currentLang = SystemLanguage.Korean;
 
     // 아이템 개수 
-    public int itemCleaner = 0;
-    public int itemUpgrade = 0;
-    public int itemBack = 0;
+    public ObscuredInt itemCleaner = 0;
+    public ObscuredInt itemUpgrade = 0;
+    public ObscuredInt itemBack = 0;
 
-    public int carHighScore = 0;
-    public int wineHighScore = 0;
-    public int vikingHighScore = 0;
-    public int currentScore = 0;
+    public ObscuredInt carHighScore = 0;
+    public ObscuredInt wineHighScore = 0;
+    public ObscuredInt vikingHighScore = 0;
+    public ObscuredInt currentScore = 0;
 
     // 각 박물관 진척도 
-    public int carMuseumStep = 0;
-    public int wineMuseumStep = 0;
-    public int vikingMuseumStep = 0;
+    public ObscuredInt carMuseumStep = 0;
+    public ObscuredInt wineMuseumStep = 0;
+    public ObscuredInt vikingMuseumStep = 0;
 
     // 연출을 위한 백업용 step 값. 2048 플레이 전의 스텝 값
     public int carMuseumPreviousStep = 0;
@@ -38,13 +39,13 @@ public class PierSystem : MonoBehaviour {
     public int vikingMuseumPreviousStep = 0;
 
 
-    public int NoAds = 0; // 노 광고..  0(광고있음), 1(광고없음)
+    public ObscuredInt NoAds = 0; // 노 광고..  0(광고있음), 1(광고없음)
 
     public int MaxCarMuseumStep = 0;
     public int MaxWineMuseumStep = 0;
     public int MaxVikingMuseumStep = 0;
 
-    public long MoveCount = 0; // 오브젝트 이동 카운트 
+    public ObscuredLong MoveCount = 0; // 오브젝트 이동 카운트 
 
     public int themeIndex = 0;
 

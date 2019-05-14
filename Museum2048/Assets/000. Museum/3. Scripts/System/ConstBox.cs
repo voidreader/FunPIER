@@ -13,6 +13,7 @@ public static class ConstBox {
     public static readonly string KeySavedSurprisePack = "SavedPackDay"; // 서프라이즈 팩 오픈일자
     public static readonly string KeySavedFacebookReward = "SavedFacebookShare"; // 페이스북 쉐어 일자
     public static readonly string KeySavedLang = "SavedLang";
+    public static readonly string KeySavedTutorialOpen = "SavedTutorialOpen";
 
     public static readonly string ParticleConfettiRainbow = "ConfettiBlastRainbow";
     public static readonly string ParticleConfettiGreenYellow = "ConfettiBlastGreenYellow";

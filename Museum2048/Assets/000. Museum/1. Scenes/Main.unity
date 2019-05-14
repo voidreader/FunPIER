@@ -3721,6 +3721,7 @@ MonoBehaviour:
   DragGap: 0.5
   MovingTime: 0.25
   currentScore: 0
+  mergeShotCheck: 0
   _zoomTarget: {fileID: 0}
   _mainCamera: {fileID: 885238579}
   OriginCameraPos: {x: 11.03424, y: 8.542463, z: 9.984484}
@@ -23535,7 +23536,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500105019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -1, z: 0}
+  m_LocalPosition: {x: 0.1, y: -1, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8642655957283892476}
@@ -27396,24 +27397,84 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AdminPlay: 0
   currentLang: 23
-  itemCleaner: 0
-  itemUpgrade: 0
-  itemBack: 0
-  carHighScore: 0
-  wineHighScore: 0
-  vikingHighScore: 0
-  currentScore: 0
-  carMuseumStep: 0
-  wineMuseumStep: 0
-  vikingMuseumStep: 0
+  itemCleaner:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  itemUpgrade:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  itemBack:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  carHighScore:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  wineHighScore:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  vikingHighScore:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  currentScore:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  carMuseumStep:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  wineMuseumStep:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
+  vikingMuseumStep:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
   carMuseumPreviousStep: 0
   wineMuseumPreviousStep: 0
   vikingMuseumPreviousStep: 0
-  NoAds: 0
+  NoAds:
+    currentCryptoKey: 444444
+    hiddenValue: 444444
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
   MaxCarMuseumStep: 0
   MaxWineMuseumStep: 0
   MaxVikingMuseumStep: 0
-  MoveCount: 0
+  MoveCount:
+    currentCryptoKey: 444442
+    hiddenValue: 444442
+    inited: 1
+    fakeValue: 0
+    fakeValueActive: 1
   themeIndex: 0
   wineTileMaterials:
   - {fileID: 2100000, guid: 46a42b8c961d85c44aaefb898fbb5a1a, type: 2}

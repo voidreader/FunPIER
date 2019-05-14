@@ -149,6 +149,10 @@ public class LobbyManager : MonoBehaviour {
 
         yield return null;
 
+
+        
+
+
         // 이전에 플레이 하던 게임이 있는지 체크 
         if (CheckNeedResumeGame()) {
 
@@ -162,6 +166,15 @@ public class LobbyManager : MonoBehaviour {
             SplashClean(0.1f); // 스플래시 클린.
 
             AudioAssistant.main.PlayMusic("LobbyBGM", true);
+
+            // 첫실행시 튜토리얼 
+            if (!ES2.Exists(ConstBox.KeySavedTutorialOpen)) {
+                // 튜토리얼 오픈하기 
+                yield return new WaitForSeconds(0.1f);
+                PageManager.main.OpenTutorial();
+               
+            }
+
         }
 
         yield return StartCoroutine(DelayedInit());
