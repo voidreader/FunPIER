@@ -18,6 +18,7 @@ public class LobbyManager : MonoBehaviour {
     public GameObject btnNoAds; // 광고없애기 버튼 
 
     public GameObject tutorialButton; // 튜토리얼 버튼 
+    public GameObject facebookButton; 
 
     public UISprite splash;
 
@@ -100,6 +101,7 @@ public class LobbyManager : MonoBehaviour {
         
         splash.alpha = 1;
         splash.gameObject.SetActive(true); // 일단 까맣게 만들어놓고 시작.
+        RefreshFacebookShareButton();
 
         ScissorCtrl.Instance.UpdateResolution();
 
@@ -535,6 +537,12 @@ public class LobbyManager : MonoBehaviour {
     }
 
 
+    public void RefreshFacebookShareButton() {
+        if (PlatformManager.main.CheckFacebookShareToday())
+            facebookButton.SetActive(false);
+        else
+            facebookButton.SetActive(true);
+    }
 
 
     #region Splash 

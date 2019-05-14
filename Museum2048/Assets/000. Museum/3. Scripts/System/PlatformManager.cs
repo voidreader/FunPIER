@@ -668,6 +668,21 @@ public class PlatformManager : MonoBehaviour
 
     #region Facebook 
 
+    /// <summary>
+    /// true :: 오늘 공유했음, false :: 오늘 공유 안했음
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckFacebookShareToday() {
+
+        if (!ES2.Exists(ConstBox.KeySavedFacebookReward))
+            return false;
+
+        if (ES2.Load<int>(ConstBox.KeySavedFacebookReward) == System.DateTime.Now.DayOfYear)
+            return true;
+
+        return false;
+    }
+
     void InitFacebook() {
         Debug.Log(">> Init Facebook Called");
 
@@ -717,9 +732,10 @@ public class PlatformManager : MonoBehaviour
 
         if (!FB.IsLoggedIn) {
 
+            AdsControl.main.IsCoolingPauseAds = true;
             var perms = new List<string>() { "public_profile", "email" };
             FB.LogInWithReadPermissions(perms, AuthCallback);
-            AdsControl.main.IsCoolingPauseAds = true;
+
             return;
         }
 
@@ -756,9 +772,10 @@ public class PlatformManager : MonoBehaviour
         //로그인이 안되어있으면    
         if (!FB.IsLoggedIn) {
             Debug.Log("Need Facebook Login.. Go!");
+            AdsControl.main.IsCoolingPauseAds = true;
             var perms = new List<string>() { "public_profile", "email" };
             FB.LogInWithReadPermissions(perms, ShareProcedure);
-            AdsControl.main.IsCoolingPauseAds = true;
+
             return;
         }
         else {
@@ -770,7 +787,7 @@ public class PlatformManager : MonoBehaviour
 
     void ShareProcedure(ILoginResult result) {
 
-        
+
         string address = string.Empty;
         address = "http://invite.pier-showcase.com/invite/MiM2048.html";
 
@@ -831,6 +848,8 @@ public class PlatformManager : MonoBehaviour
         ItemCounter.RefreshItems();
         PierSystem.main.SaveProfile();
 
+        ES2.Save<int>(System.DateTime.Now.DayOfYear, ConstBox.KeySavedFacebookReward);
+        LobbyManager.main.RefreshFacebookShareButton();
 
     }
 
