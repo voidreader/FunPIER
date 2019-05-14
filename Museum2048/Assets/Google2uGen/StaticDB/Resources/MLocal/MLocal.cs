@@ -76,12 +76,12 @@ namespace Google2u
 		public enum rowIds {
 			TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT7, TEXT8, TEXT9, TEXT10, TEXT11, TEXT12, TEXT13, TEXT14, TEXT15, TEXT16, TEXT17, TEXT18
 			, TEXT19, TEXT20, TEXT21, TEXT22, TEXT23, TEXT24, TEXT25, TEXT26, TEXT27, TEXT28, TEXT29, TEXT30, TEXT31, TEXT32, TEXT33, TEXT34, TEXT35, TEXT36, TEXT37, TEXT38
-			, TEXT39, TEXT40, TEXT41, TEXT42, TEXT43, TEXT44, TEXT45, TEXT46, TEXT47, TEXT48, TEXT49, TEXT50, TEXT51, TEXT52, TEXT53, TEXT54, TEXT55
+			, TEXT39, TEXT40, TEXT41, TEXT42, TEXT43, TEXT44, TEXT45, TEXT46, TEXT47, TEXT48, TEXT49, TEXT50, TEXT51, TEXT52, TEXT53, TEXT54, TEXT55, TEXT56, TEXT57
 		};
 		public string [] rowNames = {
 			"TEXT1", "TEXT2", "TEXT3", "TEXT4", "TEXT5", "TEXT6", "TEXT7", "TEXT8", "TEXT9", "TEXT10", "TEXT11", "TEXT12", "TEXT13", "TEXT14", "TEXT15", "TEXT16", "TEXT17", "TEXT18"
 			, "TEXT19", "TEXT20", "TEXT21", "TEXT22", "TEXT23", "TEXT24", "TEXT25", "TEXT26", "TEXT27", "TEXT28", "TEXT29", "TEXT30", "TEXT31", "TEXT32", "TEXT33", "TEXT34", "TEXT35", "TEXT36", "TEXT37", "TEXT38"
-			, "TEXT39", "TEXT40", "TEXT41", "TEXT42", "TEXT43", "TEXT44", "TEXT45", "TEXT46", "TEXT47", "TEXT48", "TEXT49", "TEXT50", "TEXT51", "TEXT52", "TEXT53", "TEXT54", "TEXT55"
+			, "TEXT39", "TEXT40", "TEXT41", "TEXT42", "TEXT43", "TEXT44", "TEXT45", "TEXT46", "TEXT47", "TEXT48", "TEXT49", "TEXT50", "TEXT51", "TEXT52", "TEXT53", "TEXT54", "TEXT55", "TEXT56", "TEXT57"
 		};
 		public System.Collections.Generic.List<MLocalRow> Rows = new System.Collections.Generic.List<MLocalRow>();
 
@@ -119,11 +119,11 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT19", "축하합니다!", "Congratulation!"));
 			Rows.Add( new MLocalRow("TEXT20", "박물관이 더욱 다채로워졌어요!", "Your museum has become more valuable!"));
 			Rows.Add( new MLocalRow("TEXT21", "다시하기", "Retry"));
-			Rows.Add( new MLocalRow("TEXT22", "나가기", "Finish"));
+			Rows.Add( new MLocalRow("TEXT22", "게임 끝내기", "Finish"));
 			Rows.Add( new MLocalRow("TEXT23", "별점주기", "Rate me"));
 			Rows.Add( new MLocalRow("TEXT24", "『Midnight in Museum』을 즐기고 계신가요?", "Are you enjoying 『Midnight in Museum』?"));
 			Rows.Add( new MLocalRow("TEXT25", "움직일 수 있는 블록이 없어요!", "No more exhibits to move."));
-			Rows.Add( new MLocalRow("TEXT26", "아이템을 사용하여 게임을 계속하거나\n슬라이드 하여 새로운 게임을 시작하세요", "Use items to make higher exhibits or\nFinish this game."));
+			Rows.Add( new MLocalRow("TEXT26", "아이템을 사용하여 게임을 계속하거나\n새로운 게임을 시작하세요.", "Use items to make higher exhibits or\nFinish this game."));
 			Rows.Add( new MLocalRow("TEXT27", "Game Over!", "Game Over!"));
 			Rows.Add( new MLocalRow("TEXT28", "당신의 박물관은 더 발전할 수 있습니다!", "The museum is not yet finished!"));
 			Rows.Add( new MLocalRow("TEXT29", "9단계 미만의 전시품을 1단계 업그레이드 해줍니다.", "UPGRADER will upgrade selected exhibit under Lv9."));
@@ -153,8 +153,10 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT51", "튜토리얼", "How to play"));
 			Rows.Add( new MLocalRow("TEXT52", "최소 Lv3 전시품이 하나 이상 존재해야 합니다", "At least one Lv3 exhibit must be present."));
 			Rows.Add( new MLocalRow("TEXT53", "개인정보 보호정책", "Privacy Policy"));
-			Rows.Add( new MLocalRow("TEXT54", "이미 구입했습니다.", "You have already made this purchase."));
-			Rows.Add( new MLocalRow("TEXT55", "상품을 구입 하였습니다.", "Purchase has been made."));
+			Rows.Add( new MLocalRow("TEXT54", "이미 구입했습니다.", "Purchase has been made."));
+			Rows.Add( new MLocalRow("TEXT55", "상품을 구입 하였습니다.", "Purchae has been completed."));
+			Rows.Add( new MLocalRow("TEXT56", "블록 정렬하기", "Align exhibits"));
+			Rows.Add( new MLocalRow("TEXT57", "게임 계속하기", "Conniue game"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

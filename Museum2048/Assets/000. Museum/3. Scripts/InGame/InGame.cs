@@ -44,6 +44,7 @@ public class InGame : MonoBehaviour {
     public List<TileCtrl> SpawnSpotTiles = new List<TileCtrl>(); // 스폰 스팟선정요
     public TileCtrl[,] tiles = new TileCtrl[4, 4]; // 실제 2차원 배열 (좌측 하단이 0,0 우측 상단이 3,3)
 
+    public AskingEndGame askingEndGame;
     public GameObject topUIs, bottomUIs; // 아래 위 UI 그룹
     public GameOverCtrl gameOverControl; // 게임 오버 컨트롤러 
     public bool isAskedNoMove = false; // 움직일 수 있는 블록 없음 경고!
@@ -121,6 +122,9 @@ public class InGame : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.R)) {
             AppearRedMoon();
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+            AlignBlocks();
     }
 
     #endregion
@@ -918,13 +922,19 @@ public class InGame : MonoBehaviour {
 
         isPlaying = false;
         isAskedNoMove = true;
-        PageManager.main.OpenMessage(Message.NoMoreMove, OnCloseAsking);
+        // PageManager.main.OpenMessage(Message.NoMoreMove, OnCloseAsking);
+
+        // 게임오버 물어보기
+        //AskingEndGame.main.OpenAsking();
+        askingEndGame.OpenAsking();
     }
 
-    void OnCloseAsking() {
+    public void OnCloseAsking() {
         StartCoroutine(DelayedAsked());
         
     }
+
+    
 
     IEnumerator DelayedAsked() {
         yield return new WaitForSeconds(0.5f);
@@ -1341,6 +1351,47 @@ public class InGame : MonoBehaviour {
     #endregion
 
     #region Item 기능 
+
+    /// <summary>
+    /// 블록 정렬기능.
+    /// </summary>
+    public void AlignBlocks() {
+        List<int> ids = new List<int>();
+        for(int i=0; i<ListTiles.Count;i++) {
+            if (ListTiles[i].chip == null)
+                continue;
+
+            ids.Add(ListTiles[i].chip.id); // id 입력 
+        }
+
+        ids.Sort(); // 정렬.
+        PoolManager.Pools[ConstBox.poolIngame].DespawnAll(); // 칩 모두 해제 
+        for (int h = 0; h < HEIGHT; h++) {
+            for (int w = 0; w < WIDTH; w++) {
+                tiles[h, w].Init(); // 초기화 
+            }
+        } 
+
+
+        int sortIndex = ids.Count-1;
+        Transform tr;
+
+        // 정렬한 것들 배열 
+        for (int h = 0; h < HEIGHT; h++) {
+            for (int w = 0; w < WIDTH; w++) {
+
+                if (sortIndex < 0)
+                    return;
+
+                tr = PoolManager.Pools[ConstBox.poolIngame].Spawn(GetSpawnChipPrefabName(ids[sortIndex]));
+                tiles[h, w].chip = tr.GetComponent<Chip>();
+                tiles[h, w].ChipInit();
+
+                sortIndex--;
+            }
+        }
+    }
+
 
     void CallDelayedRecoverState() {
         StartCoroutine(DelayedInputItemCheckDisable());

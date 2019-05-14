@@ -95,6 +95,8 @@ public class PageMessage : UILayer {
 
                 lblMessage.text = string.Format(PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT48), arg1, arg2);
                 SetSingleButton();
+
+                Debug.Log("End of item get Message");
                 break;
 
             case Message.NeedLv3:
