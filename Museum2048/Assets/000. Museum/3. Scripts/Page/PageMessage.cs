@@ -16,7 +16,8 @@ public enum Message {
     ItemGet,
     NeedLv3,
     PuchaseComplete,
-    AlreadyHaveNoAds
+    AlreadyHaveNoAds,
+    NotInitBilling
 
 }
 
@@ -119,6 +120,11 @@ public class PageMessage : UILayer {
 
             case Message.AlreadyHaveNoAds:
                 lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT54);
+                SetSingleButton();
+                break;
+
+            case Message.NotInitBilling:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT58);
                 SetSingleButton();
                 break;
         }

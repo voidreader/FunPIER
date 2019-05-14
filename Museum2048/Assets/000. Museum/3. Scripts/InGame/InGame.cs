@@ -184,7 +184,8 @@ public class InGame : MonoBehaviour {
         SetProgressUI(); // 진척도 
         SetHighScore(); // 하이스코어
         InitTiles(); // 타일 초기화
-        
+
+        InputManager.inputLock = false;
 
         if (resume) {
             SetSnapShotTile();

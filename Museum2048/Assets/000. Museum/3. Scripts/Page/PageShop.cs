@@ -23,6 +23,12 @@ public class PageShop : UILayer {
     /// 가격정보 세팅 
     /// </summary>
     void InitStorePrices() {
+
+        if (!IAPControl.IsInitialized) {
+            Debug.Log("IAPControl is not init yet.");
+        }
+
+
         _lblBack1.text = GetLocalizedPrice("back_m2048");
         _lblBack2.text = GetLocalizedPrice("back2_m2048");
 
@@ -40,7 +46,10 @@ public class PageShop : UILayer {
     /// <summary>
     /// 
     /// </summary>
-    public static string GetLocalizedPrice(string p) {
+    public static string GetLocalizedPrice(string p) { 
+
+        
+
         foreach (Product product in IAPControl.main.Controller.products.all) {
 
             if(product.definition.id == p) {

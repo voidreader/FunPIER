@@ -80,6 +80,12 @@ public class PageManager : MonoBehaviour
     }
 
     public void OpenShop() {
+
+        if(!IAPControl.IsInitialized) {
+            OpenMessage(Message.NotInitBilling, delegate { });
+            return;
+        }
+
         OpenPage(UILayerEnum.Store);
     }
 

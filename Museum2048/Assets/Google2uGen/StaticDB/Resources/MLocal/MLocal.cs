@@ -76,12 +76,14 @@ namespace Google2u
 		public enum rowIds {
 			TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT7, TEXT8, TEXT9, TEXT10, TEXT11, TEXT12, TEXT13, TEXT14, TEXT15, TEXT16, TEXT17, TEXT18
 			, TEXT19, TEXT20, TEXT21, TEXT22, TEXT23, TEXT24, TEXT25, TEXT26, TEXT27, TEXT28, TEXT29, TEXT30, TEXT31, TEXT32, TEXT33, TEXT34, TEXT35, TEXT36, TEXT37, TEXT38
-			, TEXT39, TEXT40, TEXT41, TEXT42, TEXT43, TEXT44, TEXT45, TEXT46, TEXT47, TEXT48, TEXT49, TEXT50, TEXT51, TEXT52, TEXT53, TEXT54, TEXT55, TEXT56, TEXT57
+			, TEXT39, TEXT40, TEXT41, TEXT42, TEXT43, TEXT44, TEXT45, TEXT46, TEXT47, TEXT48, TEXT49, TEXT50, TEXT51, TEXT52, TEXT53, TEXT54, TEXT55, TEXT56, TEXT57, TEXT58
+			
 		};
 		public string [] rowNames = {
 			"TEXT1", "TEXT2", "TEXT3", "TEXT4", "TEXT5", "TEXT6", "TEXT7", "TEXT8", "TEXT9", "TEXT10", "TEXT11", "TEXT12", "TEXT13", "TEXT14", "TEXT15", "TEXT16", "TEXT17", "TEXT18"
 			, "TEXT19", "TEXT20", "TEXT21", "TEXT22", "TEXT23", "TEXT24", "TEXT25", "TEXT26", "TEXT27", "TEXT28", "TEXT29", "TEXT30", "TEXT31", "TEXT32", "TEXT33", "TEXT34", "TEXT35", "TEXT36", "TEXT37", "TEXT38"
-			, "TEXT39", "TEXT40", "TEXT41", "TEXT42", "TEXT43", "TEXT44", "TEXT45", "TEXT46", "TEXT47", "TEXT48", "TEXT49", "TEXT50", "TEXT51", "TEXT52", "TEXT53", "TEXT54", "TEXT55", "TEXT56", "TEXT57"
+			, "TEXT39", "TEXT40", "TEXT41", "TEXT42", "TEXT43", "TEXT44", "TEXT45", "TEXT46", "TEXT47", "TEXT48", "TEXT49", "TEXT50", "TEXT51", "TEXT52", "TEXT53", "TEXT54", "TEXT55", "TEXT56", "TEXT57", "TEXT58"
+			
 		};
 		public System.Collections.Generic.List<MLocalRow> Rows = new System.Collections.Generic.List<MLocalRow>();
 
@@ -157,6 +159,7 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT55", "상품을 구입 하였습니다.", "Purchae has been completed."));
 			Rows.Add( new MLocalRow("TEXT56", "블록 정렬하기", "Align exhibits"));
 			Rows.Add( new MLocalRow("TEXT57", "게임 계속하기", "Conniue game"));
+			Rows.Add( new MLocalRow("TEXT58", "결제 서비스를 초기화하고 있습니다.", "Initializing payment service."));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

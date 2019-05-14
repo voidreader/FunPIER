@@ -12,19 +12,19 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     public static IAPControl main = null;
     public static bool IsInitialized = false;
 
-    IStoreController controller;
-    IExtensionProvider extensions;
+    IStoreController controller = null;
+    IExtensionProvider extensions = null;
 
     public IStoreController Controller { get => controller; set => controller = value; }
 
     private void Awake() {
         main = this;
+        InitBilling();
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        InitBilling();
+    void Start() {
+        
     }
 
 
@@ -83,7 +83,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     }
 
     public void OnInitializeFailed(InitializationFailureReason error) {
-        Debug.Log("Unity IAP OnInitializeFailed :: " + error.ToString());
+        Debug.Log(">>> Unity IAP OnInitializeFailed :: " + error.ToString());
     }
 
     /// <summary>
@@ -128,7 +128,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     }
 
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
-        Debug.Log("Unity IAP OnInitialized");
+        Debug.Log(">>> Unity IAP OnInitialized <<< ");
         this.Controller = controller;
         this.extensions = extensions;
 

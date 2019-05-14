@@ -112,7 +112,7 @@ public class TileCtrl : MonoBehaviour {
         InGame.main.mergeShotCheck = false;
         InGame.main.MergeCheck(id);
 
-
+        InputManager.main.LockUIClose(); // 입력 막기.
 
     }
 
@@ -130,6 +130,8 @@ public class TileCtrl : MonoBehaviour {
         chip = PoolManager.Pools[ConstBox.poolIngame].Spawn(InGame.GetSpawnChipPrefabName(id)).GetComponent<Chip>();
         ChipInit();
         InGame.main.MergeCheck(id);
+
+        InputManager.main.LockUIClose(); // 입력 막기.
     }
 
     public Vector3 GetChipPosition() {
