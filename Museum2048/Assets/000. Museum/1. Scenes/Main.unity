@@ -462,6 +462,11 @@ PrefabInstance:
       propertyPath: mText
       value: "\uB85C\uBE44"
       objectReference: {fileID: 0}
+    - target: {fileID: 3708458265568756332, guid: ad58d160167febf448bd5357d8cc799d,
+        type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad58d160167febf448bd5357d8cc799d, type: 3}
 --- !u!4 &32419268 stripped
@@ -1503,7 +1508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
   trigger: 0
   volume: 1
   pitch: 1
@@ -1520,8 +1525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 99338236}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -4429,6 +4434,8 @@ GameObject:
   - component: {fileID: 278979701}
   - component: {fileID: 278979703}
   - component: {fileID: 278979702}
+  - component: {fileID: 278979705}
+  - component: {fileID: 278979704}
   m_Layer: 5
   m_Name: Rank
   m_TagString: Untagged
@@ -4551,6 +4558,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 84, y: 84, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &278979704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278979699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 0}
+  hover: {x: 1, y: 1, z: 1}
+  pressed: {x: 1.05, y: 1.05, z: 1.05}
+  duration: 0.2
+--- !u!114 &278979705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278979699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1 &279754997
 GameObject:
   m_ObjectHideFlags: 0
@@ -5431,6 +5470,7 @@ GameObject:
   - component: {fileID: 333486793}
   - component: {fileID: 333486792}
   - component: {fileID: 333486791}
+  - component: {fileID: 333486795}
   m_Layer: 5
   m_Name: btnAd
   m_TagString: Untagged
@@ -5482,8 +5522,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 333486789}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -5568,6 +5608,22 @@ MonoBehaviour:
   mSpriteName: btn_empty
   mFixedAspect: 0
   mFillCenter: 1
+--- !u!114 &333486795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333486789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 0}
+  hover: {x: 1, y: 1, z: 1}
+  pressed: {x: 1.05, y: 1.05, z: 1.05}
+  duration: 0.2
 --- !u!1001 &334593951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7245,6 +7301,11 @@ PrefabInstance:
       propertyPath: mText
       value: "\uCDE8\uC18C"
       objectReference: {fileID: 0}
+    - target: {fileID: 3708458265568756332, guid: ad58d160167febf448bd5357d8cc799d,
+        type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4eeebb93525210344876b8b422932f80, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad58d160167febf448bd5357d8cc799d, type: 3}
 --- !u!4 &456747570 stripped
@@ -7695,6 +7756,7 @@ GameObject:
   - component: {fileID: 536637325}
   - component: {fileID: 536637327}
   - component: {fileID: 536637326}
+  - component: {fileID: 536637328}
   m_Layer: 5
   m_Name: Progress
   m_TagString: Untagged
@@ -7763,6 +7825,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 329.99997, y: 73.00001, z: 0}
   m_Center: {x: 164.99998, y: 26.500013, z: 0}
+--- !u!114 &536637328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536637324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1 &544021334
 GameObject:
   m_ObjectHideFlags: 0
@@ -8947,7 +9025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
   trigger: 0
   volume: 1
   pitch: 1
@@ -8980,8 +9058,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 599798126}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -9979,7 +10057,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
   trigger: 0
   volume: 1
   pitch: 1
@@ -9996,8 +10074,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 642499473}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -10214,6 +10292,7 @@ GameObject:
   - component: {fileID: 664803289}
   - component: {fileID: 664803288}
   - component: {fileID: 664803292}
+  - component: {fileID: 664803293}
   m_Layer: 5
   m_Name: btnContinue
   m_TagString: Untagged
@@ -10265,8 +10344,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 664803286}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -10363,6 +10442,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adea13a618f7c41439caa723c0c6526f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &664803293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664803286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 0}
+  hover: {x: 1, y: 1, z: 1}
+  pressed: {x: 1.05, y: 1.05, z: 1.05}
+  duration: 0.2
 --- !u!1 &671907414
 GameObject:
   m_ObjectHideFlags: 0
@@ -12090,6 +12185,7 @@ GameObject:
   - component: {fileID: 773137657}
   - component: {fileID: 773137656}
   - component: {fileID: 773137655}
+  - component: {fileID: 773137658}
   m_Layer: 5
   m_Name: btnHome
   m_TagString: Untagged
@@ -12226,6 +12322,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 60, y: 54, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &773137658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773137652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1001 &773615270
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13772,6 +13884,8 @@ GameObject:
   - component: {fileID: 894545100}
   - component: {fileID: 894545099}
   - component: {fileID: 894545098}
+  - component: {fileID: 894545103}
+  - component: {fileID: 894545102}
   m_Layer: 5
   m_Name: btnRight
   m_TagString: Untagged
@@ -13908,6 +14022,34 @@ MonoBehaviour:
   mSpriteName: 'right-arrow '
   mFixedAspect: 0
   mFillCenter: 1
+--- !u!114 &894545102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894545096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adea13a618f7c41439caa723c0c6526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &894545103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894545096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1001 &917159822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14686,7 +14828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
   trigger: 0
   volume: 1
   pitch: 1
@@ -14703,8 +14845,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 985299619}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -15244,7 +15386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
   trigger: 0
   volume: 1
   pitch: 1
@@ -19030,6 +19172,11 @@ PrefabInstance:
       propertyPath: mText
       value: "\uB2E4\uC2DC\uD558\uAE30"
       objectReference: {fileID: 0}
+    - target: {fileID: 3708458265568756332, guid: ad58d160167febf448bd5357d8cc799d,
+        type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad58d160167febf448bd5357d8cc799d, type: 3}
 --- !u!4 &1245184726 stripped
@@ -20314,6 +20461,7 @@ GameObject:
   - component: {fileID: 1319371628}
   - component: {fileID: 1319371627}
   - component: {fileID: 1319371630}
+  - component: {fileID: 1319371631}
   m_Layer: 5
   m_Name: btnPlay
   m_TagString: Untagged
@@ -20453,6 +20601,22 @@ MonoBehaviour:
   hover: {x: 1, y: 1, z: 1}
   pressed: {x: 1.05, y: 1.05, z: 1.05}
   duration: 0.2
+--- !u!114 &1319371631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319371625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1 &1322777263
 GameObject:
   m_ObjectHideFlags: 0
@@ -21331,6 +21495,7 @@ GameObject:
   - component: {fileID: 1370282257}
   - component: {fileID: 1370282256}
   - component: {fileID: 1370282255}
+  - component: {fileID: 1370282259}
   m_Layer: 5
   m_Name: btnFinish
   m_TagString: Untagged
@@ -21382,8 +21547,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 1370282253}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -21468,6 +21633,22 @@ MonoBehaviour:
   mSpriteName: cancel
   mFixedAspect: 0
   mFillCenter: 1
+--- !u!114 &1370282259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1370282253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 0}
+  hover: {x: 1, y: 1, z: 1}
+  pressed: {x: 1.05, y: 1.05, z: 1.05}
+  duration: 0.2
 --- !u!1 &1379593822
 GameObject:
   m_ObjectHideFlags: 0
@@ -22275,6 +22456,8 @@ GameObject:
   - component: {fileID: 1430656209}
   - component: {fileID: 1430656208}
   - component: {fileID: 1430656207}
+  - component: {fileID: 1430656212}
+  - component: {fileID: 1430656211}
   m_Layer: 5
   m_Name: btnLeft
   m_TagString: Untagged
@@ -22411,6 +22594,34 @@ MonoBehaviour:
   mSpriteName: left-arrow
   mFixedAspect: 0
   mFillCenter: 1
+--- !u!114 &1430656211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430656205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adea13a618f7c41439caa723c0c6526f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1430656212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1430656205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1 &1436580759
 GameObject:
   m_ObjectHideFlags: 0
@@ -23536,7 +23747,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500105019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -1, z: -0.1}
+  m_LocalPosition: {x: 0.2, y: -1, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8642655957283892476}
@@ -23913,8 +24124,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tweenTarget: {fileID: 1538940794}
-  hover: {r: 0.88235295, g: 0.78431374, b: 0.5882353, a: 1}
-  pressed: {r: 0.7176471, g: 0.6392157, b: 0.48235294, a: 1}
+  hover: {r: 1, g: 1, b: 1, a: 1}
+  pressed: {r: 1, g: 1, b: 1, a: 1}
   disabledColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   duration: 0.2
   dragHighlight: 0
@@ -23958,7 +24169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
   trigger: 0
   volume: 1
   pitch: 1
@@ -24088,6 +24299,8 @@ GameObject:
   - component: {fileID: 1573755556}
   - component: {fileID: 1573755558}
   - component: {fileID: 1573755557}
+  - component: {fileID: 1573755560}
+  - component: {fileID: 1573755559}
   m_Layer: 5
   m_Name: btnOption
   m_TagString: Untagged
@@ -24208,6 +24421,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 64, y: 64, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1573755559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573755554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
+--- !u!114 &1573755560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573755554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 0}
+  hover: {x: 1, y: 1, z: 1}
+  pressed: {x: 1.05, y: 1.05, z: 1.05}
+  duration: 0.2
 --- !u!1 &1574444448
 GameObject:
   m_ObjectHideFlags: 0
@@ -25347,6 +25592,7 @@ GameObject:
   - component: {fileID: 1637542686}
   - component: {fileID: 1637542688}
   - component: {fileID: 1637542687}
+  - component: {fileID: 1637542689}
   m_Layer: 5
   m_Name: Progress
   m_TagString: Untagged
@@ -25415,6 +25661,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 330, y: 72.99999, z: 0}
   m_Center: {x: 165, y: 26.499996, z: 0}
+--- !u!114 &1637542689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637542685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1 &1647922019
 GameObject:
   m_ObjectHideFlags: 0
@@ -28416,7 +28678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
   trigger: 0
   volume: 1
   pitch: 1
@@ -30141,6 +30403,8 @@ GameObject:
   - component: {fileID: 1907861677}
   - component: {fileID: 1907861679}
   - component: {fileID: 1907861678}
+  - component: {fileID: 1907861681}
+  - component: {fileID: 1907861680}
   m_Layer: 5
   m_Name: btnShop
   m_TagString: Untagged
@@ -30261,6 +30525,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 98, y: 84, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1907861680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907861675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
+--- !u!114 &1907861681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907861675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c041f61e4a9fbf4e830210f5d933ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tweenTarget: {fileID: 0}
+  hover: {x: 1, y: 1, z: 1}
+  pressed: {x: 1.05, y: 1.05, z: 1.05}
+  duration: 0.2
 --- !u!1 &1924480877
 GameObject:
   m_ObjectHideFlags: 0
@@ -32014,6 +32310,7 @@ GameObject:
   - component: {fileID: 2031177254}
   - component: {fileID: 2031177256}
   - component: {fileID: 2031177255}
+  - component: {fileID: 2031177257}
   m_Layer: 5
   m_Name: NoAds
   m_TagString: Untagged
@@ -32136,6 +32433,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 208, y: 84, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2031177257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031177252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d44bc69c2ca5f943b845318866dc1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
+  trigger: 0
+  volume: 1
+  pitch: 1
 --- !u!1001 &2031941111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35282,6 +35595,11 @@ PrefabInstance:
       propertyPath: onClick.Array.data[0].mMethodName
       value: OnClickRate
       objectReference: {fileID: 0}
+    - target: {fileID: 3708458265568756332, guid: ad58d160167febf448bd5357d8cc799d,
+        type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b137e64a51b20a34589e5f7215796fee, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad58d160167febf448bd5357d8cc799d, type: 3}
 --- !u!1001 &6154114201787972781

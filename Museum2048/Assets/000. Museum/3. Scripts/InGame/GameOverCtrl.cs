@@ -212,7 +212,8 @@ public class GameOverCtrl : MonoBehaviour {
     /// 별점주기
     /// </summary>
     public void OnClickRate() {
-
+        AdsControl.main.IsCoolingPauseAds = true;
+        Application.OpenURL("http://onelink.to/azvmtn");
     }
 
     /// <summary>

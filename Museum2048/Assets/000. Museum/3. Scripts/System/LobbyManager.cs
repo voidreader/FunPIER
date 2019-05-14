@@ -209,7 +209,7 @@ public class LobbyManager : MonoBehaviour {
 
 
     IEnumerator DelayedInit() {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         AdsControl.main.RequestBanner();
         AdsControl.main.RequestInterstitial();
         AdsControl.main.RequestRewardAd();

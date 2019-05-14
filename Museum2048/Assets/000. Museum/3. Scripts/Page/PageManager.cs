@@ -89,6 +89,7 @@ public class PageManager : MonoBehaviour
 
     public void OpenTutorial() {
         OpenPage(UILayerEnum.Tutorial);
+        ES2.Save<bool>(true, ConstBox.KeySavedTutorialOpen);
     }
 
     public void OpenLang() {

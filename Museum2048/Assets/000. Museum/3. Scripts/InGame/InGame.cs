@@ -1410,13 +1410,22 @@ public class InGame : MonoBehaviour {
         if (_lblBottomMessage.gameObject.activeSelf)
             return;
 
-        
+
+        /*
         if (PierSystem.main.itemCleaner < 1 && PierSystem.main.AdminPlay) {
             PierSystem.main.itemCleaner += 5; // 임시로 5그냥 증가 처리 
             PierSystem.main.SaveProfile();
             ItemCounter.RefreshItems();
             return;
         }
+        */
+
+        if(PierSystem.main.itemCleaner <= 0) {
+            PageManager.main.OpenShop();
+            return;
+        }
+
+
 
         bool hasLv3Higher = false;
         
@@ -1478,14 +1487,10 @@ public class InGame : MonoBehaviour {
             return;
 
 
-        /*
-        if (PierSystem.main.itemBack < 1) {
-            PierSystem.main.itemBack += 5; // 임시로 5그냥 증가 처리 
-            PierSystem.main.SaveProfile();
-            ItemCounter.RefreshItems();
+        if (PierSystem.main.itemBack <= 0) {
+            PageManager.main.OpenShop();
             return;
         }
-        */
 
         if (NodeTileHistory == null ||  NodeTileHistory["history"].Count <= 1)
             return;
@@ -1513,10 +1518,17 @@ public class InGame : MonoBehaviour {
     /// 업그레이드 아이템 클릭 
     /// </summary>
     public void OnClickUpgrade() {
+        /*
         if(PierSystem.main.itemUpgrade < 1) {
             PierSystem.main.itemUpgrade += 5; // 임시로 5그냥 증가 처리 
             PierSystem.main.SaveProfile();
             ItemCounter.RefreshItems();
+            return;
+        }
+        */
+
+        if (PierSystem.main.itemUpgrade <= 0) {
+            PageManager.main.OpenShop();
             return;
         }
 
