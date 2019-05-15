@@ -157,6 +157,12 @@ public class InGame : MonoBehaviour {
     }
 
     void InitCamera() {
+
+        /*
+        if (OriginCameraPos == Vector3.zero)
+            OriginCameraPos = _mainCamera.transform.position;
+        */
+
         _mainCamera.transform.position = OriginCameraPos;
         _mainCamera.orthographicSize = 13;
     }
@@ -1610,8 +1616,11 @@ public class InGame : MonoBehaviour {
     float Zoom = 2.5f;
     float ZoomSize = 0.01f;
 
-    [SerializeField] Vector3 OriginCameraPos = new Vector3(10.9f, 8.87f, 10.25f);
-    
+    // [SerializeField] Vector3 OriginCameraPos = new Vector3(10.9f, 8.87f, 10.25f);
+    // [SerializeField] Vector3 OriginCameraPos = new Vector3(12.038f, 10.156f, 11.3f);
+    [SerializeField] Vector3 OriginCameraPos = Vector3.zero;
+
+
 
 
 
