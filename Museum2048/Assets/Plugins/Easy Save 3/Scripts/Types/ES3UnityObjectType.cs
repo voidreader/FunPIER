@@ -24,8 +24,11 @@ namespace ES3Types
 
 		public virtual void WriteObject(object obj, ES3Writer writer, ES3.ReferenceMode mode)
 		{
+			if(WriteUsingDerivedType(obj, writer))
+				return;
+
 			var instance = obj as UnityEngine.Object;
-			if(instance == null)
+			if(obj != null && instance == null)
 				throw new ArgumentException("Only types of UnityEngine.Object can be written with this method, but argument given is type of "+obj.GetType());
 
 			// If this object is in the instance manager, store it's instance ID with it.
@@ -36,7 +39,6 @@ namespace ES3Types
 				if(mode == ES3.ReferenceMode.ByRef)
 					return;
 			}
-			
 			WriteUnityObject(instance, writer);
 		}
 

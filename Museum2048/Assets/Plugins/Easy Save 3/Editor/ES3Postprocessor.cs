@@ -16,198 +16,205 @@ public class ES3Postprocessor : UnityEditor.AssetModificationProcessor
 	public static bool didGenerateReferences = false;
 	public static ES3DefaultSettings settings;
 
+	public static Queue<UnityEngine.Object> changedSinceLastSave = new Queue<UnityEngine.Object>();
+
 	// This constructor is also called once when playmode is activated.
 	static ES3Postprocessor()
 	{
 		ES3Editor.ES3Window.OpenEditorWindowOnStart();
-		#if UNITY_2017_3_OR_NEWER
+
+		#if UNITY_2017_2_OR_NEWER
 		EditorApplication.playModeStateChanged += PlaymodeStateChanged;
 		#else
 		EditorApplication.playmodeStateChanged += PlaymodeStateChanged;
 		#endif
+		Undo.postprocessModifications += OnPostProcessModifications;
+		EditorApplication.update += Update;
+		#if UNITY_2018_1_OR_NEWER
+		EditorApplication.hierarchyChanged += HierarchyChanged;
+		#else
+		EditorApplication.hierarchyWindowChanged += HierarchyChanged;
+		#endif
 	}
 
-	#if UNITY_2017_3_OR_NEWER
+	static void Update()
+	{
+		var timeStarted = Time.realtimeSinceStartup;
+		
+		if(_defaultSettings == null)
+			_defaultSettings = ES3Settings.GetDefaultSettings();
+
+		if(_defaultSettings.addMgrToSceneAutomatically && _refMgr == null)
+			AddManagerToScene();
+			
+		/* Ensure that the following code is always last in the Update() routine */
+		
+		if(_defaultSettings.autoUpdateReferences && _refMgr != null)
+		{
+			while(changedSinceLastSave.Count > 0 && !EditorApplication.isPlayingOrWillChangePlaymode)
+			{
+				if(Time.realtimeSinceStartup - timeStarted > 0.02f)
+					return;
+				_refMgr.AddDependencies(new UnityEngine.Object[]{changedSinceLastSave.Dequeue()});
+			}
+		}
+	}
+
+	static void HierarchyChanged()
+	{
+		// If the hierarchy changed, an item might have been added, so it will need updating.
+		if(Selection.activeGameObject != null)
+			changedSinceLastSave.Enqueue(Selection.activeGameObject);
+	}
+
+	#if UNITY_2017_2_OR_NEWER
 	static void PlaymodeStateChanged(PlayModeStateChange state)
 	#else
 	static void PlaymodeStateChanged()
 	#endif
 	{
 		// This is called when we press the Play button, but before serialisation takes place.
-		/*if(EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
+		if(EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
 		{
-			RefreshReferences();
-		}*/
+			if(_refMgr != null)
+				_refMgr.RemoveNullValues();
+		}
 	}
 
 	public static string[] OnWillSaveAssets(string[] paths)
 	{
-		RefreshReferences();
 		return paths;
 	}
 
-	public static void RefreshReferences()
+	private static UndoPropertyModification[] OnPostProcessModifications(UndoPropertyModification[] propertyModifications)
 	{
-		if(_defaultSettings == null)
-			_defaultSettings = ES3EditorUtility.GetDefaultSettings();
-
-		if(_defaultSettings.addMgrToSceneAutomatically)
-		if(_refMgr == null)
-			AddManagerToScene();
-
-		if(_defaultSettings.autoUpdateReferences && _refMgr != null)
+		// Ignore changes made during play mode.
+		if(Application.isPlaying)
+			return propertyModifications;
+		
+		foreach (UndoPropertyModification m in propertyModifications)
 		{
-			_refMgr.GenerateReferences();
-			_refMgr.GeneratePrefabReferences();
+			var obj = m.currentValue.target;
+	
+			// If this is a scene object, and it's not a reference manager, add it.
+			if(!AssetDatabase.Contains(obj))
+				changedSinceLastSave.Enqueue(m.currentValue.target);
 		}
+		return propertyModifications;
 	}
 
 	public static GameObject AddManagerToScene()
 	{
-		var go = GameObject.Find("Easy Save 3 Manager");
+		if(_refMgr != null)
+			return _refMgr.gameObject;
+		
+		var mgr = GameObject.Find("Easy Save 3 Manager");
 
-		if(go == null)
+		if(mgr == null)
 		{
-			go = new GameObject("Easy Save 3 Manager");
-			var inspectorInfo = go.AddComponent<ES3InspectorInfo>();
+			mgr = new GameObject("Easy Save 3 Manager");
+			var inspectorInfo = mgr.AddComponent<ES3InspectorInfo>();
 			inspectorInfo.message = "The Easy Save 3 Manager is required in any scenes which use Easy Save, and is automatically added to your scene when you enter Play mode.\n\nTo stop this from automatically being added to your scene, go to 'Window > Easy Save 3 > Settings' and deselect the 'Auto Add Manager to Scene' checkbox.";
 
+			_refMgr = mgr.AddComponent<ES3ReferenceMgr>();
+			_autoSaveMgr = mgr.AddComponent<ES3AutoSaveMgr>();
 
+			foreach(var obj in EditorSceneManager.GetActiveScene().GetRootGameObjects())
+				if(obj != mgr && !changedSinceLastSave.Contains(obj))
+					changedSinceLastSave.Enqueue(obj);
+					
+			_refMgr.GeneratePrefabReferences();
 
-			_refMgr = go.AddComponent<ES3ReferenceMgr>();
-			_autoSaveMgr = go.AddComponent<ES3AutoSaveMgr>();
-			Undo.RegisterCreatedObjectUndo(go, "Enabled Easy Save for Scene");
+			Undo.RegisterCreatedObjectUndo(mgr, "Enabled Easy Save for Scene");
+
 		}
 		else
 		{
-			_refMgr = go.GetComponent<ES3ReferenceMgr>();
+			_refMgr = mgr.GetComponent<ES3ReferenceMgr>();
 			if(_refMgr == null)
 			{
-				_refMgr = go.AddComponent<ES3ReferenceMgr>();
+				_refMgr = mgr.AddComponent<ES3ReferenceMgr>();
 				Undo.RegisterCreatedObjectUndo(_refMgr, "Enabled Easy Save for Scene");
 			}
 
-			_autoSaveMgr = go.GetComponent<ES3AutoSaveMgr>();
+			_autoSaveMgr = mgr.GetComponent<ES3AutoSaveMgr>();
 			if(_autoSaveMgr == null)
 			{
-				_autoSaveMgr = go.AddComponent<ES3AutoSaveMgr>();
+				_autoSaveMgr = mgr.AddComponent<ES3AutoSaveMgr>();
 				Undo.RegisterCreatedObjectUndo(_autoSaveMgr, "Enabled Easy Save for Scene");
 			}
 		}
-		return go;
+		return mgr;
 	}
-
-	/*public static void GenerateReferences()
-	{
-		GenerateReferences(EditorSceneManager.GetActiveScene());
-	}
-
-	public static void GenerateReferences(Scene scene)
-	{
-		if(!scene.isLoaded || EditorApplication.isPlaying)
-			return;
-
-		Debug.Log("Generated references");
-
-		var refMgr = GetReferenceMgr();
-		if(refMgr == null)
-			return;
-
-		bool undoRecorded = false;
-
-		didGenerateReferences = true;
-
-		// Remove NULL values from Dictionary.
-		if(refMgr.idRef.RemoveNullValues() > 0)
-		{
-			Undo.RecordObject(refMgr, "Update Easy Save 3 Reference List");
-			undoRecorded = true;
-		}
-
-		var sceneObjects = scene.GetRootGameObjects();
-
-		var dependencies = EditorUtility.CollectDependencies(sceneObjects);
-
-		for(int i=0; i<dependencies.Length; i++)
-		{
-			var obj = (UnityEngine.Object)dependencies[i];
-
-			// If we're adding a new item to the type list, make sure we've recorded an undo for the object.
-			if(refMgr.Get(obj) == -1)
-			{
-				if(!undoRecorded)
-				{
-					Undo.RecordObject(refMgr, "Update Easy Save 3 Reference List");
-					undoRecorded = true;
-				}
-				refMgr.Add(obj);
-			}
-		}
-	}
-
-	public static void GeneratePrefabReferences()
-	{
-		var refMgr = GetReferenceMgr();
-		if(refMgr == null)
-			return;
-
-		bool undoRecorded = false;
-
-		// Remove null values from prefab array.
-		if(refMgr != null)
-		{
-			if(refMgr.prefabs.RemoveAll(item => item == null) > 0)
-			{
-				Undo.RecordObject(refMgr, "Update Easy Save 3 Reference List");
-				undoRecorded = true;
-			}
-		}
-
-		var es3Prefabs = Resources.FindObjectsOfTypeAll<ES3Prefab>();
-
-		if(es3Prefabs.Length == 0)
-			return;
-
-		foreach(var es3Prefab in es3Prefabs)
-		{
-			Debug.Log(es3Prefab);
-			if(PrefabUtility.GetPrefabType(es3Prefab.gameObject) != PrefabType.Prefab)
-				continue;
-
-			if(refMgr != null)
-			{
-				if(refMgr.GetPrefab(es3Prefab) != -1)
-				{
-					refMgr.AddPrefab(es3Prefab);
-					if(!undoRecorded)
-					{
-						Undo.RecordObject(refMgr, "Update Easy Save 3 Reference List");
-						undoRecorded = true;
-					}
-				}
-			}
-
-			bool prefabUndoRecorded = false;
-
-			if(es3Prefab.localRefs.RemoveNullKeys() > 0)
-			{
-				Undo.RecordObject(es3Prefab, "Update Easy Save 3 Prefab");
-				prefabUndoRecorded = true;
-			}
-
-			// Get GameObject and it's children and add them to the reference list.
-			foreach(var obj in EditorUtility.CollectDependencies(new UnityEngine.Object[]{es3Prefab}))
-			{
-				if(es3Prefab.Get(obj) != -1)
-				{
-					es3Prefab.Add(obj);
-					if(!prefabUndoRecorded)
-					{
-						Undo.RecordObject(es3Prefab, "Update Easy Save 3 Prefab");
-						prefabUndoRecorded = true;
-					}
-				}
-			}
-		}
-	}*/
 }
+
+// Used to initialise the reference manager for the first time.
+// Displays a loading bar.
+/*public class ES3ReferenceMgrInitialiser : EditorWindow
+{
+	ES3ReferenceMgr mgr = null;
+	public Queue<GameObject> gos = new Queue<GameObject>();
+
+	void Awake()
+	{
+		var go = ES3Postprocessor.AddManagerToScene();
+		if(go == null)
+			return;
+		
+		mgr = go.GetComponent<ES3ReferenceMgr>();
+		if(mgr == null)
+			return;
+
+		if(mgr.IsInitialised)
+			return;
+
+		var list = new List<GameObject> ();
+		EditorSceneManager.GetActiveScene().GetRootGameObjects(list);
+		// Remove Easy Save 3 Manager from dependency list
+		list.Remove(go);
+
+		gos = new Queue<GameObject>(list);
+
+		EditorApplication.update += OnUpdate;
+	}
+
+	public static void Init()
+	{
+		UnityEditor.EditorWindow window = GetWindow(typeof(ES3ReferenceMgrInitialiser));
+		window.position = new Rect (256, 256, 256, 96);
+		window.ShowUtility();
+	}
+
+	void OnUpdate()
+	{
+		if(gos.Count > 0)
+		{
+			mgr.AddDependencies(new Object[] { gos.Dequeue() });
+			Repaint();
+		}
+
+		if(gos.Count == 0)
+		{
+			EditorApplication.update -= OnUpdate;
+			mgr.GeneratePrefabReferences();
+			this.Close();
+		}
+	}
+		
+	void OnGUI()
+	{
+		if (gos.Count > 0)
+		{
+			EditorGUILayout.LabelField("Adding references to Easy Save 3 Manager", EditorStyles.boldLabel);
+			EditorGUILayout.Space();
+			EditorGUILayout.LabelField(gos.Count+" GameObjects remaining");
+			EditorGUILayout.Space();
+		}
+
+		if(GUILayout.Button("Cancel"))
+		{
+			this.Close();
+			mgr.Clear();
+		}
+	}
+}*/

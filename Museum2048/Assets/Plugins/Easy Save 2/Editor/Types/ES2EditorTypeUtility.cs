@@ -157,6 +157,9 @@ public class ES2EditorTypeUtility
 	 */
 	public static bool TypeIsSupported(Type type)
 	{
+		if (type == typeof(string))
+			return true;
+
 		if(IsCollectionType(type))
 		{
 			if(!CollectionIsSupported(type))

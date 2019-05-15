@@ -1,4 +1,4 @@
-#if !UNITY_4
+#if !UNITY_4 && !UNITY_2017_1_OR_NEWER
 using UnityEngine;
 using UnityEditor;
 using System.Collections;

@@ -14,12 +14,22 @@ namespace ES3Editor
 		{
 			var go = Selection.activeGameObject;
 
+			#if UNITY_2018_2_OR_NEWER
+			if(PrefabUtility.GetPrefabInstanceStatus(go) != PrefabInstanceStatus.NotAPrefab)
+			{
+				go = (GameObject)PrefabUtility.GetCorrespondingObjectFromSource(go);
+				if(go == null)
+					return;
+			}
+			#else
 			if(PrefabUtility.GetPrefabType(go) != PrefabType.Prefab)
 			{
 				go = (GameObject)PrefabUtility.GetPrefabParent(go);
 				if(go == null)
 					return;
 			}
+			#endif
+		
 			Undo.AddComponent<ES3Prefab>(go);
 		}
 

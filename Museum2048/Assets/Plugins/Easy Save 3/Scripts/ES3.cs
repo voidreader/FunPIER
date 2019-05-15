@@ -3,6 +3,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using ES3Internal;
+#if UNITY_2018_3_OR_NEWER
+using UnityEngine.Networking;
+#endif
 
 public static class ES3
 {
@@ -465,15 +468,27 @@ public static class ES3
 
 	/// <summary>Loads an audio file as an AudioClip. Note that MP3 files are not supported on standalone platforms and Ogg Vorbis files are not supported on mobile platforms.</summary>
 	/// <param name="imagePath">The relative or absolute path of the audio file we want to load as an AudioClip.</param>
-	public static AudioClip LoadAudio(string audioFilePath)
+	public static AudioClip LoadAudio(string audioFilePath 
+										#if UNITY_2018_3_OR_NEWER
+											, AudioType audioType
+										#endif
+										)
 	{
-		return LoadAudio(audioFilePath, new ES3Settings());
+		return LoadAudio(audioFilePath, 
+						#if UNITY_2018_3_OR_NEWER 
+							audioType,
+						#endif 
+						new ES3Settings());
 	}
 
 	/// <summary>Loads an audio file as an AudioClip. Note that MP3 files are not supported on standalone platforms and Ogg Vorbis files are not supported on mobile platforms.</summary>
 	/// <param name="imagePath">The relative or absolute path of the audio file we want to load as an AudioClip.</param>
 	/// <param name="settings">The settings we want to use to override the default settings.</param>
-	public static AudioClip LoadAudio(string audioFilePath, ES3Settings settings)
+	public static AudioClip LoadAudio(string audioFilePath, 
+									#if UNITY_2018_3_OR_NEWER
+		 								AudioType audioType,
+									#endif
+									ES3Settings settings)
 	{
 		if(Application.platform == RuntimePlatform.WebGLPlayer)
 			Debug.LogError("You cannot use ES3.LoadAudio with Unity Web Player");
@@ -490,11 +505,34 @@ public static class ES3
 
 		var newSettings = new ES3Settings(audioFilePath, settings);
 
-		#if UNITY_2017_1_OR_NEWER
+		#if UNITY_2018_3_OR_NEWER
+		using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip("file://"+newSettings.FullPath, audioType))
+		{
+			www.SendWebRequest();
+
+			while(!www.isDone)
+			{
+				// Wait for it to load.
+			}
+
+			if (www.isNetworkError)
+				throw new System.Exception(www.error);
+			else
+				return DownloadHandlerAudioClip.GetContent(www);
+		}
+		#elif UNITY_2017_1_OR_NEWER
 		WWW www = new WWW(newSettings.FullPath);
+
+		while(!www.isDone)
+		{
+		// Wait for it to load.
+		}
+
+		if(!string.IsNullOrEmpty(www.error))
+			throw new System.Exception(www.error);
 		#else
 		WWW www = new WWW("file://"+newSettings.FullPath);
-		#endif
+
 		while(!www.isDone)
 		{
 			// Wait for it to load.
@@ -502,13 +540,12 @@ public static class ES3
 
 		if(!string.IsNullOrEmpty(www.error))
 			throw new System.Exception(www.error);
+		#endif
 
-		#if UNITY_2017_3_OR_NEWER
+		#if UNITY_2017_3_OR_NEWER && !UNITY_2018_3_OR_NEWER
 		return www.GetAudioClip(true);
-		#elif UNITY_5_6_OR_NEWER
+		#elif UNITY_5_6_OR_NEWER && !UNITY_2018_3_OR_NEWER
 		return WWWAudioExtensions.GetAudioClip(www);
-		#else
-		return www.audioClip;
 		#endif
 	}
 
@@ -624,6 +661,43 @@ public static class ES3
 			PlayerPrefs.SetString(newSettings.FullPath, PlayerPrefs.GetString(oldSettings.FullPath));
 			PlayerPrefs.DeleteKey(oldSettings.FullPath);
 		}
+		else if(oldSettings.location == Location.Resources)
+			throw new System.NotSupportedException("Modifying files from Resources is not allowed.");
+	}
+
+	/// <summary>Renames a file.</summary>
+	/// <param name="oldDirectoryPath">The relative or absolute path of the file we want to rename.</param>
+	/// <param name="newDirectoryPath">The relative or absolute path we want to rename the file to.</param>
+	public static void RenameDirectory(string oldDirectoryPath, string newDirectoryPath)
+	{
+		RenameDirectory(new ES3Settings(oldDirectoryPath), new ES3Settings(newDirectoryPath));
+	}
+
+	/// <summary>Renames a file.</summary>
+	/// <param name="oldDirectoryPath">The relative or absolute path of the file we want to rename.</param>
+	/// <param name="newDirectoryPath">The relative or absolute path we want to rename the file to.</param>
+	/// <param name="oldSettings">The settings for the file we want to rename.</param>
+	/// <param name="newSettings">The settings for the file we want our source file to be renamed to.</param>
+	public static void RenameDirectory(string oldDirectoryPath, string newDirectoryPath, ES3Settings oldSettings, ES3Settings newSettings)
+	{
+		RenameDirectory(new ES3Settings(oldDirectoryPath, oldSettings), new ES3Settings(newDirectoryPath, newSettings));
+	}
+
+	/// <summary>Renames a file.</summary>
+	/// <param name="oldSettings">The settings for the file we want to rename.</param>
+	/// <param name="newSettings">The settings for the file we want our source file to be renamed to.</param>
+	public static void RenameDirectory(ES3Settings oldSettings, ES3Settings newSettings)
+	{
+		if(oldSettings.location == Location.File)
+		{
+			if(ES3IO.DirectoryExists(oldSettings.FullPath))
+			{
+				ES3IO.DeleteDirectory(newSettings.FullPath);
+				ES3IO.MoveDirectory(oldSettings.FullPath, newSettings.FullPath);
+			}
+		}
+		else if(oldSettings.location == Location.PlayerPrefs)
+			throw new System.NotSupportedException("Directories cannot be renamed when saving to PlayerPrefs or using WebGL.");
 		else if(oldSettings.location == Location.Resources)
 			throw new System.NotSupportedException("Modifying files from Resources is not allowed.");
 	}

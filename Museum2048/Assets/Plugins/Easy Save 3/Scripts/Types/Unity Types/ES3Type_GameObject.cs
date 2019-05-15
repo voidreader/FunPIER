@@ -35,14 +35,12 @@ namespace ES3Types
 
 			var es3AutoSave = instance.GetComponent<ES3AutoSave>();
 
-			//if(es3AutoSave == null || es3AutoSave.saveLayer)
 			writer.WriteProperty("layer", instance.layer, ES3Type_int.Instance);
-			//if(es3AutoSave == null || es3AutoSave.saveTag)
 			writer.WriteProperty("tag", instance.tag, ES3Type_string.Instance);
-			//if(es3AutoSave == null || es3AutoSave.saveName)
 			writer.WriteProperty("name", instance.name, ES3Type_string.Instance);
-			//if(es3AutoSave == null || es3AutoSave.saveHideFlags)
 			writer.WriteProperty("hideFlags", instance.hideFlags);
+			writer.WriteProperty("active", instance.activeSelf);
+
 			if(es3AutoSave != null && es3AutoSave.saveChildren)
 				writer.WriteProperty("children", GetChildren(instance), ES3.ReferenceMode.ByRefAndValue);
 
@@ -54,7 +52,7 @@ namespace ES3Types
 				if(ES3TypeMgr.GetES3Type(componentType) != null /*|| ES3Reflection.AttributeIsDefined(componentType, ES3Reflection.serializableAttributeType)*/)
 					components.Add(component);
 			}
-			writer.WriteProperty("components", components);
+			writer.WriteProperty("components", components, ES3.ReferenceMode.ByRefAndValue);
 		}
 
 		protected override object ReadObject<T>(ES3Reader reader)
@@ -104,7 +102,10 @@ namespace ES3Types
 					if(obj != null || ES3ReferenceMgrBase.Current == null)
 						reader.Skip();
 					else
+					{
 						obj = reader.Read<GameObject>(ES3Type_ES3PrefabInternal.Instance);
+						ES3ReferenceMgrBase.Current.Add(obj, id);
+					}
 				}
 				else if(propertyName == null)
 				{
@@ -148,6 +149,9 @@ namespace ES3Types
 					case "hideFlags":
 						instance.hideFlags = reader.Read<UnityEngine.HideFlags>();
 						break;
+					case "active":
+						instance.SetActive(reader.Read<bool>(ES3Type_bool.Instance));
+						break;
 					case "children":
 						reader.Read<GameObject[]>();
 						break;
@@ -181,7 +185,7 @@ namespace ES3Types
 
 			foreach(Transform child in goTransform)
 				// If a child has an Auto Save component, let it save itself.
-				if(child.GetComponent<ES3AutoSave>() == null)
+				//if(child.GetComponent<ES3AutoSave>() == null)
 					children.Add(child.gameObject);
 
 			return children;

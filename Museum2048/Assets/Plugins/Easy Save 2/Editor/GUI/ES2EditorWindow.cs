@@ -120,10 +120,13 @@ public class ES2EditorWindow : EditorWindow
 
 		string selectedMenuItem = menu.SelectedMenu;
 		string selectedSubMenuItem 	= menu.SelectedSubMenu;
-
 		if(selectedMenuItem == "Auto Save")
-		{
-			if(selectedSubMenuItem == "Scene")
+        {
+#if UNITY_2017_1_OR_NEWER
+            EditorGUILayout.LabelField("Easy Save 2 Auto Save was deprected in Unity 2017. Use Easy Save 3 Auto Save instead.");
+#else
+
+            if (selectedSubMenuItem == "Scene")
 			{
 				if(windowContent == null  || windowContent.GetType() != typeof(ES2EditorAutoSaveScene))
 					windowContent = new ES2EditorAutoSaveScene();
@@ -143,7 +146,8 @@ public class ES2EditorWindow : EditorWindow
 					windowContent = new ES2EditorAutoSaveSettings();
 				windowContent.Draw();
 			}
-		}
+#endif
+        }
 		else if(selectedMenuItem == "Settings")
 		{
 			if(selectedSubMenuItem == "General")

@@ -325,7 +325,7 @@ public abstract class ES3Reader : System.IDisposable
 	/// <param name="settings">The settings we want to use to override the default settings.</param>
 	public static ES3Reader Create(byte[] bytes, ES3Settings settings)
 	{
-		Stream stream = new MemoryStream(bytes);
+		Stream stream = ES3Stream.CreateStream(new MemoryStream(bytes), settings, ES3FileMode.Read);
 		if(stream == null)
 			return null;
 
@@ -342,6 +342,8 @@ public abstract class ES3Reader : System.IDisposable
 
 	internal static ES3Reader Create(Stream stream, ES3Settings settings)
 	{
+		stream = ES3Stream.CreateStream(stream, settings, ES3FileMode.Read);
+
 		// Get the baseWriter using the given Stream.
 		if(settings.format == ES3.Format.JSON)
 			return new ES3JSONReader(stream, settings);

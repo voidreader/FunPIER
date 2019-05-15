@@ -53,8 +53,15 @@ namespace ES3Internal
 					throw new System.NotSupportedException("Cannot write to Resources folder at runtime. Use a different save location at runtime instead.");
 			}
 
+			return CreateStream(stream, settings, fileMode);
+		}
+
+		public static Stream CreateStream(Stream stream, ES3Settings settings, ES3FileMode fileMode)
+		{
+			bool isWriteStream = (fileMode != ES3FileMode.Read);
+
 			#if !DISABLE_ENCRYPTION
-			if(settings.encryptionType != ES3.EncryptionType.None)
+			if(settings.encryptionType != ES3.EncryptionType.None && stream.GetType() != typeof(UnbufferedCryptoStream))
 			{
 				EncryptionAlgorithm alg = null;
 				if(settings.encryptionType == ES3.EncryptionType.AES)

@@ -6,6 +6,7 @@ using ES3Internal;
 namespace ES3Types
 {
 	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+	[ES3DoNotStripAttribute]
 	public abstract class ES3Type
 	{
 		public const string typeFieldName = "__type";
@@ -141,4 +142,7 @@ namespace ES3Types
 			this.members = members;
 		}
 	}
+
+	[AttributeUsage(AttributeTargets.Class, Inherited=true)]
+	public class ES3DoNotStripAttribute : UnityEngine.Scripting.PreserveAttribute{}
 }

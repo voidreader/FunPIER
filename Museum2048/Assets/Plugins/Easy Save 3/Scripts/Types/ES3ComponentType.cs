@@ -5,7 +5,7 @@ using ES3Internal;
 
 namespace ES3Types
 {
-	public abstract class ES3ComponentType : ES3ObjectType
+	public abstract class ES3ComponentType : ES3UnityObjectType
 	{
 		public ES3ComponentType(Type type) : base(type) {}
 
@@ -14,10 +14,10 @@ namespace ES3Types
 
 		protected const string gameObjectPropertyName = "goID";
 
-		protected override void WriteObject(object obj, ES3Writer writer)
+		protected override void WriteUnityObject(object obj, ES3Writer writer)
 		{
 			var instance = obj as Component;
-			if(instance == null)
+			if(obj != null && instance == null)
 				throw new ArgumentException("Only types of UnityEngine.Component can be written with this method, but argument given is type of "+obj.GetType());
 
 			var refMgr = ES3ReferenceMgrBase.Current;
@@ -27,17 +27,17 @@ namespace ES3Types
 				// If this object is in the instance manager, store it's instance ID with it.
 				writer.WriteRef(instance);
 				// Write the reference of the GameObject so we know what one to attach it to.
-				writer.WriteProperty(gameObjectPropertyName, ES3ReferenceMgrBase.Current.Add(instance.gameObject), ES3Type_long.Instance); 
+				writer.WriteProperty(gameObjectPropertyName, refMgr.Add(instance.gameObject), ES3Type_long.Instance); 
 			}
 			WriteComponent(instance, writer);
 		}
 
-		protected override void ReadObject<T>(ES3Reader reader, object obj)
+		protected override void ReadUnityObject<T>(ES3Reader reader, object obj)
 		{
 			ReadComponent<T>(reader, obj);
 		}
 
-		protected override object ReadObject<T>(ES3Reader reader)
+		protected override object ReadUnityObject<T>(ES3Reader reader)
 		{
 			var refMgr = ES3ReferenceMgrBase.Current;
 			long id = -1;
@@ -93,7 +93,7 @@ namespace ES3Types
 			return instance;
 		}
 
-				private static Component GetOrAddComponent(GameObject go, Type type)
+		private static Component GetOrAddComponent(GameObject go, Type type)
 		{
 			if(type == typeof(Transform))
 				return go.GetComponent(type);

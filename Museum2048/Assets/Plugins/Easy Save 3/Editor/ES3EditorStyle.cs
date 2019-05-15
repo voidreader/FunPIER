@@ -43,7 +43,7 @@ namespace ES3Editor
 			menuButtonSelected.fontStyle = FontStyle.Bold;
 
 			// Main Headings
-			heading = new GUIStyle();
+			heading = new GUIStyle(EditorStyles.label);
 			heading.fontStyle = FontStyle.Bold;
 			heading.fontSize = 24;
 
@@ -59,7 +59,10 @@ namespace ES3Editor
 
 			link = new GUIStyle();
 			link.fontSize = 16;
-			link.normal.textColor = new Color(0.129f, 0.129f, 0.8f);
+			if(EditorGUIUtility.isProSkin)
+				link.normal.textColor = new Color (0.262f, 0.670f, 0.788f);
+			else
+				link.normal.textColor = new Color (0.129f, 0.129f, 0.8f);
 
 			toggle = new GUIStyle(EditorStyles.toggle);
 			toggle.stretchWidth = false;

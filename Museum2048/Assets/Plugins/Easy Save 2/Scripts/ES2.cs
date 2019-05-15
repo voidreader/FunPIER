@@ -596,6 +596,7 @@ public static class ES2
 	#if !DISABLE_WWW
 	public static AudioClip LoadAudio(string path)
 	{
+	#if !UNITY_2018_1_OR_NEWER
 		if(Application.platform == RuntimePlatform.WebGLPlayer)
 			Debug.LogError("Easy Save 2 Error: You cannot use LoadAudio with WebGL.");
 
@@ -636,6 +637,10 @@ public static class ES2
 
 
         return clip;
+		#else
+		Debug.LogError("ES2.LoadAudio was deprecated in Unity 2018. Please use Easy Save 3's ES3.LoadAudio method instead.");
+		return null;
+		#endif
 	}
 #endif
 

@@ -40,9 +40,27 @@ namespace ES3Internal
 
 		[SerializeField]
 		public ES3IdRefDictionary idRef = new ES3IdRefDictionary();
-		//[SerializeField]
-		// Reference as the key, reference ID as the value.
-		//public ES3RefIdDictionary refId = new ES3RefIdDictionary();
+		private ES3RefIdDictionary _refId = null;
+
+		public ES3RefIdDictionary refId
+		{
+			get
+			{
+				if(_refId == null)
+				{
+					_refId = new ES3RefIdDictionary();
+					// Populate the reverse dictionary with the items from the normal dictionary.
+					foreach (var kvp in idRef)
+						if(kvp.Value != null)
+							_refId [kvp.Value] = kvp.Key;
+				}
+				return _refId;
+			}
+			set
+			{
+				_refId = value;
+			}
+		}
 
 		public List<ES3Prefab> prefabs = new List<ES3Prefab>();
 
@@ -70,17 +88,17 @@ namespace ES3Internal
 				if(idRef.TryGetValue(kvp.Key, out value))
 				{
 					if(value != kvp.Value)
-						throw new ArgumentException("Attempting to merge two ES3 Reference Managers, but they contain duplicate IDs. If you've made a copy of a scene and you're trying to load it additively into another scene, generate new reference IDs by going to Assets > Easy Save 3 > Generate New Reference IDs for Scene. Alternatively, remove the Easy Save 3 Manager from the scene if you do not intend on saving any data from it.");
+						throw new ArgumentException ("Attempting to merge two ES3 Reference Managers, but they contain duplicate IDs. If you've made a copy of a scene and you're trying to load it additively into another scene, generate new reference IDs by going to Assets > Easy Save 3 > Generate New Reference IDs for Scene. Alternatively, remove the Easy Save 3 Manager from the scene if you do not intend on saving any data from it.");
 				}
 				else
-					idRef.Add(kvp.Key, kvp.Value);
+					Add(kvp.Value, kvp.Key);
 			}
 		}
 
 		public long Get(UnityEngine.Object obj)
 		{
 			long id;
-			if(!idRef.TryGetKey(obj, out id))
+			if(!refId.TryGetValue(obj, out id))
 				return -1;
 			return id;
 		}
@@ -115,7 +133,7 @@ namespace ES3Internal
 		{
 			long id; 
 			// If it already exists in the list, do nothing.
-			if(idRef.TryGetKey(obj, out id))
+			if(refId.TryGetValue(obj, out id))
 				return id;
 			// Add the reference to the Dictionary.
 			id = GetNewRefID();
@@ -130,7 +148,7 @@ namespace ES3Internal
 				id = GetNewRefID();
 			// Add the reference to the Dictionary.
 			idRef[id] = obj;
-			//refId[obj] = id;
+			refId [obj] = id;
 		}
 
 		public void AddPrefab(ES3Prefab prefab)
@@ -142,11 +160,12 @@ namespace ES3Internal
 		public void Remove(UnityEngine.Object obj)
 		{
 			long referenceID;
+
 			// Get the reference ID, or do nothing if it doesn't exist.
-			if(!idRef.TryGetKey(obj, out referenceID))
+			if(refId.TryGetValue(obj, out referenceID))
 				return;
 			
-			//refId.Remove(obj);
+			refId.Remove(obj);
 			idRef.Remove(referenceID);
 		}
 
@@ -157,18 +176,39 @@ namespace ES3Internal
 			if(!idRef.TryGetValue(referenceID, out obj))
 				return;
 
-			//refId.Remove(obj);
+			refId.Remove(obj);
 			idRef.Remove(referenceID);
+		}
+
+		public void RemoveNullValues()
+		{
+			var nullKeys = idRef.Where(pair => pair.Value == null)
+								.Select(pair => pair.Key).ToList();
+			foreach (var key in nullKeys)
+				idRef.Remove(key);
+		}
+
+		public void Clear()
+		{
+			refId.Clear();
+			idRef.Clear();
 		}
 
 		public bool Contains(UnityEngine.Object obj)
 		{
-			return idRef.ContainsValue(obj);
+			return refId.ContainsKey(obj);
 		}
 
 		public bool Contains(long referenceID)
 		{
 			return idRef.ContainsKey(referenceID);
+		}
+
+		public void ChangeId(long oldId, long newId)
+		{
+			idRef.ChangeKey(oldId, newId);
+			// Empty the refId so it has to be refreshed.
+			refId = null;
 		}
 
 		internal static long GetNewRefID()

@@ -5,17 +5,17 @@ using ES3Internal;
 
 namespace ES3Types
 {
-	public abstract class ES3ScriptableObjectType : ES3ObjectType
+	public abstract class ES3ScriptableObjectType : ES3UnityObjectType
 	{
 		public ES3ScriptableObjectType(Type type) : base(type) {}
 
 		protected abstract void WriteScriptableObject(object obj, ES3Writer writer);
 		protected abstract void ReadScriptableObject<T>(ES3Reader reader, object obj);
 
-		protected override void WriteObject(object obj, ES3Writer writer)
+		protected override void WriteUnityObject(object obj, ES3Writer writer)
 		{
 			var instance = obj as ScriptableObject;
-			if(instance == null)
+			if(obj != null && instance == null)
 				throw new ArgumentException("Only types of UnityEngine.ScriptableObject can be written with this method, but argument given is type of "+obj.GetType());
 
 			// If this object is in the instance manager, store it's instance ID with it.
@@ -25,12 +25,12 @@ namespace ES3Types
 			WriteScriptableObject(instance, writer);
 		}
 
-		protected override void ReadObject<T>(ES3Reader reader, object obj)
+		protected override void ReadUnityObject<T>(ES3Reader reader, object obj)
 		{
 			ReadScriptableObject<T>(reader, obj);
 		}
 
-		protected override object ReadObject<T>(ES3Reader reader)
+		protected override object ReadUnityObject<T>(ES3Reader reader)
 		{
 			var refMgr = ES3ReferenceMgrBase.Current;
 			long id = -1;

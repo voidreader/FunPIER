@@ -95,7 +95,7 @@ namespace ES3Internal
 					es3Type = new ES3ReflectedValueType(type);
 				else if(ES3Reflection.IsAssignableFrom(typeof(ScriptableObject), type))
 					es3Type = new ES3ReflectedScriptableObjectType(type);
-				else if(ES3Reflection.HasParameterlessConstructor(type))
+				else if(ES3Reflection.HasParameterlessConstructor(type) || ES3Reflection.IsAbstract(type) || ES3Reflection.IsInterface(type))
 					es3Type = new ES3ReflectedObjectType(type);
 				else if(throwException)
 					throw new NotSupportedException("Type of "+type+" is not supported as it does not have a parameterless constructor. Only value types, Components or ScriptableObjects are supportable without a parameterless constructor. However, you may be able to create an ES3Type script to add support for it.");

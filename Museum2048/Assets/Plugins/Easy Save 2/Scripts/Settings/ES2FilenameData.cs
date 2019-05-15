@@ -396,7 +396,7 @@ public struct ES2FilenameData
 		get
 		{
 			if(userFolder != "")
-				return (userFolder+"/"+filename).TrimStart('/');
+				return (userFolder+"/"+filename).TrimStart('/','\\');
 			return filename;
 		}
 	}

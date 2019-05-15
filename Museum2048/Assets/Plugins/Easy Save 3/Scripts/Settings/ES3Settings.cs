@@ -208,6 +208,20 @@ public class ES3Settings : System.ICloneable
 		CopyInto(settings);
 		return settings;
 	}
+
+	#if UNITY_EDITOR
+	[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+	public static ES3DefaultSettings GetDefaultSettings()
+	{
+		var go = Resources.Load<GameObject>("ES3/ES3 Default Settings");
+		if(go == null)
+			Debug.LogError("Could not find ES3 Default Settings object in Easy Save 3/Resources/ES3.");
+		var settings = go.GetComponent<ES3DefaultSettings>();
+		if(settings == null)
+			Debug.LogError("There is no ES3 Default Settings script attached to the ES3 Default Settings object in Easy Save 3/Resources/ES3");
+		return settings;
+	}
+	#endif
 }
 
 /*

@@ -19,17 +19,6 @@ public class ES3EditorUtility : Editor
 		return AssetDatabase.GUIDToAssetPath(guids[0]).Split(new string[]{"Editor"}, System.StringSplitOptions.RemoveEmptyEntries)[0];
 	}
 
-	public static ES3DefaultSettings GetDefaultSettings()
-	{
-		var go = Resources.Load<GameObject>("ES3/ES3 Default Settings");
-		if(go == null)
-			Debug.LogError("Could not find ES3 Default Settings object in Easy Save 3/Resources/ES3.");
-		var settings = go.GetComponent<ES3DefaultSettings>();
-		if(settings == null)
-			Debug.LogError("There is no ES3 Default Settings script attached to the ES3 Default Settings object in Easy Save 3/Resources/ES3");
-		return settings;
-	}
-
 	public static void DisplayLink(string label, string url)
 	{
 		var style = ES3Editor.EditorStyle.Get;
@@ -42,5 +31,14 @@ public class ES3EditorUtility : Editor
 		EditorGUIUtility.AddCursorRect(buttonRect, MouseCursor.Link);
 
 			
+	}
+
+	public static bool IsPrefabInAssets(UnityEngine.Object obj)
+	{
+		#if UNITY_2018_1_OR_NEWER
+		return PrefabUtility.IsPartOfPrefabAsset(obj);
+		#else
+		return (PrefabUtility.GetPrefabType(obj) == PrefabType.Prefab);
+		#endif
 	}
 }

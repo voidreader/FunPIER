@@ -64,7 +64,7 @@ namespace ES3Internal
 			else
 				return null;
 		}
-			
+
 		public static List<FieldInfo> GetSerializableFields(Type type, bool safe=true, string[] memberNames=null)
 		{
 			var fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -76,8 +76,8 @@ namespace ES3Internal
 
 				// If a members array was provided as a parameter, only include the field if it's in the array.
 				if(memberNames != null)
-					if(!memberNames.Contains(fieldName))
-						continue;
+				if(!memberNames.Contains(fieldName))
+					continue;
 
 				var fieldType = field.FieldType;
 
@@ -116,7 +116,7 @@ namespace ES3Internal
 			// Only get private properties if we're not getting properties safely.
 			if(!safe)
 				bindingFlags = bindingFlags | BindingFlags.NonPublic;
-			
+
 			var properties = type.GetProperties(bindingFlags);
 			var serializableProperties = new List<PropertyInfo>();
 
@@ -126,8 +126,8 @@ namespace ES3Internal
 
 				// If a members array was provided as a parameter, only include the property if it's in the array.
 				if(memberNames != null)
-					if(!memberNames.Contains(propertyName))
-						continue;
+				if(!memberNames.Contains(propertyName))
+					continue;
 
 				if(safe)
 				{
@@ -185,7 +185,7 @@ namespace ES3Internal
 				return true;
 
 			var es3Type = ES3TypeMgr.GetOrCreateES3Type(type, false);
-				
+
 			if(es3Type != null && !es3Type.isUnsupported)
 				return true;
 
@@ -319,7 +319,7 @@ namespace ES3Internal
 		{
 			return new ES3ReflectedMethod(type, methodName, genericParameters, parameterTypes);
 		}
-			
+
 		public static bool TypeIsArray(Type type)
 		{
 			return type.IsArray;
@@ -329,111 +329,123 @@ namespace ES3Internal
 		{
 			return type.GetElementType();
 		}
-			
-	#if NETFX_CORE
-	    public static bool IsAbstract(Type type)
-	    {
-	        return type.GetTypeInfo().IsAbstract;
-	    }
 
-	    public static bool IsGenericType(Type type)
+		#if NETFX_CORE
+		public static bool IsAbstract(Type type)
 		{
-			return type.GetTypeInfo().IsGenericType;
+		return type.GetTypeInfo().IsAbstract;
 		}
 
-	    public static bool IsValueType(Type type)
+		public static bool IsInterface(Type type)
 		{
-			return type.GetTypeInfo().IsValueType;
+		return type.GetTypeInfo().IsInterface;
 		}
 
-	    public static bool IsEnum(Type type)
+		public static bool IsGenericType(Type type)
 		{
-			return type.GetTypeInfo().IsEnum;
+		return type.GetTypeInfo().IsGenericType;
 		}
 
-	    public static bool HasParameterlessConstructor(Type type)
-	    {
-	        foreach (var cInfo in type.GetTypeInfo().DeclaredConstructors)
-	        {
-	            if (!cInfo.IsFamily && !cInfo.IsStatic && cInfo.GetParameters().Length == 0)
-	                return true;
-	        }
-	        return false;
-
-	    }
-
-	    public static ConstructorInfo GetParameterlessConstructor(Type type)
-	    {
-	        foreach (var cInfo in type.GetTypeInfo().DeclaredConstructors)
-	        {
-	            if (!cInfo.IsFamily && cInfo.GetParameters().Length == 0)
-	                return cInfo;
-	        }
-	        return null;
-	    }
-
-	    public static string GetShortAssemblyQualifiedName(Type type)
-	    {
-	        return type.FullName + "," + type.GetTypeInfo().Assembly.GetName().Name;
-	    }
-
-	    public static PropertyInfo GetProperty(Type type, string propertyName)
-	    {
-	        return type.GetTypeInfo().GetDeclaredProperty(propertyName);
-	    }
-
-	    public static FieldInfo GetField(Type type, string fieldName)
-	    {
-	        return type.GetTypeInfo().GetDeclaredField(fieldName);
-	    }
-
-	    public static bool IsPrimitive(Type type)
+		public static bool IsValueType(Type type)
 		{
-			return (type.GetTypeInfo().IsPrimitive || type == typeof(string) || type == typeof(decimal));
+		return type.GetTypeInfo().IsValueType;
+		}
+
+		public static bool IsEnum(Type type)
+		{
+		return type.GetTypeInfo().IsEnum;
+		}
+
+		public static bool HasParameterlessConstructor(Type type)
+		{
+		foreach (var cInfo in type.GetTypeInfo().DeclaredConstructors)
+		{
+		if (!cInfo.IsFamily && !cInfo.IsStatic && cInfo.GetParameters().Length == 0)
+		return true;
+		}
+		return false;
+
+		}
+
+		public static ConstructorInfo GetParameterlessConstructor(Type type)
+		{
+		foreach (var cInfo in type.GetTypeInfo().DeclaredConstructors)
+		{
+		if (!cInfo.IsFamily && cInfo.GetParameters().Length == 0)
+		return cInfo;
+		}
+		return null;
+		}
+
+		public static string GetShortAssemblyQualifiedName(Type type)
+		{
+		if (IsPrimitive (type))
+		return type.ToString ();
+		return type.FullName + "," + type.GetTypeInfo().Assembly.GetName().Name;
+		}
+
+		public static PropertyInfo GetProperty(Type type, string propertyName)
+		{
+		return type.GetTypeInfo().GetDeclaredProperty(propertyName);
+		}
+
+		public static FieldInfo GetField(Type type, string fieldName)
+		{
+		return type.GetTypeInfo().GetDeclaredField(fieldName);
+		}
+
+		public static bool IsPrimitive(Type type)
+		{
+		return (type.GetTypeInfo().IsPrimitive || type == typeof(string) || type == typeof(decimal));
 		}
 
 		public static bool AttributeIsDefined(MemberInfo info, Type attributeType)
 		{
-			var attributes = info.GetCustomAttributes(attributeType, true);
-			foreach(var attribute in attributes)
-				return true;
-			return false;
+		var attributes = info.GetCustomAttributes(attributeType, true);
+		foreach(var attribute in attributes)
+		return true;
+		return false;
 		}
 
 		public static bool AttributeIsDefined(Type type, Type attributeType)
 		{
-			var attributes = type.GetTypeInfo().GetCustomAttributes(attributeType, true);
-			foreach(var attribute in attributes)
-				return true;
-			return false;
+		var attributes = type.GetTypeInfo().GetCustomAttributes(attributeType, true);
+		foreach(var attribute in attributes)
+		return true;
+		return false;
 		}
 
 		public static bool ImplementsInterface(Type type, Type interfaceType)
 		{
-			return type.GetTypeInfo().ImplementedInterfaces.Contains(interfaceType);
+		return type.GetTypeInfo().ImplementedInterfaces.Contains(interfaceType);
 		}
-	#else
-	    public static bool IsAbstract(Type type)
+		#else
+		public static bool IsAbstract(Type type)
 		{
 			return type.IsAbstract;
 		}
 
-	    public static bool IsGenericType(Type type)
-	    {
-	        return type.IsGenericType;
-	    }
+		public static bool IsInterface(Type type)
+		{
+			return type.IsInterface;
+		}
 
-	    public static bool IsValueType(Type type)
-	    {
-	        return type.IsValueType;
-	    }
+		public static bool IsGenericType(Type type)
+		{
+			return type.IsGenericType;
+		}
 
-	    public static bool IsEnum(Type type)
-	    {
-	        return type.IsEnum;
-	    }
+		public static bool IsValueType(Type type)
+		{
+			return type.IsValueType;
+		}
 
-	    public static bool HasParameterlessConstructor(Type type)
+		public static bool IsEnum(Type type)
+		{
+			return type.IsEnum;
+		}
+
+		public static bool HasParameterlessConstructor(Type type)
 		{
 			return type.GetConstructor (Type.EmptyTypes) != null || IsValueType(type);
 		}
@@ -445,6 +457,8 @@ namespace ES3Internal
 
 		public static string GetShortAssemblyQualifiedName(Type type)
 		{
+			if (IsPrimitive (type))
+				return type.ToString ();
 			return type.FullName + "," + type.Assembly.GetName().Name;
 		}
 
@@ -458,10 +472,10 @@ namespace ES3Internal
 			return type.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 		}
 
-	    public static bool IsPrimitive(Type type)
-	    {
-	        return (type.IsPrimitive || type == typeof(string) || type == typeof(decimal));
-	    }
+		public static bool IsPrimitive(Type type)
+		{
+			return (type.IsPrimitive || type == typeof(string) || type == typeof(decimal));
+		}
 
 		public static bool AttributeIsDefined(MemberInfo info, Type attributeType)
 		{
@@ -477,9 +491,9 @@ namespace ES3Internal
 		{
 			return (type.GetInterface(interfaceType.Name) != null);
 		}
-	#endif
+		#endif
 
-	/*
+		/*
 	 * 	Allows us to use FieldInfo and PropertyInfo interchangably.
 	 */
 		public struct ES3ReflectedMember
@@ -533,9 +547,9 @@ namespace ES3Internal
 				else
 					return fieldInfo.GetValue(obj);
 			}
-	    }
+		}
 
-	    public class ES3ReflectedMethod
+		public class ES3ReflectedMethod
 		{
 			private MethodInfo method;
 

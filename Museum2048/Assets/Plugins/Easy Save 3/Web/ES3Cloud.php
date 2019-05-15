@@ -83,19 +83,19 @@ else if(isset($_POST["putFile"]))
 	$stmt->execute();
 }
 
-// ----- DELETE FILE -----
-else if(isset($_POST["deleteFile"]))
+// ----- RENAME FILE -----
+else if(isset($_POST["renameFile"]))
 {
-	$stmt = $db->prepare("UPDATE $tableName SET $filenameField = :newFilename WHERE $filenameField = :filename");
-	$stmt->bindParam(":filename", $_POST["deleteFile"]);
+	$stmt = $db->prepare("UPDATE $tableName SET $filenameField = :newFilename WHERE $filenameField = :filename AND $userField = :user");
+	$stmt->bindParam(":filename", $_POST["renameFile"]);
 	$stmt->bindParam(":newFilename", $_POST["newFilename"]);
 	$postUser = GetPOSTUser();
 	$stmt->bindParam(":user", $postUser);
 	$stmt->execute();
 }
 
-// ----- RENAME FILE -----
-else if(isset($_POST["renameFile"]))
+// ----- DELETE FILE -----
+else if(isset($_POST["deleteFile"]))
 {
 	
 	$stmt = $db->prepare("DELETE FROM $tableName WHERE $filenameField = :filename AND $userField = :user");
@@ -108,12 +108,12 @@ else if(isset($_POST["renameFile"]))
 // ----- GET FILENAMES -----
 else if(isset($_POST["getFilenames"]))
 {
-	$stmt = $db->prepare("SELECT GROUP_CONCAT($filenameField SEPARATOR ';') FROM $tableName WHERE $userField = :user");
-	$postUser = GetPOSTUser();
-	$stmt->bindParam(":user", $postUser);
+	$stmt = $db->prepare("SELECT $filenameField FROM $tableName WHERE $userField = :user");
+	$stmt->bindParam(":user", GetPOSTUser());
 	$stmt->execute();
-	if($stmt->rowCount() > 0)
-		echo $stmt->fetchColumn();
+	$rows = $stmt->fetchAll();
+	foreach($rows as $row)
+		echo $row[$filenameField] . ";";
 }
 
 // ----- GET TIMESTAMP -----
@@ -219,6 +219,7 @@ PRIMARY KEY (`$filenameField`,`$userField`)
 	    	}
 	    }
     	
+    	
     	try
     	{
 	    	$apiKey = substr(md5(microtime()),rand(0,26),12);
@@ -232,7 +233,16 @@ PRIMARY KEY (`$filenameField`,`$userField`)
 \$db_name		= 	'$dbName';		// MySQL Database Name.
 ?>";
 	    	
-	    	file_put_contents("ES3Variables.php", $phpScript);
+	    	// Check that path is writable or file_put_contents is supported.
+	    	if(!is_writable("ES3Variables.php") || !function_exists("file_put_contents"))
+	    	{
+		    	ManuallyInstall($phpScript);
+		    	exit();
+	    	}
+	    	else
+	    	{
+	    		file_put_contents("ES3Variables.php", $phpScript);
+	    	}
     	}
     	catch(Exception $e)
     	{
@@ -266,7 +276,7 @@ PRIMARY KEY (`$filenameField`,`$userField`)
 
 function ManuallyInstall($phpScript)
 {
-		    	echo "	<p>Couldn't create PHP file on your server. Server returned the following error:</p><p>".$e->getMessage()."</p>
+		    	echo "	<p>Couldn't create PHP file on your server. This could be because file_put_contents is not supported on your server, or you do not have permission to write files to this folder on your server.</p>
 	    			<p>To manually install the PHP file, please create a file named <em>ES3Variables.php</em> in the same directory as your ES3.php file with the following contents:</p>
 					<pre>$phpScript</pre>
 					<p>After creating this file, installation will be complete.</p>";

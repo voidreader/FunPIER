@@ -951,7 +951,7 @@ public class InGame : MonoBehaviour {
     /// 게임 오버 처리 
     /// </summary>
     public void GameOver() {
-        Debug.Log("Call Game End");
+        Debug.Log("Call Game End , movecount :: " + PierSystem.main.MoveCount); 
         isPlaying = false;
 
         gameOverControl.OpenGameOver();

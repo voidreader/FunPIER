@@ -256,12 +256,13 @@ public class ES3File
 		{
 			var memorySettings = (ES3Settings)settings.Clone();
 			memorySettings.location = ES3.Location.Memory;
-			using (var baseWriter = ES3Writer.Create(ms, memorySettings, true, false))
+			using (var baseWriter = ES3Writer.Create(ES3Stream.CreateStream(ms, memorySettings, ES3FileMode.Write), memorySettings, true, false))
 			{
 				foreach (var kvp in cache)
 					baseWriter.Write(kvp.Key, kvp.Value.type.type, kvp.Value.bytes);
 				baseWriter.Save(false);
 			}
+
 			return ms.ToArray();
 		}
 	}

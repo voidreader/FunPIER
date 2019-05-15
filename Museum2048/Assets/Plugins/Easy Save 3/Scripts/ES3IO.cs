@@ -30,11 +30,7 @@ namespace ES3Internal
 		public static void MoveFile(string sourcePath, string destPath) { File.Move(sourcePath, destPath); }
 		public static void CopyFile(string sourcePath, string destPath) { File.Copy(sourcePath, destPath); }
 
-		/*
-		 * 	Given a path, it returns the directory that path points to.
-		 * 	eg. "C:/myFolder/thisFolder/myFile.txt" will return "C:/myFolder/thisFolder".
-		 */
-
+		public static void MoveDirectory(string sourcePath, string destPath) { Directory.Move(sourcePath, destPath); }
 		public static void CreateDirectory(string directoryPath){ Directory.CreateDirectory(directoryPath); }
 		public static bool DirectoryExists(string directoryPath) { return Directory.Exists(directoryPath); }
 
@@ -42,15 +38,30 @@ namespace ES3Internal
 		 * 	Given a path, it returns the directory that path points to.
 		 * 	eg. "C:/myFolder/thisFolder/myFile.txt" will return "C:/myFolder/thisFolder".
 		 */
-		public static string GetDirectoryName(string path){ return Path.GetDirectoryName(path); }
-
+		public static string GetDirectoryPath(string path)
+		{ 
+			//return Path.GetDirectoryName(path);
+			// Path.GetDirectoryName turns forward slashes to backslashes in some cases on Windows, which is why
+			// Substring is used instead.
+			int slash = path.LastIndexOf('/');
+			// Ignore trailing slash if necessary.
+			if(slash == (path.Length - 1))
+				slash = path.Substring(0, slash).LastIndexOf('/');
+			if(slash == -1)
+				Debug.LogError("A directory path with forward-slashes was expected, but given path was \'"+path+"\'");
+			return path.Substring(0, slash);
+		}
+			
 		public static string[] GetDirectories(string path, bool getFullPaths = true)
 		{
 			var paths = Directory.GetDirectories(path);
-			if(!getFullPaths)
+			for (int i = 0; i < paths.Length; i++) 
 			{
-				for(int i=0; i<paths.Length; i++)
+				if(!getFullPaths)
 					paths[i] = Path.GetFileName(paths[i]);
+				// GetDirectories sometimes returns backslashes, so we need to convert them to
+				// forward slashes.
+				paths[i].Replace ("\\", "/");
 			}
 			return paths;
 		}

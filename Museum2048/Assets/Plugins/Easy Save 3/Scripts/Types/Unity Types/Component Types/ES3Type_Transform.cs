@@ -16,7 +16,6 @@ namespace ES3Types
 		protected override void WriteComponent(object obj, ES3Writer writer)
 		{
 			var instance = (UnityEngine.Transform)obj;
-
 			writer.WritePropertyByRef("parent", instance.parent);
 			writer.WriteProperty("localPosition", instance.localPosition);
 			writer.WriteProperty("localRotation", instance.localRotation);

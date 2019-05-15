@@ -94,6 +94,7 @@ namespace ES3PlayMaker
 		{
 			EditField("str");
 			EditField("useBase64Encoding");
+			EditField("appendNewline");
 		}
 	}
 
@@ -104,6 +105,7 @@ namespace ES3PlayMaker
 		{
 			EditField("str");
 			EditField("useBase64Encoding");
+			EditField("appendNewline");
 		}
 	}
 

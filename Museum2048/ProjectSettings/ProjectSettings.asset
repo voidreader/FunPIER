@@ -120,7 +120,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.1
+  bundleVersion: 1.0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -741,7 +741,10 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   scriptingDefineSymbols:
+    1: AN_FIREBASE_ANALYTICS
     4: GAME_KIT_API_ENABLED
+    7: AN_FIREBASE_ANALYTICS
+    13: AN_FIREBASE_ANALYTICS
   platformArchitecture: {}
   scriptingBackend:
     Android: 1

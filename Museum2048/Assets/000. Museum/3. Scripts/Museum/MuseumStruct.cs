@@ -175,10 +175,12 @@ public class MuseumStruct : MonoBehaviour {
 
 
     /// <summary>
-    /// 박물관 업그레이드!
+    /// 박물관 구조물 업그레이드
     /// </summary>
+    /// <param name="s">인게임의 current step</param>
     public void UpgradeMuseum(int s) {
 
+        // 현재 단계가 인게임 마지막 플레이 단계보다 크거나 같으면 return. 
         if (currentStep >= s)
             return;
 
@@ -246,13 +248,14 @@ public class MuseumStruct : MonoBehaviour {
         }
         */
 
+
         IdleMoving(0);
         for (int i = 1; i <= s; i++) {
             IdleMoving(i);
         }
 
 
-
+        currentStep = s; // 업그레이드 하고 currentstep 정보 저장 
         LobbyManager.isAnimation = false;
 
     }

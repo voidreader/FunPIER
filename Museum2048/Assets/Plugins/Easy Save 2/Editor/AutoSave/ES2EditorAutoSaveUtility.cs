@@ -1,4 +1,4 @@
-#if !UNITY_4
+#if !UNITY_4 && !UNITY_2017_1_OR_NEWER
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
@@ -119,8 +119,13 @@ public class ES2EditorAutoSaveUtility
 
 		for(int i=0; i<Selection.gameObjects.Length; i++)
 		{
+#if UNITY_2018_3_OR_ABOVE
+			if(PrefabUtility.GetCorrespondingObjectFromSource(Selection.gameObjects[i]) != null || PrefabUtility.GetPrefabObject(Selection.gameObjects[i]) == null)
+				return false;
+#else
 			if(PrefabUtility.GetPrefabParent(Selection.gameObjects[i]) != null || PrefabUtility.GetPrefabObject(Selection.gameObjects[i]) == null)
 				return false;
+#endif
 		}
 
 		return true;

@@ -656,6 +656,7 @@ namespace HutongGames.PlayMaker.Actions
 					filenames.Values = ES2.GetFiles(path.Value, extension.Value);
 				else
 					filenames.Values = ES2.GetFiles(path.Value);
+				filenames.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 				Finish();
 			}
@@ -687,6 +688,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				folders.Values = ES2.GetFolders(path.Value);
+				folders.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 				Finish();
 			}
@@ -732,6 +734,7 @@ namespace HutongGames.PlayMaker.Actions
 							regexTags.Add(tags[i]);
 					filenames.Values = regexTags.ToArray();
 				}
+				filenames.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 				Finish();
 			}
@@ -1073,7 +1076,10 @@ namespace HutongGames.PlayMaker.Actions
 						{
 							FsmArray thisVar = variable.FindFsmArray(entry.Key);
 							if(thisVar != null)
+							{
 								thisVar.Values = (object[])entry.Value;
+								thisVar.SaveChanges();
+							}
 						}
 						continue;
 					}
@@ -2641,6 +2647,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2673,6 +2680,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2705,6 +2713,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2737,6 +2746,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2769,6 +2779,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2801,6 +2812,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2833,6 +2845,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2865,6 +2878,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2897,6 +2911,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2929,6 +2944,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2961,6 +2977,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -2993,6 +3010,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -3025,6 +3043,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = ES2.LoadArray<object>(filename.Value, GetSettings(new ES2Settings()));
+				loadValue.SaveChanges();
 				base.OnEnter(); // Ensure that base.OnEnter() is called when done.
 			}
 			catch(System.Exception e)
@@ -4381,6 +4400,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4413,6 +4433,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4445,6 +4466,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4477,6 +4499,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4509,6 +4532,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4550,6 +4574,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.GetFilenames();
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4582,6 +4607,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4614,6 +4640,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4646,6 +4673,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4678,6 +4706,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4710,6 +4739,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4742,6 +4772,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4774,6 +4805,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)
@@ -4806,6 +4838,7 @@ namespace HutongGames.PlayMaker.Actions
 			try
 			{
 				loadValue.Values = web.LoadArray<object>(tag.Value);
+				loadValue.SaveChanges();
 				base.IsDone();
 			}
 			catch(System.Exception e)

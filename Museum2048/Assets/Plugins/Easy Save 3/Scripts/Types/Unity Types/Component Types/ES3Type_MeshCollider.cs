@@ -19,8 +19,8 @@ namespace ES3Types
 			
 			writer.WriteProperty("sharedMesh", instance.sharedMesh);
 			writer.WriteProperty("convex", instance.convex, ES3Type_bool.Instance);
-			writer.WriteProperty("inflateMesh", instance.inflateMesh, ES3Type_bool.Instance);
-			writer.WriteProperty("skinWidth", instance.skinWidth, ES3Type_float.Instance);
+			/*writer.WriteProperty("inflateMesh", instance.inflateMesh, ES3Type_bool.Instance);
+			writer.WriteProperty("skinWidth", instance.skinWidth, ES3Type_float.Instance);*/
 			writer.WriteProperty("enabled", instance.enabled, ES3Type_bool.Instance);
 			writer.WriteProperty("isTrigger", instance.isTrigger, ES3Type_bool.Instance);
 			writer.WriteProperty("contactOffset", instance.contactOffset, ES3Type_float.Instance);
@@ -41,12 +41,12 @@ namespace ES3Types
 					case "convex":
 						instance.convex = reader.Read<System.Boolean>(ES3Type_bool.Instance);
 						break;
-					case "inflateMesh":
+					/*case "inflateMesh":
 						instance.inflateMesh = reader.Read<System.Boolean>(ES3Type_bool.Instance);
 						break;
 					case "skinWidth":
 						instance.skinWidth = reader.Read<System.Single>(ES3Type_float.Instance);
-						break;
+						break;*/
 					case "enabled":
 						instance.enabled = reader.Read<System.Boolean>(ES3Type_bool.Instance);
 						break;

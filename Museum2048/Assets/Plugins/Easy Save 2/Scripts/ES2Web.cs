@@ -3,6 +3,7 @@ using MoodkieSecurity;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class ES2Web
 {
@@ -16,26 +17,55 @@ public class ES2Web
 	public HashType hashType = HashType.MD5;
 	
 	public ES2Settings settings;
-	public WWW www = null;
+    public UnityWebRequest www = null;
 
+	/// <summary>The encoding to use when encoding and decoding data as strings.</summary>
+	public System.Text.Encoding encoding = System.Text.Encoding.UTF8;
+
+
+	private byte[] _data = null;
+	/// <summary>Any downloaded data, if applicable. This may also contain an error message, so you should check the 'ifError' variable before reading data.</summary>
 	public byte[] data
 	{
-		get{ return www.bytes; }
+		get{ return _data; }
 	}
-	
+
+	/// <summary>The downloaded data as text, decoded using the encoding specified by the 'encoding' variable.</summary>
 	public string text
 	{
-		get{ return www.text; }
+		get
+		{
+			if(data == null)
+				return null;
+			return encoding.GetString(data);
+		}
+	}
+
+	/// <summary>An array of filenames downloaded from the server. This must only be accessed after calling the 'DownloadFilenames' routine.</summary>
+	public string[] filenames
+	{
+		get
+		{
+			if(data == null || data.Length == 0)
+				return new string[0];
+			return text.Split(';');
+		}
+
 	}
 	
 	public float progress
 	{
-		get{ return www.progress; }
+		get{ return www.downloadProgress; }
 	}
 	
 	public float uploadProgress
 	{
 		get{ return www.uploadProgress; }
+	}
+
+	public float downloadProgress
+	{
+		get{ return www.downloadProgress; }
 	}
 
 	public ES2Web(string identifier)
@@ -46,6 +76,17 @@ public class ES2Web
 	public ES2Web(string identifier, ES2Settings settings)
 	{
 		this.settings = settings.Clone(identifier);
+	}
+
+	protected IEnumerator SendWebRequest(UnityWebRequest webRequest)
+	{
+		www = webRequest;
+		www.chunkedTransfer = false;
+		#if !UNITY_2017_2_OR_NEWER
+		yield return webRequest.Send();
+		#else
+		yield return webRequest.SendWebRequest();
+		#endif
 	}
 	
 	#region UploadMethods
@@ -61,11 +102,12 @@ public class ES2Web
 			writer.Save();
 			
 			byte[] bytes = writer.stream.ReadAllBytes();
-			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(bytes));
-			yield return www;
-			
-			getError();
+
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(bytes)))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -79,10 +121,12 @@ public class ES2Web
 		{	
 			writer.Write<T>(param, settings.filenameData.tag);
 			writer.Save();
-			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+	
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -96,10 +140,12 @@ public class ES2Web
 		{	
 			writer.Write<T>(param, settings.filenameData.tag);
 			writer.Save();
-			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -114,9 +160,11 @@ public class ES2Web
 			writer.Write<T>(param, settings.filenameData.tag);
 			writer.Save();
 			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -132,9 +180,11 @@ public class ES2Web
 			writer.Write<TKey,TValue>(param, settings.filenameData.tag);
 			writer.Save();
 			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -150,9 +200,11 @@ public class ES2Web
 			writer.Write<T>(param, settings.filenameData.tag);
 			writer.Save();
 			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -168,9 +220,11 @@ public class ES2Web
 			writer.Write<T>(param, settings.filenameData.tag);
 			writer.Save();
 			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -186,9 +240,11 @@ public class ES2Web
 			writer.Write<T>(param, settings.filenameData.tag);
 			writer.Save();
 			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -204,9 +260,11 @@ public class ES2Web
 			writer.Write<T>(param, settings.filenameData.tag);
 			writer.Save();
 			
-			www = new WWW(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes()));
-			yield return www;
-			getError();
+			using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(writer.stream.ReadAllBytes())))
+			{
+				yield return SendWebRequest(webRequest);
+				getError();
+			}
 			isDone = true;
 		}
 	}
@@ -221,11 +279,11 @@ public class ES2Web
 		// If we're already using this ES2Web object, throw error.
 		CheckWWWUsage();
 		
-		www = new WWW(settings.filenameData.fullString, CreateUploadForm(data));
-		
-		yield return www;
-		
-		getError();
+		using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(data)))
+		{
+			yield return SendWebRequest(webRequest);
+			getError();
+		}
 		isDone = true;
 	}
 	
@@ -234,11 +292,11 @@ public class ES2Web
 		// If we're already using this ES2Web object, throw error.
 		CheckWWWUsage();
 		
-		www = new WWW(settings.filenameData.fullString, CreateUploadForm(tex.EncodeToPNG()));
-		
-		yield return www;
-		
-		getError();
+		using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(tex.EncodeToPNG())))
+		{
+			yield return SendWebRequest(webRequest);
+			getError();
+		}
 		isDone = true;
 	}
 	
@@ -246,12 +304,12 @@ public class ES2Web
 	{
 		// If we're already using this ES2Web object, throw error.
 		CheckWWWUsage();
-		
-		www = new WWW(settings.filenameData.fullString, CreateUploadForm(ES2.LoadRaw(file)));
-		
-		yield return www;
-		
-		getError();
+
+		using(var webRequest = UnityWebRequest.Post(settings.filenameData.filePath, CreateUploadForm(ES2.LoadRaw(file))))
+		{
+			yield return SendWebRequest(webRequest);
+			getError();
+		}
 		isDone = true;
 	}
 	
@@ -399,29 +457,32 @@ public class ES2Web
 	public IEnumerator DownloadFilenames()
 	{
 		CheckWWWUsage();
-		
-		www = new WWW(settings.filenameData.fullString, CreateGetFilesForm());
-		
-		yield return www;
-		
-		getError();
+	
+		using(var webRequest = UnityWebRequest.Post(settings.filenameData.fullString, CreateGetFilesForm()))
+		{
+			yield return SendWebRequest(webRequest);
+			if(!getError())
+				_data = webRequest.downloadHandler.data;
+		}
 		isDone = true;
 	}
 	
 	public string[] GetFilenames()
 	{
-		return www.text.Split(new char[]{'\n'}, System.StringSplitOptions.RemoveEmptyEntries);
+		return text.Split(new char[]{'\n'}, System.StringSplitOptions.RemoveEmptyEntries);
 	}
 	
 	public IEnumerator Download()
 	{
 		CheckWWWUsage();
 
-		www = new WWW(settings.filenameData.fullString, CreateDownloadForm());
-		
-		yield return www;
-		
-		getError();
+
+		using(var webRequest = UnityWebRequest.Post(settings.filenameData.fullString, CreateDownloadForm()))
+		{
+			yield return SendWebRequest(webRequest);
+			if(!getError())
+				_data = webRequest.downloadHandler.data;
+		}
 		isDone = true;
 	}
 	
@@ -438,13 +499,21 @@ public class ES2Web
 			form.AddField("type", "tag");
 		else
 			form.AddField("type", "file");
-		
-		www = new WWW(settings.filenameData.fullString, form);
-		
-		yield return www;
-		
-		getError();
+
+		using(var webRequest = UnityWebRequest.Post(settings.filenameData.fullString, form))
+		{
+			yield return SendWebRequest(webRequest);
+			getError();
+		}
 		isDone = true;
+	}
+
+	public string[] GetTags()
+	{
+		using (ES2Reader reader = ES2Reader.Create(data, settings))
+		{
+			return reader.GetTags();
+		}
 	}
 	
 	private WWWForm CreateUploadForm(byte[] data)
@@ -512,10 +581,10 @@ public class ES2Web
 			errorCode = "00";
 			return true;
 		}
-		else if(www.text.Length == 2)
+		else if(www.downloadHandler != null && www.downloadHandler.text.Length == 2)
 		{
 			isError = true;
-			switch(www.text)  
+			switch(www.downloadHandler.text)  
 			{
 				/* Error codes and their accompanying descriptions. */
 			case "01":   

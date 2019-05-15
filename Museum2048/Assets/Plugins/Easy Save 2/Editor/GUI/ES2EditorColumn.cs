@@ -190,7 +190,11 @@ public class ES2EditorRow
 				//EditorApplication.MarkSceneDirty();
 				Undo.RecordObject(obj.undoRecordObject, "Changes to Auto Save");
 
+#if UNITY_2018_2_OR_NEWER
+				if(PrefabUtility.GetPrefabInstanceStatus(obj.undoRecordObject) != PrefabInstanceStatus.NotAPrefab)
+#else
 				if(PrefabUtility.GetPrefabType(obj.undoRecordObject) == PrefabType.Prefab)
+#endif
 					EditorUtility.SetDirty(obj.undoRecordObject);
 
 				// If we right click the icon, mark it as right-clicked in the column.

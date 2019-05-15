@@ -46,7 +46,7 @@ namespace ES3Types
 					case "pathCount":
 						int pathCount = reader.Read<System.Int32>(ES3Type_int.Instance);
 						for(int i=0; i<pathCount; i++)
-							instance.SetPath(i, reader.Read<UnityEngine.Vector2[]>(ES3Type_Vector2Array.Instance));
+							instance.SetPath(i, reader.ReadProperty<UnityEngine.Vector2[]>(ES3Type_Vector2Array.Instance));
 						break;
 					case "density":
 						instance.density = reader.Read<System.Single>(ES3Type_float.Instance);

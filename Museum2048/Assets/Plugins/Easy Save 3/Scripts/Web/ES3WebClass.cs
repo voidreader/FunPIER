@@ -11,8 +11,31 @@ namespace ES3Internal
 		protected string apiKey;
 
 		protected List<KeyValuePair<string,string>> formData = new List<KeyValuePair<string, string>>();
+		protected UnityWebRequest _webRequest = null;
+
 
 		public bool isDone = false;
+		public float uploadProgress
+		{
+			get
+			{ 
+				if(_webRequest == null)
+					return 0;
+				else
+					return _webRequest.uploadProgress;
+			}
+		}
+
+		public float downloadProgress
+		{
+			get
+			{ 
+				if(_webRequest == null)
+					return 0;
+				else
+					return _webRequest.downloadProgress;
+			}
+		}
 
 		#region Error Handling
 
@@ -53,7 +76,7 @@ namespace ES3Internal
 			if(!string.IsNullOrEmpty(password))
 				user += password;
 
-			#if !DISABLE_ENCRYPTION
+			#if !DISABLE_ENCRYPTION && !DISABLE_HASHING
 			user = ES3Internal.ES3Hash.SHA1Hash(user);
 			#endif
 			return user;
@@ -99,6 +122,8 @@ namespace ES3Internal
 
 		protected IEnumerator SendWebRequest(UnityWebRequest webRequest)
 		{
+			_webRequest = webRequest;
+			_webRequest.chunkedTransfer = false;
 			#if !UNITY_2017_2_OR_NEWER
 			yield return webRequest.Send();
 			#else

@@ -399,11 +399,12 @@ public class ES3Cloud : ES3WebClass
 		using(var webRequest = UnityWebRequest.Post(url, form))
 		{
 			yield return SendWebRequest(webRequest);
-
 			if(!HandleError(webRequest, false))
 			{
 				if(webRequest.downloadedBytes > 0)
+				{
 					ES3.SaveRaw(webRequest.downloadHandler.data, settings);
+				}
 				else
 				{
 					error = string.Format("File {0} was not found on the server.", settings.path);

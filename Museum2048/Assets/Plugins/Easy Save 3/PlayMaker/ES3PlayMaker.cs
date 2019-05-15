@@ -180,43 +180,49 @@ namespace ES3PlayMaker
 		public FsmString str;
 		[Tooltip("Whether to encode this string using Base-64 encoding. This will override any default encoding settings.")]
 		public FsmBool useBase64Encoding;
+		[Tooltip("Adds a newline to the end of the file.")]
+		public FsmBool appendNewline;
 
 		public override void OnReset()
 		{
 			str = "";
 			useBase64Encoding = false;
+			appendNewline = false;
 		}
 
 		public override void Enter()
 		{
 			if(useBase64Encoding.Value)
-				ES3.SaveRaw(System.Convert.FromBase64String(str.Value), GetSettings());
+				ES3.SaveRaw(System.Convert.FromBase64String(str.Value) + (appendNewline.Value ? "\n" : ""), GetSettings());
 			else
-				ES3.SaveRaw(str.Value, GetSettings());
+				ES3.SaveRaw(str.Value + (appendNewline.Value ? "\n" : ""), GetSettings());
 		}
 	}
 
 	[ActionCategory("Easy Save 3")]
-	[Tooltip("")]
+	[Tooltip("Appends a string to the end of a file.")]
 	public class AppendRaw : SettingsAction
 	{
 		[Tooltip("The string we want to append to a file.")]
 		public FsmString str;
 		[Tooltip("Whether to encode this string using Base-64 encoding. This will override any default encoding settings.")]
 		public FsmBool useBase64Encoding;
+		[Tooltip("If checked, a newline will be added after the data.")]
+		public FsmBool appendNewline;
 
 		public override void OnReset()
 		{
 			str = "";
 			useBase64Encoding = false;
+			appendNewline = false;
 		}
 
 		public override void Enter()
 		{
 			if(useBase64Encoding.Value)
-				ES3.AppendRaw(System.Convert.FromBase64String(str.Value), GetSettings());
+				ES3.AppendRaw(System.Convert.FromBase64String(str.Value) + (appendNewline.Value ? "\n" : ""), GetSettings());
 			else
-				ES3.AppendRaw(str.Value, GetSettings());
+				ES3.AppendRaw(str.Value + (appendNewline.Value ? "\n" : ""), GetSettings());
 		}
 	}
 
@@ -358,15 +364,28 @@ namespace ES3PlayMaker
 		[Tooltip("The variable we want to use to store our loaded AudioClip.")]
 		public FsmObject audioClip;
 
+		#if UNITY_2018_3_OR_NEWER
+		[Tooltip("The type of AudioClip we're loading.")]
+		[ObjectType(typeof(AudioType))]
+		public FsmEnum audioType;
+		#endif
+
 		public override void OnReset()
 		{
 			audioFilePath = "audio.wav";
 			audioClip = null;
+			#if UNITY_2018_3_OR_NEWER
+			audioType = AudioType.MPEG;
+			#endif
 		}
 
 		public override void Enter()
 		{
-			audioClip.Value = ES3.LoadAudio(audioFilePath.Value, GetSettings());
+			audioClip.Value = ES3.LoadAudio(	audioFilePath.Value, 
+											#if UNITY_2018_3_OR_NEWER 
+												(AudioType)audioType.Value,
+											#endif 
+												GetSettings());
 		}
 	}
 
@@ -640,6 +659,7 @@ namespace ES3PlayMaker
 		public override void Enter()
 		{
 			keys.Values = ES3.GetKeys(filePath.Value, GetSettings());
+			keys.SaveChanges();
 		}
 	}
 
@@ -683,6 +703,7 @@ namespace ES3PlayMaker
 		public override void Enter()
 		{
 			files.Values = ES3.GetFiles(directoryPath.Value, GetSettings());
+			files.SaveChanges();
 		}
 	}
 
@@ -705,6 +726,7 @@ namespace ES3PlayMaker
 		public override void Enter()
 		{
 			directories.Values = ES3.GetDirectories(directoryPath.Value, GetSettings());
+			directories.SaveChanges();
 		}
 	}
 
@@ -923,6 +945,7 @@ namespace ES3PlayMaker
 		public override void Enter()
 		{
 			keys.Values = es3File.GetKeys();
+			keys.SaveChanges();
 		}
 	}
 
@@ -997,16 +1020,18 @@ namespace ES3PlayMaker
 
 		public override void OnUpdate()
 		{
-			if(cloud.isError)
+			base.OnUpdate();
+			if(cloud.isDone)
 			{
-				errorCode = (int)cloud.errorCode;
-				errorMessage = cloud.error;
-				Log("Error occurred when trying to perform operation with ES3Cloud: [Error "+cloud.errorCode+"] " + cloud.error);
-				Fsm.Event(errorEvent);
-			}
-			else if(cloud.isDone)
-			{
-				Finish();
+				if(cloud.isError)
+				{
+					errorCode.Value = (int)cloud.errorCode;
+					errorMessage.Value = cloud.error;
+					Log("Error occurred when trying to perform operation with ES3Cloud: [Error "+cloud.errorCode+"] " + cloud.error);
+					Fsm.Event(errorEvent);
+				}
+				else
+					Finish();
 			}
 		}
 
@@ -1027,12 +1052,6 @@ namespace ES3PlayMaker
 			user = "";
 			password = "";
 		}
-
-		public override void Enter()
-		{
-			var settings = GetSettings();
-			StartCoroutine(cloud.Sync(path.Value, user.Value, password.Value, settings));
-		}
 	}
 
 	[ActionCategory("Easy Save 3")]
@@ -1041,7 +1060,6 @@ namespace ES3PlayMaker
 	{
 		public override void Enter()
 		{
-			base.Enter();
 			var settings = GetSettings();
 			StartCoroutine(cloud.Sync(path.Value, settings));
 		}
@@ -1053,7 +1071,6 @@ namespace ES3PlayMaker
 	{
 		public override void Enter()
 		{
-			base.Enter();
 			var settings = GetSettings();
 			StartCoroutine(cloud.UploadFile(path.Value, user.Value, password.Value, settings));
 		}
@@ -1065,7 +1082,6 @@ namespace ES3PlayMaker
 	{
 		public override void Enter()
 		{
-			base.Enter();
 			var settings = GetSettings();
 			StartCoroutine(cloud.DownloadFile(path.Value, user.Value, password.Value, settings));
 		}
@@ -1077,7 +1093,6 @@ namespace ES3PlayMaker
 	{
 		public override void Enter()
 		{
-			base.Enter();
 			var settings = GetSettings();
 			StartCoroutine(cloud.DeleteFile(path.Value, user.Value, password.Value, settings));
 		}
@@ -1092,7 +1107,6 @@ namespace ES3PlayMaker
 
 		public override void Enter()
 		{
-			base.Enter();
 			var settings = GetSettings();
 			StartCoroutine(cloud.RenameFile(path.Value, newFilename.Value, user.Value, password.Value, settings));
 		}
@@ -1113,14 +1127,19 @@ namespace ES3PlayMaker
 
 		public override void Enter()
 		{
-			base.Enter();
 			StartCoroutine(cloud.DownloadFilenames(user.Value, password.Value));
 		}
 
 		public override void OnUpdate()
 		{
 			if(cloud != null && cloud.isDone)
-				filenames.Values = cloud.filenames;
+			{
+				var downloadedFilenames = cloud.filenames;
+				filenames.Resize(cloud.filenames.Length);
+				for(int i = 0; i < downloadedFilenames.Length; i++)
+					filenames.Set(i, downloadedFilenames [i]);
+				filenames.SaveChanges();
+			}
 			base.OnUpdate();
 		}
 	}
@@ -1139,7 +1158,6 @@ namespace ES3PlayMaker
 
 		public override void Enter()
 		{
-			base.Enter();
 			StartCoroutine(cloud.DownloadFilenames(user.Value, password.Value));
 		}
 

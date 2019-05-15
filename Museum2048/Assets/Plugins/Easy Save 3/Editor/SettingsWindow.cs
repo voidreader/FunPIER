@@ -8,14 +8,17 @@ namespace ES3Editor
 {
 	public class SettingsWindow : SubWindow
 	{
+		public GameObject defaultSettingsGo = null;
 		public ES3DefaultSettings editorSettings = null;
 		public ES3SerializableSettings settings = null;
+		public SerializedObject so = null;
+		public SerializedProperty assemblyNamesProperty = null;
 
 		public SettingsWindow(EditorWindow window) : base("Settings", window){}
 
 		public override void OnGUI()
 		{
-			if(settings == null || editorSettings == null)
+			if(settings == null || editorSettings == null || assemblyNamesProperty == null)
 				Init();
 
 			var style = EditorStyle.Get;
@@ -53,11 +56,13 @@ namespace ES3Editor
 
 
 			// Show Assembly names array.
-			SerializedObject so = new SerializedObject(editorSettings);
-			SerializedProperty settingsProperty = so.FindProperty("settings");
-			SerializedProperty assemblyNamesProperty = settingsProperty.FindPropertyRelative("assemblyNames");
 			EditorGUILayout.PropertyField(assemblyNamesProperty, new GUIContent("Assemblies containing ES3Types", "The names of assemblies we want to load ES3Types from."), true); // True means show children
-			so.ApplyModifiedProperties();
+			if(so.ApplyModifiedProperties())
+			{
+				#if UNITY_2018_3_OR_NEWER
+				PrefabUtility.SaveAsPrefabAsset(defaultSettingsGo, "Assets/Plugins/Easy Save 3/Resources/ES3/ES3 Default Settings.prefab");
+				#endif
+			}
 
 			EditorGUILayout.EndVertical();
 
@@ -70,8 +75,22 @@ namespace ES3Editor
 
 		public void Init()
 		{
-			editorSettings = ES3EditorUtility.GetDefaultSettings();
+			#if UNITY_2018_3_OR_NEWER
+			defaultSettingsGo = (GameObject)AssetDatabase.LoadMainAssetAtPath("Assets/Plugins/Easy Save 3/Resources/ES3/ES3 Default Settings.prefab");
+			editorSettings = defaultSettingsGo.GetComponent<ES3DefaultSettings>();
+			#else
+			editorSettings = ES3Settings.GetDefaultSettings();
+			#endif
+
 			settings = editorSettings.settings;
+			so = new SerializedObject(editorSettings);
+			var settingsProperty = so.FindProperty("settings");
+			assemblyNamesProperty = settingsProperty.FindPropertyRelative("assemblyNames");
+			
+			
+			#if UNITY_2018_3_OR_NEWER
+			PrefabUtility.SavePrefabAsset(defaultSettingsGo);
+			#endif
 		}
 	}
 

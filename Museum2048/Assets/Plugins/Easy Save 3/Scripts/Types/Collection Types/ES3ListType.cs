@@ -8,6 +8,7 @@ namespace ES3Types
 	public class ES3ListType : ES3CollectionType
 	{
 		public ES3ListType(Type type) : base(type){}
+		public ES3ListType(Type type, ES3Type elementType) : base(type, elementType){}
 
 		public override void Write(object obj, ES3Writer writer, ES3.ReferenceMode memberReferenceMode)
 		{

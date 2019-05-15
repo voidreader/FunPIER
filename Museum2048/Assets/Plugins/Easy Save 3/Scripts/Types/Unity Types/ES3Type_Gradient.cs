@@ -16,7 +16,6 @@ namespace ES3Types
 		public override void Write(object obj, ES3Writer writer)
 		{
 			var instance = (UnityEngine.Gradient)obj;
-			
 			writer.WriteProperty("colorKeys", instance.colorKeys, ES3Type_GradientColorKeyArray.Instance);
 			writer.WriteProperty("alphaKeys", instance.alphaKeys, ES3Type_GradientAlphaKeyArray.Instance);
 			writer.WriteProperty("mode", instance.mode);
@@ -32,18 +31,16 @@ namespace ES3Types
 		public override void ReadInto<T>(ES3Reader reader, object obj)
 		{
 			var instance = (UnityEngine.Gradient)obj;
+			instance.SetKeys(
+				reader.ReadProperty<UnityEngine.GradientColorKey[]>(ES3Type_GradientColorKeyArray.Instance),
+				reader.ReadProperty<UnityEngine.GradientAlphaKey[]>(ES3Type_GradientAlphaKeyArray.Instance)
+			);
+
 			string propertyName;
 			while((propertyName = reader.ReadPropertyName()) != null)
 			{
 				switch(propertyName)
 				{
-					
-					case "colorKeys":
-						instance.colorKeys = reader.Read<UnityEngine.GradientColorKey[]>(ES3Type_GradientColorKeyArray.Instance);
-						break;
-					case "alphaKeys":
-						instance.alphaKeys = reader.Read<UnityEngine.GradientAlphaKey[]>(ES3Type_GradientAlphaKeyArray.Instance);
-						break;
 					case "mode":
 						instance.mode = reader.Read<UnityEngine.GradientMode>();
 						break;

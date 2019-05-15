@@ -3052,8 +3052,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 206534644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -120, y: 42, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -120, y: 40, z: 0}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_Children:
   - {fileID: 1534768971}
   - {fileID: 167229319}
@@ -3765,7 +3765,7 @@ MonoBehaviour:
   lblTotalProgress: {fileID: 1337700666}
   btnNoAds: {fileID: 2031177252}
   tutorialButton: {fileID: 629500013}
-  facebookButton: {fileID: 0}
+  facebookButton: {fileID: 1379593822}
   splash: {fileID: 1832273645}
   lobbyPanel: {fileID: 1104691450}
   lobbyBottomGroup: {fileID: 1349532086}
@@ -7458,7 +7458,7 @@ PrefabInstance:
     - target: {fileID: 4674756186014134202, guid: b866318c69fdedf43bf75794234e8340,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 215
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 4674756186014134202, guid: b866318c69fdedf43bf75794234e8340,
         type: 3}
@@ -22251,8 +22251,12 @@ PrefabInstance:
       propertyPath: onClick.Array.data[0].mMethodName
       value: Close
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6918685922772223771, guid: b866318c69fdedf43bf75794234e8340, type: 3}
+    - target: {fileID: 6918685922772223771, guid: b866318c69fdedf43bf75794234e8340,
+        type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b866318c69fdedf43bf75794234e8340, type: 3}
 --- !u!4 &1397065785 stripped
 Transform:
@@ -24019,7 +24023,7 @@ MonoBehaviour:
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: ec0a0a2e1a76f5e4db449f38d7bd05ab, type: 3}
   mFont: {fileID: 0}
-  mText: 20%
+  mText: 50%
   mFontSize: 24
   mFontStyle: 1
   mAlignment: 0
