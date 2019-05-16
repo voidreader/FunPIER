@@ -33,7 +33,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             return;
 
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        builder.AddProduct("noads_m2048", ProductType.Consumable, new IDs {
+        builder.AddProduct("noads_m2048", ProductType.NonConsumable, new IDs {
             { "noads_m2048", GooglePlay.Name },
             { "noads_m2048", AppleAppStore.Name }
         });
@@ -68,10 +68,12 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             { "cleaner2_m2048", AppleAppStore.Name }
         });
 
+        /*
         builder.AddProduct("onechance_m2048", ProductType.Consumable, new IDs {
             { "onechance_m2048", GooglePlay.Name },
             { "onechance_m2048", AppleAppStore.Name }
         });
+        */
 
         builder.AddProduct("pack1_m2048", ProductType.Consumable, new IDs {
             { "pack1_m2048", GooglePlay.Name },
@@ -92,6 +94,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     /// <param name="e"></param>
     /// <returns></returns>
     public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs e) {
+
+        Debug.Log(">> Called ProcessPurchase  :: " + e.purchasedProduct.definition.id);
 
         bool validPurchase = true;
         var validator = new CrossPlatformValidator(GooglePlayTangle.Data(), AppleTangle.Data(), Application.identifier);
@@ -142,6 +146,34 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         */
 
         IsInitialized = true;
+
+#if UNITY_ANDROID
+
+
+        Product p = this.Controller.products.WithID("noads_m2048");
+
+        if(p != null && p.hasReceipt) {
+            Debug.Log(">> Restore noads!! <<");
+            UnLockProduct("noads_m2048");
+        }
+
+#endif
+
+    }
+
+    public void RestoreIOS() {
+        if (!IsInitialized)
+            return;
+
+        extensions.GetExtension<IAppleExtensions>().RestoreTransactions(result => {
+            if (result) {
+                Debug.Log(">> Restored! <<");
+            }
+            else {
+                // Restoration failed.
+                Debug.Log(">> Restored! Failed<<");
+            }
+        });
     }
 
 

@@ -102,6 +102,7 @@ public class LobbyManager : MonoBehaviour {
         splash.alpha = 1;
         splash.gameObject.SetActive(true); // 일단 까맣게 만들어놓고 시작.
         RefreshFacebookShareButton();
+        RefreshNoAdsButton();
 
         ScissorCtrl.Instance.UpdateResolution();
 
@@ -544,6 +545,13 @@ public class LobbyManager : MonoBehaviour {
             facebookButton.SetActive(true);
     }
 
+    public void RefreshNoAdsButton() {
+        if (PierSystem.main.NoAds > 0)
+            btnNoAds.gameObject.SetActive(false);
+        else
+            btnNoAds.gameObject.SetActive(true);
+
+    }
 
     #region Splash 
 

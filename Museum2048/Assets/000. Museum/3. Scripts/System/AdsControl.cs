@@ -330,6 +330,9 @@ public class AdsControl : MonoBehaviour
         if(PierSystem.main.NoAds > 0) {
             bannerView.Hide();
         }
+
+        LobbyManager.main.RefreshNoAdsButton();
+        
     }
 
 

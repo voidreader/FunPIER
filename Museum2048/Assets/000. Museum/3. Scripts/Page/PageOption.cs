@@ -8,10 +8,17 @@ public class PageOption : UILayer {
     public GameObject _sfxInactive, _bgmInactive;
     public UILabel _lblSFX, _lblBGM;
 
-
+    public GameObject _btnRestore;
 
 
     public override UILayer Init(UILayerEnum type, Transform parent, Action pOpen, Action pClose) {
+
+        _btnRestore.SetActive(false);
+#if UNITY_IOS
+        
+        _btnRestore.SetActive(true);
+#endif
+
 
         CheckVolumeState();
 
