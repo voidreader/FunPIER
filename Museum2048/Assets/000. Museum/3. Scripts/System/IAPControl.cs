@@ -33,9 +33,9 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             return;
 
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        builder.AddProduct("noads_m2048", ProductType.NonConsumable, new IDs {
-            { "noads_m2048", GooglePlay.Name },
-            { "noads_m2048", AppleAppStore.Name }
+        builder.AddProduct("noads_nonconsumable", ProductType.NonConsumable, new IDs {
+            { "noads_nonconsumable", GooglePlay.Name },
+            { "noads_nonconsumable", AppleAppStore.Name }
         });
 
         builder.AddProduct("back_m2048", ProductType.Consumable, new IDs {
@@ -150,11 +150,11 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 #if UNITY_ANDROID
 
 
-        Product p = this.Controller.products.WithID("noads_m2048");
+        Product p = this.Controller.products.WithID("noads_nonconsumable");
 
         if(p != null && p.hasReceipt) {
             Debug.Log(">> Restore noads!! <<");
-            UnLockProduct("noads_m2048");
+            UnLockProduct("noads_nonconsumable");
         }
 
 #endif
@@ -187,7 +187,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             return;
 
         // 이미 광고 없애기 구매한 경우.
-        if(productid == "noads_m2048" && PierSystem.main.NoAds > 0) {
+        if(productid == "noads_nonconsumable" && PierSystem.main.NoAds > 0) {
             PageManager.main.OpenMessage(Message.AlreadyHaveNoAds, delegate { });
             return;
         }
@@ -245,7 +245,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                 break;
 
 
-            case "noads_m2048":
+            case "noads_nonconsumable":
                 PierSystem.main.NoAds = 1;
                 AdsControl.main.NoAdsCheck();
                 // AdsControl.main.set

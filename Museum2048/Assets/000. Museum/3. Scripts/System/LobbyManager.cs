@@ -76,7 +76,7 @@ public class LobbyManager : MonoBehaviour {
     /// 광고 없애기 구매 
     /// </summary>
     public void BuyNoAds() {
-        IAPControl.main.Purchase("noads_m2048");
+        IAPControl.main.Purchase("noads_nonconsumable");
     }
 
     /// <summary>
