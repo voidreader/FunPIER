@@ -137,13 +137,13 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         this.extensions = extensions;
 
 
-        /*
+
         foreach (var product in controller.products.all) {
             Debug.Log(product.metadata.localizedTitle);
             Debug.Log(product.metadata.localizedDescription);
             Debug.Log(product.metadata.localizedPriceString);
         }
-        */
+
 
         IsInitialized = true;
 
