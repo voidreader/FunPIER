@@ -17,7 +17,8 @@ public enum Message {
     NeedLv3,
     PuchaseComplete,
     AlreadyHaveNoAds,
-    NotInitBilling
+    NotInitBilling,
+    RestoreCompleted // 복원 완료
 
 }
 
@@ -125,6 +126,11 @@ public class PageMessage : UILayer {
 
             case Message.NotInitBilling:
                 lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT58);
+                SetSingleButton();
+                break;
+
+            case Message.RestoreCompleted:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT60);
                 SetSingleButton();
                 break;
         }

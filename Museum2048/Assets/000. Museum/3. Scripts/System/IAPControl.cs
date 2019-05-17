@@ -168,6 +168,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         extensions.GetExtension<IAppleExtensions>().RestoreTransactions(result => {
             if (result) {
                 Debug.Log(">> Restored! <<");
+                PageManager.main.OpenMessage(Message.RestoreCompleted, delegate { });
             }
             else {
                 // Restoration failed.
