@@ -269,6 +269,9 @@ public class AdsControl : MonoBehaviour
 
         if (!this.rewardedAd.IsLoaded()) {
             Debug.Log("admob rewarded ad is not ready");
+            OnWatchedAd();
+            OnWatchedAd = delegate { };
+            CreateAndLoadRewardedAd();
             return;
         }
 
