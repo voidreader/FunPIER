@@ -112,6 +112,9 @@ public class InGame : MonoBehaviour {
 
     void Update() {
 
+        if (!PierSystem.main.AdminPlay)
+            return;
+
         /* 이 부분은 테스트를 위한 로직 */
 
         if(Input.GetKeyDown(KeyCode.O)) {
@@ -165,6 +168,16 @@ public class InGame : MonoBehaviour {
 
         _mainCamera.transform.position = OriginCameraPos;
         _mainCamera.orthographicSize = 13;
+    }
+
+    public void SetResolutionPos(bool isTall) {
+        if(isTall) {
+            askingEndGame.transform.localPosition = new Vector3(0, 200, 0);
+        }
+        else {
+            askingEndGame.transform.localPosition = new Vector3(0, 150, 0);
+        }
+
     }
 
     /// <summary>

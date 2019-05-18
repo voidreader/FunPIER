@@ -38,7 +38,7 @@ public class PageShop : UILayer {
         _lblClean1.text = GetLocalizedPrice("cleaner_m2048");
         _lblClean2.text = GetLocalizedPrice("cleaner2_m2048");
 
-        _lblNoAds.text = GetLocalizedPrice("noads_nonconsumable");
+        _lblNoAds.text = GetLocalizedPrice(IAPControl.noadsID);
         _lblPackage.text = GetLocalizedPrice("pack1_m2048");
 
     }
@@ -89,7 +89,7 @@ public class PageShop : UILayer {
     }
 
     public void BuyNoAds() {
-        IAPControl.main.Purchase("noads_nonconsumable");
+        IAPControl.main.Purchase(IAPControl.noadsID);
     }
 
     public void BuyPackage() {

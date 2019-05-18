@@ -11,6 +11,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
     public static IAPControl main = null;
     public static bool IsInitialized = false;
+    public static string noadsID = string.Empty;
 
     IStoreController controller = null;
     IExtensionProvider extensions = null;
@@ -19,6 +20,16 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
     private void Awake() {
         main = this;
+
+#if UNITY_ANDROID
+        noadsID = "noads_m2048";
+
+#else
+
+        noadsID = "noads_nonconsumable";
+
+#endif
+
         InitBilling();
     }
 
@@ -33,10 +44,22 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             return;
 
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        builder.AddProduct("noads_nonconsumable", ProductType.NonConsumable, new IDs {
-            { "noads_nonconsumable", GooglePlay.Name },
+
+#if UNITY_ANDROID 
+        builder.AddProduct(noadsID, ProductType.Consumable, new IDs {
+            { noadsID, GooglePlay.Name },
             { "noads_nonconsumable", AppleAppStore.Name }
         });
+
+#else
+
+        builder.AddProduct(noadsID, ProductType.NonConsumable, new IDs {
+            { "noads_m2048", GooglePlay.Name },
+            { "noads_nonconsumable", AppleAppStore.Name }
+        });
+
+
+#endif
 
         builder.AddProduct("back_m2048", ProductType.Consumable, new IDs {
             { "back_m2048", GooglePlay.Name },
@@ -150,11 +173,11 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 #if UNITY_ANDROID
 
 
-        Product p = this.Controller.products.WithID("noads_nonconsumable");
+        Product p = this.Controller.products.WithID(noadsID);
 
         if(p != null && p.hasReceipt) {
             Debug.Log(">> Restore noads!! <<");
-            UnLockProduct("noads_nonconsumable");
+            UnLockProduct(noadsID);
         }
 
 #endif
@@ -188,7 +211,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             return;
 
         // 이미 광고 없애기 구매한 경우.
-        if(productid == "noads_nonconsumable" && PierSystem.main.NoAds > 0) {
+        if(productid == noadsID && PierSystem.main.NoAds > 0) {
             PageManager.main.OpenMessage(Message.AlreadyHaveNoAds, delegate { });
             return;
         }
@@ -246,6 +269,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                 break;
 
 
+            case "noads_m2048":
             case "noads_nonconsumable":
                 PierSystem.main.NoAds = 1;
                 AdsControl.main.NoAdsCheck();

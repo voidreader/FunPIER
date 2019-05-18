@@ -76,7 +76,7 @@ public class LobbyManager : MonoBehaviour {
     /// 광고 없애기 구매 
     /// </summary>
     public void BuyNoAds() {
-        IAPControl.main.Purchase("noads_nonconsumable");
+        IAPControl.main.Purchase(IAPControl.noadsID);
     }
 
     /// <summary>
@@ -138,6 +138,8 @@ public class LobbyManager : MonoBehaviour {
             }
 
         }
+
+        InGame.main.SetResolutionPos(isTallScreen);
         #endregion
 
         // 기본 초기화 로직 
