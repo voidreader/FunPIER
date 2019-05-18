@@ -18,7 +18,9 @@ public enum Message {
     PuchaseComplete,
     AlreadyHaveNoAds,
     NotInitBilling,
-    RestoreCompleted // 복원 완료
+    RestoreCompleted, // 복원 완료
+    ExitGame
+
 
 }
 
@@ -133,6 +135,12 @@ public class PageMessage : UILayer {
                 lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT60);
                 SetSingleButton();
                 break;
+
+            case Message.ExitGame:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT61);
+                SetDoubleButton();
+                break;
+
         }
     }
 

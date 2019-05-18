@@ -68,9 +68,37 @@ public class LobbyManager : MonoBehaviour {
 
     void Update() {
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+            ControlEscape();
+
+        if (!PierSystem.main.AdminPlay)
+            return;
+
         if(Input.GetKeyDown(KeyCode.U))
             TestUpgrade();
     }
+
+    void ControlEscape() {
+
+        if (inGameTopGroup.gameObject.activeSelf)
+            return;
+
+
+
+        if(PageManager.main.pageStack.Count > 0) {
+            PageManager.main.pageStack.Pop().Close();
+            return;
+        }
+
+        PageManager.main.OpenDoubleButtonMessage(Message.ExitGame, QuitProcess, delegate { });
+
+    }
+
+    void QuitProcess() {
+        Application.Quit();
+    }
+
+    
 
     /// <summary>
     /// 광고 없애기 구매 

@@ -77,13 +77,13 @@ namespace Google2u
 			TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT7, TEXT8, TEXT9, TEXT10, TEXT11, TEXT12, TEXT13, TEXT14, TEXT15, TEXT16, TEXT17, TEXT18
 			, TEXT19, TEXT20, TEXT21, TEXT22, TEXT23, TEXT24, TEXT25, TEXT26, TEXT27, TEXT28, TEXT29, TEXT30, TEXT31, TEXT32, TEXT33, TEXT34, TEXT35, TEXT36, TEXT37, TEXT38
 			, TEXT39, TEXT40, TEXT41, TEXT42, TEXT43, TEXT44, TEXT45, TEXT46, TEXT47, TEXT48, TEXT49, TEXT50, TEXT51, TEXT52, TEXT53, TEXT54, TEXT55, TEXT56, TEXT57, TEXT58
-			, TEXT59, TEXT60
+			, TEXT59, TEXT60, TEXT61
 		};
 		public string [] rowNames = {
 			"TEXT1", "TEXT2", "TEXT3", "TEXT4", "TEXT5", "TEXT6", "TEXT7", "TEXT8", "TEXT9", "TEXT10", "TEXT11", "TEXT12", "TEXT13", "TEXT14", "TEXT15", "TEXT16", "TEXT17", "TEXT18"
 			, "TEXT19", "TEXT20", "TEXT21", "TEXT22", "TEXT23", "TEXT24", "TEXT25", "TEXT26", "TEXT27", "TEXT28", "TEXT29", "TEXT30", "TEXT31", "TEXT32", "TEXT33", "TEXT34", "TEXT35", "TEXT36", "TEXT37", "TEXT38"
 			, "TEXT39", "TEXT40", "TEXT41", "TEXT42", "TEXT43", "TEXT44", "TEXT45", "TEXT46", "TEXT47", "TEXT48", "TEXT49", "TEXT50", "TEXT51", "TEXT52", "TEXT53", "TEXT54", "TEXT55", "TEXT56", "TEXT57", "TEXT58"
-			, "TEXT59", "TEXT60"
+			, "TEXT59", "TEXT60", "TEXT61"
 		};
 		public System.Collections.Generic.List<MLocalRow> Rows = new System.Collections.Generic.List<MLocalRow>();
 
@@ -162,6 +162,7 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT58", "결제 서비스를 초기화하고 있습니다.", "Initializing payment service."));
 			Rows.Add( new MLocalRow("TEXT59", "구매 복원", "Restore Purchase"));
 			Rows.Add( new MLocalRow("TEXT60", "구매 복원이 완료되었습니다.", "Restore process is completed"));
+			Rows.Add( new MLocalRow("TEXT61", "게임을 종료 하시겠습니까?", "Exit Game?"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
