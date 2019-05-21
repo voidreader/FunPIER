@@ -118,7 +118,7 @@ public class MuseumStruct : MonoBehaviour {
 
             case Theme.Wine:
                 // _baseTransform.localEulerAngles = new Vector3(-90, 0, 0);
-                _baseTransform.localEulerAngles = new Vector3(-90, -60, 0);
+                _baseTransform.localEulerAngles = new Vector3(-90, 0, 0);
 
                 listStep1[1].transform.DOKill();
                 listStep1[1].transform.localPosition = new Vector3(0.02036037f, -0.01167562f, -0.002455181f);
@@ -311,8 +311,9 @@ public class MuseumStruct : MonoBehaviour {
                 _baseTransform.DOLocalRotate(new Vector3(_baseTransform.localEulerAngles.x, -50, 0), Random.Range(8f, 15f), RotateMode.Fast).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
             }
             else if (theme == Theme.Wine) {
-                _baseTransform.localEulerAngles = new Vector3(-90, -60, 0);
-                _baseTransform.DOLocalRotate(new Vector3(_baseTransform.localEulerAngles.x, 40, 0), Random.Range(8f, 15f), RotateMode.Fast).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+                _baseTransform.localEulerAngles = new Vector3(-90, 0, 0);
+                _baseTransform.DOLocalRotate(new Vector3(_baseTransform.localEulerAngles.x, -60, 0), Random.Range(8f, 15f), RotateMode.Fast).SetEase(Ease.Linear).OnComplete(OnLoopRotateWine);
+                //_baseTransform.DOLocalRotate(new Vector3(_baseTransform.localEulerAngles.x, 40, 0), Random.Range(8f, 15f), RotateMode.Fast).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
             }
             else if (theme == Theme.Viking) {
                 _baseTransform.localEulerAngles = new Vector3(-90, 20, 0);
@@ -481,6 +482,11 @@ public class MuseumStruct : MonoBehaviour {
         
 
     }
+
+    void OnLoopRotateWine() {
+        _baseTransform.DOLocalRotate(new Vector3(_baseTransform.localEulerAngles.x, 40, 0), Random.Range(8f, 15f), RotateMode.Fast).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+    }
+
 
     public void RotateObject(Transform t, bool isX) {
         StartCoroutine(Rotating(t, isX));

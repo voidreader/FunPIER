@@ -3,43 +3,53 @@ using UnityEngine.UI;
 using OldMoatGames;
 
 public class CodeExample : MonoBehaviour {
-    private AnimatedGifPlayer AnimatedGifPlayer;
+    [SerializeField] AnimatedGifPlayer _animatedGifPlayer;
 
-    public Button PlayButton;
-    public Button PauseButton;
-
+    
     public void Awake() {
         // Get the GIF player component
-        AnimatedGifPlayer = GetComponent<AnimatedGifPlayer>();
+        // _animatedGifPlayer = GetComponent<AnimatedGifPlayer>();
 
         // Set the file to use. File has to be in StreamingAssets folder or a remote url (For example: http://www.example.com/example.gif).
         // AnimatedGifPlayer.FileName = "AnimatedGIFPlayerExampe 3.gif";
-        AnimatedGifPlayer.FileName = "http://www.pier-showcase.com/gifs/test.gif";
+        _animatedGifPlayer.FileName = "http://www.pier-showcase.com/gifs/test.gif";
 
         // Disable autoplay
-        AnimatedGifPlayer.AutoPlay = false;
+        _animatedGifPlayer.AutoPlay = false;
 
         // Add ready event to start play when GIF is ready to play
-        AnimatedGifPlayer.OnReady += OnGifLoaded;
-        
+        _animatedGifPlayer.OnReady += OnGifLoaded;
+
         // Add ready event for when loading has failed
-        AnimatedGifPlayer.OnLoadError += OnGifLoadError;
+        _animatedGifPlayer.OnLoadError += OnGifLoadError;
 
         // Init the GIF player
-        AnimatedGifPlayer.Init();
+        _animatedGifPlayer.Init();
     
     }
 
     private void OnGifLoaded() {
-        PlayButton.interactable = true;
+        Debug.Log("GIF size: width: " + _animatedGifPlayer.Width + "px, height: " + _animatedGifPlayer.Height + " px");
+        this.gameObject.SetActive(true);
+        _animatedGifPlayer.Play();
 
-        Debug.Log("GIF size: width: " + AnimatedGifPlayer.Width + "px, height: " + AnimatedGifPlayer.Height + " px");
     }
 
     private void OnGifLoadError() {
         Debug.Log("Error Loading GIF");
     }
 
+    public void OnClickClose() {
+        _animatedGifPlayer.Pause();
+        this.gameObject.SetActive(false);
+
+    }
+
+    public void OnClickPlay() {
+
+    }
+
+    /*
     public void Play() {
         // Start playing the GIF
         AnimatedGifPlayer.Play();
@@ -50,7 +60,9 @@ public class CodeExample : MonoBehaviour {
         // Enable the pause button
         PauseButton.interactable = true;
     }
+    */
 
+    /*
     public void Pause() {
         // Stop playing the GIF
         AnimatedGifPlayer.Pause();
@@ -61,8 +73,7 @@ public class CodeExample : MonoBehaviour {
         // Disable the pause button
         PauseButton.interactable = false;
     }
+    */
 
-    public void OnDisable() {
-        AnimatedGifPlayer.OnReady -= Play;
-    }
+
 }
