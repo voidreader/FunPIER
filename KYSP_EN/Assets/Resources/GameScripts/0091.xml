@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- シートベルト -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id="bg" res="seatbelt/seatbeltBG" pos="0,0,10"/>
+  <useAndShow id="hito" res="seatbelt/seatbeltHitoUnten" pos="-25,-5,2"/>
+  <useAndShow id="omae" res="seatbelt/seatbeltOmaeSwaru" pos="90,36,9"/>
+  <useAndShow id="ude" res="seatbelt/seatbeltOmaeUde" pos="70,-15,8"/>
+  <useAndShow id="bonnet" res="seatbelt/seatbeltBonnet" pos="168,-118,0"/>
+  <useAndShow id="belt" res="seatbelt/seatbeltBelt" pos="0,0,1"/>
+  <beginSound name="jg_date"/>
+  <frame count ="60"/>
+  <function id="belt" func="OnBegin"/>
+  <frame count ="120"/>
+  <beginSound name="bgm_sumo" loop="true"/>
+
+  <!-- 時間切れ -->
+  <frame count="720"/>
+  <halt result="0"/>
+
+  <!-- 正しいシートベルト -->
+  <frame count ="2000"/>
+  <endIf/>
+  <beginMoveEx id="ude" pos="70,-15,-1"/>
+  <endSound/>
+  <frame count ="2060"/>
+  <beginSound name="bgm_car" loop="true" fade="2.0"/>
+  <frame count ="2180"/>
+  <halt result="1"/>
+
+  <!-- 誤ったシートベルト -->
+  <frame count ="3000"/>
+  <endIf/>
+  <frame count ="3120"/>
+  <var name="secret" value="1"/>
+  <halt result ="0"/>
+  
+</kyscript>

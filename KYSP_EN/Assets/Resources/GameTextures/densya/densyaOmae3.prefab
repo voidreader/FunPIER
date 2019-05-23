@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 11400000}
+  - component: {fileID: 11400002}
+  m_Layer: 0
+  m_Name: densyaOmae3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1002 &100001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -120.075, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1002 &400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75917f266df9d574fb8c2e345e27ffe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Textures:
+  - {fileID: 2800000, guid: 969a6336c1dbaeb48992321a8c574ef7, type: 3}
+  - {fileID: 2800000, guid: 580dfe33764da8249a0f8ff5c9e0b840, type: 3}
+  - {fileID: 2800000, guid: adefbb2525b80e444abf34bf08c3e50f, type: 3}
+  - {fileID: 2800000, guid: 580dfe33764da8249a0f8ff5c9e0b840, type: 3}
+  - {fileID: 2800000, guid: 969a6336c1dbaeb48992321a8c574ef7, type: 3}
+  - {fileID: 2800000, guid: df0031ffc04069d4097f673460f36e1f, type: 3}
+  - {fileID: 2800000, guid: 166db022bbcd671439f60eab064605a6, type: 3}
+  - {fileID: 2800000, guid: 449dc716dc642e046a138e330f8edb74, type: 3}
+  - {fileID: 2800000, guid: 69d6be0eff6fe9045bb38e1cf0eeb19c, type: 3}
+  - {fileID: 2800000, guid: 0eb0d085bc362ee4eae366095c1c9dd9, type: 3}
+  Animations:
+  - BeginFrame: 4
+    EndFrame: 5
+    Interval: 0
+    Loop: 1
+  - BeginFrame: 0
+    EndFrame: 0
+    Interval: 0
+    Loop: 0
+  - BeginFrame: 0
+    EndFrame: 3
+    Interval: 0.2
+    Loop: 1
+  - BeginFrame: 6
+    EndFrame: 7
+    Interval: 0.2
+    Loop: 1
+  - BeginFrame: 8
+    EndFrame: 9
+    Interval: 0.2
+    Loop: 1
+  - BeginFrame: 6
+    EndFrame: 6
+    Interval: 0
+    Loop: 0
+  Frames: []
+  AnimationIndex: 0
+  UsePosition: 0
+--- !u!1002 &11400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!114 &11400002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37282cf0e9306964faaaa40ca4677607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IntervalDistance: 16
+--- !u!1002 &11400003
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+--- !u!1002 &100100001
+EditorExtensionImpl:
+  serializedVersion: 6

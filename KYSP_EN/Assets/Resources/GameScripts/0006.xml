@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ウェーブ -->
+<kyscript yuragi="false">
+  
+  <frame count ="0"/>
+  <useAndShow id ="main" res ="wave/KyGameWave" pos ="0,0,0"/>
+  <beginSound name ="bgm_wave" loop="true"/>
+  <wait/>
+  
+  <frame count ="1000"/>
+  <halt/>
+  
+</kyscript>

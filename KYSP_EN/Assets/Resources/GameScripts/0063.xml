@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 雨あがり -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="kasa/kasaBG" pos ="120,0,5"/>
+  <useAndShow id ="uekomi0" res ="kasa/kasaUekomi" pos ="-180, 192,14"/>
+  <useAndShow id ="uekomi1" res ="kasa/kasaUekomi" pos ="-180,  96,13"/>
+  <useAndShow id ="uekomi2" res ="kasa/kasaUekomi" pos ="-180,   0,12"/>
+  <useAndShow id ="uekomi3" res ="kasa/kasaUekomi" pos ="-180, -96,11"/>
+  <useAndShow id ="uekomi4" res ="kasa/kasaUekomi" pos ="-180,-192,10"/>
+  <useAndShow id ="mizu" res ="ameagari/ameagariMizutamari" pos ="100, 60, 4"/>
+  <useAndShow id ="kanojo" res ="tatiiti/tatiitiKanojoWalk" pos ="-60,300,3"/>
+  <useAndShow id ="karesi" res ="ameagari/ameagariOmaeWalk" pos ="20,300,2"/>
+  <useAndShow id ="speed" res ="ameagari/ameagariSpeed" pos ="0,0,1"/>
+  <useAndShow id ="car" res ="kasa/kasaCar" pos ="120,-400,1"/>
+  <beginMoveEx id ="kanojo" posAdd="0,-800" duration="1200"/>
+  <beginMoveEx id ="karesi" posAdd="0,-800" duration="1200"/>
+  <beginSound name="bgm_sumo" loop="true"/>
+  <beginIf id="water" target="object" name="car" crange="120,60,20,20" goto="1000"/>
+  <beginIf id="finish" target="object" name="kanojo" crange="-60,-180,20,20" goto="3000"/>
+  <var name="nurenai" value ="2"/>
+
+  <frame count="200"/>
+  <var name="nurenai" value ="0"/>
+  
+  <!-- 時間が経ったら彼氏は濡れないフラグ -->
+  <frame count="500"/>
+  <var name="nurenai" value ="1"/>
+  <wait/>
+
+  <!-- 車が水たまりに入る -->
+  <frame count="1000"/>
+  <endIf/>
+  <beginIfVar lhs="$speed" op="gt" rhs="0.2" goto="2000"/>
+  <beginSound name="se_splash" pitch="1.0" volume="0.2"/>
+  <frame count="1180"/>
+  <halt result="1"/>
+
+  <!-- 水しぶきを上げる -->
+  <frame count="2000"/>
+  <useAndShow id="sibuki" res="ameagari/ameagariSibuki" pos ="37,60,0"/>
+  <beginSound name="se_splash" pitch="2.0"/>
+  <beginIfVar lhs="$nurenai" op="eq" rhs="0" goto="2500"/>
+  <frame count="2180"/>
+  <beginIfVar lhs="$nurenai" op="eq" rhs="2" goto="2200"/>
+  <halt result="1"/>
+  <frame count="2200"/>
+  <var name="secret" value="1"/>
+  <halt result="1"/>
+  
+  <!-- 彼氏に水がかかる -->
+  <frame count="2520"/>
+  <endMove id="karesi"/>
+  <beginAnim id="karesi" anim="1"/>
+  <frame count="2700"/>
+  <halt result="0"/>
+  
+  <!-- 時間経過で終了 -->
+  <frame count="3000"/>
+  <halt result="1"/>
+  
+</kyscript>

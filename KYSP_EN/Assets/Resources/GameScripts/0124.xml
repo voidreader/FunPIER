@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 仮装大会 -->
+<kyscript>
+
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="gauge" res="kasou/kasouGauge" pos="175,-110,6"/>
+  <useAndShow id ="bg" res ="kasou/kasouBG" pos ="0,0,5"/>
+  <useAndShow id ="kodomo" res ="kasou/kasouKodomo" pos ="0,-85,4"/>
+  <beginSound name ="bgm_quiz" volume="0.3" loop="true"/>
+  <frame count ="60"/>
+  <drawRect id="border" size="65,3" pos="200,116,0" color="1,0,0,1"/>
+  <beginIf target="always" goto="940"/>
+  
+  <!-- 点数アニメ -->
+  <frame count ="1000"/>
+  <beginIfVar id ="goukaku1" lhs="$score" op="eq" rhs="15" goto="2001"/>
+  <function id="gauge" func="OnStartTouch"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1030"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1060"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1072"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1075"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1080"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1085"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1086"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1095"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1100"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1115"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1160"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1200"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1280"/>
+  <function id="gauge" func="OnScoreUp"/>
+  <frame count ="1290"/>
+  <endIf id="goukaku1"/>
+  <beginIfVar id ="goukaku2" lhs="$score" op="eq" rhs="15" goto="2000"/>
+
+  <!-- 時間切れ その１-->
+  <frame count ="1500"/>
+  <endIf id="goukaku2"/>
+  <function id="gauge" func="OnEndTouch"/>
+  <beginIf target="always" goto="3000"/>
+
+  <!-- 合格 その１ -->
+  <frame count ="2000"/>
+  <var name="result" op="set" value="1"/>
+  <frame count ="2001"/>
+  <endIf/>
+  <endSound fade="0"/>
+  <beginSound name="jg_goukaku"/>
+  <function id="gauge" func="OnGoukaku"/>
+  <frame count ="2180"/>
+  <halt/>
+  
+  <!-- 司会登場 -->
+  <frame count ="3000"/>
+  <endSound fade="0"/>
+  <beginSound name="se_fall" pitch="0.5"/>
+  <frame count ="3120"/>
+  <useAndShow id ="sikai" res ="kasou/kasouSikai" pos="-300,-70,3"/>
+  <beginMoveEx id ="sikai" pos ="-75,-70" duration="120"/>
+  <frame count ="3240"/>
+  <useAndShow id ="fukidasi" res ="kasou/kasouFukidasi" pos="-50,60,0"/>
+  <drawText id="text1" textId="180" font="0" size="24" pos="-30, 80, 0"/>
+  <function id="gauge" func="OnStartTouch"/>
+  <beginIfVar id ="goukaku3" lhs="$score" op="eq" rhs="15" goto="4000"/>
+  <!-- 時間切れ その２(読まない) -->
+  <frame count ="3840"/>
+  <halt result="2"/>
+
+  <!-- 合格 その２(シークレット) -->
+  <frame count ="4000"/>
+  <unuse id="fukidasi"/>
+  <unuse id="text1"/>
+  <beginSound name="jg_goukaku"/>
+  <function id="gauge" func="OnGoukaku"/>
+  <frame count ="4180"/>
+  <useAndShow id ="fukidasi" res ="kasou/kasouFukidasi" pos="-50,60,0"/>
+  <drawText id="text1" textId="181" font="0" size="32" pos="-50, 80, 0"/>
+  <frame count ="4300"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="1"/>
+  
+</kyscript>

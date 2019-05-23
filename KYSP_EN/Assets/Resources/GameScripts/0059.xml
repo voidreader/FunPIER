@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 合コン -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="push" op="set" value="0"/>
+  
+  <useAndShow id ="cast00" res ="goukon/goukonJyosi" pos ="0,80,4"/>
+
+  <useAndShow id ="table" res ="feeling/feelingTable" pos ="0,-72,3"/>
+  <useAndShow id ="gless" res ="goukon/goukonNomimono" pos ="0,0,2"/>
+
+  <useAndShow id ="cast01" res ="feeling/feelingHitoSuwari" pos ="-155,-100,0"/>
+  <useAndShow id ="cast02" res ="feeling/feelingHitoSuwari" pos ="-60,-100,0"/>
+  <useAndShow id ="cast03" res ="feeling/feelingHitoSuwari" pos ="35,-100,0"/>
+
+  <useAndShow id ="bell" res ="goukon/goukonYobirin" pos ="194,-82,1"/>
+  <useAndShow id ="omae" res ="goukon/goukonOmae" pos ="144,-100,0"/>
+
+  <beginSound name="bgm_feeling" loop="true"/>
+
+  <beginIf id ="goal1" target="touch" crange="194,-82,64,64" goto="1000"/>
+
+  <beginTimer id ="timer" duration="600"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="4000" priority="1"/>
+  <wait />
+
+  <!-- 押した -->
+  <frame count ="1000"/>
+  <unuse id ="goal1"/>
+  <beginAnim id ="omae" anim ="1"/>
+  <beginSound name="se_bell" loop="false"/>
+  <var name="push" op="inc" value="1"/>
+  <frame count ="1020"/>
+  <beginAnim id ="omae" anim ="0"/>
+  <beginIf id ="goal1" target="touch" crange="194,-82,64,64" goto="1000"/>
+  <wait />
+
+  <!-- 時間切れ -->
+  <frame count ="4000"/>
+  <endIf id ="all"/>
+  <beginIfVar lhs="$push" op="gte" rhs="5" goto="4030"/>
+  <beginIfVar lhs="$push" op="gte" rhs="3" goto="4020"/>
+  <beginIfVar lhs="$push" op="gte" rhs="1" goto="4010"/>
+  <!-- 読めない -->
+  <halt result ="0"/>
+  <!-- 読めた -->
+  <frame count ="4010"/>
+  <halt result ="1"/>
+  <!-- シークレット -->
+  <frame count ="4020"/>
+  <var name="secret" value="1"/>
+  <halt result ="1"/>
+  <!-- 押し過ぎで読めない -->
+  <frame count ="4030"/>
+  <var name="secret" value="1"/>
+  <halt result ="0"/>
+
+</kyscript>

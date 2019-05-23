@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 付き合います -->
+<kyscript>
+  <!-- １カット目 -->  
+  <frame count ="0"/>
+  <!--<beginIf target="always" goto="900"/>-->
+  <useAndShow id ="cut01" res ="tukiau/tukiauCut1" pos ="0,0,0"/>
+  <drawText id="text1" textId="140" size="27" pos="105, 205, -1" vertical="true"/>
+  <drawText id="text2" textId="141" size="27" pos="115, -201, -1" vertical="true"/>
+  <beginSound name="jg_date"/>
+  <frame count ="60"/>
+  <beginIf id ="touch" target="touch" goto="240"/>
+  <frame count ="240"/>
+  <endIf/>
+  <fadeScreen kind="fadeout" duration="60"/>
+
+  <!-- ２カット目 -->
+  <frame count ="300"/>
+  <unuse id ="all"/>
+  <frame count ="301"/>
+  <useAndShow id ="cut02" res ="tukiau/tukiauCut2" pos ="-80,-85,0"/>
+  <useAndShow id ="robot" res ="date/dateRobot" pos ="-120,150,2"/>
+  <useAndShow id ="renai" res ="date/dateRenai" pos ="120,150,2"/>
+  <useAndShow id ="omae" res ="date/dateOmae1" pos ="110,56,0"/>
+  <drawRect id ="rect" pos ="0,140,3" size="480,480" color="0.75, 0.75, 0.75" anchory="max"/>
+  <fadeScreen kind="fadein" duration="60"/>
+  <drawText id ="text1" textId="142" size="25" pos="162,-93,-2" color="0,0,0,1" vertical="true"/>
+  <!--<drawRect id ="rect1" color ="1,1,1,0.9" pos="56,-58,-1" size="360,120"/>-->
+  <!--<frame count ="330"/>
+  <drawText id ="text1" textId="142" size="32" pos="180,0,-2" color="0,0,0,0" vertical="true"/>
+  <drawRect id ="rect1" color ="1,1,1,0" pos="190,0,-1" size="120,480"/>
+  <beginMoveEx id="text1" color="0,0,0,1" duration="60"/>
+  <beginMoveEx id="rect1" color="1,1,1,0.9" duration="60"/>
+  <frame count ="420"/>-->
+  <drawText id ="text2" textId="143" size="25" pos="151,-199,-2" color="0,0,0,1" vertical="true"/>
+  
+  <!--<drawRect id ="rect2" color ="1,1,1,0.9" pos="2,-180,-1" size="480,120"/>-->
+  <!--<drawText id ="text2" textId="143" size="32" pos="-70,-80,-2" color="0,0,0,0" vertical="true"/>
+  <drawRect id ="rect2" color ="1,1,1,0" pos="-70,-90,-1" size="120,360"/>
+  <beginMoveEx id="text2" color="0,0,0,1" duration="60"/>
+  <beginMoveEx id="rect2" color="1,1,1,0.9" duration="60"/>-->
+  <beginIf id ="touch" target="touch" goto="540"/>
+  <frame count ="540"/>
+  <endIf/>
+  <fadeScreen kind="fadeout" duration="60"/>
+
+  <!-- ３カット目 -->  
+  <frame count ="600"/>
+  <unuse id ="all"/>
+  <frame count ="601"/>
+  <drawRect id ="rect0" color="0.4,0.4,0.4,1" pos ="0,0,3" size="480,480"/>
+  <useAndShow id ="cut03" res ="tukiau/tukiauCut3" pos ="200,-240,2"/>
+  <beginMoveEx id ="cut03" pos="75,-95" duration="180"/>
+  <fadeScreen kind="fadein" duration="60"/>
+  
+  <frame count ="630"/>
+  <drawText id ="text3" textId="144" size="32" pos="60,150,0" color="0,0,0,0" vertical="true"/>
+  <!--<drawRect id ="rect3" color ="1,1,1,0" pos="240,240,1" size ="130,280" anchory="max" anchorx="max"/>-->
+  <beginMoveEx id="text3" color="255,255,255,1" duration="60"/>
+  <!--<beginMoveEx id="rect3" color="1,1,1,0.9" duration="60"/>-->
+  <frame count ="720"/>
+  <drawText id ="text4" textId="145" size="32" pos="97,-196,0" color="0,0,0,0" vertical="true"/>
+  <!--<drawRect id ="rect4" color ="1,1,1,0" pos="-240,-240,1" size ="120,280" anchory="min" anchorx="min"/>-->
+  <beginMoveEx id="text4" color="255,255,255,1" duration="60"/>
+  <!-- <beginMoveEx id="rect4" color="1,1,1,0.9" duration="60"/>-->
+  
+  <beginIf id ="touch" target="touch" goto="840"/>
+  <!--<beginSound name="bgm_heartbeat" loop="true" volume="0.25"/>-->
+  <frame count ="900"/>
+  <endIf/>
+  <fadeScreen kind="fadeout" duration="60"/>
+
+  <!-- ４カット目 -->  
+  <frame count ="960"/>
+  <endIf/>
+  <unuse id ="all"/>
+  <frame count ="961"/>
+  <drawRect id ="rect1" color="0.4,0.4,0.4,1" pos ="0,0,4" size="480,480"/>
+  <useAndShow id ="cut04" res ="tukiau/tukiauCut4" pos ="0,100,3"/>
+  <useAndShow id ="isu" res ="tukiau/tukiauIsu" pos ="0,-240,0"/>
+  <useAndShow id ="omae" res ="tukiau/tukiauCko1" pos ="-40,-150,1"/>
+  <useAndShow id ="kare" res ="tukiau/tukiauKaresi" pos ="188,-120,1"/>
+  <fadeScreen kind="fadein" duration="60"/>
+  <beginSound name="bgm_love" loop="true"/>
+  <frame count ="1020"/>
+  <beginDrag id ="omae" range="-240,-150,40,-150"/>
+  <beginIf id="goal1" target="object" name ="omae" crange="40,-150,40,40" goto="2000"/>
+  <beginIf id="goal2" target="object" name ="omae" crange="-240,-150,40,40" goto="3000"/>
+  
+  <!-- 時間切れで終了 -->
+  <frame count ="1500"/>
+  <halt result="0"/>
+
+  <!-- よりかかる -->
+  <frame count ="2000"/>
+  <endIf/>
+  <endDrag id ="omae"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae1" res ="tukiau/tukiauCko2" pos ="26,-140,1"/>
+  <useAndShow id ="asel" res ="tukiau/tukiauAseL" pos ="12,-31,1"/>
+  <useAndShow id ="aseR" res ="tukiau/tukiauAseR" pos ="175,4,1"/>
+  <frame count ="2180"/>
+  <halt result="1"/>
+
+  <!-- 逃げる -->
+  <frame count ="3000"/>
+  <endif/>
+  <endDrag id ="omae"/>
+  <beginMoveEx id ="omae" pos="-350,-150" duration="60"/>
+  <beginSound name="se_enter"/>
+  <frame count ="3060"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+  
+</kyscript>

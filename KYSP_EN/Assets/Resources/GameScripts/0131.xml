@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 節電中 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="densya/densyaBG" pos ="0,0,6"/>
+  <useAndShow id ="madowaku" res ="densya/densyaBGMado" pos ="-94,68,5"/>
+  <useAndShow id ="mado" res ="densya/densyaMado" pos ="-18,28,4"/>
+  <useAndShow id ="turikawa" res="densya/densyaTurikawa" pos ="0,158,2"/>
+  <useAndShow id ="hito1" res ="densya/densyaHitoNemuri" pos ="-210,-60,2"/>
+  <useAndShow id ="hito2" res ="densya/densyaAtsugari" pos ="-120,-60,2"/>
+  <useAndShow id ="omae" res ="densya/densyaOmaeStand" pos ="-24,-60,3"/>
+  <useAndShow id ="onna" res ="densya/densyaJosei" pos ="48,-60,2"/>
+  <useAndShow id ="hito3" res ="densya/densyaHitoNemuri" pos ="120,-60,2"/>
+  <useAndShow id ="hito4" res ="densya/densyaHitoNemuri" pos ="210,-60,2"/>
+  <useAndShow id ="setuden" res="densya/densyaSetuden" pos="160,200,0"/>
+
+  <var name="mado" op="set" value="0"/>
+  <beginSound name ="bgm_train" loop="true" volume="0.5"/>
+  <beginTimer id ="timer" duration="780"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="4000" priority="1"/>
+  <beginIf id="goal1" target="touchaction" direction="0,3" goto="2000"/>
+  <frame count ="60"/>
+  <!--<beginAnim id ="setuden" anim="1"/>-->
+  
+  <wait/>
+
+  <!-- 下段 -->
+  <frame count ="1000"/>
+  <endIf id="goal1"/>
+  <endIf id="goal2"/>
+  <beginSound name="se_dooropen"/>
+  <beginAnim id ="omae" anim="1"/>
+  <beginMoveEx id ="mado" pos ="-18,28,4"/>
+  <var name="mado" value="0"/>
+  <frame count ="1010"/>
+  <beginAnim id ="omae" anim="0"/>
+  <beginAnim id ="hito2" anim="0"/>
+  <beginIf id="goal1" target="touchaction" direction="0,3" goto="2000"/>
+  <wait/>
+  
+  <!-- 中段 -->
+  <frame count ="2000"/>
+  <beginAnim id ="omae" anim="1"/>
+  <beginAnim id ="onna" anim="0"/>
+  <frame count ="2010"/>
+  <endIf id="goal1"/>
+  <endIf id="goal2"/>
+  <var name="mado" value="1"/>
+  <beginSound name="se_dooropen"/>
+  <beginSound name ="bgm_train" loop="true" volume="0.5"/>
+  <beginAnim id ="omae" anim="2"/>
+  <beginAnim id ="onna" anim="0"/>
+  <beginAnim id ="hito2" anim="1"/>
+  <beginMoveEx id ="mado" pos ="-18,68,4"/>
+  <beginIf id="goal1" target="touchaction" direction="0,3" goto="3000"/>
+  <beginIf id="goal2" target="touchaction" direction="0,-3" goto="1000"/>
+  <frame count ="2180"/>
+  <halt result="1"/>
+  <wait/>
+ 
+  <!-- 上段 -->
+  <frame count ="3000"/>
+  <endIf id="goal1"/>
+  <endIf id="goal2"/>
+  <var name="mado" value="2"/>
+  <var name="zenkai" op="inc" value="1"/>
+  <beginSound name="se_dooropen"/>
+  <beginSound name ="bgm_car" loop="true"/>
+  <beginAnim id="omae" anim="3"/>
+  <beginAnim id="onna" anim="1"/>
+  <beginMoveEx id ="mado" pos ="-18,110,4"/>
+  <frame count ="3010"/>
+  <beginAnim id="onna" anim="2"/>
+  <beginIf id="goal1" target="touchaction" direction="0,-3" goto="2010"/>
+  <wait/>
+
+  <!-- 時間切れ -->
+  <frame count ="4000"/>
+  <beginIfVar lhs="$mado" op="eq" rhs="0" goto="4010"/>
+  <halt/>
+  <frame count ="4010"/>
+  <beginIfVar lhs="$zenkai" op="eq" rhs="1" goto="4020"/>
+  <halt/>
+  <frame count ="4020"/>
+  <var name="secret" value="1"/>
+  <halt/>
+  
+</kyscript>

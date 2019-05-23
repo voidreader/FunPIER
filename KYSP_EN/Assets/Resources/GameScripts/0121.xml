@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ヘッドフォン -->
+<kyscript>
+  
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="densya/densyaBG" pos ="0,0,3"/>
+  <useAndShow id ="turikawa" res="densya/densyaTurikawa" pos ="0,158,2"/>
+  <useAndShow id ="hito1" res ="densya/densyaHito" pos ="-200,-60,2"/>
+  <useAndShow id ="hito2" res ="densya/densyaHito" pos ="-100,-60,2"/>
+  <useAndShow id ="hito3" res ="densya/densyaHito" pos ="100,-60,2"/>
+  <useAndShow id ="hito4" res ="densya/densyaHito" pos ="200,-60,2"/>
+  <useAndShow id ="phone" res ="densya/densyaHeadphone" pos ="0,-60,2"/>
+  <useAndShow id ="noize1" res ="densya/densyaNoize" pos ="-60,20,1"/>
+  <useAndShow id ="noize2" res ="densya/densyaNoize" pos ="60,20,1"/>
+  <useAndShow id ="volume" res ="densya/densyaVolume" pos ="0,140,1"/>
+  <beginMoveEx id ="noize2" scale="-1,1,1"/>
+
+  <frame count ="60"/>
+  <function id ="volume" func="OnEnabled"/>
+  <beginTimer id ="timer" duration="600"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="4000" priority="1"/>
+
+  <!-- 音量大 -->
+  <frame count ="1000"/>
+  <beginAnim id ="hito1" frame="0"/>
+  <beginAnim id ="hito2" frame="0"/>
+  <beginAnim id ="hito3" frame="0"/>
+  <beginAnim id ="hito4" frame="0"/>
+  <beginAnim id ="noize1" anim="0"/>
+  <beginAnim id ="noize2" anim="0"/>
+  <wait/>
+  
+  <!-- 音量中 -->
+  <frame count ="2000"/>
+  <beginAnim id ="hito1" frame="1"/>
+  <beginAnim id ="hito2" frame="0"/>
+  <beginAnim id ="hito3" frame="0"/>
+  <beginAnim id ="hito4" frame="1"/>
+  <beginAnim id ="noize1" anim="1"/>
+  <beginAnim id ="noize2" anim="1"/>
+  <wait/>
+  
+  <!-- 音量低 -->
+  <frame count ="3000"/>
+  <beginAnim id ="hito1" frame="1"/>
+  <beginAnim id ="hito2" frame="1"/>
+  <beginAnim id ="hito3" frame="1"/>
+  <beginAnim id ="hito4" frame="1"/>
+  <beginAnim id ="noize1" anim="2"/>
+  <beginAnim id ="noize2" anim="2"/>
+  <frame count ="3180"/>
+  <beginIf target="always" goto="4000"/>
+  <wait/>
+
+  <!-- 時間切れ -->
+  <frame count ="4000"/>
+  <endIf/>
+  <function id ="volume" func="OnDisabled"/>
+  <function id ="volume" func="OnJudge"/>
+  <halt/>
+  
+</kyscript>

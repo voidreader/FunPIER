@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- トータライザー -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="stat" op="inc" value="1"/>
+  <beginSound name="bgm_quiz" loop="true"/>
+  <useAndShow id ="switch" res ="totalizer/totalizerSwitch" pos ="0,-80,2"/>
+  <frame count ="60"/>
+  <useAndShow id ="fuki" res ="totalizer/totalizerFukidasi" pos ="-185,160,1"/>
+  <drawText id="message" textId="9" pos ="200,164,0" size="22" vertical="false"/>
+
+  <beginTimer id ="timer0" duration="600"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="6000" priority="1"/>
+  <beginIf id ="push" target="touch" trigger="down" goto="1000"/>
+  <wait />
+
+  <!-- 押した回数をカウント（シークレット用) -->
+  <frame count ="1000"/>
+  <beginSound name="se_click" loop ="false"/>
+  <var name="stat" op="inc" value="1"/>
+  <unuse id ="push"/>
+  <beginAnim id ="switch" anim ="1"/>
+  <frame count ="1030"/>
+  <beginAnim id ="switch" anim ="0"/>
+  <beginIf id ="push" target="touch" trigger="down" goto="1000"/>
+  <wait />
+
+  <!-- 時間切れ -->
+  <frame count ="6000"/>
+  <endIf id ="all"/>
+  <beginIfVar lhs="$stat" op="neq" rhs="1" goto="7000"/>
+  <halt result="0"/>
+
+  <frame count ="7000"/>
+  <beginIfVar lhs="$stat" op="gt" rhs="4" goto="8000"/>
+  <halt result="1"/>
+
+  <frame count ="8000"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="1"/>
+  
+</kyscript>

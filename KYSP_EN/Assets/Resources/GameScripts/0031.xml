@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- くじ -->
+<kyscript>
+  <!-- カット１ -->
+  <frame count ="0"/>
+  <!--<beginIf target="always" goto="660"/>-->
+  <useAndShow id ="cut1" res ="quiz/quizCut1" pos ="20,-39,0"/>
+  <beginSound name="jg_brother" loop="false"/>
+  <frame count ="30"/>
+  <drawText id="text0" textId="100" size="26" color="0,0,0,0" pos="109, -204, -1" vertical="true"/>
+  <beginMoveEx id="text0" color="0,0,0,1" duration="30"/>
+  <frame count ="120"/>
+  <drawText id="text1" textId="101" size="26" color="0,0,0,0" pos="100, 172, -1" vertical="true"/>
+  <beginMoveEx id="text1" color="0,0,0,1" duration="30"/>
+  <frame count ="240"/>
+  <fadeScreen kind="fadeout" duration="30"/>
+  
+  <!-- カット２ -->
+  <frame count ="270"/>
+  <unuse id="all"/>
+  <useAndShow id ="cut2" res ="kuji/amidaCut2" pos ="0,0,0"/>
+  <fadeScreen kind="fadein" duration="30"/>
+  <frame count ="300"/>
+  <beginSound name="jg_ultra" loop="false"/>
+
+  <!-- カット３ -->
+  <frame count ="480"/>
+  <unuse id="cut2"/>
+  <useAndShow id ="cut3" res ="kuji/amidaCut3" pos ="0,0,0"/>
+  <drawText id="text0" textId="102" size="24" pos="250, 100, -1" vertical="true"/>
+  <beginSound name="se_bikkuri" loop="false"/>
+  <frame count ="600"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+  
+  <!-- カット４ -->
+  <frame count ="660"/>
+  <unuse id="all"/>
+  <useAndShow id ="cut4" res ="kuji/kuji_01" pos ="-0,0,0"/>
+  <useAndShow id ="lines" res="kuji/kujiAmidaLine"/>
+  <fadeScreen kind="fadein" duration="60"/>
+  <beginTimer id ="timer" duration="600"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="2120" priority="1"/>
+  <wait/>
+  
+  <frame count="2000"/>
+  <function id="lines" func="OnDisabled"/>
+  <frame count="2120"/>
+  <function id="lines" func="OnDisabled"/>
+  <function id="lines" func="OnJudge"/>
+  <halt/>
+
+</kyscript>
+
+
+

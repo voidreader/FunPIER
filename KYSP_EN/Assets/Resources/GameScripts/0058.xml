@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- フィーリングカップル -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="cast00" res ="feeling/feelingJyosi" pos ="0,80,4"/>
+  <useAndShow id ="table" res ="feeling/feelingTable" pos ="0,-72,3"/>
+  <useAndShow id ="cast01" res ="feeling/feelingHitos" pos ="0,0,0"/>
+
+  <useAndShow id ="omae" res ="feeling/feelingOmaeSwari" pos ="150,-100,2"/>
+  <beginSound name="bgm_feeling" loop="true"/>
+
+  <!-- 吹き出し１ -->
+  <frame count ="60"/>
+  <useAndShow id ="fuki10" res ="feeling/feelingFukidasi" pos ="-178,-26,1"/>
+  <useAndShow id ="fuki11" res ="feeling/feelingA" pos ="-180,-16,0"/>
+
+  <!-- 吹き出し2 -->
+  <frame count ="120"/>
+  <useAndShow id ="fuki20" res ="feeling/feelingFukidasi" pos ="-78,-26,1"/>
+  <useAndShow id ="fuki21" res ="feeling/feelingB" pos ="-80,-16,0"/>
+
+  <!-- 吹き出し3 -->
+  <frame count ="180"/>
+  <useAndShow id ="fuki30" res ="feeling/feelingFukidasi" pos ="22,-26,1"/>
+  <useAndShow id ="fuki31" res ="feeling/feelingA" pos ="20,-16,0"/>
+
+  <!-- タッチ解放 -->
+  <beginIf id ="goal1" target="touch" crange="-98,85,64,80" goto="1000"/>
+  <beginIf id ="goal2" target="touch" crange="0,85,64,80" goto="2000"/>
+  <beginIf id ="goal3" target="touch" crange="98,85,64,80" goto="3000"/>
+  <beginIf id ="goal4_1" target="touch" crange="50,-100,64,80" goto="4000"/>
+  <beginIf id ="goal4_2" target="touch" crange="-50,-100,64,80" goto="4000"/>
+  <beginIf id ="goal4_3" target="touch" crange="-150,-100,64,80" goto="4000"/>
+
+  <!-- 時間切れ -->
+  <frame count ="600"/>
+  <halt result ="0"/>
+  
+  <!-- Touch A (読まない＋シークレット)-->
+  <frame count ="1000"/>
+  <endIf id ="all" />
+  <beginSound name="se_ok" loop="false"/>
+ 
+  <useAndShow id ="fuki40" res ="feeling/feelingFukidasi" pos ="173,12,1"/>
+  <beginMoveEx id ="fuki40" scale ="-1,1" />
+  <useAndShow id ="fuki41" res ="feeling/feelingA" pos ="171,22,0"/>
+  <frame count ="1120"/>
+  <halt result ="2"/>
+  
+  <!-- Touch B (読まない)-->
+  <frame count ="2000"/>
+  <endIf id ="all" />
+  <beginSound name="se_ok" loop="false"/>
+
+  <useAndShow id ="fuki40" res ="feeling/feelingFukidasi" pos ="173,12,1"/>
+  <beginMoveEx id ="fuki40" scale ="-1,1" />
+  <useAndShow id ="fuki41" res ="feeling/feelingB" pos ="171,22,0"/>
+  <frame count ="2120"/>
+  <halt result ="2"/>
+  
+  <!-- Touch C -->
+  <frame count ="3000"/>
+  <endIf id ="all" />
+  <beginSound name="se_ok" loop="false"/>
+
+  <useAndShow id ="fuki40" res ="feeling/feelingFukidasi" pos ="173,12,1"/>
+  <beginMoveEx id ="fuki40" scale ="-1,1" />
+  <useAndShow id ="fuki41" res ="feeling/feelingC" pos ="171,22,0"/>
+  <frame count ="3120"/>
+  <halt result ="1"/>
+
+  <!-- Touch MAN (読まない＋シークレット)-->
+  <frame count ="4000"/>
+  <endIf id ="all" />
+  <beginSound name="se_ok" loop="false"/>
+ 
+  <useAndShow id ="fuki40" res ="feeling/feelingFukidasi" pos ="173,12,1"/>
+  <beginMoveEx id ="fuki40" scale ="-1,1" />
+  <useAndShow id ="fuki41" res ="feeling/feelingOtoko" pos ="171,18,0"/>
+  <frame count ="4120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+
+
+  
+</kyscript>

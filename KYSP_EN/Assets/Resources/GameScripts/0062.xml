@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ポーズ -->
+<kyscript>
+  <frame count ="0"/>
+  <useAndShow id ="ground" res ="pose/poseGround" pos ="0,-170,3"/>
+  <useAndShow id ="sentai" res ="pose/poseSentai" pos ="-57,-50,2"/>
+  <useAndShow id ="omae" res ="pose/poseYellow1" pos ="180,-50,1"/>
+
+  <beginIf id="goal1" target="touchaction" direction="3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="-3,0" goto="2000"/>
+  <beginIf id="goal3" target="touchaction" direction="0,3" goto="3000"/>
+  <beginIf id="goal4" target="touchaction" direction="0,-3" goto="4000"/>
+
+  <!-- 時間切れ -->
+  <frame count ="400"/>
+  <halt result ="0"/>
+
+  <!-- ポーズ右 -->
+  <frame count ="1000"/>
+  <endIf/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae1" res ="pose/poseYellow2" pos ="174,-60,0"/>
+  <beginSound name="se_pause" loop="false"/>
+  
+  <!-- 爆発 -->
+  <frame count ="1030"/>
+  <useAndShow id ="bomb" res ="pose/poseBakuhatu" pos ="0,0,4"/>
+  <beginSound name="se_explosion2" loop="false"/>
+  <beginMoveEx id="bomb" scale="30,30,1" duration="180"/>
+  <frame count ="1120"/>
+  <beginMoveEx id="bomb" color="1,1,1,0" duration="60"/>
+  <frame count ="1150"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+  
+  
+  <frame count ="1300"/>
+  <halt result ="1"/>
+
+  <!-- 以下読まない -->
+  <!-- ポーズ左 -->
+  <frame count ="2000"/>
+  <endIf/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="pose/poseYellow4" pos ="180,-60,1"/>
+  <beginSound name="se_pause" loop="false"/>
+  <frame count ="2120"/>
+  <halt result ="2"/>
+
+  <!-- ポーズ上 -->
+  <frame count ="3000"/>
+  <endIf/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae3" res ="pose/poseYellow3" pos ="180,-40,1"/>
+  <beginSound name="se_pause" loop="false"/>
+  <frame count ="3120"/>
+  <!-- シークレット -->
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+
+  <!-- ポーズ下 -->
+  <frame count ="4000"/>
+  <endIf/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae4" res ="pose/poseYellow5" pos ="189,-97,1"/>
+  <beginSound name="se_pause" loop="false"/>
+  <frame count ="4120"/>
+  <halt result ="2"/>
+
+
+  
+</kyscript>

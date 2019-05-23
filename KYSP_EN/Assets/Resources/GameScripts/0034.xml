@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 糸くず -->
+<kyscript>
+  <!-- カット１ -->
+  <frame count ="0"/>
+  <!-- いきなり本番へ進む場合はこの行をコメントアウト -->
+  <!--<beginIf target="always" goto="300"/>-->
+  <useAndShow id ="bg" res ="nounai/nounaiCut1" pos ="-38,-53,3"/>
+  <beginSound name ="jg_date"/>
+  <frame count ="30"/>
+  <drawText id="text0" textId="122" size="20" color="0,0,0,0" pos="223,81,0" vertical="true"/>
+  <beginMoveEx id="text0" posAdd="-10,10,0" color="0,0,0,1" duration="30"/>
+  <frame count ="90"/>
+  <drawText id="text1" textId="121" size="20" color="0,0,0,0" pos="-39,169,0" vertical="true"/>
+  <beginMoveEx id="text1" posAdd="-10,10,0" color="0,0,0,1" duration="30"/>
+
+  <!-- カット２ -->
+  <frame count ="210"/>
+  <unuse id="all"/>
+  <useAndShow id ="cut3" res="itokuzu/itokuzuCut3" pos="0,0,3"/>
+  <beginSound name="se_bikkuri"/>
+
+  <!-- カット３ -->
+  <frame count ="300"/>
+  <unuse id ="all"/>
+  
+  <useAndShow id ="display" res="itokuzu/itokuzuDisplay" pos="0,200,5"/>
+  <useAndShow id ="keyboard" res="itokuzu/itokuzuKeyboard" pos="0,0,4"/>
+  <useAndShow id ="handL" res="itokuzu/itokuzuOmaeHidarite" pos="-140,-140,3"/>
+  <useAndShow id ="handR" res="itokuzu/itokuzuOmaeMigite" pos="140,-140,2"/>
+  <useAndShow id ="itokuzu" res="itokuzu/itokuzuItokuzu" pos="0,-140,6"/>
+  <useAndShow id ="effect" res="itokuzu/itokuzuEffect" pos="0,0,0"/>
+  <useAndShow id ="game" res="itokuzu/itokuzuGame"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+  
+  <beginMoveEx id ="effect" scale="1.4,1.4,1" color="1,1,1,0"/>
+  <beginMoveEx id ="effect" color="1,1,1,1" duration="10"/>
+  <frame count="320"/>
+  <beginMoveEx id ="effect" color="1,1,1,0" duration="10"/>
+  <frame count="340"/>
+  <beginMoveEx id ="effect" color="1,1,1,1" duration="10"/>
+  <frame count="360"/>
+  <beginMoveEx id ="effect" color="1,1,1,0" duration="10"/>
+  
+  <beginIf id="cond1" target="object" name="itokuzu" range="-240,-240,-200,240" goto="2000"/>
+  <beginIf id="cond2" target="object" name="itokuzu" range=" 200,-240, 240,240" goto="2500"/>
+  <beginIf id="cond3" target="object" name="itokuzu" range="-240,-240, 240,-200" goto="3000"/>
+  
+  <!--<beginDrag id="keyboard" grab="true" grabRange="-239,-94,239,94"/>
+  <beginDrag id="handL" grab="true" grabRange="-85,-85,171,171"/>
+  <beginDrag id="handR" grab="true" grabRange="-100,-79,200,159"/>-->
+
+  <!-- 操作可能 -->
+  <function id="game" func="OnEnabled"/>
+
+  <!-- 時間切れ -->
+  <frame count ="900"/>
+  <halt result="0"/>
+  
+  <!-- 除去成功 -->
+  <frame count ="1000"/>
+  <function id="game" func="OnDisabled"/>
+  <endIf/>
+  <endSound fade="0"/>
+  <beginSound name="jg_fanfare"/>
+  <frame count ="1120"/>
+  <halt result="1"/>
+  
+  <frame count ="2000"/>
+  <beginMoveEx id="itokuzu" posAdd="-80,0" duration="60"/>
+  <beginIf target="always" goto="1000"/>
+  <frame count ="2500"/>
+  <beginMoveEx id="itokuzu" posAdd="80,0" duration="60"/>
+  <beginIf target="always" goto="1000"/>
+  <frame count ="3000"/>
+  <beginMoveEx id="itokuzu" posAdd="0,-80" duration="60"/>
+  <beginIf target="always" goto="1000"/>
+
+  <!-- モニタを突き飛ばす -->
+  <frame count ="4000"/>
+  <function id="game" func="OnDisabled"/>
+  <beginSound name="se_jihanki" pitch="1.5"/>
+  <endIf/>
+  <beginMoveEx id="display" posAdd="0,120" duration="30"/>
+  <frame count ="4030"/>
+  <beginSound name="se_fall"/>
+  <frame count ="4120"/>
+  <var name="secret" value="1"/>
+  <halt result="0"/>
+</kyscript>

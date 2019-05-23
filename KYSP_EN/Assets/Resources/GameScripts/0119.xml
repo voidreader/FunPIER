@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- マヨネーズ -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="mayo0" res ="mayonnaise/mayonnaiseBottle1" pos ="-104,54,1"/>
+  <useAndShow id ="mayo1" res="mayonnaise/mayonnaiseBottle2" pos ="104,54,1"/>
+  <useAndShow id ="jibeta" res="domino/domonoGround" pos ="0,-48,2"/>
+  <useAndShow id ="omae" res ="mayonnaise/mayonnaiseOmae" pos ="0,-150,0"/>
+  <beginDrag id ="omae" range="-190,-170,170,190"/>
+  <beginIf id ="goal1" target ="object" name="omae" crange="-104,54,120,160" goto="1000"/>
+  <beginIf id ="goal2" target ="object" name="omae" crange="104,54,120,160" goto="2000"/>
+  <beginIf id ="goal3" target ="touch" crange="-104,54,120,160" goto="970"/>
+  <beginIf id ="goal4" target ="touch" crange="104,54,120,160" goto="1970"/>
+
+  <!-- 時間切れ -->
+  <frame count ="600"/>
+  <endDrag id ="omae"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+
+  <!-- マヨ成立 -->
+  <frame count ="970"/>
+  <endDrag id ="omae"/>
+  <endIf id ="all"/>
+  <beginMoveEx id ="omae" pos ="-104,14" duration="30"/>
+  <frame count ="1000"/>
+  <endIf id ="all"/>
+  <endDrag id ="omae"/>
+  <beginSound name ="se_move" />
+  <frame count ="1060"/>
+  <halt result="2"/>
+
+  <!-- マヨ逆立 -->
+  <frame count ="1970"/>
+  <endDrag id ="omae"/>
+  <endIf id ="all"/>
+  <beginMoveEx id ="omae" pos ="104,14" duration="30"/>
+  <frame count ="2000"/>
+  <endIf id ="all"/>
+  <endDrag id ="omae"/>
+  <beginSound name ="se_move" />
+  <frame count ="2060"/>
+  <halt result="1"/>
+  
+</kyscript>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 気功の -->
+<kyscript>
+  <!-- タイトル -->
+  <frame count ="30"/>
+  <useAndShow id ="kanban" res ="kikouno/kikounoKanban" pos ="0,0,1"/>
+  <beginMoveEx id ="kanban" scale="4,4,1"/>
+  <beginMoveEx id ="kanban" scale="1,1,1" rot="0,0,720" duration="30"/>
+  <frame count ="50"/>
+  <beginSound name="se_bikkuri"/>
+  <frame count ="150"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+  <beginMoveEx id ="kanban" pos="0,180,0" duration="80"/>
+
+  <frame count ="210"/>
+  <useAndShow id ="kikousi" res ="kikouno/kikounoHitoKikouokuru" pos ="133,-17,0"/>
+  <useAndShow id ="omae" res ="kikouno/kikounoOmaeTati" pos ="-120,-29,0"/>
+  <beginMoveEx id ="kikousi" color="1,1,1,0"/>
+  <beginMoveEx id ="kikousi" color="1,1,1,1" duration="90"/>
+  <beginMoveEx id ="omae" color="1,1,1,0"/>
+  <beginMoveEx id ="omae" color="1,1,1,1" duration="90"/>
+  <beginIf id="goal4" target="touchaction" direction="-3,0" goto="3000"/>
+  <beginIf id="goal5" target="touchaction" direction="0,-3" goto="3000"/>
+
+  <frame count ="300"/>
+  <endIf id ="all"/>
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="0,-3" goto="1000"/>
+  <beginIf id="goal3" target="touchaction" direction="3,0" goto="2000"/>
+  <useAndShow id ="kikou" res ="kikouno/kikounoKikou" pos ="70,9,0"/>
+
+  <!-- 時間切れ -->
+  <frame count ="900"/>
+  <halt result ="0"/>
+
+  <!-- 倒れる -->
+  <frame count ="1000"/>
+  <endIf id="all"/>
+  <endSound fade="0"/>
+  <beginSound name="se_down"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="kikouno/kikounoOmaeTaoreru1" pos ="-120,-29,0"/>
+  <frame count ="1008"/>
+  <unuse id ="omae2"/>
+  <useAndShow id ="omae3" res ="kikouno/kikounoOmaeTaoreru2" pos ="-120,-29,0"/>
+  <frame count ="1120"/>
+  <halt result ="1"/>
+
+  <!-- 反撃（シークレット） -->
+  <frame count ="2000"/>
+  <endIf id="all"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="kikouno/kikounoOmaeKaesu1" pos ="-33,-29,0"/>
+  <frame count ="2008"/>
+  <unuse id ="omae2"/>
+  <useAndShow id ="omae3" res ="kikouno/kikounoOmaeKaesu2" pos ="-33,-29,0"/>
+  <unuse id="kikou"/>
+  <useAndShow id ="kikou2" res ="kikouno/kikounoKikou2" pos ="5,9,0"/>
+  <frame count ="2028"/>
+  <beginMove id ="kikousi" to="320,80" duration="20"/>
+  <endSound fade="0"/>
+  <beginSound name="se_fall"/>
+  <frame count ="2120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+
+  <!-- 先に倒れる -->
+  <frame count ="3000"/>
+  <endIf id="all"/>
+  <endSound fade="0"/>
+  <beginSound name="se_down"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="kikouno/kikounoOmaeTaoreru1" pos ="-120,-29,0"/>
+  <frame count ="3008"/>
+  <unuse id ="omae2"/>
+  <useAndShow id ="omae3" res ="kikouno/kikounoOmaeTaoreru2" pos ="-120,-29,0"/>
+  <frame count ="3120"/>
+  <halt result ="2"/>
+  
+</kyscript>

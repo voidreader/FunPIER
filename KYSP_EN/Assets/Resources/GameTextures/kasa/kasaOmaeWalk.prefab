@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 400000}
+  - component: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: kasaOmaeWalk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1002 &100001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.571289, y: -69.31851, z: -10.498413}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1002 &400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64a0228d07fde484e9624dc832899831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimationIndex: 0
+  FrameIndex: 0
+  Textures:
+  - {fileID: 2800000, guid: 486a5c884136c864bb7b705c932ee78e, type: 3}
+  - {fileID: 2800000, guid: b663d6502ba663146a938c4d2b514a93, type: 3}
+  - {fileID: 2800000, guid: d29dbf3ce45bfbc469daaaaac682ce42, type: 3}
+  - {fileID: 2800000, guid: 7f52dfca63a18d24ab936f5787eccf25, type: 3}
+  - {fileID: 2800000, guid: 843de53ae0053d645bb060edfb7b777c, type: 3}
+  - {fileID: 2800000, guid: e145a02e9a4fb6d47a9f1def4bf474b7, type: 3}
+  Animations:
+  - BeginFrame: 0
+    EndFrame: 1
+    Interval: 0.3
+    Loop: 1
+  - BeginFrame: 2
+    EndFrame: 3
+    Interval: 0.3
+    Loop: 1
+  - BeginFrame: 4
+    EndFrame: 5
+    Interval: 0.3
+    Loop: 1
+  Frames:
+  - TextureIndex: 0
+    ClipRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    Offset: {x: 0, y: 0}
+  - TextureIndex: 1
+    ClipRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    Offset: {x: 0, y: 0}
+  - TextureIndex: 2
+    ClipRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    Offset: {x: 47, y: -13}
+  - TextureIndex: 3
+    ClipRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    Offset: {x: 47, y: -13}
+  - TextureIndex: 4
+    ClipRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    Offset: {x: 16, y: -22}
+  - TextureIndex: 5
+    ClipRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    Offset: {x: 16, y: -22}
+--- !u!1002 &11400001
+EditorExtensionImpl:
+  serializedVersion: 6
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+--- !u!1002 &100100001
+EditorExtensionImpl:
+  serializedVersion: 6

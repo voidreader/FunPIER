@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- かさ -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="kasa/kasaBG" pos ="170,0,9"/>
+  <useAndShow id ="uekomi0" res ="kasa/kasaUekomi" pos ="-180, 192,14"/>
+  <useAndShow id ="uekomi1" res ="kasa/kasaUekomi" pos ="-180,  96,13"/>
+  <useAndShow id ="uekomi2" res ="kasa/kasaUekomi" pos ="-180,   0,12"/>
+  <useAndShow id ="uekomi3" res ="kasa/kasaUekomi" pos ="-180, -96,11"/>
+  <useAndShow id ="uekomi4" res ="kasa/kasaUekomi" pos ="-180,-192,10"/>
+  <useAndShow id ="hamon1" res="kasa/kasaHamon" pos="-50,-190,8"/>
+  <useAndShow id ="hamon2" res="kasa/kasaHamon" pos="-20,60,8"/>
+  <useAndShow id ="hamon3" res="kasa/kasaHamon" pos="170,190,8"/>
+  <useAndShow id ="hito" res ="kasa/kasaHito" pos ="-60,-360,0"/>
+  <useAndShow id ="omae" res ="kasa/kasaOmaeWalk" pos ="20,360,0"/>
+  <useAndShow id ="car" res ="kasa/kasaCar" pos ="170,-350,4"/>
+  <beginSound name="bgm_rain" loop="true"/>
+  
+  <frame count ="60"/>
+  <beginMoveEx id ="hito" posAdd="0,800" duration="800"/>
+  <beginMoveEx id ="omae" posAdd="0,-800" duration="800"/>
+  
+  <frame count ="240"/>
+  <beginIf id="slideRight" target="touchaction" direction="3,0" goto="2000" priority="1"/>
+  <beginIf id="slideDown" target="touchaction" direction="0,-3" goto="3000" priority="1"/>
+  <beginIf id="crash" target="object" name ="omae" crange="20,0,20,20" goto="4000" priority="1"/>
+  <beginIf id="hitoanim" target="animend" name="hito" goto="5000" priority="2"/>
+  <beginIf target="always" goto="1000"/>
+  <!--<beginIf id="caranim" target="animend" name="car" goto="1000"/>-->
+  
+  <!-- 車が走るサブルーチン -->
+  <frame count ="1000"/>
+  <beginMoveEx id ="car" pos="170,-350"/>
+  <beginMoveEx id ="car" posAdd="0,2400" duration="360"/>
+  <beginIf id="caranim" target="animend" name="car" goto="1000"/>
+  <beginSound name="se_horn" volume="0.3"/>
+  <wait/>
+
+  <!-- 右にかさをよける -->
+  <frame count ="2000"/>
+  <endIf priority="1"/>
+  <beginAnim id ="omae" anim="1"/>
+  <beginSound name ="se_pitching"/>
+  <var name="result" op="set" value="1"/>
+  <wait/>
+  
+  <!-- かさをたたむ -->
+  <frame count ="3000"/>
+  <endIf priority="1"/>
+  <beginAnim id ="omae" anim="2"/>
+  <beginSound name ="se_dooropen" pitch="2.0"/>
+  <var name="result" op="set" value="1"/>
+  <var name="secret" op="set" value="1"/>
+  <wait/>
+
+  <!-- 衝突 -->
+  <frame count ="4000"/>
+  <endIf priority="1"/>
+  <endMove id ="omae"/>
+  <beginMoveEx id="omae" posAdd="20,0"/>
+  <beginMoveEx id="omae" posAdd="0,-400" duration="400"/>
+  <beginSound name ="se_dooropen" pitch="2.0"/>
+  <wait/>
+  
+  <!-- 終了処理 -->
+  <frame count ="5000"/>
+  <halt/>
+  
+</kyscript>

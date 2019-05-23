@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 夜露死苦 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="stat" op="set" value="0"/>
+  <useAndShow id ="cast00" res ="yorosiku/yorosikuBG" pos ="0,0,3"/>
+  <useAndShow id ="omae" res ="yorosiku/yorosikuOmaeTati" pos ="-54,25,4"/>
+
+  <beginIf id="goal1" target="touchaction" direction="0,-3" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="0,3" goto="2000"/>
+
+  <!-- 時間切れ -->
+  <frame count ="600"/>
+  <halt result ="0"/>
+
+  <!-- 座る -->
+  <frame count ="1000"/>
+  <endIf id ="all" />
+  <unuse id="omae"/>
+  <useAndShow id ="omae2" res ="yorosiku/yorosikuOmaeSuwari" pos ="-54,-5,4"/>
+  <frame count ="1030"/>
+  <useAndShow id ="yo" res ="yorosiku/yorosikuYo" pos ="-159,170,0"/>
+  <beginSound name ="se_explosion1"/>
+  <frame count ="1060"/>
+  <useAndShow id ="ro" res ="yorosiku/yorosikuRo" pos ="-53,170,0"/>
+  <beginSound name ="se_explosion1"/>
+
+  <frame count ="1090"/>
+  <useAndShow id ="si" res ="yorosiku/yorosikuSi" pos ="53,170,0"/>
+  <beginSound name ="se_explosion1"/>
+  <var name="stat" op="set" value="1"/>
+  <frame count ="1120"/>
+  <useAndShow id ="ku" res ="yorosiku/yorosikuKu" pos ="159,170,0"/>
+  <beginSound name ="se_explosion1"/>
+  <var name="stat" op="set" value="2"/>
+
+  <frame count ="1240"/>
+  <halt result ="1"/>
+
+  <!-- 露に頭突き (シークレット) 
+  <frame count ="2000"/>
+  <var name="secret" op="set" value="1"/>
+  <unuse id ="omae2"/>
+  <useAndShow id ="omae" res ="yorosiku/yorosikuOmaeTati" pos ="-54,25,4"/>
+  <beginMoveEx id ="ro" posAdd="0, 150" rot="0,0,360" duration="20"/>
+  <beginSound name ="se_explosion2"/>
+  <frame count ="2020"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="0" goto="1090"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="1" goto="1120"/>
+-->
+  <frame count ="2000"/>
+  <endIf id ="all" />
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="yorosiku/yorosikuOmaePose" pos ="-53,35,4"/>
+
+  <frame count ="2120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+    
+</kyscript>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- デート２ -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="kare1" res ="date/dateOmaeIntro" pos ="50,-10,0"/>
+  <useAndShow id ="kano1" res="date/dateUsiIntro" pos ="-60,-10,1"/>
+  <drawText id="text" textId ="2" size ="32" pos="85,180,2" />
+  <beginSound name="jg_date"/>
+
+  <!-- 本編 -->
+  <frame count ="120"/>
+  <unuse id="all"/>
+  <useAndShow id ="robot" res ="date/dateYakiniku" pos ="-120,150,2"/>
+  <useAndShow id ="renai" res ="date/dateSusi" pos ="120,150,2"/>
+  <useAndShow id ="omae" res ="date/dateOmae2" pos ="0,-120,0"/>
+  <drawRect id ="rect" pos ="0,140,3" size="480,480" color="0.75, 0.75, 0.75" anchory="max"/>
+  <beginSound name="bgm_sumo" loop="true"/>
+  <beginDrag id ="omae" range="-240,-120,240,90"/>
+  <beginIf id ="goal1" target ="object" name ="omae" crange="120,150,200,160" goto="1000"/>
+  <beginIf id ="goal2" target ="object" name ="omae" crange="-120,150,200,160" goto="3000"/>
+  <frame count ="180"/>
+  <unuse id="goal2"/>
+  <beginIf id ="goal3" target ="object" name ="omae" crange="-120,150,200,160" goto="2000"/>
+
+  <!-- 時間切れで終了 -->
+  <frame count ="720"/>
+  <halt result ="0"/>
+
+  <!-- 寿司屋に入場 -->
+  <frame count ="1000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMoveEx id ="omae" pos="120,110" scale ="0.5,0.5" duration="60"/>
+  <beginSound name="se_enter"/>
+  <frame count ="1060"/>
+  <unuse id ="omae" />
+  <frame count ="1120"/>
+  <halt result ="1"/>
+
+  <!-- 焼肉屋に入場 (読まない)-->
+  <frame count ="2000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMoveEx id ="omae" pos="-120,110" scale ="0.5,0.5" duration="60"/>
+  <beginSound name="se_enter"/>
+  <frame count ="2060"/>
+  <unuse id ="omae" />
+  <frame count ="2120"/>
+  <halt result ="2"/>
+
+  <!-- 速攻で焼肉屋に入場 (シークレット)-->
+  <frame count ="3000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMoveEx id ="omae" pos="-120,110" scale ="0.5,0.5" duration="20"/>
+  <beginSound name="se_enter"/>
+  <frame count ="3020"/>
+  <unuse id ="omae" />
+  <frame count ="3080"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+  
+</kyscript>

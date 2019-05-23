@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 歩調 -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="kasa/kasaBG" pos ="170,0,5"/>
+  <useAndShow id ="uekomi0" res ="kasa/kasaUekomi" pos ="-180, 192,14"/>
+  <useAndShow id ="uekomi1" res ="kasa/kasaUekomi" pos ="-180,  96,13"/>
+  <useAndShow id ="uekomi2" res ="kasa/kasaUekomi" pos ="-180,   0,12"/>
+  <useAndShow id ="uekomi3" res ="kasa/kasaUekomi" pos ="-180, -96,11"/>
+  <useAndShow id ="uekomi4" res ="kasa/kasaUekomi" pos ="-180,-192,10"/>
+  <useAndShow id ="omae" res ="date/dateOmaeWalk" pos ="20,-250,0"/>
+  <useAndShow id ="kano" res ="date/dateKanojoWalk" pos ="-40,-250,1"/>
+  <useAndShow id ="car" res ="kasa/kasaCar" pos ="170,-350,4"/>
+  <beginMoveEx id ="kano" posAdd="0,550" duration="800"/>
+  <beginDrag id ="omae" range="20,-240,20,320" factor="0.5"/>
+  <beginSound name="bgm_sumo" loop="true"/>
+  <beginTimer id ="timer" duration="400"/>
+  <beginIf id="timeout" target="animend" name="timer" goto="2000"/>
+  <beginIf id="kanoout" target="object" name="kano" crange="-40,250,20,20" goto="5000"/>
+  <beginIf id="omaeout" target="object" name="omae" crange="20,300,20,20" goto="3000"/>
+  <beginIf target="always" goto="1000"/>
+  
+  <!-- 車が走るサブルーチン -->
+  <frame count ="1000"/>
+  <beginMoveEx id ="car" pos="170,-350"/>
+  <beginMoveEx id ="car" posAdd="0,2400" duration="360"/>
+  <beginIf id="caranim" target="animend" name="car" goto="1000"/>
+  <beginSound name="se_horn" volume="0.3"/>
+  <wait/>
+  
+  <!-- 第２の彼女登場 -->
+  <frame count ="2000"/>
+  <useAndShow id ="kano2" res ="date/dateRoboWalk" pos ="-40,-300,0"/>
+  <beginMoveEx id ="kano2" posAdd="0,600" duration="600"/>
+  <wait/>
+  
+  <!--  -->
+  <frame count ="3000"/>
+  <endIf/>
+  <halt/>
+  
+  <!-- 終了処理 -->
+  <frame count ="5000"/>
+  <function id ="omae" func="OnJudge"/>
+  <halt/>
+  
+</kyscript>

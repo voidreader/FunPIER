@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- さようなら -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <fadeScreen kind="fadein" duration="300"/>
+  <useAndShow id ="bg" res ="sayounara/sayounaraBG" pos="0,40,5"/>
+  <drawRect id="uprect" color="1,1,1,1" size="480,240" pos="0,40,0" anchory="min"/>
+  <drawRect id="downrect" color="1,1,1,1" size="480,240" pos="0,40,0" anchory="max"/>
+  <drawText id="message" text="" color="1,1,1,1" size="22" pos="-225, -100, 2" anchorx="min" anchory="max"/>
+  <useAndShow id ="next" res="sayounara/sayounaraObj" pos="205,-120,3"/>
+  <hide id="next"/>
+  <beginMoveEx id="uprect" pos="0,320" duration="300"/>
+  <beginMoveEx id="downrect" pos="0,-240" duration="300"/>
+  <beginSound name="bgm_ending" loop="true"/>
+  <!--  -->
+  <frame count ="240"/>
+  <drawRect id="rect" color="0.5,0.5,0.5,0" size="480,60" pos="0,-140,4" anchory="min"/>
+  <beginMoveEx id="rect" color="0.5,0.5,0.5,1" duration="30"/>
+  <!-- ゲーム開始 -->
+  <frame count ="300"/>
+  <useAndShow id ="game" res ="sayounara/sayounaraGame"/>
+  <!-- スタッフロール開始 -->
+  <frame count ="480"/>
+  <useAndShow id ="staff" res ="sayounara/staffroll" pos="-200,-150,1"/>
+  <wait/>
+  <frame count="1000"/>
+
+  <!-- 終了 -->
+  <frame count ="3000"/>
+  <beginMoveEx id="rect" color="0.5,0.5,0.5,0" duration="30"/>
+  <frame count ="3060"/>
+  <endSound fade="5"/>
+  <fadeScreen kind="fadeout" duration="360"/>
+  <beginMoveEx id="uprect" pos="0,40" duration="360"/>
+  <beginMoveEx id="downrect" pos="0,40" duration="360"/>
+  <frame count ="3420"/>
+  <beginSound name="se_ending"/>
+  <frame count ="3540"/>
+  <halt/>
+  
+</kyscript>

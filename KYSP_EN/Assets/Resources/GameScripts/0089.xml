@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 焼き肉 -->
+<kyscript>
+  <!-- 場面１ -->
+  <frame count ="0"/>
+  <var name="result" op="set" value="0"/>
+
+  <useAndShow id ="tbl" res ="yakiniku/yakinikuTable" pos ="-66,-130,3"/>
+  <useAndShow id ="kano" res ="yakiniku/yakinikuKanojyo" pos ="-62,70,4"/>
+  <useAndShow id ="omae" res ="yakiniku/yakinikuOmae" pos ="-106,-192,0"/>
+  <useAndShow id ="niku" res ="yakiniku/yakinikuNiku" pos ="-50,-82,2"/>
+  <useAndShow id ="hasi" res ="yakiniku/yakinikuHasi1" pos ="-10,-238,1"/>
+  <useAndShow id ="hito" res ="yakiniku/yakinikuHitoKoukan" pos ="160,280,4"/>
+  <beginSound name="bgm_yakiniku" loop="true"/>
+
+  <beginTimer id ="timer0" duration="600"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="9000" priority="1"/>
+  <beginIf id ="goal1" target="touch" crange="-50,-82,48,48" goto="1000"/>
+
+  <beginMove id ="hito" to="172,-46" duration="600"/>
+  <wait />
+
+
+  <!-- 肉をつかむ -->
+  <frame count ="1000"/>
+  <beginSound name="se_yes" loop="false"/>
+  <unuse id="goal1"/>
+  <beginMove id ="hasi" to="-50,-77" duration="10"/>
+  <frame count ="1010"/>
+  <unuse id="niku"/>
+  <unuse id="hasi"/>
+  <useAndShow id ="hasi2" res ="yakiniku/yakinikuHasi2" pos ="-50,-82,1"/>
+  <beginDrag id ="hasi2" range="-190,-190,46,-40"/>
+  <beginIf id ="goal4" target ="object" trigger="up" name ="hasi2" range="-200,-200,60,-15" goto="1500"/>
+
+  <beginIf id ="goal2" target ="object" trigger="up" name ="hasi2" crange="-172,-45,60,60" goto="2000"/>
+  <beginIf id ="goal3" target ="object" trigger="up" name ="hasi2" crange="28,-180,60,60" goto="3000"/>
+  <beginIf id ="goalS" target ="object" trigger="up" name ="hasi2" crange="-107,-180,60,48" goto="4000"/>
+  <wait />
+
+  <!-- 肉をはなす -->
+  <frame count ="1500" />
+  <endIf id ="goal2"/>
+  <endIf id ="goal3"/>
+  <endIf id ="goal4"/>
+  <endIf id ="goalS"/>
+  <unuse id="hasi2"/>
+  <useAndShow id ="niku" res ="yakiniku/yakinikuNiku" pos ="-50,-82,2"/>
+  <useAndShow id ="hasi" res ="yakiniku/yakinikuHasi1" pos ="-50,-82,1"/>  
+  <beginMove id ="hasi" to="-10,-238" duration="10"/>
+  <frame count ="1510" />
+  <beginIf id ="goal1" target="touch" crange="-50,-82,48,48" goto="1000"/>
+  <wait />
+
+  <!-- 肉を彼女へ -->
+  <frame count ="2000"/>
+  <unuse id ="timeout0"/>
+  <endIf id ="goal2"/>
+  <endIf id ="goal3"/>
+  <endIf id ="goal4"/>
+  <endIf id ="goalS"/>
+  <unuse id="hasi2"/>
+  <useAndShow id ="hasi3" res ="yakiniku/yakinikuHasi1" pos ="-190,-35,1"/>
+  <useAndShow id ="niku2" res ="yakiniku/yakinikuNiku" pos ="-179,-48,2"/>
+  <beginMove id ="hasi3" to="-10,-238" duration="60"/>
+  <beginTimer id ="timer1" duration="120"/>
+  <beginIf id="timeout1" target="animend" name ="timer1" goto="9000" priority="1"/>
+  <var name="result" op="set" value="2"/>
+  <wait />
+
+  <!-- 肉を自分へ -->
+  <frame count ="3000"/>
+  <unuse id ="timeout0"/>
+  <endIf id ="goal2"/>
+  <endIf id ="goal3"/>
+  <endIf id ="goal4"/>
+  <endIf id ="goalS"/>
+  <unuse id="hasi2"/>
+  <useAndShow id ="hasi3" res ="yakiniku/yakinikuHasi1" pos ="46,-188,1"/>
+  <useAndShow id ="niku2" res ="yakiniku/yakinikuNiku" pos ="33,-178,2"/>
+  <beginMove id ="hasi3" to="-10,-238" duration="30"/>
+  <beginTimer id ="timer1" duration="120"/>
+  <beginIf id="timeout1" target="animend" name ="timer1" goto="9000" priority="1"/>
+  <var name="result" op="set" value="1"/>
+  <wait />
+
+  <!-- シークレット 直接食う -->
+  <frame count ="4000"/>
+  <unuse id ="timeout0"/>
+  <endIf id ="goal2"/>
+  <endIf id ="goal3"/>
+  <endIf id ="goal4"/>
+  <endIf id ="goalS"/>
+  <unuse id="hasi2"/>
+  <useAndShow id ="hasi3" res ="yakiniku/yakinikuHasi1" pos ="-107,-190,1"/>
+  <beginMove id ="hasi3" to="-10,-238" duration="30"/>
+  <beginTimer id ="timer1" duration="120"/>
+  <beginIf id="timeout1" target="animend" name ="timer1" goto="9000" priority="1"/>
+  <var name="result" op="set" value="1"/>
+  <var name="secret" op="set" value="1"/>
+  <wait />
+
+  <!-- 時間切れ -->
+  <frame count ="9000"/>
+  <endIf id ="all" />
+  <unuse id ="timeout0" />
+  <unuse id ="timeout1" />
+  <beginAnim id ="hito" anim="1"/>
+  <endMove id ="hito" />
+  <frame count ="9060"/>
+  <halt />
+
+
+  
+</kyscript>

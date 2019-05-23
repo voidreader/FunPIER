@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ぐち -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="omae" res="guchi/guchiOmae" pos="0,-120,0"/>
+  <useAndShow id ="kano" res="guchi/guchiKanojo" pos="40,-50,1"/>
+  <useAndShow id ="fukidasi" res="guchi/guchiFukidasiKanojo" pos="40,120,3"/>
+  <useAndShow id ="randomText" res="guchi/guchiRandomText" pos="200,130,-1" /> <!--pos ="135,130,-1"/>-->
+  <drawText id="text1" textId ="1000" pos="190,134,2" size="24"/>
+  <hide id="randomText"/>
+  <hide id="fukidasi"/>
+  <hide id="text1"/>
+  <var name="count" value="0"/>
+
+  <beginTimer id ="timer" duration="60"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="1000" priority="2"/>
+  <beginIf id="goal1" target="object" name="omae" crange="-240,-120,80,20" goto="3000"/>
+  <beginIf id="goal2" target="object" name="omae" crange="240,-120,80,20" goto="4000"/>
+  <wait/>
+  
+  <!-- 彼女喋る -->
+  <frame count ="1000"/>
+  <show id="fukidasi"/>
+  <show id="randomText"/>
+  <function id="randomText" func="OnUpdateText"/>
+  <function id="omae" func="OnGetReady"/>
+  <!-- ねえ！聞いてるの！？ -->
+  <frame count ="1120"/>
+  <hide id="randomText"/>
+  <useAndShow id ="punL" res="guchi/guchiPunpun" pos="-20,40,0"/>
+  <useAndShow id ="punR" res="guchi/guchiPunpun" pos="100,40,0"/>
+  <beginMoveEx id="punR" scale="-1,1,1"/>
+  <show id="text1"/>
+  <frame count ="1240"/>
+  <function id="omae" func="OnDisabled"/>
+  <hide id ="fukidasi"/>
+  <unuse id ="punL"/>
+  <unuse id ="punR"/>
+  <hide id ="text1"/>
+  <beginTimer id ="timer" duration="60"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="1000" priority="2"/>
+  <var name="count" op="inc" value="1"/>
+  <beginIfVar lhs="$finish" op="eq" rhs="1" goto="2000"/>
+  <wait/>
+  
+  <frame count="2000"/>
+  <function id="omae" func="OnJudge"/>
+  <halt/>
+  
+  <frame count="3000"/>
+  <endIf/>
+  <function id="omae" func="OnFinished"/>
+  <beginMoveEx id="omae" pos="-540,-120" duration="180"/>
+  <beginSound name="se_enter"/>
+  <frame count="3120"/>
+  <var name="secret" value="1"/>
+  <halt result="0"/>
+
+  <frame count="4000"/>
+  <endIf/>
+  <function id="omae" func="OnFinished"/>
+  <beginMoveEx id="omae" pos="480,-120" duration="180"/>
+  <beginSound name="se_enter"/>
+  <frame count="4120"/>
+  <var name="secret" value="1"/>
+  <halt result="0"/>
+  
+</kyscript>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- システム：遊び方(空気読み。) -->
+<kyscript yuragi="false">
+  
+  <!-- artisticLicense1 -->
+  <frame count ="0"/>
+  <fadeScreen type="fadeend"/>
+  <frame count ="30"/>
+  <fadeScreen type="fadein" duration="90"/>
+  <useAndShow id ="artisticLicense1" res ="system/artisticLicense1" pos ="0,0,0"/>
+  <frame count ="50"/>
+  <beginIf id ="touch" target="touch" goto="940"/>
+  <wait/>
+  <frame count ="940"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+
+  <!-- artisticLicense2 -->
+  <frame count ="1030"/>
+  <unuse id="artisticLicense1"/>
+  <useAndShow id ="artisticLicense2" res ="system/artisticLicense2" pos ="0,0,0"/>
+  <fadeScreen kind="fadein" duration="90"/>
+  <frame count ="1050"/>
+  <beginIf id ="touch" target="touch" goto="1940"/>
+  <wait/>
+  <frame count ="1940"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+  
+  <!-- artisticLicense3 -->
+  <frame count ="2030"/>
+  <unuse id="artisticLicense2"/>
+  <useAndShow id ="artisticLicense3" res ="system/artisticLicense3" pos ="0,0,0"/>
+  <fadeScreen kind="fadein" duration="90"/>
+  <frame count ="2050"/>
+  <beginIf id ="touch" target="touch" goto="2940"/>
+  <wait/>
+  <frame count ="2940"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+  
+  <!-- artisticLicense4 -->
+  <frame count ="3030"/>
+  <unuse id="artisticLicense3"/>
+  <useAndShow id ="artisticLicense4" res ="system/artisticLicense4" pos ="0,0,0"/>
+  <fadeScreen kind="fadein" duration="90"/>
+  <frame count ="3050"/>
+  <beginIf id ="touch" target="touch" goto="4000"/>
+  <wait/>
+  <frame count ="4000"/>
+  <fadeScreen kind="fadein" duration="0"/>
+  <halt continueSound="true"/>
+  
+</kyscript>

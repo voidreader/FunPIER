@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 熱湯風呂 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="nettou/nettouBG" pos ="0,-60,10"/>
+  <useAndShow id ="body" res ="nettou/nettouAikataBody" pos ="0,-60,1"/>
+  <useAndShow id ="head" res ="nettou/nettouAikataHead" pos ="-90,20,2"/>
+  <useAndShow id ="ase" res="nettou/nettouAse" pos="-70,80,2"/>
+  <useAndShow id ="osuna1" res="nettou/nettouOsuna1" pos="-170,180,2"/>
+  <useAndShow id ="osuna2" res="nettou/nettouOsuna2" pos="170,180,2"/>
+  <beginIf id ="goal0" target="touch" crange="40,10,180,130" goto="2000"/>
+
+  <beginSound name="bgm_dance" loop="true"/>
+  <frame count ="90"/>
+  <endIf id ="goal0"/>
+  <beginAnim id ="head" anim="1"/>
+  <beginAnim id ="osuna1" anim="1"/>
+  <beginAnim id ="osuna2" anim="1"/>
+  <beginIf id ="goal" target="touch" crange="40,10,180,130" goto="1000"/>
+
+  <!-- 時間切れで終了 -->
+  <frame count ="600"/>
+  <halt result ="0"/>
+
+  <!-- 正解 -->
+  <frame count ="1000"/>
+  <unuse id ="body"/>
+  <unuse id ="head"/>
+  <unuse id ="ase"/>
+  <unuse id ="osuna1"/>
+  <unuse id ="osuna2"/>
+  <useAndShow id ="dobon1" res ="nettou/nettouAikataDobon1" pos ="-28,-50,2"/>
+  <beginSound name="se_splash"/>
+  <frame count ="1007"/>
+  <unuse id ="dobon1"/>
+  <useAndShow id ="dobon2" res ="nettou/nettouAikataDobon2" pos ="-54,-40,2"/>
+  <useAndShow id ="sibuki" res="nettou/nettouSibuki" pos ="0,0,0"/>
+  <frame count ="1014"/>
+  <unuse id ="sibuki"/>
+  <frame count ="1060"/>
+  <beginSound name="se_laugh"/>
+  <frame count ="1120"/>
+  <halt result="1"/>
+
+  <!-- シークレット -->
+  <frame count ="2000"/>
+  <unuse id ="body"/>
+  <unuse id ="head"/>
+  <unuse id ="ase"/>
+  <unuse id ="osuna1"/>
+  <unuse id ="osuna2"/>
+  <useAndShow id ="dobon1" res ="nettou/nettouAikataDobon1" pos ="-28,-50,2"/>
+  <beginSound name="se_splash"/>
+  <frame count ="2007"/>
+  <unuse id ="dobon1"/>
+  <useAndShow id ="dobon2" res ="nettou/nettouAikataDobon2" pos ="-54,-40,2"/>
+  <useAndShow id ="sibuki" res="nettou/nettouSibuki" pos ="0,0,0"/>
+  <frame count ="2014"/>
+  <unuse id ="sibuki"/>
+  <frame count ="2060"/>
+  <var name="secret" value="1"/>
+  <halt result="0"/>
+  
+</kyscript>

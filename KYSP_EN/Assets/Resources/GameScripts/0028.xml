@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- バーで2 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="desk" res ="bar/barCounter" pos ="-67,-70,4"/>
+  <useAndShow id ="hito" res ="bar/barGunmanA" pos ="-146,80,3"/>
+  <useAndShow id ="stool1" res ="bar/barStool1" pos ="16,-128,0"/>
+  <useAndShow id ="stool2" res ="bar/barStool2" pos ="-110,5,0"/>
+  <useAndShow id ="grass" res ="bar/barGlass" pos ="-200,36,2"/>
+  <useAndShow id ="omae" res ="bar/barOmaeSuwari" pos ="-40,-32,1"/>
+  <useAndShow id ="hito2" res ="bar/barGunmanB" pos ="142,-130,0"/>
+  <beginSound name="bgm_bar" loop="true"/>
+
+  <frame count ="30"/>
+  <beginMove id ="grass" to="16,-220" duration="180"/>
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+
+  <beginTimer id ="t0" duration="130"/>
+  <beginIf id="to0" target="animend" name ="t0" goto="180" priority="1"/>
+  <wait />
+
+  <frame count ="180"/>
+  <endMove id ="grass" />
+  <beginMove id ="grass" to="16,-220" duration="80"/>
+  <beginTimer id ="t1" duration="40"/>
+  <beginIf id="to1" target="animend" name ="t1" goto="210" priority="1"/>
+  <wait />
+  <frame count ="210"/>
+  <endMove id ="grass" />
+  <beginMove id ="grass" to="16,-220" duration="60"/>
+  <beginTimer id ="t0" duration="60"/>
+  <beginIf id="to0" target="animend" name ="t0" goto="250" priority="1"/>
+  <wait />
+  <frame count ="250"/>
+  <endIf id ="all" />
+  <beginSound name="se_catch"/>
+  <!-- 時間切れ -->
+  <frame count ="320"/>
+  <halt result ="1"/>
+
+  <!-- 手を出す -->
+  <frame count ="1000"/>
+  <unuse id="omae"/>
+  <unuse id="goal1"/>
+  <useAndShow id ="omae2" res ="bar/barOmaeCatch" pos ="-40,-32,1"/>
+  <beginIf id ="goal2" target ="object" name ="grass" crange="-90,-94,16,16" goto="2000"/>
+  <wait />
+
+  <!-- キャッチ -->
+  <frame count ="2000"/>
+  <unuse id="goal2"/>
+  <endIf id="to0"/>
+  <endIf id="to1"/>
+
+  <beginSound name="se_catch"/>
+  <endMove id="grass"/>
+  <beginIf id="goal3" target="touchaction" direction="3,0" goto="3000"/> 
+  <!-- <beginIf id="goal4" target="touchaction" direction="-3,0" goto="4000"/> -->
+  <frame count ="2120"/>
+  <halt result ="2"/>
+  
+  <!-- 送り　シークレット -->
+  <frame count ="3000"/>
+  <endIf id ="all"/>
+  <beginMove id ="grass" to="16,-220" duration="80"/>
+
+  <frame count ="3005"/>
+  <unuse id="omae2"/>
+  <useAndShow id ="omae" res ="bar/barOmaeSuwari" pos ="-40,-32,1"/>
+
+  <frame count ="3040"/>
+  <endMove id ="grass" />
+  <beginMove id ="grass" to="16,-220" duration="60"/>
+  <frame count ="3070"/>
+  <endMove id ="grass" />
+  <beginMove id ="grass" to="16,-220" duration="40"/>
+  <frame count ="3110"/>
+  <beginSound name="se_catch"/>
+
+  <frame count ="3120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+  <!-- 投げ返し　シークレット -->
+  <frame count ="4000"/>
+  <endIf id ="all"/>
+  <beginMove id ="grass" to="-280,-140" duration="30"/>
+
+  <frame count ="4010"/>
+  <unuse id="omae2"/>
+  <useAndShow id ="omae" res ="bar/barOmaeSuwari" pos ="-40,-32,!"/>
+
+  <frame count ="4120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+  
+</kyscript>

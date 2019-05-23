@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 回転寿司 -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="counter" res ="susi/susiCounter" pos ="28,-94,10"/>
+  <useAndShow id ="kyaku" res="susi/susiKyaku" pos="-11,-44,12"/>
+  <useAndShow id ="niwatori" res="susi/susiNiwatori" pos="115,54,13"/>
+  <useAndShow id ="body" res="susi/susiOmaeBody" pos="-162,-180,11"/>
+  <useAndShow id ="face" res="susi/susiOmaeFace" pos="-165,-93,3"/>
+  <useAndShow id ="kaiten" res="susi/susiSusiKaiten"/>
+  <beginSound name ="bgm_sumo" loop="true"/>
+  <beginSound track ="1" name ="bgm_sushi" loop="true" volume="0.5"/>
+  <beginIf id ="catch" target="touch" range ="-240,-240,240,240" goto="1000"/>
+  <beginTimer id ="timer" duration="1200"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="3000" priority="1"/>
+  <wait/>
+  
+  <frame count ="1000"/>
+  <beginAnim id="face" anim="1"/>
+  <beginSound name="se_pitching"/>
+  <function id="kaiten" func="OnCatch"/>
+  <wait/>
+  
+  <frame count ="2000"/>
+  <beginAnim id ="face" anim="2"/>
+  <beginSound name="se_catch"/>
+  <beginIf id ="catch" target="touch" range ="-240,-240,240,240" goto="1000"/>
+  <wait/>
+  
+  <frame count ="3000"/>
+  <function id="kaiten" func="OnJudge"/>
+  <halt/>
+  
+</kyscript>

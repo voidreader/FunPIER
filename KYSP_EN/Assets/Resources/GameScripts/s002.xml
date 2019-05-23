@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- システム：タイトル画面 -->
+<kyscript yuragi="false" notrim="true">
+  
+  <frame count ="0"/>
+  <useAndShow id ="title" res ="system/titleLogo" pos ="0,0,0"/>
+  <useAndShow id ="start" res ="system/titleTouch" pos ="160,90,0"/>
+  <useAndShow id ="smalltitle" res ="system/smalltitle" pos ="-120,80,0"/>
+  <beginSound name ="bgm_title" loop="true"/>
+  <frame count ="20"/>
+  <beginIf id ="touch" target="touch" goto="120"/> 
+  <wait/>
+  <frame count ="120"/>
+  <halt continueSound="true"/>
+  
+</kyscript>

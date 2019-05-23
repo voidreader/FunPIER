@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- システム：結果画面 -->
+<kyscript yuragi="false" notrim="true">
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="result" res ="result/intermitResult"/>
+  <drawRect id="rect" color ="1,1,1,1" size="400,42" pos="20,255,0"/>
+  <drawRect id="rect2" color ="1,1,1,1" size="480,1000" pos="0,0,2"/>
+  <frame count ="60"/>
+  <beginMoveEx id="text" pos="20,255,1"/>
+  <beginMoveEx id="rect" pos="500,255" duration="60"/>
+  <frame count ="150"/>
+  <beginMoveEx id="rect2" color="1,1,1,0" duration="180"/>
+  <beginMoveEx id="image" pos="-80,0,3"/>
+  <beginMoveEx id="mode" pos="120,-120,3"/>
+  <beginSound name="jg_result"/>
+  <beginIf id ="touch" target="touch" goto="1000"/>
+  <wait/>
+  
+  <frame count ="1000"/>
+  <halt/>
+  
+</kyscript>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- コールアンドレスポンス -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="call/callBG" pos ="0,22,6"/>
+  <useAndShow id ="stage" res ="call/callStage" pos ="0,-84,4"/>
+  <useAndShow id ="bass" res ="call/callHitoBase" pos ="-160,28,5"/>
+  <useAndShow id ="guiter" res ="call/callHitoGuitar" pos ="160,28,5"/>
+  <useAndShow id ="vocal" res ="call/callHitoVocal" pos="0,28,5"/>
+  <useAndShow id ="omae0" res ="call/sayhoOmaeSyou" pos ="0,-100,3"/>
+  <useAndShow id ="omae1" res ="call/sayhoOmaeDai" pos ="0,-110,2"/>
+  <useAndShow id ="yeah1" res ="call/callYeah" pos=" 120,0,0"/>
+  <useAndShow id ="yeah2" res ="call/callYeah" pos="-120,0,0"/>
+  <useAndShow id ="fukidasi" res ="call/callFukidasi" pos="-10,154,1"/>
+  <useAndShow id ="randomText" res="call/callRandomText"/><!-- pos="0,174,0"/>-->
+  <beginAnim id ="guiter" anim ="0"/>
+  <beginAnim id ="vocal" frame="0"/>
+  <hide id="yeah1"/>
+  <hide id="yeah2"/>
+  <hide id="fukidasi"/>
+  <hide id="randomText"/>
+  <beginSound name="bgm_band"/>
+  <var name="count" value="0"/>
+  <!--<beginIf target="always" goto="1000"/>-->
+  
+  <!-- トーキング -->
+  <frame count ="480"/>
+  <beginAnim id="vocal" frame="1"/>
+  <beginAnim id="guiter" frame="0"/>
+  <beginSound name="bgm_band_inst" loop="true"/>
+  <beginTimer id ="timer1" duration="120"/>
+  <beginIf id="timeout" target="animend" name ="timer1" goto="1000" priority="1"/>
+  <wait/>
+  
+  <!-- ボーカル喋る -->
+  <frame count ="1000"/>
+  <beginAnim id="vocal" frame ="0"/>
+  <beginAnim id ="omae0" frame="0"/>
+  <beginAnim id ="omae1" frame="0"/>
+  <hide id="yeah1"/>
+  <hide id="yeah2"/>
+  <show id ="fukidasi"/>
+  <show id ="randomText"/>
+  <function id ="randomText" func="OnUpdateText"/>
+  <beginTimer id ="timer2" duration="180"/>
+  <beginIf id="timeout" target="animend" name ="timer2" goto="1120" priority="1"/>
+  <beginIf id="touchup" target="touchaction" direction="0,3,0" goto="2000" priority="0"/>
+  <!-- ボーカル喋り終わる -->
+  <frame count ="1120"/>
+  <beginAnim id="vocal" frame ="1"/>
+  <hide id ="fukidasi"/>
+  <hide id="randomText"/>
+  <var name="count" op="inc" value="1"/>
+  <beginTimer id ="timer1" duration="120"/>
+  <beginIf id="timeout" target="animend" name ="timer1" goto="1500" priority="1"/>
+  <wait/>
+  <frame count ="1500"/>
+  <function id="randomText" func="OnJudgeAndNext"/>
+  <beginIfVar lhs="$count" op="eq" rhs="3" goto="5000" priority="2"/>
+  <beginIf target="always" goto="1000"/>
+  
+  <!-- Yeah!! -->
+  <frame count ="2000"/>
+  <beginAnim id ="omae0" frame="1"/>
+  <beginAnim id ="omae1" frame="1"/>
+  <show id="yeah1"/>
+  <beginMoveEx id="yeah1" pos="120,-40"/>
+  <beginMoveEx id="yeah1" pos="120,0" duration="30"/>
+  <show id="yeah2"/>
+  <beginMoveEx id="yeah2" pos="-120,-40"/>
+  <beginMoveEx id="yeah2" pos="-120,0" duration="30"/>
+  <beginSound name="se_yeah"/>
+  <beginSound name="se_applause1"/>
+  <var name="yeah" value ="1"/>
+  <wait/>
+  
+  <frame count ="5000"/>
+  <endIf/>
+  <frame count ="5120"/>
+  <beginIfVar lhs ="$score" op="eq" rhs="1" goto="5200"/>
+  <beginIfVar lhs ="$yeahCount" op="eq" rhs="3" goto="5300"/>
+  <halt result="0"/>
+  <frame count ="5200"/>
+  <halt result="1"/>
+  <frame count ="5300"/>
+  <var name="secret" value="1"/>
+  <halt result="0"/>
+
+</kyscript>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 着替え -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="telbox" res ="kigae/kigaeTelbox" pos ="0,0,2"/>
+  <useAndShow id ="bg" res ="kiss/kissGround" pos ="0,-80,4"/>
+  <useAndShow id ="fuki" res ="chourei/choureiFukidasi" pos ="480,180,1"/>
+  <drawText id="migi" textId="6" size="28" pos="360, 180, 0" vertical="false"/>
+  <useAndShow id ="omae" res ="kigae/kigaeOmaeNormal" pos ="0,-180,0"/>
+  <beginSound name="bgm_dance" loop="true"/>
+  
+  <frame count ="30"/>
+  <beginMove id ="fuki" to="210,180" duration="30"/>
+  <beginMove id ="migi" to="96,180" duration="30"/>
+  
+  <frame count ="60"/>
+  <useAndShow id ="hito" res ="kigae/kigaeHito" pos ="-310,-2,3"/>
+  <beginMove id ="hito" to="-10,-2" duration="180"/>
+  <beginIf id="goalS" target="touchaction" direction="3,0" goto="3000"/>
+  
+  <frame count ="240"/>
+  <unuse id ="hito"/>
+  <frame count ="260"/>
+  <endIf id="all"/>  
+  <useAndShow id ="hito" res ="kigae/kigaeHitoKakunin" pos ="-40,10,3"/>
+  <beginMove id ="hito" to="-66,10" duration="60"/>
+
+  <frame count ="320"/>
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="2000"/>
+  
+  <!-- 時間切れ(読まない) -->
+  <frame count ="600"/>
+  <halt result ="2"/>
+
+  <!-- 左を向く(正答) -->
+  <frame count ="1000"/>
+  <endIf id="all"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omaeL" res ="kigae/kigaeOmaeHidarimuki" pos ="0,-180,0"/>
+  <beginMove id ="hito" to="-40,10" duration="30"/>
+  <frame count ="1030"/>
+  <unuse id ="hito"/>
+  <frame count ="1040"/>
+  <drawRect id ="rect0" pos ="-56,0,2" size="240,140" color="1.0, 1.0, 1.0" anchorx="max"/>
+  <useAndShow id ="hero" res ="kigae/kigaeHero" pos ="-33,10,3"/>
+  <beginMove id ="hero" to="80,0" duration="30"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+  <frame count ="1070"/>
+  <beginMove id ="hero" to="380,120" duration="60"/>
+  <frame count ="1300"/>
+  <halt result ="1"/>
+
+  <!-- 右を向く(正答) -->
+  <frame count ="2000"/>
+  <endIf id="all"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omaeR" res ="kigae/kigaeOmaeMigimuki" pos ="0,-180,0"/>
+  <beginMove id ="hito" to="-40,10" duration="30"/>
+  <frame count ="2030"/>
+  <unuse id ="hito"/>
+  <frame count ="2040"/>
+  <drawRect id ="rect0" pos ="-56,0,2" size="240,140" color="1.0, 1.0, 1.0" anchorx="max"/>
+  <useAndShow id ="hero" res ="kigae/kigaeHero" pos ="-33,10,3"/>
+  <beginMove id ="hero" to="80,0" duration="30"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+  <frame count ="2070"/>
+  <beginMove id ="hero" to="380,120" duration="60"/>
+  <frame count ="2300"/>
+  <halt result ="1"/>
+  
+  <!-- 助けに行く(シークレット)(読まない) -->
+  <frame count ="3000"/>
+  <endIf id="all"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omaeR" res ="kigae/kigaeOmaeMigimuki" pos ="0,-180,0"/>
+  <frame count ="3010"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+  <beginMove id ="omaeR" to="380,-180" duration="60"/>
+  <beginIf id ="goalh" target ="object" name ="hito" crange="-10,-2,8,8" goto="4000"/>
+  <frame count ="3200"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+  <frame count ="4000"/>
+  <unuse id="hito"/>
+  <beginIf target="always" goto="3060"/>
+
+</kyscript>

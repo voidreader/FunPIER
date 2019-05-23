@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 目線 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="omae" res ="mesen/mesenOmae" pos ="-40,-150,-1"/>
+  <useAndShow id ="jyoshi" res ="mesen/mesenJyosikousei" pos="-40,115,1"/>
+  <useAndShow id ="sisen" res ="mesen/mesenSisen" pos="40,-120,0"/> 
+  <useAndShow id ="tesuri" res ="escalator/escalatorTesuriOverlay" pos ="130,0,3"/>
+  <useAndShow id ="step" res="escalator/escalatorStepMgr" pos="0,0,4"/>
+  <useAndShow id ="base" res ="escalator/escalatorBase" pos ="70,0,5"/>
+  <useAndShow id ="bg" res ="escalator/escalatorBG" pos ="0,0,6"/>
+  <function id="step" func="OnUseMob"/>
+  
+  <beginMoveEx id ="bg" posAdd="0,-300" duration="1200"/>
+  <beginSound name="bgm_dance" loop="true"/>
+  <beginDrag id="sisen" range="-240, -240, 240, 240"/>
+
+  <!-- 時間切れ(OnJudgeによる判定ジャンプ) -->
+  <frame count ="600"/>
+  <function id="sisen" func="OnJudge"/>
+
+  <!-- あまり見てない(読めた) -->
+  <frame count ="1000"/>
+  <halt result="1"/>
+
+  <!-- ガン見(読まない) -->
+  <frame count ="2000"/>
+  <halt result="2"/>
+
+  <!-- 普通に見てた(読めない) -->
+  <frame count ="3000"/>
+  <halt result="0"/>
+  
+</kyscript>

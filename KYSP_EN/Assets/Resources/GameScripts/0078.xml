@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 告る -->
+<kyscript>
+  <!-- １カット目 -->  
+  <frame count ="0"/>
+  <useAndShow id ="cut01" res ="kokuru/kokuruIntro" pos ="0,-40,0"/>
+  <beginSound name="bgm_xmas" loop="true"/>
+  <frame count ="60"/>
+  <drawText id="text1" textId="130" size="32" pos="49,161,0" color="0,0,0,0" vertical="false"/>
+  <beginMoveEx id="text1" posAdd="10,10" color="0,0,0,1" duration="60"/>
+  <frame count ="180"/>
+  <drawText id="text2" textId="131" size="32" pos="-39,-185,0" color="0,0,0,0" vertical="false"/>
+  <beginMoveEx id="text2" posAdd="10,10" color="0,0,0,1" duration="60"/>
+  <frame count ="240"/>
+  <drawText id="text3" textId="132" size="32" pos="37,-215,0" color="0,0,0,0" vertical="false"/>
+  <beginMoveEx id="text3" posAdd="10,10" color="0,0,0,1" duration="60"/>
+  <frame count ="360"/>
+  <beginIf target="always" goto="1000"/>
+
+  <!-- ２カット目 -->
+  <frame count ="1000"/>
+  <unuse id="all"/>
+  <useAndShow id ="lane0" res ="kokuru/kokuruLaneLower" pos ="0,-166,5"/>
+  <useAndShow id ="lane1" res ="kokuru/kokuruLaneUpper" pos ="0,-36,4"/>
+  <useAndShow id ="lane2" res ="kokuru/kokuruLaneUpper" pos ="0,60,3"/>
+  <useAndShow id ="lane3" res ="kokuru/kokuruLaneUpper" pos ="0,163,2"/>
+  <useAndShow id ="ball" res ="kokuru/kokuruBall" pos ="0,-252,1"/>
+  <beginMove id ="ball" to="0,260,1" duration="180"/>
+  <useAndShow id ="pin" res ="kokuru/kokuruPin" pos="-30,190,0"/>
+  <beginTimer id ="timer" duration="270"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="5000" priority="1"/>
+  <beginIf id="cond1" target="touchaction" direction="-3,-0" goto="2001"/>
+  <beginIf id="cond2" target="touchaction" direction="3,0" goto="2501"/>
+  <beginSound name="se_ball" loop="false"/>
+  <frame count ="1130"/>
+  <beginIf id="cond1" target="touchaction" direction="-3,-0" goto="4000"/>
+  <beginIf id="cond2" target="touchaction" direction="3,0" goto="4500"/>
+  <frame count ="1150"/>
+  <beginIf id="cond1" target="touchaction" direction="-3,-0" goto="2000"/>
+  <beginIf id="cond2" target="touchaction" direction="3,0" goto="2500"/>
+  <wait/>
+
+  <!-- 倒れる -->
+  <frame count ="2000"/>
+  <var name="result" value="1"/>
+  <beginIf target="always" goto="2100"/>
+  <frame count ="2001"/>
+  <var name="result" value="2"/>
+  <beginIf target="always" goto="2100"/>
+  <frame count ="2100"/>
+  <endIf priority="0"/>
+  <beginSound name="se_pin" volume="0.8" pitch="0.8"/>
+  <beginMoveEx id="pin" rot="0,0,90" duration="10"/>
+  <wait/>
+  
+  <frame count ="2500"/>
+  <var name="result" value="1"/>
+  <beginIf target="always" goto="2600"/>
+  <frame count ="2501"/>
+  <var name="result" value="2"/>
+  <beginIf target="always" goto="2600"/>
+  <frame count ="2600"/>
+  <endIf priority="0"/>
+  <beginSound name="se_pin" volume="0.8" pitch="0.8"/>
+  <beginMoveEx id="pin" rot="0,0,-90" duration="10"/>
+  <wait/>
+
+  <!-- ジャストミート -->
+  <frame count ="4000"/>
+  <endIf priority="0"/>
+  <beginSound name="se_pin" pitch="1.2"/>
+  <beginMoveEx id="pin" pos="-60, 230" rot="0,0,180" duration="10"/>
+  <frame count ="4010"/>
+  <beginMoveEx id="pin" pos="-30, 270" rot="0,0,360" duration="10"/>
+  <var name="result" op="set" value="1"/>
+  <wait/>
+  <frame count ="4500"/>
+  <endIf priority="0"/>
+  <beginSound name="se_pin" pitch="1.2"/>
+  <beginMoveEx id="pin" pos="30, 270" rot="0,0,-360" duration="20"/>
+  <var name="result" op="set" value="1"/>
+  <var name="secret" op="set" value="1"/>
+  <wait/>
+
+  <frame count ="5000"/>
+  <halt/>
+
+  
+</kyscript>

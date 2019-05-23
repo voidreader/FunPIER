@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 下さい -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <drawText id="text00" text="娘さんと" size="10" pos="120, 80, 0"/>
+  <drawText id="text01" text="結婚させて" size="10" pos="40, 40, 0"/>
+  <drawText id="text02" text="下さい" size="10" pos="-40, 40, 0"/>
+  <drawText id="text03" text="まで・・・" size="10" pos="-120, -5, 0"/>
+
+  <frame count ="120"/>
+  <unuse id ="text00"/>
+  <unuse id ="text01"/>
+  <unuse id ="text02"/>
+  <unuse id ="text03"/>
+  <beginSound name="bgm_heartbeat" loop="true"/>
+  <useAndShow id ="tyabu" res ="kudasai/kudasaiTyabudai" pos ="0,0,4"/>
+  <useAndShow id ="kano" res ="kudasai/kudasaiKanojo" pos ="80,-40,3"/>
+  <useAndShow id ="omae" res ="kudasai/kudasaiOmae1" pos ="-70,-40,2"/>
+
+  <frame count ="150"/>
+  <useAndShow id ="cdwn5" res ="kudasai/kudasaiDigit5" pos ="0,180,0"/>
+  <beginSound name="se_explosion1"/>
+
+  <frame count ="210"/>
+  <unuse id="cdwn5"/>
+  <useAndShow id ="cdwn4" res ="kudasai/kudasaiDigit4" pos ="0,180,0"/>
+  <beginSound name="se_explosion1"/>
+
+  <frame count ="270"/>
+  <unuse id="cdwn4"/>
+  <useAndShow id ="cdwn3" res ="kudasai/kudasaiDigit3" pos ="0,180,0"/>
+  <beginSound name="se_explosion1"/>
+
+  <frame count ="330"/>
+  <unuse id="cdwn3"/>
+  <useAndShow id ="cdwn2" res ="kudasai/kudasaiDigit2" pos ="0,180,0"/>
+  <beginSound name="se_explosion1"/>
+
+  <frame count ="390"/>
+  <unuse id="cdwn2"/>
+  <useAndShow id ="cdwn1" res ="kudasai/kudasaiDigit1" pos ="0,180,0"/>
+  <beginSound name="se_explosion1"/>
+
+  <beginDrag id ="omae" rewind ="true" range="-200, -150, 200, 150"/>
+  <beginIf id ="goal1" target ="object" trigger="up" name="omae" crange="-180,-50,80,80" goto ="1000"/>
+  <beginIf id ="goal2" target ="object" trigger="up" name="omae" crange=" -66,58,80,80" goto ="2000"/>
+
+  <frame count ="450"/>
+  <unuse id="cdwn1"/>
+  <unuse id="omae"/>
+  <useAndShow id ="omae1" res ="kudasai/kudasaiOmae2" pos ="-64,-70,2"/>
+
+  <frame count ="480"/>
+  <beginSound name="se_fall"/>
+  <frame count ="500"/>
+  <useAndShow id ="fuki" res ="kudasai/kudasaiFukidasi2" pos ="-160,100,1"/>
+  <drawText id="text10" text="ならん" size="10" pos="-160, 100, 0"/>
+
+  <!-- 時間切れで終了 -->
+  <frame count ="620"/>
+  <halt result="0"/>
+
+  <!-- 正答 -->
+  <frame count ="1000"/>
+  <endIf id ="all"/>
+  <unuse id="cdwn1"/>
+  <endDrag id ="omae"/>
+  <beginMove id ="omae" to ="-180,-50" duration="15"/>
+  <frame count ="1015"/>
+  <unuse id="omae"/>
+  <useAndShow id ="omae1" res ="kudasai/kudasaiOmae2" pos ="-174,-80,2"/>
+  <frame count ="1030"/>
+  <beginSound name="jg_fanfare"/>
+  <frame count ="1045"/>
+  <useAndShow id ="fuki" res ="kudasai/kudasaiFukidasi2" pos ="-160,100,1"/>
+  <drawText id="text10" text="娘を" size="10" pos="-153, 130, 0"/>
+  <drawText id="text11" text="よろしく" size="10" pos="-181, 90, 0"/>  
+  <frame count ="1200"/>
+  <halt result="1"/>
+  
+  
+  <!-- シークレット -->
+  <frame count ="2000"/>
+  <endIf id ="all"/>
+  <unuse id="cdwn1"/>
+  <endDrag id ="omae"/>
+  <beginMove id ="omae" to ="-66,58" duration="15"/>
+  <frame count ="2015"/>
+  <unuse id="omae"/>
+  <useAndShow id ="omae1" res ="kudasai/kudasaiOmae2" pos ="-60,28,2"/>
+  <frame count ="2030"/>
+  <beginSound name="se_fall"/>
+  <frame count ="2045"/>
+  <useAndShow id ="fuki" res ="kudasai/kudasaiFukidasi2" pos ="-160,100,1"/>
+  <drawText id="text10" text="ならん" size="10" pos="-160, 100, 0"/>
+  <frame count ="2200"/>
+  <halt result="3"/>
+
+  
+</kyscript>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- domino -->
+<kyscript>
+  <frame count ="0"/>
+  <var name="mov" op="set" value="0"/>
+  <var name="res" op="set" value="0"/>
+  <var name="stp" op="set" value="0"/>
+
+  <useAndShow id ="ground" res ="domino/domonoGround" pos ="0,-100,4" />
+  <useAndShow id ="kanban" res ="domino/dominoKanban" pos ="0,170,4" />
+  <useAndShow id ="domino" res ="domino/dominoMgr" pos ="0,0,3" />
+
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="6000"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="7000"/>
+
+  <beginTimer id ="tm0" duration="600"/>
+  <beginIf id="to0" target="animend" name ="tm0" goto="9000" priority="1"/>
+
+  <frame count ="5000"/>
+  <halt result ="1"/>
+
+  <frame count ="6000"/>
+ 
+  <beginIfVar lhs="$res" op="neq" rhs="0" goto="6100"/>
+  <endIf id="all"/>
+  
+  <var name="mov" op="set" value="1"/>
+  <endIf id ="to0"/>
+  <unuse id ="tm0"/>
+  <beginTimer id ="tm1" duration="240"/>
+  <beginIf id="to1" target="animend" name ="tm1" goto="9000" priority="1"/>
+  <wait/>
+  <frame count ="6100"/>
+  <wait/>
+
+  <frame count ="7000"/>
+  <beginIfVar lhs="$stp" op="neq" rhs="0" goto="7100"/>
+  <beginIfVar lhs="$res" op="neq" rhs="0" goto="7100"/>
+
+  <endIf id="all"/>
+  <var name="mov" op="set" value="-1"/>
+  <endIf id ="to0"/>
+  <unuse id ="tm0"/>
+  <beginTimer id ="tm2" duration="240"/>
+  <beginIf id="to2" target="animend" name ="tm2" goto="9000" priority="1"/>
+  <wait/>
+  <frame count ="7100"/>
+  <wait/>
+
+  <frame count ="9000"/>
+  <endIf id ="all"/>
+  <beginIfVar lhs="$res" op="eq" rhs="1" goto="9100"/>
+  <beginIfVar lhs="$res" op="eq" rhs="2" goto="9200"/>
+  <beginIfVar lhs="$res" op="eq" rhs="3" goto="9300"/>
+  <halt result ="0"/>
+  <frame count ="9100"/>
+  <halt result ="1"/>
+  <frame count ="9200"/>
+  <halt result ="2"/>
+  <frame count ="9300"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+</kyscript>
+
+

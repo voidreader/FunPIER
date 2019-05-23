@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 必殺技が・・・ -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="result" op="set" value="0"/>
+
+  <useAndShow id ="bg" res ="hissatu/hissatuBG" pos ="0,-150,0"/>
+  <useAndShow id ="hito0" res ="hissatu/hissatuHitoKousen" pos ="140,-70,4"/>
+  <useAndShow id ="omae0" res ="hissatu/hissatuOmaeNormal" pos ="-100,-70,4"/>
+  <beginSound name="bgm_kikou" loop="true"/>
+
+  <frame count ="30" />
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+
+
+  <frame count ="90" />
+  <useAndShow id ="beem0" res ="hissatu/hissatuBeem1" pos ="94,-50,3"/>
+  <beginSound name="se_laser" track ="1" loop="true"/>
+  <frame count ="91" />
+  <endSound track ="1"/>
+  <beginSound name="se_laser" track ="1" loop="true"/>
+
+  <frame count ="120" />
+  <beginIf id="goal3" target="touchaction" direction="3,0" goto="3000"/>
+  
+  <frame count ="170" />
+  <endIf id ="goal1" />
+  <beginIf id="goal2" target="touchaction" direction="-3,0" goto="1100"/>
+
+  <useAndShow id ="hit0" res ="hissatu/hissatuHit1" pos ="-72,-50,2"/>
+
+  <!-- 時間切れ -->
+  <frame count ="800"/>
+  <halt result ="0"/>
+
+  <!-- やられて倒れる（ビーム前）読まない -->
+  <frame count ="1000"/>
+  <var name="result" op="set" value="2"/>
+  <beginIf target="always" goto="2000"/>
+
+  <!-- やられて倒れる（ビーム後） -->
+  <frame count ="1100"/>
+  <var name="result" op="set" value="1"/>
+  <beginIf target="always" goto="2000"/>
+
+  <!-- やられて倒れる -->
+  <frame count ="2000" />
+  <endIf id ="all"/>
+  <unuse id ="beem0"/>
+  <unuse id ="hit0"/>
+  <endSound fade ="0" />
+
+
+  <frame count ="2010" />
+  <unuse id ="omae0"/>
+  <useAndShow id ="omae1" res ="hissatu/hissatuOmaeYarare1" pos ="-144,-90,4"/>
+  <frame count ="2020" />
+  <unuse id ="omae1"/>
+  <useAndShow id ="omae2" res ="hissatu/hissatuOmaeYarare2" pos ="-155,-132,4"/>
+  <beginSound name="se_down" />
+  <frame count ="2260" />
+  <halt />
+  
+  <!-- カウンター攻撃 -->
+  <frame count ="3000" />
+  <endIf id ="all"/>
+  <unuse id ="beem0"/>
+  <unuse id ="hit0"/>
+  <useAndShow id ="baria0" res ="hissatu/hissatuBaria" pos ="-72,-50,2"/>
+  <useAndShow id ="beem1" res ="hissatu/hissatuBeem2" pos ="-72,-50,2"/>
+  <frame count ="3080" />
+  <useAndShow id ="hit1" res ="hissatu/hissatuHit1" pos ="110,-50,1"/>
+  <frame count ="3150" />
+  <endSound fade ="0" />
+
+  <unuse id ="beem1"/>
+  <unuse id ="hit1"/>
+  <frame count ="3200" />
+  <unuse id ="hito0"/>
+  <useAndShow id ="hito1" res ="hissatu/hissatuHitoYarare1" pos ="190,-84,4"/>
+  <frame count ="3210" />
+  <unuse id ="hito1"/>
+  <useAndShow id ="hito2" res ="hissatu/hissatuHitoYarare2" pos ="220,-124,4"/>
+  <beginSound name="se_down" />
+  <frame count ="3330" />
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+  
+</kyscript>

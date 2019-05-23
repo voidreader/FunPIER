@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ヅラ -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="zura/zuraBG" pos ="0,0,4"/>
+  <useAndShow id ="omae" res ="zura/zuraOmaeNormal" pos ="-48,0,3"/>
+  <useAndShow id ="oyj" res ="zura/zuraHitoNormal" pos ="48,-15,3"/>
+  <useAndShow id ="fg" res ="zura/zuraTelop" pos ="0,0,1"/>
+
+  <beginSound name="bgm_quiz" loop="true"/>
+
+  <frame count ="60"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="zura/zuraOmaeOjigi" pos ="-48,0,3"/>
+  <useAndShow id ="fuki" res ="zura/zuraFukidasi" pos ="-170,46,0"/>
+  <useAndShow id ="oha" res ="zura/zuraOhayou" pos ="-170,46,-1"/>
+
+  <frame count ="70"/>
+  <unuse id ="oyj"/>
+  <useAndShow id ="oyj2" res ="zura/zuraHitoOtiru1" pos ="48,-15,3"/>
+
+  <frame count ="80"/>
+  <unuse id ="oyj2"/>
+  <useAndShow id ="oyj3" res ="zura/zuraHitoOtiru2" pos ="48,-15,3"/>
+
+  <frame count ="120"/>
+  <unuse id ="oyj3"/>
+  <useAndShow id ="oyj4" res ="zura/zuraHitoOtiru3" pos ="48,-15,3"/>
+  <useAndShow id ="dura0" res ="zura/zuraKaturaRakka" pos ="48,45,2"/>
+  <beginMoveEx id ="dura0" pos ="48,-116" duration="40"/>
+  <endSound />
+  <beginSound name="se_fall" />
+  <frame count ="160"/>
+  <unuse id ="dura0"/>
+  <useAndShow id ="dura" res ="zura/zuraKatura" pos ="38,-128,2"/>
+  <frame count ="190"/>
+  <unuse id ="oyj4"/>
+  <useAndShow id ="oyj" res ="zura/zuraHitoOtiru4" pos ="48,-15,3"/>
+  <frame count ="200"/>
+  <unuse id ="omae2"/>
+  <unuse id ="fuki"/>
+  <unuse id ="oha"/>
+  <useAndShow id ="omae" res ="zura/zuraOmaeNormal" pos ="-48,0,3"/>
+
+
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="2000"/>
+
+  <!-- 時間切れ シークレット -->
+  <frame count ="780"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+  <!-- 左見正答 -->
+  <frame count ="1000"/>
+  <endIf id ="all" />
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="zura/zuraOmaeSorasu" pos ="-48,0,3"/>
+  <frame count ="1120"/>
+  <halt result ="1"/>
+
+  <!-- 右見読まない -->
+  <frame count ="2000"/>
+  <endIf id ="all" />
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="zura/zuraOmaeMiru" pos ="-50,0,3"/>
+  <frame count ="2120"/>
+  <halt result ="2"/>
+  
+</kyscript>

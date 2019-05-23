@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 続々々再び電車で -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="densya/densyaBG" pos ="0,0,5"/>
+  <useAndShow id ="cm" res ="densya/densyaKoukoku" pos ="150,60,4"/>
+  <useAndShow id ="turikawa" res="densya/densyaTurikawa" pos ="0,158,2"/>
+  <useAndShow id ="hito1" res ="densya/densyaHitoSuwari" pos ="-200,-60,3"/>
+  <!--<useAndShow id ="hito2" res ="densya/densyaHitoSuwari" pos ="-120,-60,3"/>-->
+  <useAndShow id ="hito3" res ="densya/densyaHitoSuwari" pos ="-40,-60,3"/>
+  <useAndShow id ="hito4" res ="densya/densyaHitoSuwari" pos ="50,-60,3"/>
+  <useAndShow id ="hito5" res ="densya/densyaHitoSuwari" pos ="130,-60,3"/>
+  <useAndShow id ="hito6" res ="densya/densyaHitoSuwari" pos ="210,-60,3"/>
+  <useAndShow id ="dokusyo" res ="densya/densyaDokusyo" pos ="0,-170,1"/>
+  <useAndShow id ="jyosi" res ="densya/densyaJKNemuriB" pos ="-100,-60,2"/>
+  <useAndShow id ="sisen" res ="mesen/mesenSisen2" pos ="50,-150,0"/>
+  <beginDrag id ="sisen" range="-240,-240,240,240"/>
+  <beginSound name ="bgm_train" loop="true"/>
+  
+  <frame count ="60"/>
+  <beginAnim id ="jyosi" anim ="1"/>
+  
+  <frame count ="600"/>
+  <function id="sisen" func="OnJudge"/>
+
+  <!-- あまり見てない(読めた) -->
+  <frame count ="1000"/>
+  <beginIfVar lhs="$secret" op="eq" rhs="1" goto="1100"/>
+  <halt result="1"/>
+  <!-- 横の男をガン見(シークレット) -->
+  <frame count ="1100"/>
+  <unuse id ="sisen"/>
+  <beginMoveEx id="hito3" posAdd="-10,0" duration="15"/>
+  <frame count ="1115"/>
+  <beginMoveEx id="hito3" posAdd="10,0" duration="15"/>
+  <frame count ="1130"/>
+  <beginAnim id="jyosi" anim="2"/>
+  <frame count ="1300"/>
+  <halt result ="1"/>
+
+  <!-- ガン見(読まない) -->
+  <frame count ="2000"/>
+  <halt result="2"/>
+
+  <!-- 普通に見てた(読めない) -->
+  <frame count ="3000"/>
+  <halt result="0"/>
+  
+</kyscript>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 電気（クーラー） -->
+<kyscript>
+  <!-- カット１ -->
+  <frame count ="0"/>
+  <useAndShow id ="cast00" res ="denki/denkiKanojo" pos ="80,-130,3"/>
+  <useAndShow id ="cast01" res ="jihanki/jihankiOmaeKaidasi" pos ="-120,-70,3"/>
+  <beginSound name="jg_date" loop="false"/>
+  <frame count ="60"/>
+  <useAndShow id ="cast02" res ="denki/denkiKanojoSerifu" pos ="100,28,2"/>
+  <beginMoveEx id="cast02" color="1,1,1,0"/>
+  <beginMoveEx id="cast02" color="1,1,1,1" duration="30"/>
+  <frame count ="120"/>
+  <useAndShow id ="cast03" res ="jihanki/jihankiRyoukai" pos ="-60,122,2"/>
+  <beginMoveEx id="cast03" color="1,1,1,0"/>
+  <beginMoveEx id="cast03" color="1,1,1,1" duration="30"/>
+
+  <!-- カット２ -->
+  <frame count ="240"/>
+  <unuse id="all"/>
+  <useAndShow id ="remo" res ="denki/denkiRemocon" pos ="0,-240,0"/>
+  <beginMoveEx id="remo" pos="0,0,0" duration="15"/>
+  <frame count ="260"/>
+  <beginTimer id ="timer" duration="780"/>
+  <beginIf id ="timeout" target="animend" name ="timer" goto="4000" priority="1"/>
+  <beginIf id ="up" target ="touch" crange="80,120,100,80" autoEnd ="false" goto="1000"/>
+  <beginIf id ="down" target ="touch" crange="80,40,100,80" autoEnd ="false" goto="2000"/>
+  <beginIf id ="power" target ="touch" crange="80,-40,100,80" goto="5000"/>
+  <!--<beginSound name="bgm_car" loop="true" volume="0.3"/>-->
+  <wait/>
+
+  <!-- 上ボタン -->
+  <frame count ="1000"/>
+  <beginSound name ="se_button"/>
+  <wait/>
+  <function id="remo" func="OnUpTemplature"/>
+
+  <!-- 下ボタン -->
+  <frame count ="2000"/>
+  <beginSound name ="se_button"/>
+  <wait/>
+  <function id="remo" func="OnDownTemplature"/>
+
+  <!-- 温度を上げて時間切れ -->
+  <frame count ="3000"/>
+  <frame count ="3180"/>
+  <halt result ="1"/>
+
+  <!-- 時間切れ -->
+  <frame count ="4000"/>
+  <beginIfVar lhs="20" op="gt" rhs="$temp" goto="4010"/>
+  <halt result ="0"/>
+  <frame count ="4010"/>
+  <halt result ="2"/>
+
+  <!-- 電源 -->
+  <frame count ="5000"/>
+  <endIf/>
+  <function id="remo" func="OnPower"/>
+  <beginSound name="se_stop"/>
+  <endSound fade="0.5"/>
+  <frame count ="5120"/>
+  <var name="secret" value="1"/>
+  <halt result ="1"/>
+  
+</kyscript>

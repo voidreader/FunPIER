@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- レジで -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="reji1" res="reji/rejiBG1" pos ="0,80,4"/>
+  <useAndShow id ="reji2" res="reji/rejiBG2" pos ="0,-80,2"/>
+  <useAndShow id ="omae" res="reji/rejiOmaeWalk" pos ="0,-250,1"/>
+  <useAndShow id ="hito" res="reji/rejiHitoNarabi" pos ="100,-330,0"/>
+  <beginSound name="bgm_bco_inst" loop="true"/>
+  <beginMove id ="hito" to ="40,-260,0" duration="120"/>
+  
+  <frame count ="120"/>
+  <beginDrag id ="omae" range="-120, -260, 88, 82"/>
+
+  <beginIf id ="goal1" target="object" name ="omae" range="-240,-280, -100, -120" goto="1000"/>
+  <beginIf id ="goal2" target="object" name ="omae" range="60,-280, 240, -120" goto="2000"/>
+  <beginIf id ="goal3" target="object" name ="omae" range="64,0,260,260" goto="3000"/>
+  
+  <frame count ="900"/>
+  <halt result ="0"/>
+
+  <!-- 左によける -->
+  <frame count ="1000"/>
+  <endDrag id ="omae"/>
+  <endIf id ="all"/>
+  <beginMove id ="omae" to ="-160,-250" duration="30"/>
+  <frame count ="1060"/>
+  <beginMove id ="hito" to ="-40,-180" duration ="60"/>
+  <frame count ="1120"/>
+  <halt result ="1"/>
+
+  <!-- 右によける -->
+  <frame count ="2000"/>
+  <endDrag id ="omae"/>
+  <endIf id ="all"/>
+  <beginMove id ="omae" to ="60,-250" duration="30"/>
+  <frame count ="2060"/>
+  <beginMove id ="hito" to ="-40,-180" duration ="60"/>
+  <frame count ="2120"/>
+  <halt result ="1"/>
+
+  <!-- あえてレンジの前へ -->
+  <frame count ="3000"/>
+  <endDrag id ="omae"/>
+  <endIf id ="all"/>
+  <beginMove id ="omae" to ="70,90" duration="60"/>
+  <frame count ="3060"/>
+  <setPos id ="omae" pos ="70,90,3"/>
+  <beginMove id="omae" to="70,0" duration ="20"/>
+  <frame count ="3080"/>
+  <beginMove id="omae" to="120,20" duration ="90"/>
+  <frame count ="3170"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+  
+</kyscript>

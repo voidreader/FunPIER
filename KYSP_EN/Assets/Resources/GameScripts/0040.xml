@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 一本じめ -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="cast00" res ="ippon/ipponHito" pos ="-95,0,3"/>
+  <useAndShow id ="cast01" res ="ippon/ipponHito" pos ="-190,0,3"/>
+  <useAndShow id ="cast02" res ="ippon/ipponHito" pos ="95,0,3"/>
+  <useAndShow id ="cast03" res ="ippon/ipponHito" pos ="190,0,3"/>
+  <useAndShow id ="omae" res ="ippon/ipponOmae" pos ="0,0,2"/>
+
+  <beginIf id="goal0" target="touch" goto="1000"/>
+
+  <frame count ="60"/>
+  <beginSound name="se_ote1"/>
+  <unuse id="goal0"/>
+  <beginIf id="goal1" target="touch" goto="1500"/>
+
+  <frame count ="120"/>
+  <useAndShow id ="oteo" res ="ippon/ipponKakegoe" pos ="-136,180,1"/>
+  <beginSound name="se_yooo1"/>
+
+  <frame count ="160"/>
+  <unuse id="goal1"/>
+  <beginIf id="goal2" target="touch" goto="2000"/>
+
+  <frame count ="200"/>
+  <unuse id="goal2"/>
+  <beginIf id="goal3" target="touch" goto="3000"/>
+  <beginAnim id ="cast00" anim="1"/>
+  <beginAnim id ="cast01" anim="1"/>
+  <beginAnim id ="cast02" anim="1"/>
+  <beginAnim id ="cast03" anim="1"/>
+  <beginSound name="se_clap"/>
+  <frame count ="260"/>
+  <unuse id="goal3"/>
+  <beginIf id="goal4" target="touch" goto="1000"/>
+
+  <!-- 時間切れ -->
+  <frame count ="400"/>
+  <halt result ="0"/>
+
+  <!-- ぽん失敗 -->
+  <frame count ="1000"/>
+  <beginSound name="se_clap"/>
+  <beginAnim id ="omae" anim="1"/>
+  <frame count ="1140"/>
+  <halt result ="2"/>
+
+  <!-- ぽん失敗2 -->
+  <frame count ="1500"/>
+  <beginSound name="se_clap"/>
+  <beginAnim id ="omae" anim="1"/>
+  <frame count ="1640"/>
+  <halt result ="0"/>
+
+  <!-- ぽん成功 -->
+  <frame count ="2000"/>
+  <beginSound name="se_clap"/>
+  <beginAnim id ="omae" anim="1"/>
+  <frame count ="2010"/>
+  <beginSound name="se_clap"/>
+  <beginAnim id ="cast00" anim="1"/>
+  <beginAnim id ="cast01" anim="1"/>
+  <beginAnim id ="cast02" anim="1"/>
+  <beginAnim id ="cast03" anim="1"/>
+ 
+  <beginIf target="always" goto="4000"/>
+  <wait/>
+
+  <!-- ぽん成功 -->
+  <frame count ="3000"/>
+  <beginSound name="se_clap"/>
+  <beginAnim id ="omae" anim="1"/>
+
+  <beginIf target="always" goto="4000"/>
+  <wait/>
+
+  <frame count ="4000"/>
+  <beginIf id="goal5" target="touch" goto="4200"/>
+  <frame count ="4100"/>
+  <halt result ="1"/>
+
+  <frame count ="4200"/>
+  <beginAnim id ="omae" anim="0"/>
+  <frame count ="4204"/>
+  <beginSound name="se_clap"/>
+  <beginAnim id ="omae" anim="1"/>
+  <frame count ="4214"/>
+  <beginIf id="goal6" target="touch" goto="4400"/>
+  <frame count ="4300"/>
+  <halt result ="0"/>
+
+  <frame count ="4400"/>
+  <beginAnim id ="omae" anim="0"/>
+  <frame count ="4404"/>
+  <beginSound name="se_clap"/>
+  <beginAnim id ="omae" anim="1"/>
+  <frame count ="4500"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+  
+</kyscript>

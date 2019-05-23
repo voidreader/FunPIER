@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 再び電車で -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="densya/densyaBG" pos ="0,0,3"/>
+  <useAndShow id ="turikawa" res="densya/densyaTurikawa" pos ="0,158,2"/>
+  <useAndShow id ="hito1" res ="densya/densyaHitoNemuri" pos ="-200,-60,2"/>
+  <useAndShow id ="hito2" res ="densya/densyaHitoNemuri" pos ="-120,-60,2"/>
+  <useAndShow id ="hito3" res ="densya/densyaHitoNemuri" pos ="130,-60,2"/>
+  <useAndShow id ="hito4" res ="densya/densyaHitoNemuri" pos ="210,-60,2"/>
+  <useAndShow id ="omae" res ="densya/densyaOmae3" pos ="50,-60,1"/>
+  <beginAnim id ="omae" anim="1"/>
+  <useAndShow id ="oyaji" res ="densya/densyaOyaji" pos ="-25,-60,0"/>
+  <beginSound name ="bgm_train" loop="true"/>
+
+  <frame count ="180"/>
+  <beginAnim id ="oyaji" anim="1"/>
+
+  <frame count ="240"/>
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="0,-3" goto="3000"/>
+
+  <!-- 時間切れ -->
+  <frame count ="660"/>
+  <halt result="0"/>
+
+
+  <!-- つつく -->
+  <frame count ="1000"/>
+  <endIf id ="all"/>
+  <beginAnim id ="omae" anim="2"/>
+  <beginSound name ="se_yes" loop="false"/>
+  <frame count ="1080"/>
+  <beginAnim id ="omae" anim="1"/>
+  <beginAnim id ="oyaji" anim="2"/>
+  <beginIf id="goal2" target="touchaction" direction="0,-3" goto="3000"/>
+  <frame count ="1260"/>
+  <halt result="1"/>
+
+  <!-- たつ -->
+  <frame count ="3000"/>
+  <endIf id ="all"/>
+  <beginMoveEx id ="omae" pos ="50,-60,-1" />
+  <beginAnim id ="omae" anim="0"/>
+  <beginDrag id ="omae" rewind ="true" range="-200, -120, 200, 120"/>
+  <beginIf id ="goal3" target ="object" trigger="up" name="omae" crange=" -220,-50,80,240" goto ="4000"/>
+  <beginIf id ="goal4" target ="object" trigger="up" name="omae" crange=" 220,-50,80,240" goto ="5000"/>
+
+  <frame count ="3300"/>
+  <halt result="0"/>
+
+  <!-- 左へ歩きさる -->
+  <frame count ="4000"/>
+  <endIf id ="all"/>
+  <beginMoveEx id ="omae" posAdd ="-80,0" duration="30"/>
+  <frame count ="4120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="1"/>
+
+  <!-- 右へ歩きさる -->
+  <frame count ="5000"/>
+  <endIf id ="all"/>
+  <beginMoveEx id ="omae" posAdd ="80,0" duration="30"/>
+  <frame count ="5120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="1"/>
+
+  
+</kyscript>

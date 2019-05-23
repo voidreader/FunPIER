@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 映画館で -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="chairs" res ="stand/standChairs" pos ="0,-100,3"/>
+  <useAndShow id ="hitos" res ="eigakan/eigakanHitos" pos ="0,-100,2"/>
+  <useAndShow id ="omae" res ="eigakan/eigakanOmae" pos ="100,-54,1"/>
+  
+  <beginSound name ="bgm_movie" loop="true"/>
+  <beginTimer id ="timer0" duration="600"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="600" priority="1"/>
+ 
+  <beginIf id ="goal0" target ="touch" name ="omae" crange="100,-54,80,180" goto="800"/>
+  <wait />
+
+  <!-- 時間切れ -->
+  <frame count ="600"/>
+  <endIf id="all"/>
+  <halt result ="0"/>
+
+  <frame count ="800" />
+  <endIf id ="all" priority="0"/>
+  <beginAnim id ="omae" anim ="1" />
+  <beginDrag id ="omae" rewind ="true" range="-200, -200, 240, 112"/>
+
+  <beginIf id ="goal1" target ="object" name ="omae" crange="-200,-54,80,180" goto="1000"/>
+  <beginIf id ="goal2" target ="object" name ="omae" crange="240,-54,80,180" goto="2000"/>
+  <beginIf id ="goal3" target ="object" trigger="up" name="omae" crange="100,-54,80,180" goto ="900"/>
+  <wait />
+  
+  <frame count ="900" />
+  <endIf id ="all" priority="0"/>
+  <endDrag id ="omae"/>
+  <beginMoveEx id ="omae" scale="1,1" pos ="100,-54"/>
+  <beginAnim id ="omae" anim ="0" />
+  <beginIf id ="goal0" target ="touch" name ="omae" crange="100,-54,80,180" goto="800"/>
+  <wait />
+  
+
+  <!-- 正答 -->
+  <frame count ="1000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <endIf id="timeout0"/>
+  <beginMove id ="omae" to="-200,-54" duration="30"/>
+  <frame count ="1020" />
+  <beginAnim id ="omae" anim ="0" />
+
+  <frame count ="1180"/>
+  <halt result ="1"/>
+
+  <!-- シークレット -->
+  <frame count ="2000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <endIf id="timeout0"/>
+  <beginMoveEx id ="omae" scale="-1,1" />
+  <beginMove id ="omae" to="320,-54" duration="30"/>
+  <frame count ="2120"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae2" res ="eigakan/eigakanOmaeSuwari" pos ="320,60,4"/>
+  <beginMove id ="omae2" to="170,60" duration="60"/>
+  
+  <frame count ="2270"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="1"/>
+
+
+  
+</kyscript>

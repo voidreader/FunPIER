@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ペンライト -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="game" res ="penlight/penlightGame" pos ="0,0,0"/>
+  <drawRect id ="bg" color="0,0,0,1" size="480,480" pos="0,0,5"/>
+  <beginSound name ="bgm_xmas" loop="true"/>
+  <frame count ="30"/>
+  <function id ="game" func="OnBegin"/>
+  <wait/>
+  
+  <!-- ゲーム終了 -->
+  <frame count ="1000"/>
+  <halt/>
+  
+</kyscript>

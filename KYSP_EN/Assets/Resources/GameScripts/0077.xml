@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- テニス -->
+<kyscript>
+  <frame count ="0"/>
+  <var name="muki" op="set" value="0"/>
+  <var name="loop" op="set" value="0"/>
+  <var name="ufoin" op="set" value="0"/>
+  <var name="look" op="set" value="0"/>
+  <var name="ufolook" op="set" value="1"/>
+  <var name="ufonolook" op="set" value="1"/>
+  <beginSound name="se_applause1" />  
+  
+  <useAndShow id ="bg" res ="tennis/tennisCourt" pos ="0,-74,2"/>
+  <useAndShow id ="hito" res ="tennis/tennisHitos" pos ="0,96,3"/>
+  <useAndShow id ="omae" res ="tennis/tennisOmae" pos ="-6,96,2"/>
+  <useAndShow id ="ball" res ="tennis/tennisBall" pos ="-280,-20,1"/>
+
+
+  <beginTimer id ="tm0" duration="120"/>
+  <beginIf id="to0" target="animend" name ="tm0" goto="1000" priority="1"/>
+ <!--
+  <beginIf id="to0" crange ="0,100,100,100" target="touch" goto="1000"/>
+-->
+  <beginIf target="always" goto="4000"/>
+  <wait />
+  
+  <frame count ="1000" />
+  <endIf id ="to0" />
+  <unuse id ="tm0" />
+  <beginMove id ="ball" pos ="-280,-20" />
+  <beginAnim id ="ball" anim ="1"/>
+  <beginSound name="se_tennis" />
+
+  <beginTimer id ="tm1" duration="30"/>
+  <beginIf id="to1" target="animend" name ="tm1" goto="1100" priority="1"/>
+<!--
+  <beginIf id="to1" crange ="0,100,100,100" target="touch" goto="1100"/>
+-->
+  <beginIfVar lhs="$muki" op="eq" rhs="1" goto="1050"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+
+  <frame count ="1050" />
+  <var name="look" op="set" value="1"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+
+
+  <frame count ="1100" />
+  <endIf id ="to1" />
+  <unuse id ="tm1" />
+  <beginAnim id ="hito" anim ="1" />
+
+
+  <beginTimer id ="tm2" duration="70"/>
+  <beginIf id="to2" target="animend" name ="tm2" goto="1200" priority="1"/>
+<!--
+  <beginIf id="to2" crange ="0,100,100,100" target="touch" goto="1200"/>
+  -->
+  <beginIfVar lhs="$loop" op="eq" rhs="2" goto="1110"/>
+<!--  <beginIfVar lhs="$muki" op="eq" rhs="0" goto="1150"/> -->
+  <beginIf target="always" goto="4000"/>
+  <wait />
+  <frame count ="1110" />
+  <useAndShow id ="ufo" res ="tennis/tennisUfo0" pos ="150,-20,1"/>
+  <var name="ufoin" op="set" value="1"/>
+  <beginSound name="jg_arere" />
+<!--  <beginIfVar lhs="$muki" op="eq" rhs="0" goto="1150"/> -->
+<!--  <beginIf target="always" goto="4000"/> -->
+  <beginIf target="always" goto="1210"/>
+  <wait />
+
+  <frame count ="1150" />
+  <beginIfVar lhs="$ufoin" op="eq" rhs="1" goto="4000"/>
+  <var name="look" op="set" value="1"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+
+
+  <frame count ="1200" />
+  <endIf id ="to2" />
+  <unuse id ="tm2" />
+  <beginMove id ="ball" pos ="280,-20" />
+  <beginAnim id ="ball" anim ="2"/>
+  <beginSound name="se_tennis" />
+  
+
+  <beginTimer id ="tm3" duration="30"/>
+  <beginIf id="to3" target="animend" name ="tm3" goto="1300" priority="1"/>
+ <!--
+   <beginIf id="to3" crange ="0,100,100,100" target="touch" goto="1300"/>
+ -->
+  <beginIfVar lhs="$ufoin" op="eq" rhs="1" goto="1210"/>
+
+  <beginIfVar lhs="$muki" op="eq" rhs="0" goto="1050"/>
+
+  <beginIf target="always" goto="4000"/>
+  <wait />
+  
+  <frame count ="1210" />
+  <!-- <var name="ufoin" op="set" value="0"/> -->
+  <beginIfVar lhs="$look" op="eq" rhs="1" goto="1230"/>
+  <beginIfVar lhs="$muki" op="eq" rhs="1" goto="1220"/>
+  <var name="ufonolook" op="set" value="1"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+  <frame count ="1220" />
+  <var name="ufolook" op="set" value="1"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+  <frame count ="1230" />
+  <var name="ufolook" op="set" value="0"/>
+  <var name="ufonolook" op="set" value="0"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+
+  <frame count ="1300" />
+  <endIf id ="to3" />
+  <unuse id ="tm3" />
+  <beginAnim id ="hito" anim ="0" />
+  <var name="loop" op="inc" value="1"/>
+  <beginIfVar lhs="$loop" op="eq" rhs="4" goto="9000"/>
+
+
+  <beginTimer id ="tm0" duration="70"/>
+  <beginIf id="to0" target="animend" name ="tm0" goto="1000" priority="1"/>
+<!--
+   <beginIf id="to0" crange ="0,100,100,100" target="touch" goto="1000"/>
+   -->
+  <beginIfVar lhs="$ufoin" op="eq" rhs="1" goto="1310"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+
+  <frame count ="1310" />
+  <var name="ufoin" op="set" value="0"/>
+  <beginIfVar lhs="$look" op="eq" rhs="1" goto="4000"/>
+  <beginIfVar lhs="$muki" op="eq" rhs="1" goto="1320"/>
+  <var name="ufonolook" op="set" value="1"/>
+  <var name="ufolook" op="set" value="0"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+  <frame count ="1320" />
+  <var name="ufonolook" op="set" value="0"/>
+  <var name="ufolook" op="set" value="1"/>
+  <beginIf target="always" goto="4000"/>
+  <wait />
+
+  <frame count ="4000" />
+  <beginIfVar lhs="$muki" op="eq" rhs="1" goto="4010"/>
+  <beginIf id="touch0" target="touchaction" direction="3,0" goto="5000"/>
+  <wait /> 
+  <frame count ="4010" />
+  <beginIf id="touch1" target="touchaction" direction="-3,0" goto="6000"/> 
+  <wait /> 
+
+  <frame count ="5000" />
+  <endIf id ="touch0"/>
+  <beginAnim id ="omae" anim ="1" />
+  <var name="muki" op="set" value="1"/>
+
+  <beginIfVar lhs="$ufoin" op="eq" rhs="1" goto="4000"/>
+  <var name="ufonolook" op="set" value="0"/>
+  <beginIf target="always" goto="4000"/>
+<!--  <beginIf id="touch1" target="touchaction" direction="-3,0" goto="6000"/> -->
+  <wait/>
+
+  <frame count ="6000" />
+  <endIf id ="touch1"/>
+  <beginAnim id ="omae" anim ="0" />
+  <var name="muki" op="set" value="0"/>
+
+  <beginIfVar lhs="$ufoin" op="eq" rhs="1" goto="4000"/>
+  <var name="ufolook" op="set" value="0"/>
+  <beginIf target="always" goto="4000"/>
+<!--  <beginIf id="touch0" target="touchaction" direction="3,0" goto="5000"/> -->
+  <wait/>
+
+  <!-- 時間切れ -->
+  <frame count ="9000"/>
+  <endIf id ="all" />
+  <beginIfVar lhs="$ufolook" op="eq" rhs="1" goto="9200"/>
+  <beginIfVar lhs="$ufonolook" op="eq" rhs="1" goto="9300"/>
+  <beginIfVar lhs="$look" op="eq" rhs="1" goto="9100"/>
+  <halt result ="2"/>
+
+  <frame count ="9100" />
+  <halt result ="0"/>
+
+  <frame count ="9200" />
+  <halt result ="1"/>
+
+  <frame count ="9300" />
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+
+</kyscript>

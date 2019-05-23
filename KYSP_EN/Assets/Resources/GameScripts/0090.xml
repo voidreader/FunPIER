@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- リフト -->
+<kyscript>
+  <!-- まもなく山頂だ…。 -->
+  <frame count ="0"/>
+  <useAndShow id ="kao" res ="lift/liftOmaeDokin" pos ="0,0,0"/>
+  <beginSound name ="bgm_heartbeat" loop="true"/>
+  <frame count ="60"/>
+  <useAndShow id ="mamonaku" res ="lift/liftMamonaku" pos ="111,101,0"/>
+  <beginMoveEx id ="mamonaku" color="1,1,1,0"/>
+  <beginMoveEx id ="mamonaku" color="1,1,1,1" duration="30"/>
+  <frame count ="120"/>
+  <useAndShow id ="dokin" res ="lift/liftDokin" pos ="-150,-85,0"/>
+  <beginMoveEx id ="dokin" color="1,1,1,0"/>
+  <beginMoveEx id ="dokin" color="1,1,1,1" duration="30"/>
+  <frame count ="180"/>
+  <fadeScreen kind="fadeout" duration="120"/>
+
+  <!-- 本編 -->
+  <frame count ="300"/>
+  <unuse id ="all"/>
+  <frame count ="301"/>
+  <useAndShow id ="te" res="lift/liftOmaeTe" pos ="0,0,0"/>
+  <useAndShow id ="bar" res="lift/liftBar" pos="-2,120,0"/>
+  <useAndShow id ="hito1" res ="lift/liftHitoSuwari" pos="-120,30,1"/>
+  <useAndShow id ="kanojo" res ="lift/liftKanojyoSuwari" pos="-30,40,2"/>
+  <useAndShow id ="omae" res ="lift/liftOmaeAgeru" pos="50,36,3"/>
+  <useAndShow id ="hito2" res ="lift/liftHitoSuwari" pos="140,30,4"/>
+  <useAndShow id ="bg" res ="lift/liftBG" pos="0,110,5"/>
+  <useAndShow id ="kumo" res ="mitono/mitonoKumo" pos ="-100,270,6"/>
+  <fadeScreen kind="fadein" duration="0"/>
+  <beginMoveEx id="kumo" scale="-1.5,1.5,1"/>
+  <beginMoveEx id="kumo" pos="0,0,0" scale="0,0,0" duration="900"/>
+  <beginSound name ="bgm_sumo" loop="true"/>
+
+  <beginTimer id ="timer" duration="600"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="4000" priority="1"/>
+
+  <beginIf target="always" goto="2000"/>
+  <wait/>
+  
+  <!-- 上にあげる -->
+  <frame count ="1000"/>
+  <endIf priority ="0"/>
+  <var name="lift" op="inc" value="1"/>
+  <beginSound name ="se_cursor"/>
+  <beginIf target="always" goto="2000"/>
+  <!-- 下にさげる -->
+  <frame count ="1010"/>
+  <endIf priority ="0"/>
+  <var name="lift" op="inc" value="-1"/>
+  <beginSound name ="se_cursor"/>
+  <beginIf target="always" goto="2000"/>
+
+  <!-- 状態別の処理 -->
+  <frame count ="2000"/>
+  <beginAnim id ="bar" frame="$lift"/>
+  <beginAnim id ="omae" frame ="$lift"/>
+  <beginAnim id ="te" frame="$lift"/>
+  <beginIfVar lhs="$lift" op="eq" rhs="0" goto="2100"/>
+  <beginIfVar lhs="$lift" op="eq" rhs="5" goto="2300"/>
+  <beginIf target ="always" goto="2200"/>
+  <!-- 一番下 -->
+  <frame count ="2100"/>
+  <beginIf id ="age" target="touchaction" direction="0,3" goto="1000"/>
+  <beginIfVar lhs="$open" op="eq" rhs="1" goto="2110"/>
+  <wait/>
+  <!-- シークレット：一番上にあげてからさげる -->
+  <frame count ="2110"/>
+  <var name="secret" op="set" value="1"/>
+  <wait/>
+  <!-- 途中 -->
+  <frame count ="2200"/>
+  <beginIf id ="age" target="touchaction" direction="0,3" goto="1000"/>
+  <beginIf id ="sage" target="touchaction" direction="0,-3" goto="1010"/>
+  <wait/>
+  <!-- １番上 -->
+  <frame count ="2300"/>
+  <beginSound name="se_jihanki"/>
+  <beginIf id ="sage" target="touchaction" direction="0,-3" goto="1010"/>
+  <var name="open" op="set" value="1"/>
+  <!-- ３秒で強制終了 -->
+  <frame count ="2480"/>
+  <beginIf target="always" goto="4000"/>
+  <wait/>
+
+  <!-- 終了処理 -->
+  <frame count ="4000"/>
+  <endIf/>
+  <beginIfVar lhs="$lift" op="eq" rhs="5" goto="4100"/>
+  <halt result="0"/>
+  <frame count ="4100"/>
+  <halt result="1"/>
+  
+</kyscript>

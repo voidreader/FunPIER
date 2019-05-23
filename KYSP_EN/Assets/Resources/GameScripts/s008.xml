@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- システム：遊び方(空気読み。) -->
+<kyscript yuragi="false">
+  
+  <!-- naverNanumFontLicense1 -->
+  <frame count ="0"/>
+  <fadeScreen type="fadeend"/>
+  <frame count ="30"/>
+  <fadeScreen type="fadein" duration="90"/>
+  <useAndShow id ="naverNanumFontLicense1" res ="system/naverNanumFontLicense1" pos ="0,0,0"/>
+  <frame count ="50"/>
+  <beginIf id ="touch" target="touch" goto="940"/>
+  <wait/>
+  <frame count ="940"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+
+  <!-- naverNanumFontLicense2 -->
+  <frame count ="1030"/>
+  <unuse id="naverNanumFontLicense1"/>
+  <useAndShow id ="naverNanumFontLicense2" res ="system/naverNanumFontLicense2" pos ="0,0,0"/>
+  <fadeScreen kind="fadein" duration="90"/>
+  <frame count ="1050"/>
+  <beginIf id ="touch" target="touch" goto="1940"/>
+  <wait/>
+  <frame count ="1940"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+  
+  <!-- naverNanumFontLicense3 -->
+  <frame count ="2030"/>
+  <unuse id="naverNanumFontLicense2"/>
+  <useAndShow id ="naverNanumFontLicense3" res ="system/naverNanumFontLicense3" pos ="0,0,0"/>
+  <fadeScreen kind="fadein" duration="90"/>
+  <frame count ="2050"/>
+  <beginIf id ="touch" target="touch" goto="2940"/>
+  <wait/>
+  <frame count ="2940"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+  
+  <!-- naverNanumFontLicense4 -->
+  <frame count ="3030"/>
+  <unuse id="naverNanumFontLicense3"/>
+  <useAndShow id ="naverNanumFontLicense4" res ="system/naverNanumFontLicense4" pos ="0,0,0"/>
+  <fadeScreen kind="fadein" duration="90"/>
+  <frame count ="3050"/>
+  <beginIf id ="touch" target="touch" goto="4000"/>
+  <wait/>
+  <frame count ="4000"/>
+  <fadeScreen kind="fadein" duration="0"/>
+  <halt continueSound="true"/>
+  
+</kyscript>

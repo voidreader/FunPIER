@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- トップロープ -->
+<kyscript>
+  
+  <frame count ="0"/>
+
+  <beginSound name="bgm_wave" loop="true"/>
+
+  <useAndShow id ="ring" res ="toprope/topropeBG" pos ="0,-70,4"/>
+  <useAndShow id ="aite" res ="toprope/topropeWrestler" pos ="0,157,2"/>
+  <useAndShow id ="omae" res ="toprope/topropeOmae" pos ="80,-140,3"/>
+
+  <frame count ="60"/>
+  <beginAnim id ="aite" anim ="1"/>
+  <beginMove id ="aite" to ="0,-130" duration="130"/>
+  <beginTimer id ="tm0" duration="130"/>
+  <beginIf id="to0" target="animend" name ="tm0" goto="500" priority="1"/>
+
+  <beginDrag id ="omae" range="-200, -140, 200, -130"/>
+  <frame count ="160"/>
+  <endIf id ="goal1" />
+
+  <frame count ="500"/>
+  <endIf id ="all"/>
+  <endDrag id="omae"/>
+  <beginIf id ="goal1" target ="object" name="omae" crange="0,-140,48,80" goto ="1000"/>
+  <frame count ="501"/>
+  <beginSound name="se_down" />  
+  <!-- 時間切れ -->
+  <frame count ="620"/>
+  <endIf id="all"/>
+  <halt result="0"/>
+  
+  <!-- 正答 -->
+  <frame count ="1000"/>
+  <beginSound name="se_explosion1" />  
+  <beginIf id ="goal2" target ="object" name="omae" crange="0,-140,8,16" goto ="1200"/>
+  <frame count ="1120"/>
+  <halt result="1"/>
+
+  <!-- シークレット -->  
+  <frame count ="1200"/>
+  <frame count ="1320"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="1"/>
+
+</kyscript>

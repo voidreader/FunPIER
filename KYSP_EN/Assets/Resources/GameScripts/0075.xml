@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 脳内のアレで -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="nounai/nounaiCut1" pos ="-33,-48,3"/>
+  <beginSound name ="jg_date"/>
+  <frame count ="30"/>
+  <drawText id="text0" textId="120" size="24" color="0,0,0,0" pos="225,112,0" vertical="true"/>
+  <beginMoveEx id="text0" posAdd="-10,10,0" color="0,0,0,1" duration="30"/>
+  <frame count ="90"/>
+  <drawText id="text1" textId="121" size="22" color="0,0,0,0" pos="-50,175,0" vertical="true"/>
+  <beginMoveEx id="text1" posAdd="-10,10,0" color="0,0,0,1" duration="30"/>
+
+  <!-- PC画面 -->
+  <frame count ="240"/>
+  <unuse id="all"/>
+  <useAndShow id ="desktop" res="nounai/nounaiDesktop" pos="0,0,0"/>
+  <useAndShow id ="desktopbg" res="nounai/nounaiDesktopBG" pos="0,0,3"/>
+  <useAndShow id ="window" res="nounai/nounaiWindow" pos="0,170,2"/>
+  <drawRect id ="rect" color="1,1,1,1" size="480,120" pos="0,-185,0,1" anchory ="max"/>
+  <beginSound name="jg_arere"/>
+
+  <!-- 時間切れ -->
+  <frame count ="840"/>
+  <function id="window" func="OnJudge"/>
+  <halt/>
+  
+  <!-- ウインドウ削除 -->
+  <frame count ="1000"/>
+  <function id="window" func="OnDisabled"/>
+  <frame count ="1120"/>
+  <halt result="1"/>
+  
+</kyscript>

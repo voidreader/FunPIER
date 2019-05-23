@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- レンタル -->
+<kyscript>
+  <!-- 場面１ -->
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="rental/rentalBG" pos ="0,0,3"/>
+  <useAndShow id ="cast01" res ="rental/rentalOmaeKita" pos ="50,-32,2"/>
+  <beginSound name="jg_date" loop="false"/>
+  <frame count ="60"/>
+  <useAndShow id ="cast02" res ="rental/rentalKyouha" pos ="104,169,1"/>
+  <beginMoveEx id="cast02" color="1,1,1,0" duration="0"/>
+  <beginMoveEx id="cast02" color="1,1,1,1" duration="60"/>
+  <frame count ="120"/>
+  <useAndShow id ="cast03" res ="rental/rentalSousoukorekore" pos ="-62,-93,1"/>
+  <beginMoveEx id="cast03" color="1,1,1,0" duration="0"/>
+  <beginMoveEx id="cast03" color="1,1,1,1" duration="60"/>
+  <frame count ="240"/>
+  <fadeScreen kind="fadeout" duration="30"/>  
+  
+  
+  
+  <!-- 場面2 -->
+  <frame count ="270"/>
+  <fadeScreen kind="fadein" duration="10"/>  
+  <beginSound name="bgm_sumo" loop="true"/>
+  <unuse id ="bg"/>
+  <unuse id ="cast01"/>
+  <unuse id ="cast02"/>
+  <unuse id ="cast03"/>
+  <useAndShow id ="bg2" res ="rental/rentalTana" pos ="0,-106,4"/>
+  <useAndShow id ="cast10" res ="rental/rentalPackage" pos ="-150,-96,2"/>
+  <useAndShow id ="cast11" res ="rental/rentalPackage" pos ="70,-96,2"/>
+  <useAndShow id ="nakami" res ="rental/rentalCase" pos ="70,-48,3"/>
+
+  <useAndShow id ="cast20" res ="rental/rentalOmaeR" pos ="437,-337,-1"/>
+  <beginTimer id ="timer0" duration="600"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="9000" priority="1"/>
+
+  <frame count ="271"/>
+  <beginMove id ="cast20" to ="433,-433" duration="15"/>
+  <frame count ="286"/>
+  <beginIf id ="goal1" target="touch" crange="71,40,130,32" goto="1000"/>
+  <beginIf id ="goal2" target="touch" crange="70,-96,190,200" goto="2000"/>
+  <beginIf id ="goal3" target="touch" crange="-150,-96,190,200" goto="3000"/>
+
+  <wait />
+
+  <!-- 中身を取る処理 -->
+  <frame count ="1000"/>
+  <unuse id ="goal1"/>
+  <unuse id ="goal2"/>
+  <unuse id ="goal3"/>
+  <beginMove id ="cast20" to ="236,-90" duration="15"/>
+
+  <frame count ="1015"/>
+  <beginDrag id ="cast20" rewind ="true" range ="236,-90,236,10"/>
+  <beginDrag id ="nakami" rewind ="true" range ="70,-48,70,52"/>
+  <beginIf id ="ret00" target ="object" trigger="up" name="nakami" crange="70,-48,70,52" goto ="1800"/>
+  <beginIf id ="goal4" target ="object" name="nakami" crange="70,50,70,52" goto ="1500"/>
+  <wait />
+
+  <frame count ="1500"/>
+  <endIf id ="all"/>
+  <unuse id ="timeout0"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="nakami"/>
+  <beginMove id ="nakami" to ="70,142" duration="30"/>
+  <beginMove id ="cast20" to ="236,98" duration="30"/>
+
+  <frame count ="1530"/>
+  <beginMoveEx id ="nakami" pos="0,0,0" />
+  <beginMove id ="nakami" to ="360,-160" duration="60"/>
+  <beginMove id ="cast20" to ="526,-204" duration="60"/>
+  <frame count ="1560"/>
+  <beginSound name="se_enter" loop="false"/>
+  <frame count ="1600"/>
+  <halt result ="1"/>
+
+  <!-- 戻り -->
+  <frame count ="1800"/>
+  <unuse id ="goal4"/>
+  <unuse id ="ret00"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="nakami"/>
+  <beginIf target="always" goto="271"/> 
+  
+  <!-- 中身入り箱を取る -->
+  <frame count ="2000"/>
+  <unuse id ="goal1"/>
+  <unuse id ="goal2"/>
+  <unuse id ="goal3"/>
+  <beginMove id ="cast20" to ="292,-215" duration="15"/>
+
+  <frame count ="2015"/>
+  <beginMoveEx id ="cast11" pos="70,-96,0" />
+  <beginMoveEx id ="nakami" pos="70,-48,1" />
+  <beginDrag id ="cast20" rewind ="true" range ="192,-215,392,-115"/>
+
+
+  <beginDrag id ="cast11" rewind ="true" range ="-30,-96,170,4"/>
+  <beginDrag id ="nakami" rewind ="true" range ="-30,-48,170,52"/>
+  <beginIf id ="ret00" target ="object" trigger="up" name="nakami" range="-30,-48,170,52" goto ="2900"/>
+  <beginIf id ="goal4" target ="object" name="nakami" range="-30,-48,-20,52" goto ="2500"/>
+  <beginIf id ="goal5" target ="object" name="nakami" range="150,-48,170,52" goto ="2700"/>
+  <wait />
+
+  <frame count ="2500"/>
+  <endIf id ="all"/>
+  <unuse id ="timeout0"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="cast11"/>
+  <endDrag id ="nakami"/>
+  <beginMove id ="nakami" to ="-360,-352" duration="60"/>
+  <beginMove id ="cast11" to ="-360,-400" duration="60"/>
+  <beginMove id ="cast20" to ="-138,-519" duration="60"/>
+  <frame count ="2530"/>
+  <beginSound name="se_enter" loop="false"/>
+  <frame count ="2640"/>
+  <halt result ="2"/>
+
+  <frame count ="2700"/>
+  <endIf id ="all"/>
+  <unuse id ="timeout0"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="cast11"/>
+  <endDrag id ="nakami"/>
+  <beginMove id ="nakami" to ="360,-352" duration="60"/>
+  <beginMove id ="cast11" to ="360,-400" duration="60"/>
+  <beginMove id ="cast20" to ="582,-519" duration="60"/>
+  <frame count ="2730"/>
+  <beginSound name="se_enter" loop="false"/>
+  <frame count ="2840"/>
+  <halt result ="2"/>
+
+
+  <!-- 戻り -->
+  <frame count ="2900"/>
+  <unuse id ="ret00"/>
+  <unuse id ="goal4"/>
+  <unuse id ="goal5"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="cast11"/>
+  <endDrag id ="nakami"/>
+  <beginMoveEx id ="cast11" pos="70,-96,2" />
+  <beginMoveEx id ="nakami" pos="70,-48,3" />
+  <beginIf target="always" goto="271"/> 
+
+
+  <!-- 空箱を取る -->
+  <frame count ="3000"/>
+
+  <unuse id ="goal1"/>
+  <unuse id ="goal2"/>
+  <unuse id ="goal3"/>
+  <beginMove id ="cast20" to ="70,-215" duration="15"/>
+
+  <frame count ="3015"/>
+  <beginMoveEx id ="cast10" pos="-150,-96,0" />
+  <beginDrag id ="cast20" rewind ="true" range ="-30,-215,170,-115"/>
+  <beginDrag id ="cast10" rewind ="true" range ="-250,-96,-50,4"/>
+ 
+  <beginIf id ="ret00" target ="object" trigger="up" name="cast10" range="-250,-96,-50,4" goto ="3900"/>
+  <beginIf id ="goal4" target ="object" name="cast10" range="-250,-96,-240,4" goto ="3500"/>
+  <beginIf id ="goal5" target ="object" name="cast10" range="-70,-96,-50,4" goto ="3700"/>
+  <wait />
+
+  <frame count ="3500"/>
+  <endIf id ="all"/>
+  <unuse id ="timeout0"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="cast10"/>
+  <beginMove id ="cast10" to ="-360,-400" duration="60"/>
+  <beginMove id ="cast20" to ="-138,-519" duration="60"/>
+  <frame count ="3530"/>
+  <beginSound name="se_enter" loop="false"/>
+  <frame count ="3640"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+  <frame count ="3700"/>
+  <endIf id ="all"/>
+  <unuse id ="timeout0"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="cast10"/>
+  <beginMove id ="cast10" to ="360,-400" duration="60"/>
+  <beginMove id ="cast20" to ="582,-519" duration="60"/>
+  <frame count ="3730"/>
+  <beginSound name="se_enter" loop="false"/>
+  <frame count ="3840"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+  
+  <!-- 戻り -->
+  <frame count ="3900"/>
+  <unuse id ="ret00"/>
+  <unuse id ="goal4"/>
+  <endDrag id ="cast20"/>
+  <endDrag id ="cast10"/>
+  <beginMoveEx id ="cast10" pos="-150,-96,2" />
+  <beginIf target="always" goto="271"/> 
+
+  <!-- 時間切れ -->
+  <frame count ="9000"/>
+  <endIf id ="all"/>
+  <halt result ="0"/>
+
+  
+</kyscript>

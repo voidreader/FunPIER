@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ＵＦＯ内 -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="ufo/ufonaiBG" pos="0,0,5"/>
+  <useAndShow id ="omae" res="ufo/ufonaiOmae" pos="0,0,4"/>
+  <drawRect id="rect" color="0,0,0,1" size="480,120" pos="0,-240,3" anchory="min"/>
+  <drawText id="speaker" textId="1300" color ="1,1,1,1" size="24" pos="-220,-150,2" anchorx="min" anchory="max"/>
+  <hide id="speaker"/>
+  <drawText id="message" text="" color="1,1,1,1" size="20" pos="-120,-150,2" anchorx="min" anchory="max"/>
+  <beginSound name ="bgm_night" loop="true"/>
+  
+  <!-- 会話開始 -->
+  <frame count ="60"/>
+  <useAndShow id ="game" res="ufo/ufonaiGame"/>
+  <beginIf id ="age" target="touchaction" direction="0,3" goto="1000"/>
+  <wait/>
+
+  <!-- 上げルーチン -->
+  <frame count ="1000"/>
+  <beginAnim id="omae" anim="1"/>
+  <var name="yeah" value="1"/>
+  <beginIf id ="sage" target="touchaction" direction="0,-3" goto="2000"/>
+  <beginSound name ="se_cancel"/>
+  <wait/>
+  
+  <!-- 下げルーチン -->
+  <frame count ="2000"/>
+  <beginAnim id="omae" anim="2"/>
+  <var name="yeah" value="0"/>
+  <beginIf id ="age" target="touchaction" direction="0,3" goto="1000"/>
+  <wait/>
+
+  <!-- 終了 -->
+  <frame count ="3000"/>
+  <halt/>
+  
+</kyscript>

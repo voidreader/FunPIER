@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 同じ方へ -->
+<kyscript>
+  <frame count ="0"/>
+  <var name="tome" op="set" value="0"/>
+  <beginSound name ="bgm_sumo" loop="true"/>
+
+  <useAndShow id ="hito" res ="date/onajiHito" pos ="0,300,1"/>
+  <useAndShow id ="omae" res ="date/onajiOmae" pos ="0,-300,0"/>
+  <beginMoveEx id ="hito" pos ="0,180" duration="120"/>
+  <beginMoveEx id ="omae" pos ="0,-180" duration="120"/>
+  <beginAnim id ="hito" anim ="1" />
+  <beginAnim id ="omae" anim ="1" />
+  
+  <frame count ="60"/>  
+  <var name="tome" op="set" value="0"/>
+  <frame count ="120"/>
+  <beginMoveEx id ="hito" pos ="60,150" duration="30"/>
+  <beginMoveEx id ="omae" pos ="60,-150" duration="30"/>
+  <var name="tome" op="set" value="0"/>
+  <frame count ="121" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="150"/>
+  <endIf id="goal1" /> 
+  <beginMoveEx id ="hito" pos ="-20,120" duration="40"/>
+  <beginMoveEx id ="omae" pos ="-20,-120" duration="40"/>
+  <var name="tome" op="set" value="1"/>
+  <frame count ="151" />
+  <beginIf id="goal1" target="touch" goto="800"/> 
+
+
+  <frame count ="190"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="10,100" duration="20"/>
+  <beginMoveEx id ="omae" pos ="10,-100" duration="20"/>
+  <var name="tome" op="set" value="0"/>
+  <frame count ="191" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+
+  <frame count ="210"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="90,60" duration="40"/>
+  <beginMoveEx id ="omae" pos ="90,-60" duration="40"/>
+  <var name="tome" op="set" value="1"/>
+  <frame count ="211" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="250"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="-80,20" duration="50"/>
+  <beginMoveEx id ="omae" pos ="-80,-20" duration="50"/>
+  <var name="tome" op="set" value="0"/>
+  <frame count ="251" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="300"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="120,20" duration="30"/>
+  <beginMoveEx id ="omae" pos ="120,-20" duration="30"/>
+  <var name="tome" op="set" value="0"/>
+  <frame count ="301" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="330"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="-40,20" duration="40"/>
+  <beginMoveEx id ="omae" pos ="-40,-20" duration="40"/>
+  <var name="tome" op="set" value="1"/>
+  <frame count ="331" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="370"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="-10,20" duration="20"/>
+  <beginMoveEx id ="omae" pos ="-10,-20" duration="20"/>
+  <var name="tome" op="set" value="0"/>
+  <frame count ="371" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="390"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="-110,20" duration="40"/>
+  <beginMoveEx id ="omae" pos ="-110,-20" duration="40"/>
+  <var name="tome" op="set" value="1"/>
+  <frame count ="391" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="430"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="20,20" duration="60"/>
+  <beginMoveEx id ="omae" pos ="20,-20" duration="60"/>
+  <var name="tome" op="set" value="0"/>
+  <frame count ="431" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="490"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="-60,20" duration="40"/>
+  <beginMoveEx id ="omae" pos ="-60,-20" duration="40"/>
+  <var name="tome" op="set" value="1"/>
+  <frame count ="491" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="530"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="-30,20" duration="20"/>
+  <beginMoveEx id ="omae" pos ="-30,-20" duration="20"/>
+  <var name="tome" op="set" value="0"/>
+  <frame count ="531" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+
+  <frame count ="550"/>
+  <endIf id ="goal1" />
+  <beginMoveEx id ="hito" pos ="-130,20" duration="50"/>
+  <beginMoveEx id ="omae" pos ="-130,-20" duration="50"/>
+  <var name="tome" op="set" value="1"/>
+  <frame count ="551" />
+  <beginIf id="goal1" target="touch" goto="800"/>
+  <frame count ="600"/>
+
+  <!-- 終了処理 -->
+  <endIf/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+
+  <frame count ="800"/>
+  <endIf id ="all" />
+  <endMove id ="hito" />
+  <endMove id ="omae" />
+<!--
+  <beginIf id="goal1" target="touch" goto="801"/>
+  
+  <wait />
+  <frame count ="801" />
+  -->
+  <beginIfVar lhs="$tome" op="eq" rhs="1" goto="1200"/>
+  <beginMoveEx id ="hito" posAdd ="70,0" duration="30"/>
+  <beginSound name ="se_pitching" />
+
+  <frame count ="830"/>
+  <beginMoveEx id ="hito" posAdd ="0,-480" duration="480"/>
+  <beginMoveEx id ="omae" posAdd ="0,480" duration="480"/>
+  <beginIf id ="goal1" target ="object" name="omae" crange="0,300,480,20" goto ="1060"/>
+  <wait/>
+  <frame count ="1060"/>
+  <halt result="1"/>
+
+  <frame count ="1200"/>
+  <beginMoveEx id ="hito" posAdd ="-70,0" duration="30"/>
+  <beginSound name ="se_pitching" />
+  <frame count ="1230"/>
+  <beginMoveEx id ="hito" posAdd ="0,-480" duration="480"/>
+  <beginMoveEx id ="omae" posAdd ="0,480" duration="480"/>
+  <beginIf id ="goal1" target ="object" name="omae" crange="0,300,480,20" goto ="1460"/>
+  <wait/>
+  <frame count ="1460"/>
+  <halt result="1"/>
+  
+</kyscript>
+
+
+
+
+

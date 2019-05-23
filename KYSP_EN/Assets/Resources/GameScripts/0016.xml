@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 始球式 -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <!-- 野球に飛びたいときはこのコメントを外す -->
+  <!--<beginIf target="always" goto="180"/>-->
+  <useAndShow id ="car" res="sikyuusiki/sikyuusikiReliefcar" pos="0,-60,0"/>
+  <useAndShow id ="fukidasi" res="sikyuusiki/sikyuusikiFukidasi" pos="-160,120,0"/>
+  <drawText id="text" textId ="1" size ="28" pos="137,120,0" />
+  <beginSound name="jg_baseball"/>
+  <frame count ="120"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+  
+  <!-- 野球表示 -->
+  <frame count ="180"/>
+  <unuse id="all"/>
+  <useAndShow id="bg" res="sikyuusiki/sikyuusikiBG" pos="0,0,5"/>
+  <useAndShow id="pitcher" res="sikyuusiki/sikyuusikiBko" pos="0,122,4"/>
+  <useAndShow id="batter" res="sikyuusiki/sikyuusikiBatter" pos ="-60,-142,0"/>
+  <useAndShow id="game" res="sikyuusiki/sikyuusikiGame" pos="0,0,3"/>
+  <beginMoveEx id="pitcher" scale="0.9,0.9,1"/>
+  <beginSound name="se_applause1"/>
+  <beginAnim id="pitcher" anim="0"/>
+  <beginAnim id="pitcher" frame ="0"/>
+  <fadeScreen kind="fadein" duration="60"/>
+  <frame count ="360"/>
+  <beginAnim id="pitcher" anim="0"/>
+  <beginAnim id="pitcher" frame ="0"/>
+  
+  <!-- ゲームモジュール開始 -->
+  <frame count ="420"/>
+  <function id="game" func="OnBeginPitch"/>
+  <wait/>
+
+  <!-- ゲームからの復帰 -->
+  <frame count ="3000"/>
+  <beginIfVar lhs="$game" op="eq" rhs="1" goto="4000"/>
+  <beginIfVar lhs="$game" op="eq" rhs="2" goto="4000"/>
+  <beginIfVar lhs="$game" op="eq" rhs="3" goto="5000"/>
+  <beginIfVar lhs="$game" op="eq" rhs="10" goto="7000"/>
+  <beginIfVar lhs="$game" op="eq" rhs="11" goto="7000"/>
+  <!-- 何もしない -->
+  <frame count ="3060"/>
+  <beginAnim id="pitcher" anim="0"/>
+  <beginSound name="se_applause1"/>
+  <frame count ="3180"/>
+  <halt result="0"/>
+
+  <!-- 空振り -->
+  <frame count ="4060"/>
+  <beginAnim id="pitcher" anim="0"/>
+  <beginSound name="se_applause1"/>
+  <frame count ="4180"/>
+  <halt result ="1"/>
+
+  <!-- ファウル -->
+  <frame count ="5000"/>
+  <var name="secret" value="1"/>
+  <halt result="2"/>
+  
+  <!-- ヒット -->
+  <frame count ="7000"/>
+  <halt result="2"/>
+  
+</kyscript>

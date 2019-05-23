@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- グラビア -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="gravure/gravureBG" pos ="-80,-100,3"/>
+  <useAndShow id ="bkon" res ="gravure/gravureBkoNormal" pos ="-80,-100,2"/>
+  <useAndShow id ="find" res ="gravure/gravureFinder" pos ="0,0,1"/>
+
+  <drawRect id ="rect0" pos ="0,240,0" size="480,174" color="0.75, 0.75, 0.75" anchory="max"/>
+  <drawRect id ="rect1" pos ="0,-240,0" size="480,174" color="0.75, 0.75, 0.75" anchory="min"/>
+  <drawRect id ="rect2" pos ="240,0,0" size="150,140" color="0.75, 0.75, 0.75" anchorx="max"/>
+  <drawRect id ="rect3" pos ="-240,0,0" size="150,140" color="0.75, 0.75, 0.75" anchorx="min"/>
+
+  <beginSound name="bgm_seashore" loop="true"/>
+  
+  <frame count ="30"/>
+  <beginMove id ="bg" to="30,20" duration="240"/>
+  <beginMove id ="bkon" to="30,20" duration="240"/>
+  <frame count ="220"/>
+  <beginIf id="goal1" target="touchaction" direction="0,-3" goto="1000"/>
+  <!-- <beginIf id="goal2" target="touchaction" direction="0,3" goto="2000"/> -->
+  <beginIf id="goal3" target="touchaction" direction="-3,0" goto="3000"/>
+  <beginIf id="goal4" target="touchaction" direction="3,0" goto="4000"/>
+
+  <!-- 時間切れ -->
+  <frame count ="660"/>
+  <halt result="0"/>
+
+  <!-- かがむ -->
+  <frame count ="1000"/>
+  <unuse id ="bkon"/>
+  <endIf id="all"/>
+  <useAndShow id ="bkop" res ="gravure/gravureBkoPose" pos ="30,20,2"/>
+  <frame count ="1015"/>
+  <beginSound name="se_applause2" loop="false"/>
+  <frame count ="1240"/>
+  <halt result="1"/>
+
+  <!-- 以下シークレット -->
+  <!-- 上へ -->
+  <frame count ="2000"/>
+  <endIf id="all"/>
+  <beginMove id ="bkon" to="30,240" duration="60"/>
+  <frame count ="2060"/>
+  <useAndShow id ="ufo" res ="tennis/tennisUFO" pos ="-240,0,2"/>
+  <beginMove id ="ufo" to="240,0" duration="240"/>
+  <frame count ="2300"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+
+  <!-- 左へ -->
+  <frame count ="3000"/>
+  <endIf id="all"/>
+  <beginMove id ="bkon" to="-240,30" duration="60"/>
+  <frame count ="3060"/>
+  <useAndShow id ="ufo" res ="tennis/tennisUFO" pos ="240,0,2"/>
+  <beginMove id ="ufo" to="-240,0" duration="240"/>
+  <frame count ="3300"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+
+  <!-- 右へ -->
+  <frame count ="4000"/>
+  <endIf id="all"/>
+  <beginMove id ="bkon" to="240,30" duration="60"/>
+  <frame count ="4060"/>
+  <useAndShow id ="ufo" res ="tennis/tennisUFO" pos ="-240,0,2"/>
+  <beginMove id ="ufo" to="240,0" duration="240"/>
+  <frame count ="4300"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+  
+</kyscript>

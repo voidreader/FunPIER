@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 朝礼で -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="cast00" res ="chourei/choureiOmae" pos ="0,0,2"/>
+  <useAndShow id ="fuki" res ="chourei/choureiFukidasi" pos ="380,180,1"/>
+  <useAndShow id ="migi" res ="chourei/choureiMigimuke" pos ="320,180,0"/>
+  <beginMove id ="fuki" to="210,180,0" duration="30"/>
+  <beginMove id ="migi" to="150,180,0" duration="30"/>
+
+  <frame count ="15"/>
+  <beginSound name="se_whistle" loop="false"/>
+
+  <frame count ="30"/>
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="2000"/>
+ 
+  <!-- 時間切れ -->
+  <frame count ="400"/>
+  <halt result ="2"/>
+
+  <!-- 右　-->
+  <frame count ="1000"/>
+  <unuse id="goal2"/>
+  <unuse id="cast00"/>
+  <useAndShow id ="cast01" res ="chourei/choureiOmaeR" pos ="0,0,2"/>
+  <frame count ="1120"/>
+  <halt result ="1"/>
+
+  <!-- 左　-->
+  <frame count ="2000"/>
+  <unuse id="goal1"/>
+  <unuse id="cast00"/>
+  <useAndShow id ="cast01" res ="chourei/choureiOmaeL" pos ="0,0,2"/>
+  <frame count ="2120"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+  
+</kyscript>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- システム：記録更新 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="kousin" res ="system/waveKousin" pos ="0,0,0"/>
+  <beginIf id ="touch" target="touch" goto="120"/>
+  <wait/>
+  <frame count ="120"/>
+  <halt/>
+  
+</kyscript>

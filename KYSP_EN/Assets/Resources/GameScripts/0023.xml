@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 続再び電車で -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="stat" op="set" value="0"/>
+  <useAndShow id ="bg" res ="densya/densyaBG" pos ="0,0,5"/>
+  <useAndShow id ="cm" res ="densya/densyaKoukoku" pos ="150,60,4"/>
+  <useAndShow id ="turikawa" res="densya/densyaTurikawa" pos ="0,158,2"/>
+
+  <beginSound name ="bgm_train" loop="true"/>
+
+  <useAndShow id ="hito1" res ="densya/densyaHitoSuwari" pos ="-200,-60,3"/>
+  <useAndShow id ="hito2" res ="densya/densyaHitoSuwari" pos ="-120,-60,3"/>
+  <useAndShow id ="hito3" res ="densya/densyaHitoSuwari" pos ="130,-60,3"/>
+  <useAndShow id ="hito4" res ="densya/densyaHitoSuwari" pos ="210,-60,3"/>
+  <useAndShow id ="hito5" res ="densya/densyaHitoSuwari" pos ="-40,-60,3"/>
+  <useAndShow id ="hito6" res ="densya/densyaHitoSuwari" pos ="50,-60,3"/>
+
+  <useAndShow id ="omae" res ="densya/densyaOmae4" pos ="-60,-170,1"/>
+  <useAndShow id ="jyosi" res ="densya/densyaJK2" pos ="40,-170,1"/>
+
+  <frame count ="90"/>
+  <beginAnim id ="jyosi" anim ="1"/>
+  <var name="stat" op="set" value="1"/>
+  <frame count ="120"/>
+  <useAndShow id ="sisen" res ="densya/densyaSisen" pos ="0,-5,2"/>
+  <beginIf id="goal1" target="touchaction" direction="3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="-3,0" goto="2000"/>
+
+  <beginTimer id ="timer0" duration="400"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="6000" priority="1"/>
+  <wait />
+
+
+  <!-- つつく -->
+  <frame count ="1000"/>
+  <unuse id ="goal1"/>
+  <beginAnim id ="omae" anim ="1"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="1" goto="1100"/>
+  <frame count ="1010"/>
+  <beginIf id="goal1" target="touchaction" direction="3,0" goto="1000"/>
+  <beginAnim id ="omae" anim ="0"/>
+  <wait />
+  
+  <frame count ="1100"/>
+  <unuse id ="goal2"/>
+  <unuse id ="sisen"/>
+  <frame count ="1170"/>
+  <beginAnim id ="jyosi" anim ="2"/>
+  <frame count ="1190"/>
+  <beginIf id="goal1" target="touchaction" direction="3,0" goto="1000"/>
+  <var name="stat" op="set" value="2"/>  
+  <beginAnim id ="omae" anim ="0"/>
+  <wait />
+
+  <!-- 視線消し　（シークレット） -->
+  <frame count ="2000"/>
+  <unuse id ="goal1"/>
+  <unuse id ="timeout0"/>
+  <beginMoveEx id ="omae" posAdd ="-240,0" duration="90"/>
+  <frame count ="2030"/>
+  <unuse id ="sisen"/>
+  <frame count ="2090"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="1"/>
+
+  <!-- 時間切れ -->
+  <frame count ="6000"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="1" goto="6010"/>
+  <halt result="1"/>
+
+  <!-- 操作無し（読まない） -->
+  <frame count ="6010"/>
+  <halt result="2"/>
+
+
+
+  
+</kyscript>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- サンタ -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="omae1" res ="santa/santaOmaeOkiteru" pos ="100,0,0"/>
+  <useAndShow id ="bed" res ="santa/santaBed" pos ="100,-30,1"/>
+  <useAndShow id ="santa" res ="santa/santaHitoAruki" pos ="-340,50,2"/>
+  <beginAnim id ="santa" anim ="1"/>
+  <useAndShow id ="tree" res ="santa/santaTree" pos ="-54,85,3"/>
+  <useAndShow id ="line" res ="kiss/kissGround" pos ="0,-30,4"/>
+  <beginSound name="bgm_xmas" loop="true"/>
+  <beginMove id ="santa" to="-241,50,0" duration="60"/>
+  <frame count ="60"/>
+  <beginAnim id ="santa" anim ="0"/>
+  <beginIf id="goal1" target="touchaction" direction="0,-3" goto="1000"/>
+
+  <!-- 時間切れ -->
+  <frame count ="600"/>
+  <beginMove id ="santa" to="-340,50,0" duration="60"/>
+  <frame count ="660"/>
+  <halt result ="0"/>
+
+  <!-- 寝る -->
+  <frame count ="1000"/>
+  <unuse id ="omae1"/>
+  <useAndShow id ="omae2" res ="santa/santaOmaeNeru" pos ="100,-0,0"/>
+  <frame count ="1030"/>
+  <beginIf id="goal2" target="touchaction" direction="0,3" goto="2000"/>
+  <beginMove id ="santa" to="148,50,0" duration="180"/>
+  <beginAnim id ="santa" anim ="1"/>
+  <frame count ="1130"/>
+  <endIf id ="goal2" />
+  <frame count ="1210"/>
+  <beginAnim id ="santa" anim ="2"/>
+  <frame count ="1230"/>
+  <beginAnim id ="santa" anim ="0"/>
+
+  <frame count ="1290"/>
+  <halt result ="1"/>
+  
+  <!-- 起きる -->
+  <frame count ="2000"/>
+  <unuse id ="omae2"/>
+  <useAndShow id ="omae3" res ="santa/santaOmaeOkiteru" pos ="100,-0,0"/>
+  <frame count ="2004"/>
+  <endMove id ="santa"/>
+  <beginAnim id ="santa" anim ="0"/>
+  <frame count ="2060"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+  
+  
+</kyscript>

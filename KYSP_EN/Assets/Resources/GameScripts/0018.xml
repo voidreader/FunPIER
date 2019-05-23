@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 山で -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="bg" res ="yama/yamaBG" pos ="0,0,4"/>
+  <useAndShow id ="snow" res ="yama/yamaSnow" pos ="0,90,3"/>
+  <useAndShow id ="omae" res ="yama/yamaOmaeOkiagari" pos ="86,-106,1"/>
+
+  <useAndShow id ="kuma" res ="yama/kuma" pos ="-400,-46,2"/>
+  <beginMove id ="kuma" to="-220,-46,2" duration="240"/>
+
+  <frame count ="80"/>
+  <beginSound name="se_bikkuri"/>
+  
+  <!-- おまえ寝る -->
+  <frame count ="240"/>
+  <unuse id ="omae"/>
+  <useAndShow id ="omae1" res ="yama/yamaOmaeSindafuri" pos ="100,-140,1"/>
+  <beginMove id ="kuma" to="-100,-46,2" duration="100"/>
+
+  <beginIf id="goal1" target="touch" goto="1500"/>
+
+  <!-- くま一回目停止 -->
+  <frame count ="340"/>
+  <beginAnim id ="kuma" anim="1"/>
+  <frame count ="400"/>
+  <beginMove id ="kuma" to="-60,-46,2" duration="80"/>
+  <beginAnim id ="kuma" anim="0"/>
+
+  <!-- くま二回目停止 -->
+  <frame count ="480"/>
+  <beginAnim id ="kuma" anim="1"/>
+
+  <frame count ="520"/>
+  <beginMove id ="kuma" to="40,-46,2" duration="100"/>
+  <beginAnim id ="kuma" anim="0"/>
+  <endIf id="goal1"/>
+  <beginIf id="goal2" target="touch" goto="2000"/>
+  <!-- くんくん開始　-->
+  <frame count ="620"/>
+  <beginAnim id ="kuma" anim="2"/>
+  <useAndShow id ="kun0" res ="yama/yamaKunkun" pos ="180,50,0"/>
+  <beginMove id ="kun0" to="200,50,0" duration="10"/>
+
+  <!-- くま三回目停止 -->
+  <frame count ="630"/>
+  <unuse id ="kun0"/>
+  <useAndShow id ="kun1" res ="yama/yamaKunkun" pos ="110,100,0"/>
+  <frame count ="660"/>
+  <unuse id ="kun1"/>  
+  <useAndShow id ="kun2" res ="yama/yamaKunkun" pos ="200,50,0"/>
+  <frame count ="690"/>
+  <unuse id ="kun2"/>  
+  <useAndShow id ="kun3" res ="yama/yamaKunkun" pos ="110,100,0"/>
+  <frame count ="720"/>
+  <unuse id ="kun3"/>  
+  <useAndShow id ="kun4" res ="yama/yamaKunkun" pos ="200,50,0"/>
+  
+  <frame count ="760"/>
+  <unuse id ="kun4"/>
+  <beginMove id ="kuma" to="80,-46,2" duration="50"/>
+  <beginAnim id ="kuma" anim="0"/>
+
+  <frame count ="810"/>
+
+  <beginAnim id ="kuma" anim="2"/>
+
+  <frame count ="840"/>
+  <unuse id ="kun0"/>
+  <useAndShow id ="kun1" res ="yama/yamaKunkun" pos ="110,100,0"/>
+  <frame count ="870"/>
+  <unuse id ="kun1"/>  
+  <useAndShow id ="kun2" res ="yama/yamaKunkun" pos ="200,50,0"/>
+  <frame count ="900"/>
+  <unuse id ="kun2"/>  
+  <useAndShow id ="kun3" res ="yama/yamaKunkun" pos ="110,100,0"/>
+  <frame count ="930"/>
+  <unuse id ="kun3"/>  
+  <useAndShow id ="kun4" res ="yama/yamaKunkun" pos ="200,50,0"/>
+  
+  <frame count ="970"/>
+  <endIf id="all"/>
+  <unuse id ="kun4"/>
+  <beginMove id ="kuma" to="460,-46,2" duration="240"/>
+  <beginAnim id ="kuma" anim="0"/>
+
+  <!-- 時間切れ -->
+  <frame count ="1210"/>
+  <halt result ="1"/>
+
+  <!-- 熊襲い1 -->  
+  <frame count ="1500"/>
+  <unuse id="goal1"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="4000"/>
+  
+  <frame count ="1530"/>
+  <unuse id="goal2"/>
+  <unuse id ="omae1"/>
+  <useAndShow id ="omae2" res ="yama/yamaOmaeOkiagari" pos ="86,-106,1"/>
+
+  <frame count ="1535"/>
+  <beginMove id ="kuma" to="60,-46,2" duration="30"/>
+  <beginAnim id ="kuma" anim="2"/>
+  <!-- 熊襲い2 -->  
+  <frame count ="1565"/>
+  <unuse id ="kuma"/>
+  <useAndShow id ="kuma2" res ="yama/yamaKumaStanding" pos ="60,16,2"/>
+  <beginSound name="se_bear"/>
+
+  <frame count ="1765"/>
+
+  <halt result ="2"/>
+
+  <!-- 熊襲い3 -->  
+  <frame count ="2000"/>
+  <unuse id="goal1"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="3999"/>
+  <frame count ="2030"/>
+  <unuse id="goal2"/>
+  <unuse id ="kun0"/>
+  <unuse id ="kun1"/>  
+  <unuse id ="kun2"/>  
+  <unuse id ="kun3"/>  
+  <unuse id ="kun4"/>
+
+  <unuse id ="omae1"/>
+  <useAndShow id ="omae2" res ="yama/yamaOmaeOkiagari" pos ="86,-106,1"/>
+  <frame count ="2035"/>
+  <unuse id ="kuma"/>
+  <useAndShow id ="kuma2" res ="yama/yamaKumaStanding" pos ="60,16,2"/>
+  <!-- なんとなく画面外で熊に教われる感じにしてみたけど・・・ -->
+  <beginSound name="se_bear"/>
+  <frame count ="2230"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+
+  <!-- シークレット -->  
+  <frame count ="3999"/>
+  <unuse id ="kun0"/>
+  <unuse id ="kun1"/>  
+  <unuse id ="kun2"/>  
+  <unuse id ="kun3"/>  
+  <unuse id ="kun4"/>
+
+  <frame count ="4000"/>
+  <beginMove id ="omae1" to="480,-140" duration="120"/>
+  <frame count ="4020"/>
+  <beginMove id ="kuma" to="400,-46" duration="120"/>
+  <beginAnim id ="kuma" anim="0"/>
+
+  <frame count ="4140"/>
+  <!-- なんとなく画面外で熊に教われる感じにしてみたけど・・・ -->
+  <beginSound name="se_bear"/>
+  <frame count ="4200"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+  
+</kyscript>

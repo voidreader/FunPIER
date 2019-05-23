@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- エスカレーター大阪編 -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="omae11" res ="escalator/escalatorOmaera1" pos ="-60,0,1"/>
+  <useAndShow id ="omae12" res ="escalator/escalatorOmaera2" pos ="50,0,1"/>
+  <useAndShow id ="tesuri" res ="escalator/escalatorTesuriOverlay" pos ="130,0,3"/>
+  <useAndShow id ="step" res="escalator/escalatorStepMgr" pos="0,0,4"/>
+  <useAndShow id ="base" res ="escalator/escalatorBase" pos ="70,0,5"/>
+  <useAndShow id ="bg" res ="escalator/escalatorBG" pos ="0,0,6"/>
+  <useEmpty id ="kaiwa"/>
+  <beginMoveEx id ="bg" posAdd="0,-300" duration="1200"/>
+  <beginSound name="bgm_dance" loop="true"/>
+
+  <frame count ="60"/>
+  <useAndShow id ="fuki12" parent="kaiwa" res ="escalator/escalatorFukidasi" pos ="-128,168,0"/>
+  <beginMoveEx id ="fuki12" rot="0,0,90"/>
+  <drawText id="text12" parent="kaiwa" textId="112" size ="32" pos="-97, 177, -1" vertical="true"/>
+  <frame count ="100"/>
+  <useAndShow id ="fuki11" parent="kaiwa" res ="escalator/escalatorFukidasi" pos ="126,170,0"/>
+  <beginMoveEx id ="fuki11" rot="0,0,90"  scale="1,-1,1"/>
+  <drawText id="text11" parent="kaiwa" textId="113" size ="24" pos="220, 178, -1" vertical="true"/>
+  <!--<beginMoveEx id ="fuki11" scale="-1,1,1"/>-->
+  <frame count ="140"/>
+  <useAndShow id ="ossan" res ="reji/rejiHitoNarabi" pos ="-5,-340,0"/>
+  <beginMove id ="ossan" to="-5,-250,0" duration="30"/>
+  <frame count ="170"/>
+  
+  <beginTimer id ="timer" duration="600"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="10000" priority="1"/>
+  <beginIf target="always" goto="500"/>
+
+  <!-- 最初の入力待ち -->
+  <frame count ="500"/>
+  <endIf priority="0"/>
+  <endDrag id="omae11"/>
+  <endDrag id="omae12"/>
+  <beginMove id ="omae11" pos="-60,0,1"/>
+  <beginMove id ="omae12" pos="50,0,1"/>
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="1000"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="2000"/>
+  <beginIf id="goal3" target="touch" crange="-60,0,77,184" goto="3000"/>
+  <beginIf id="goal4" target="touch" crange="50,0,77,184" goto="4000"/>
+  <wait/>
+  
+  <!-- 左へ -->
+  <frame count ="1000"/>
+  <endIf/>
+  <unuse id="kaiwa"/>
+  <unuse id="omae12"/>
+  <useAndShow id ="omae22" res ="escalator/escalatorOmaera1" pos ="24,0,2"/>
+  <beginMove id ="omae22" to="-60,46,2" duration="30"/>
+  <beginSound name="se_move"/>
+  <frame count ="1120"/>
+  <halt result ="0"/>
+
+  <!-- 右へ -->
+  <frame count ="2000"/>
+  <endIf/>
+  <unuse id="kaiwa"/>
+  <unuse id="omae11"/>
+  <useAndShow id ="omae21" res ="escalator/escalatorOmaera2" pos ="-36,0,2"/>
+  <beginMove id ="omae21" to="50,46,2" duration="30"/>
+  <beginSound name="se_move"/>
+  <frame count ="2060"/>
+  <beginMove id ="ossan" to="-55,-180,0" duration="60"/>
+  <frame count ="2120"/>
+  <halt result ="1"/>
+
+  <!-- 左をつかむ -->
+  <frame count ="3000"/>
+  <endIf priority="0"/>
+  <unuse id="kaiwa"/>
+  <beginMoveEx id="omae11" pos ="-60,46,2"/>
+  <beginDrag id="omae11" range="-80,46,240,46"/>
+  <beginIf id ="cond1" target="object" trigger="up" name="omae11" range="-240,-240,0,240" goto="500"/>
+  <beginIf id ="cond2" target="object" trigger="up" name="omae11" range="0,-240,100,240" goto="3100"/>
+  <beginIf id ="cond3" target="object" trigger="up" name="omae11" range="100,-240,240,240" goto="3200"/>
+  <beginSound name="se_cancel"/>
+  <wait/>
+  <frame count ="3100"/>
+  <endIf/>
+  <unuse id ="omae11"/>
+  <useAndShow id ="omae21" res ="escalator/escalatorOmaera2" pos ="50,46,2"/>
+  <beginSound name="se_move"/>
+  <beginIf target="always" goto="2001"/>
+  <frame count ="3200"/>
+  <unuse id="omae11"/>
+  <beginIf target="always" goto="5000"/>
+
+  <!-- 右をつかむ -->
+  <frame count ="4000"/>
+  <endIf priority="0"/>
+  <unuse id="kaiwa"/>
+  <beginMoveEx id="omae12" pos ="50,46,2"/>
+  <beginDrag id="omae12" range="-50,46,240,46"/>
+  <beginIf id ="cond1" target="object" trigger="up" name="omae12" range="-240,-240,-120,240" goto="500"/>
+  <beginIf id ="cond2" target="object" trigger="up" name="omae12" range="0,-240,100,240" goto="500"/>
+  <beginIf id ="cond3" target="object" trigger="up" name="omae12" range="100,-240,240,240" goto="4200"/>
+  <beginIf id ="cond4" target="object" trigger="up" name="omae12" range="-120,-240,0,240" goto="4100"/>
+  <beginSound name="se_cancel"/>
+  <wait/>
+  <frame count ="4100"/>
+  <endIf/>
+  <unuse id ="omae12"/>
+  <useAndShow id ="omae21" res ="escalator/escalatorOmaera1" pos ="-60,46,2"/>
+  <beginSound name="se_move"/>
+  <beginIf target="always" goto="1001"/>
+  <frame count ="4200"/>
+  <unuse id="omae12"/>
+  <beginIf target="always" goto="5000"/>
+  
+  <!-- 下りエスカレータ(シークレット) -->
+  <frame count ="5000"/>
+  <endIf/>
+  <useAndShow id ="omae22" res ="escalator/escalatorOmaera1" pos ="165,0,2"/>
+  <beginMoveEx id ="omae22" posAdd="110,-330" scale="1.5,1.5,1" duration="300"/>
+  <beginSound name="se_move"/>
+  <frame count ="5280"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+  
+  <!-- 時間切れ -->
+  <frame count ="10000"/>
+  <halt result ="0"/>
+  
+</kyscript>

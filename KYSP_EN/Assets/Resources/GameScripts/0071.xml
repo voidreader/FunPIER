@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- メールに夢中 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="kati" op="set" value="0"/>
+
+  <useAndShow id ="omae1" res ="mail/mailOmaeMuchuu" pos ="72,-30,0"/>
+  <useAndShow id ="makura" res ="mail/mailMakura" pos ="183,-54,1"/>
+  <useAndShow id ="obake" res ="mail/mailObake" pos ="-340,8,2"/>
+  <useAndShow id ="hitodama" res ="mail/mailHitodama" pos ="-370,50,3"/>
+  <useAndShow id ="text" res ="mail/mailKati" pos ="0,55,-1"/>
+  <beginSound name="bgm_ghost" loop="true"/>
+
+  <beginMove id ="obake" to="-148,10,2" duration="60"/>
+  <beginMove id ="hitodama" to="-178,50,3" duration="60"/>
+
+  <frame count ="60"/>
+  <beginTimer id ="tm0" duration="600"/>
+  <beginIf id="to0" target="animend" name ="tm0" goto="9000" priority="1"/>
+  <beginIf id="goal1" target="touchaction" direction="0,3" goto="1000"/>
+  <beginIf id="goal2" target="touch" goto="2000"/>
+
+  <wait />
+
+  <!-- 驚く -->
+  <frame count ="1000"/>
+  <endIf id ="all"/>
+  <endIf id ="to0"/>
+  <unuse id ="omae1"/>
+  <unuse id ="text"/>
+  <endSound fade="0"/>
+  <beginSound name="se_bikkuri"/>
+  <useAndShow id ="omae2" res ="mail/mailOmaeBikkuri" pos ="38,120,0"/>
+  <frame count ="1060"/>
+  <halt result ="1"/>
+
+  <!-- かちかちを増やす-->
+  <frame count ="2000"/>
+  <var name="kati" op="inc" value="1"/>
+<!--  <beginIfVar lhs="$kati" op="gt" rhs="6" goto="2100"/> -->
+  <beginIf id="goal2" target="touch" goto="2000"/>
+  <wait />  
+  <frame count ="2100"/>
+  <beginAnim id ="omae1" anim ="1" />
+  <beginIf id="goal2" target="touch" goto="2000"/>
+  <wait />  
+
+  
+   <!-- 時間切れ (お化け帰り時には反応しない）-->
+  <frame count ="9000"/>
+  <endIf id ="all"/>
+  <beginMove id ="obake" to="-340,10,0" duration="60"/>
+  <beginMove id ="hitodama" to="-370,50,0" duration="60"/>
+  <frame count ="9060"/>
+  <beginIfVar lhs="$kati" op="gt" rhs="6" goto="9100"/>
+  <halt result ="0"/>
+  <frame count ="9100"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+ 
+</kyscript>
+

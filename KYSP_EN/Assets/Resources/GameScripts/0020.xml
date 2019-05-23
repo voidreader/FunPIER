@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- G-Mode -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="idou" op="set" value="0"/>  
+  
+  <useAndShow id ="logo0" res ="gmode/gmodeLogoRed" pos ="320,0,3"/>
+  <beginDrag id ="logo0" rewind ="false" range="-340, 0, 340, 0"/>
+  <beginIf id ="goal1" target ="object" trigger="up" name="logo0" crange="0,0,64,32" goto ="1000"/>
+  <beginTimer id ="timer" duration="660"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="6000" priority="1"/>
+  <beginIf id="left" target="touch" goto="2000"/>
+  <wait />
+
+  <frame count ="1000"/>
+  <unuse id="logo0"/>
+  <useAndShow id ="logo1" res ="gmode/gmodeLogoBlue" pos ="0,0,3"/>
+  <beginSound name ="se_gmode" />
+  <frame count ="1120"/>
+  <halt result="1"/>
+
+  <frame count ="2000"/>
+  <var name="idou" op="set" value="1"/>  
+  <wait />
+
+  <!-- 時間切れ -->
+  <frame count ="6000"/>
+  <beginIfVar lhs="$idou" op="eq" rhs="0" goto="6010"/>
+
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+
+  <frame count ="6010"/>
+  <halt result="0"/>
+
+
+  
+</kyscript>

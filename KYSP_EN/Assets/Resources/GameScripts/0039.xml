@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 握手会 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="intro" res ="date/dateOmaeIntro" pos ="0,0,0"/>
+  <drawText id="text" textId="4" pos ="200,183,0" size="24" vertical="false"/>
+  <beginSound name="jg_date"/>
+  <frame count ="240"/>
+  <unuse id ="all"/>
+  <useAndShow id ="bko" res ="akusyu/akusyuBko" pos ="-120,150,17"/>
+  <useAndShow id ="ako" res ="akusyu/akusyuAko" pos ="120,150,16"/>
+  <useAndShow id ="omae" res ="syutugeki/syutugekiOmae" pos ="0,-140,10"/>
+  <useAndShow id ="retu0" res ="akusyu/akusyuHitoNarabi" pos ="128,58,15"/>
+  <useAndShow id ="retu1" res ="akusyu/akusyuHitoNarabi" pos ="128,38,14"/>
+  <useAndShow id ="retu2" res ="akusyu/akusyuHitoNarabi" pos ="128,18,13"/>
+  <useAndShow id ="retu3" res ="akusyu/akusyuHitoNarabi" pos ="128,-2,12"/>
+  <beginDrag id ="omae" range="-150, -200, 150, 112"/>
+  <beginIf id ="goal1" target ="object" name ="omae" crange="128,-30,80,80" goto="1000"/>
+  <beginIf id ="goal2" target ="object" name ="omae" crange="-117,30,80,80" goto="2000"/>
+  <beginIf id ="goal3" target ="object" name ="omae" crange="50,112,80,80" goto="3000"/>
+  <beginSound name="jg_arere"/>
+
+  <!-- 時間切れで終了 -->
+  <frame count ="840"/>
+  <halt result="0"/>
+
+  <!-- A子 -->
+  <frame count ="1120"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMove id ="omae" to="128,-30" duration="60"/>
+  <beginSound name="se_move"/>
+  <frame count ="1060"/>
+  <halt result ="2"/>
+
+  <!-- B子 -->
+  <frame count ="2120"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMove id ="omae" to="-120,30" duration="60"/>
+  <beginSound name="se_move"/>
+  <frame count ="2060"/>
+  <halt result ="1"/>
+
+  <!-- A子(シークレット) -->
+  <frame count ="3120"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+
+  <unuse id ="retu0"/>
+  <unuse id ="retu1"/>
+  <unuse id ="retu2"/>
+  <unuse id ="retu3"/>
+  <useAndShow id ="retu10" res ="akusyu/akusyuHitoNarabi" pos ="128,58,5"/>
+  <useAndShow id ="retu11" res ="akusyu/akusyuHitoNarabi" pos ="128,38,4"/>
+  <useAndShow id ="retu12" res ="akusyu/akusyuHitoNarabi" pos ="128,18,3"/>
+  <useAndShow id ="retu13" res ="akusyu/akusyuHitoNarabi" pos ="128,-2,2"/>
+
+  <beginMove id ="omae" to="127,81" duration="60"/>
+  <beginSound name="se_move"/>
+  <frame count ="3180"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="2"/>
+
+  
+</kyscript>

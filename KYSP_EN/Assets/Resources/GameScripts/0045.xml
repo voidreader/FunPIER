@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- スタンディングのアレ -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <useAndShow id ="chairs" res ="stand/standChairs" pos ="0,-100,1"/>
+  <useAndShow id ="hitos" res="stand/standHitos" pos ="0,-100,0"/>
+  <useAndShow id ="joei" res ="stand/standJoueichu" pos ="-160,200,0"/>
+  <useAndShow id ="omae" res ="stand/standOmae" pos ="0,-180,-1"/>
+  
+  <frame count ="120"/>
+  <beginAnim id ="hitos" anim="1"/>
+  <beginSound name ="bgm_applause" loop="true" fade="2.0"/>
+  <frame count ="140"/>
+  <beginAnim id ="hitos" anim="2"/>
+  <beginTimer id ="timer" duration="600"/>
+  <beginIf id="timeout" target="animend" name ="timer" goto="600" priority="1"/>
+  <beginIf target="always" goto="200"/>
+  
+  <!-- スタンディング待ち -->
+  <frame count ="200"/>
+  <beginIf id="cond1" target="touchaction" direction="0,3" goto="1000"/>
+  <beginIf id="cond2" target="touchaction" direction="0,-3" goto="300"/>
+  <wait/>
+
+  <!-- 歩きまわる -->
+  <frame count ="300"/>
+  <endIf priority="0"/>
+  <beginMoveEx id="omae" pos="0,-200" duration="10"/>
+  <frame count ="310"/>
+  <beginDrag id ="omae" range="-200, -240, 200, -180"/>
+  <beginIf id="cond3" target="object" name="omae" range="-240,-240,-180,-160" goto="2000"/>
+  <beginIf id="cond4" target="object" name="omae" range="180,-240,240,-160" goto="3000"/>
+  <beginIf id="cond5" target="object" name="omae" range="-40,-190,40,-170" goto="400"/>
+  <wait/>
+  
+  <!-- 着席 -->
+  <frame count="400"/>
+  <endIf priority="0"/>
+  <endDrag id ="omae"/>
+  <beginMoveEx id="omae" pos="0,-180" duration="10"/>
+  <beginIf target="always" goto="200"/>
+  
+  <!-- 時間切れ -->
+  <frame count ="600"/>
+  <halt result ="0"/>
+
+  <!-- スタンディング -->
+  <frame count ="1000"/>
+  <endIf/>
+  <beginAnim id ="omae" anim="1"/>
+  <frame count ="1020"/>
+  <beginAnim id ="omae" anim="2"/>
+  <frame count ="1120"/>
+  <halt result ="1"/>
+
+  <!-- 逃げる -->
+  <frame count ="2000"/>
+  <endIf/>
+  <endDrag id="omae"/>
+  <beginMoveEx id ="omae" pos="-300,-220" duration="60"/>
+  <frame count ="2060"/>
+  <var name="secret" value="1"/>
+  <halt result ="0"/>
+
+  <frame count ="3000"/>
+  <endIf/>
+  <endDrag id="omae"/>
+  <beginMoveEx id ="omae" pos="300,-220" duration="60"/>
+  <frame count ="3060"/>
+  <var name="secret" value="1"/>
+  <halt result ="0"/>
+  
+</kyscript>

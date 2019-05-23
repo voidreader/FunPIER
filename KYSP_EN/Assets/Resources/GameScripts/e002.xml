@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 大縄跳び(エンドレス) -->
+<kyscript yuragi="false">
+  <frame count ="0"/>
+  <useAndShow id ="game" res="oonawa/oonawaGame" pos ="0,0,0"/>
+  <drawRect id="ground" color="0.5,0.5,0.5,1" size="480,4" pos="0,-2"/>
+
+  <frame count ="60"/>
+  <beginSound name ="se_whistle"/>
+  <function id="game" func="OnBeginPlay"/>
+  <wait/>
+
+  <frame count ="1000"/>
+  <halt/>
+
+</kyscript>

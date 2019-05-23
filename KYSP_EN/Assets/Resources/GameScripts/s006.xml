@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- システム：遊び方(読まない。) -->
+<kyscript yuragi="false">
+  
+  <!-- １ページ目 -->
+  <frame count ="0"/>
+  <fadeScreen type="fadeend"/>
+  <frame count ="30"/>
+  <fadeScreen type="fadein" duration="90"/>
+  <useAndShow id ="kaisetsu" res ="system/kaisetsuYomanai" pos ="0,0,0"/>
+  <frame count ="50"/>
+  <beginIf id ="touch" target="touch" goto="940"/>
+  <wait/>
+  <frame count ="940"/>
+  <fadeScreen kind="fadeout" duration="60"/>
+
+  <!-- ２ページ目 -->
+  <frame count ="1030"/>
+  <unuse id="kaisetsu"/>
+  <useAndShow id ="kaisetsu2" res ="system/kaisetsu2Yomanai" pos ="0,0,0"/>
+  <beginMoveEx id="kaisetsu2" scale="0.98,0.98,1"/>
+  <fadeScreen kind="fadein" duration="90"/>
+  <frame count ="1050"/>
+  <beginIf id ="touch" target="touch" goto="2000"/>
+  <wait/>
+  <frame count ="2000"/>
+  <fadeScreen kind="fadein" duration="0"/>
+  <halt continueSound="true"/>
+  
+</kyscript>

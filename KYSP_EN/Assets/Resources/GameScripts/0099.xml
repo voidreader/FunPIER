@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 台風 -->
+<kyscript>
+  
+  <!-- 夜景 -->
+  <frame count ="0"/>
+  <var name="mov" op="set" value="0"/>
+  <var name="magon" op="set" value="0"/>
+  <useAndShow id ="s1bg" res ="taifuu/taifuuBG" pos ="0,-45,4"/>
+  <beginSound name="bgm_night" loop="true"/>
+  <frame count ="60"/>
+  <drawText id="text1" textId="150" size="22" pos="283,119,0" color="1,1,1,0" vertical="false"/>
+  <beginMoveEx id="text1" posAdd="10,10" color="1,1,1,1" duration="60"/>
+  <frame count ="120"/>
+  <drawText id="text2" textId="151" size="22" pos="300,6,0" color="1,1,1,0" vertical="false"/>
+  <beginMoveEx id="text2" posAdd="10,10" color="1,1,1,1" duration="60"/>
+  <frame count ="180"/>
+  <drawText id="text3" textId="152" size="22" pos="128,-113,0" color="1,1,1,0" vertical="false"/>
+  <beginMoveEx id="text3" posAdd="10,10" color="1,1,1,1" duration="60"/>
+  <frame count ="360"/>
+  <fadeScreen kind="fadeout" duration="30"/>
+  
+  <!-- 日本地図 -->
+  <frame count ="400"/>
+  <unuse id ="s1bg"/>
+  <unuse id ="text1"/>
+  <unuse id ="text2"/>
+  <unuse id ="text3"/>
+  <beginSound name="bgm_sumo" loop="true"/>
+  <useAndShow id ="s2bg" res ="taifuu/taifuuNihon" pos ="0,40,4"/>
+  <useAndShow id ="omae" res ="taifuu/taifuuOmae" pos ="0,0,2"/>
+<!--  <beginIf id="goal6" target="touch" crange="0,40,120,120" goto="700"/> -->
+  <beginIf id="goal0" target="object" name="omae" crange="0,-100,20,20" goto="1000"/>
+  <beginIf id="goal1" target="touchaction" direction="-3,0" goto="4000"/>
+  <beginIf id="goal2" target="touchaction" direction="3,0" goto="5000"/>
+  <beginIf id="goal3" target="touchaction" direction="0,-3" goto="6000"/>
+  <fadeScreen kind="fadein" duration="20"/>
+  <wait />
+
+  <frame count ="700"/>
+  <endIf id="goal1"/>
+  <endIf id="goal2"/>
+  <endIf id="goal3"/> 
+  <endIf id="goal6"/>
+  <beginDrag id="s2bg" rewind ="true" range ="-230,-230,0,40"/>
+  <beginIf id="goal7" target="object" trigger="up" name="s2bg" crange="-180,-180,100,100" goto="800"/>
+  <wait />
+  
+  <frame count ="800"/>
+  <endIf id="goal7"/>
+  <endDrag id="s2bg"/>
+  <var name="mov" op="set" value="1"/>
+  <wait />
+  
+
+  <frame count ="1000"/>
+  <endIf id="all"/>
+  <beginIf id="goal4" target="object" name="omae" crange="0,0,20,20" goto="2000"/>
+  <frame count ="2000"/>
+  <endIf id="all"/>
+  <beginSound name="se_down" loop="true"/>
+  <beginIf id="goal5" target="object" name="omae" crange="400,400,40,40" goto="3000"/>
+  <frame count ="2400"/>
+  <endSound fade="0"/>
+  <beginSound name="se_down" loop="false"/>
+  <frame count ="3000"/>
+  <beginIfVar lhs="$magon" op="eq" rhs="1" goto="3100"/>  
+  <halt result="0"/>
+  <frame count ="3100"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+
+  <frame count ="4000"/>
+  <endIf id="all"/>
+  <beginAnim id ="omae" anim="4"/>
+  <beginMove id ="omae" to="-400,0" duration="30"/>
+  <beginSound name="se_cursor" loop="false"/>
+  <frame count ="4030"/>
+  <halt result="1"/>
+
+  <frame count ="5000"/>
+  <endIf id="all"/>
+  <beginAnim id ="omae" anim="4"/>
+  <beginMove id ="omae" to="400,0" duration="30"/>
+  <beginSound name="se_cursor" loop="false"/>
+  <frame count ="5030"/>
+  <halt result="1"/>
+
+  <frame count ="6000"/>
+  <endIf id="all"/>
+  <beginAnim id ="omae" anim="4"/>
+  <beginMove id ="omae" to="0,-400" duration="30"/>
+  <beginSound name="se_cursor" loop="false"/>
+  <frame count ="6030"/>
+  <halt result="1"/>
+
+  
+ 
+</kyscript>

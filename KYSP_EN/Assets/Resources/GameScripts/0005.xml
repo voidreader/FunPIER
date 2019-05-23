@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 始業 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="sousa" op="set" value="0"/>
+
+  <useAndShow id ="isu" res ="sigyou/sigyouTukue" pos ="110,-189,2"/>
+  <useAndShow id ="tukue" res ="sigyou/sigyouTukue" pos ="0,-120,2"/>
+  <beginAnim id ="tukue" anim ="1"/>
+  
+  <useAndShow id ="omae" res ="sigyou/sigyouOmae" pos ="110,-189,1"/>
+  <var name="stat" op="set" value="0"/>
+
+  <beginTimer id ="timer0" duration="90"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="1000" priority="1"/>
+
+  <frame count ="30"/>
+  <beginSound name="se_chime"/>
+  <wait />
+  
+  <frame count ="1000"/>
+  <endIf id="timeout0"/>
+
+  <useAndShow id ="kiritu" res ="sigyou/sigyouFukidasiKiritu" pos ="-330,174,0"/>
+  <beginMove id ="kiritu" to="-108,174" duration="20"/>
+  <beginTimer id ="timer1" duration="180"/>
+  <beginIf id="timeout1" target="animend" name ="timer1" goto="2000" priority="1"/>
+  <beginIf id="tatu" target="touchaction" direction="0,6" goto="1200"/>
+  <wait />
+  <frame count ="1200"/>
+  <beginAnim id ="omae" anim="1"/>
+  <var name="stat" op="set" value="1"/>
+  <var name="sousa" op="set" value="1"/>
+  <wait />
+
+  <frame count ="2000"/>
+  <unuse id ="kiritu"/>
+  <endIf id="timeout1"/>
+  <endIf id="tatu"/>
+  <useAndShow id ="rei" res ="sigyou/sigyouFukidasiRei" pos ="-330,174,0"/>
+  <beginMove id ="rei" to="-108,174" duration="20"/>
+  <beginTimer id ="timer2" duration="180"/>
+  <beginIf id="timeout2" target="animend" name ="timer2" goto="3000" priority="1"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="0" goto="2200"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="1" goto="2300"/>
+  <wait />
+  
+  <frame count ="2200"/>
+  <beginIf id="tatu" target="touchaction" direction="0,6" goto="2299"/>
+  <wait />
+
+  <frame count ="2299"/>
+  <endif id="tatu"/>
+  <endif id="tatu2"/>
+  <beginAnim id ="omae" anim="1"/>
+  <var name="stat" op="set" value="1"/>
+  <var name="sousa" op="set" value="1"/>
+
+  <frame count ="2300"/>
+  <beginIf id="ojigi" target="touchaction" direction="-6,0" goto="2400"/>
+  <wait />
+  <frame count="2400"/>
+  <beginAnim id ="omae" anim="2"/>
+  <var name="stat" op="set" value="2"/>
+  <var name="result" op="set" value="1"/>
+  <var name="sousa" op="set" value="1"/>
+  <beginIf id="tatu" target="touchaction" direction="0,6" goto="2299"/>
+  <beginIf id="tatu2" target="touchaction" direction="6,0" goto="2299"/>
+  <wait />
+
+  <frame count ="3000"/>
+  <unuse id ="rei"/>
+  <unuse id="timeout2"/>
+  <unuse id="tatu"/>
+  <unuse id="tatu2"/>
+  <unuse id="ojigi"/>
+  <useAndShow id ="tyaku" res ="sigyou/sigyouFukidasiRei-03" pos ="-330,174,0"/>
+  <beginMove id ="tyaku" to="-108,174" duration="20"/>
+  <beginTimer id ="timer3" duration="240"/>
+  <beginIf id="timeout3" target="animend" name ="timer3" goto="4000" />
+  <beginIfVar lhs="$stat" op="eq" rhs="0" goto="3100"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="1" goto="3200"/>
+  <beginIfVar lhs="$stat" op="eq" rhs="2" goto="3300"/>
+  <wait />
+
+  <frame count="3099"/>
+  <unuse id="suwaru"/>
+  <unuse id="tatu"/>
+  <unuse id="tatu2"/>
+  <unuse id="ojigi"/>
+  <unuse id="hiku"/>
+  <beginAnim id ="omae" anim="0"/>
+  <var name="stat" op="set" value="0"/>
+  <frame count="3100"/>
+  <beginIf id="tatu" target="touchaction" direction="0,6" goto="2199"/>
+  <beginIf id="hiku" target="touchaction" direction="6,0" goto="3400"/> 
+  <wait />
+
+  <frame count="3199"/>
+  <unuse id="suwaru"/>
+  <unuse id="tatu"/>
+  <unuse id="tatu2"/>
+  <unuse id="ojigi"/>
+  <unuse id="hiku"/>
+  <beginAnim id ="omae" anim="1"/>
+  <var name="stat" op="set" value="1"/>
+  <frame count="3200"/>
+  <beginIf id="suwaru" target="touchaction" direction="0,-6" goto="3099"/>
+  <beginIf id="ojigi" target="touchaction" direction="-6,0" goto="3299"/>
+<!--  <beginIf id="hiku" target="touchaction" direction="6,0" goto="3400"/> -->
+  <wait />
+
+  <frame count="3299"/>
+  <unuse id="suwaru"/>
+  <unuse id="tatu"/>
+  <unuse id="tatu2"/>
+  <unuse id="ojigi"/>
+  <unuse id="hiku"/>
+  <beginAnim id ="omae" anim="2"/>
+  <var name="stat" op="set" value="2"/>
+  <frame count="3300"/>
+  <beginIf id="suwaru" target="touchaction" direction="0,-6" goto="3099"/>
+  <beginIf id="tatu" target="touchaction" direction="6,0" goto="3199"/>
+  <beginIf id="tatu2" target="touchaction" direction="0,6" goto="3199"/>
+  <wait />
+
+  <frame count="3400"/>
+  <unuse id="suwaru"/>
+  <unuse id="tatu"/>
+  <unuse id="tatu2"/>
+  <unuse id="ojigi"/>
+  <unuse id="hiku"/>
+  <unuse id ="timeout3"/>
+
+  <beginAnim id ="omae" anim="0"/>
+
+  <frame count="3410"/>
+  <beginMoveEx id="omae" rot="0,0,-90" duration="15"/>
+  <beginMoveEx id="isu" rot="0,0,-90" duration="15"/>
+  <frame count="3423"/>
+  <beginSound name="se_down"/>
+  
+  <frame count ="3500"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result="0"/>
+
+  <!-- 時間切れで終了 -->
+  <frame count ="4000"/>
+  <beginIfVar lhs="$sousa" op="eq" rhs="0" goto="4300"/>
+  <halt />
+
+  <frame count ="4300"/>
+  <halt result="2"/>
+
+
+</kyscript>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- 接待 -->
+<kyscript>
+  
+  <frame count ="0"/>
+  <var name="stat" op="set" value="0"/>
+  <var name="hajm" op="set" value="0"/>
+  <var name="muki" op="set" value="0"/>
+  <var name="mita" op="set" value="0"/>
+
+  <useAndShow id ="omae" res ="settai/settaiOmae" pos ="160,0,2"/>
+  <useAndShow id ="cast00" res ="settai/settaiSyatyo" pos ="-80,0,2"/>
+  <useAndShow id ="ball" res ="settai/settaiBall" pos ="-14,-83,3"/>
+  <useAndShow id ="kumo" res ="mitono/mitonoKumo" pos ="0,180,0"/>
+  <drawRect id ="rect" pos ="0,0,6" size="480,240" color="0.75, 0.75, 0.75" anchory="max"/>
+
+  <beginMove id ="kumo" to="100,180,0" duration="900"/>
+  <beginSound name="bgm_quiz" loop="true"/>
+  <beginTimer id ="timer0" duration="120"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="1000" priority="1"/>
+  <beginIf id="goal1" target="touchaction" direction="3,0" goto="5000"/>
+  <wait />
+
+  <!-- 社長スイング一回目 -->
+  <frame count ="1000"/>
+  <unuse id ="timer0"/>
+  <unuse id ="timeout0"/>
+  <var name="hajm" op="set" value="1"/>
+  <beginAnim id ="cast00" anim ="1" />
+  <beginTimer id ="timer1" duration="20"/>
+  <beginIf id="timeout1" target="animend" name ="timer1" goto="1100" priority="1"/>
+  <wait />
+
+  <frame count ="1100"/>
+  <unuse id ="timer1"/>
+  <unuse id ="timeout1"/>
+  <beginSound name="se_pitching" loop="false"/>
+  <beginTimer id ="timer0" duration="120"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="1300" priority="1"/>
+  <wait />
+
+  <!-- 社長スイング後振り向き -->
+  <frame count ="1300"/>
+  <unuse id ="timer0"/>
+  <unuse id ="timeout0"/>
+  <beginAnim id ="cast00" anim ="2" />
+  <beginTimer id ="timer2" duration="120"/>
+  <beginIf id="timeout2" target="animend" name ="timer2" goto="1400" priority="1"/>
+  <wait />
+  
+  <!-- 二度目スイング開始判定 -->
+  <frame count ="1400"/>
+  <unuse id ="timer2"/>
+  <unuse id ="timeout2"/>
+  <beginIfVar lhs="$muki" op="eq" rhs="0" goto="6000"/>
+  <!-- 社長スイング二回目 -->
+  <beginAnim id ="cast00" anim ="1" />
+  <beginTimer id ="timer1" duration="20"/>
+  <beginIf id="timeout1" target="animend" name ="timer1" goto="1500" priority="1"/>
+  <wait />
+
+  <frame count ="1500"/>
+  <unuse id ="timer1"/>
+  <unuse id ="timeout1"/>
+  <beginSound name="se_pitching" loop="false"/>
+  <beginTimer id ="timer0" duration="16"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="1600" priority="1"/>
+  <wait />
+
+  <frame count ="1600"/>
+  <unuse id ="timer0"/>
+  <unuse id ="timeout0"/>
+  <beginSound name="se_shot" loop="false"/>
+  <unuse id ="ball"/>
+  <useAndShow id ="ball2" res ="settai/settaiBall2" pos ="-14,-83,2"/>
+  <beginMoveEx id ="ball2" pos="-14,180,3" scale ="0,0,0" duration="40"/>
+  <beginTimer id ="timer1" duration="120"/>
+  <beginIf id="timeout1" target="animend" name ="timer1" goto="1800" priority="1"/>
+  <beginIfVar lhs="$muki" op="eq" rhs="0" goto="1700"/>
+  <wait />
+  <frame count ="1700"/>
+  <var name="mita" op="set" value="1"/>
+  <wait />
+
+  <!-- 社長スイング後振り向き -->
+  <frame count ="1800"/>
+  <unuse id ="timer1"/>
+  <unuse id ="timeout1"/>
+  <beginAnim id ="cast00" anim ="2" />
+  <beginTimer id ="timer2" duration="180"/>
+  <beginIf id="timeout2" target="animend" name ="timer2" goto="7000" priority="1"/>
+  <wait />
+
+  <!-- おまえ振り向き処理 -->
+  <frame count ="5000"/>
+  <var name="muki" op="set" value="1"/>
+  <endIf id ="goal1" />
+  <beginAnim id ="omae" anim ="1" />
+  <beginIf id="goal2" target="touchaction" direction="-3,0" goto="5100"/>
+  <beginIfVar lhs="$hajm" op="eq" rhs="0" goto="5200"/>
+  <wait/>
+
+  <frame count ="5100"/>
+  <var name="muki" op="set" value="0"/>
+  <var name="stat" op="set" value="2"/>
+  <endIf id ="goal2" />
+  <beginAnim id ="omae" anim ="0" />
+  <beginIf id="goal1" target="touchaction" direction="3,0" goto="5000"/>
+  <wait/>
+
+  <frame count ="5200"/>
+  <var name="stat" op="set" value="1"/>
+  <wait/>
+
+  <!-- 見てた読まない -->
+  <frame count ="6000"/>
+  <endIf id ="all" />
+  <halt result ="2"/>
+
+  <!-- とりあえず完走 -->
+  <frame count ="7000"/>
+  <endIf id ="all" />
+  <beginIfVar lhs="$stat" op="eq" rhs="1" goto="8000"/>
+  <beginIfVar lhs="$muki" op="eq" rhs="1" goto="7100"/>
+  <!-- 正答 -->
+  <halt result ="1"/>
+
+  <!-- ナイスショット見てなかったNG -->
+  <frame count ="7100"/>
+  <halt result ="0"/>
+
+  <!-- シークレットいっさい見ない よめない -->
+  <frame count ="8000"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+
+</kyscript>

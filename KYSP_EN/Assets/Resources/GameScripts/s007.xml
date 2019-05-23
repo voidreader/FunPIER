@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- システム：結果画面(サクッと空気読み。) -->
+<kyscript yuragi="false" notrim="true">
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="head" res ="system/result_00" pos ="-65,0,0"/>
+  <useAndShow id ="result" res="resultMessage" pos="190,80,0"/>
+  <beginIf id ="touch" target="touch" goto="1000"/>
+  <wait/>
+  
+  <frame count ="1000"/>
+  <halt/>
+  
+</kyscript>

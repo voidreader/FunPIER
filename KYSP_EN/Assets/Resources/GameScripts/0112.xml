@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- はじめてのデート -->
+<kyscript>
+  <!-- イントロ -->
+  <frame count ="0"/>
+  <useAndShow id ="kare1" res ="date/dateOmaeIntro" pos ="53,-21,0"/>
+  <useAndShow id ="kano1" res="date/dateKanojoIntro" pos ="-60,-20,1"/>
+  <drawText id="message" textId="8" pos ="80,186,0" size="32" vertical="false"/>
+  <beginSound name="jg_date"/>
+
+  <frame count ="150"/>
+  <unuse id="all"/>
+  <beginTimer id ="timer0" duration="600"/>
+  <beginIf id="timeout0" target="animend" name ="timer0" goto="6000" priority="1"/>
+  <useAndShow id ="cage" res ="date/dateLionCage" pos ="0,-60,2"/>
+  <useAndShow id ="omae" res ="date/dateOmae1" pos ="0,-146,0"/>
+  <useAndShow id ="mesu" res ="date/dateLionMesu" pos ="0,70,5"/>
+  <useAndShow id ="osu" res ="date/dateLionOsu" pos ="-60,114,4"/>
+  <useAndShow id ="kin" res ="date/dateLionKin" pos ="-40,50,3"/>
+
+  <beginSound name="bgm_sumo" loop="true"/>
+  <beginDrag id ="omae" range="-200, -160, 200, -49"/>
+  <beginIf id ="goal1" target ="object" name ="omae" crange="200,-146,60,180" goto="1000"/>
+  <beginIf id ="goal2" target ="object" name ="omae" crange="-200,-146,60,180" goto="2000"/>
+  <beginIf id ="goal3" target ="object" name ="omae" crange="0,-49,64,32" goto="3000"/>
+  <wait />
+
+  <!-- 右に退場 -->
+  <frame count ="1000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMove id ="omae" to="320,-146" duration="60"/>
+  <beginSound name="se_enter"/>
+  <frame count ="1060"/>
+  <halt result ="1"/>
+
+  <!-- 左に退場 -->
+  <frame count ="2000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMove id ="omae" to="-320,-146" duration="60"/>
+  <beginSound name="se_enter"/>
+  <frame count ="2060"/>
+  <halt result ="1"/>
+
+  <!-- シークレット -->
+  <frame count ="3000"/>
+  <endDrag id ="omae"/>
+  <endIf id="all"/>
+  <beginMove id ="omae" to="0,-49" duration="30"/>
+  <frame count ="3060"/>
+  <var name="secret" op="set" value="1"/>
+  <halt result ="0"/>
+  
+   <!-- 時間切れで終了 -->
+  <frame count ="6000"/>
+  <halt result="0"/>
+
+ 
+  
+</kyscript>
