@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- 握手会 -->
 <kyscript>
-  
+
   <frame count ="0"/>
   <useAndShow id ="intro" res ="date/dateOmaeIntro" pos ="0,0,0"/>
   <drawText id="text" textId="4" pos ="200,183,0" size="24" vertical="false"/>
   <beginSound name="jg_date"/>
-  <frame count ="240"/>
+  <frame count ="120"/>
   <unuse id ="all"/>
   <useAndShow id ="bko" res ="akusyu/akusyuBko" pos ="-120,150,17"/>
   <useAndShow id ="ako" res ="akusyu/akusyuAko" pos ="120,150,16"/>
@@ -22,11 +22,11 @@
   <beginSound name="jg_arere"/>
 
   <!-- 時間切れで終了 -->
-  <frame count ="840"/>
+  <frame count ="720"/>
   <halt result="0"/>
 
   <!-- A子 -->
-  <frame count ="1120"/>
+  <frame count ="1000"/>
   <endDrag id ="omae"/>
   <endIf id="all"/>
   <beginMove id ="omae" to="128,-30" duration="60"/>
@@ -35,7 +35,7 @@
   <halt result ="2"/>
 
   <!-- B子 -->
-  <frame count ="2120"/>
+  <frame count ="2000"/>
   <endDrag id ="omae"/>
   <endIf id="all"/>
   <beginMove id ="omae" to="-120,30" duration="60"/>
@@ -44,7 +44,7 @@
   <halt result ="1"/>
 
   <!-- A子(シークレット) -->
-  <frame count ="3120"/>
+  <frame count ="3000"/>
   <endDrag id ="omae"/>
   <endIf id="all"/>
 
@@ -59,9 +59,9 @@
 
   <beginMove id ="omae" to="127,81" duration="60"/>
   <beginSound name="se_move"/>
-  <frame count ="3180"/>
+  <frame count ="3060"/>
   <var name="secret" op="set" value="1"/>
   <halt result ="2"/>
 
-  
+
 </kyscript>

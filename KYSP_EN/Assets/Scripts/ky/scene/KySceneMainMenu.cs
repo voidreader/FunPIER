@@ -65,8 +65,8 @@ public class KySceneMainMenu : KyScene {
 			} else {
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Consider, KyText.GetText(20000)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Trial, KyText.GetText(20024)));
-                dataSet.Add(new KyButtonLabeled.Data((int)Result.Unlock, KyText.GetText(24102)));
-                dataSet.Add(new KyButtonLabeled.Data((int)Result.Redirect, KyText.GetText(20046)));
+                // dataSet.Add(new KyButtonLabeled.Data((int)Result.Unlock, KyText.GetText(24102)));
+                // dataSet.Add(new KyButtonLabeled.Data((int)Result.Redirect, KyText.GetText(20046)));
                 dataSet.Add(new KyButtonLabeled.Data((int)Result.Option, KyText.GetText(20027)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.License, KyText.GetText(20029)));
                 MainList.Scrollable = false;
@@ -90,7 +90,7 @@ public class KySceneMainMenu : KyScene {
         GoogleAdmobMgr.Instance.RequestBanner();
         GoogleAdmobMgr.Instance.RequestInterstitial();
         GoogleAdmobMgr.Instance.RequestRewardAd();
-        GoogleAdmobMgr.Instance.OpenCross();
+        // GoogleAdmobMgr.Instance.OpenCross();
 
         
 

@@ -11,11 +11,6 @@
       </intent-filter>
     </activity>
   </application>
-	<network-security-config>
-		<domain-config cleartextTrafficPermitted="true">
-			<domain includeSubdomains="true">pier-showcase.com</domain>
-		</domain-config>
-	</network-security-config>  
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>
