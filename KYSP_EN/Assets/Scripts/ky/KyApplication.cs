@@ -62,8 +62,10 @@ public class KyApplication : KyScene {
         }
         else {
 
+            /*
             if (!Application.isEditor)
                 GoogleAdmobMgr.Instance.ShowInterstitial();
+            */
                 //GoogleAdmobMgr.Instance.Interstitial.Show();
         }
 
@@ -245,7 +247,7 @@ public static class KyDebugPrefs {
 	public const bool MainSkipIntermit = false;
 	public const bool MainRandomScore = false;
 	public const bool StageResultSound = true;
-	public const bool OpenFullMainMenu = false;
+	public const bool OpenFullMainMenu = true;
 	public const bool OpenDevelopMenu = false;
 	public const bool OpenAllSecrets = false;
 	public const bool DontPauseWhenResume = false;

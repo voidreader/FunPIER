@@ -98,10 +98,18 @@ public class GoogleAdmobMgr : MonoBehaviour {
     ///  크로스 마케팅 정보 오픈 
     /// </summary>
     public void OpenCross() {
+
+        if (!_isAdsOn)
+            return;
+
         _cross.OpenCrossPlayer();
     }
 
     public void OpenFrontAD() {
+
+        if (!_isAdsOn)
+            return;
+
         int number = UnityEngine.Random.Range(0, 100);
         if(number < 10) {
             ShowWatchAd(delegate { });
@@ -130,7 +138,8 @@ public class GoogleAdmobMgr : MonoBehaviour {
 #endif
 
         // Create a 320x50 banner at the top of the screen.
-        bannerView = new BannerView(bannerUnitID, AdSize.Banner, AdPosition.Bottom);
+        Debug.Log("Request Banner :: " + bannerUnitID);
+        bannerView = new BannerView(bannerUnitID, AdSize.SmartBanner, AdPosition.Top);
 
 
         // Called when an ad request has successfully loaded.
