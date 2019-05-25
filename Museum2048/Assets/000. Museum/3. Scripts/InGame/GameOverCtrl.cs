@@ -198,7 +198,9 @@ public class GameOverCtrl : MonoBehaviour {
         int t = InGame.main.currentScore / 20;
         _lblFinalScore.gameObject.SetActive(true);
 
-        for(int i=0; i<20; i++) {
+        AudioAssistant.Shot("Scoring");
+
+        for (int i=0; i<20; i++) {
             _lblFinalScore.text = string.Format("{0:n0}", s);
             yield return new WaitForSeconds(0.05f);
 
@@ -222,6 +224,12 @@ public class GameOverCtrl : MonoBehaviour {
     public void OnClickReplay() {
         this.gameObject.SetActive(false);
         InGame.main.RestartSession();
+
+        // 업그레이드 요소가 없으면 전면 배너 오픈 
+        if(!isUpgrade) {
+            AdsControl.main.ShowInterstitial();
+        }
+
     }
 
     /// <summary>
@@ -230,6 +238,12 @@ public class GameOverCtrl : MonoBehaviour {
     public void OnClickHome() {
         this.gameObject.SetActive(false);
         InGame.main.CloseSession();
+
+
+        // 업그레이드 요소가 없으면 전면 배너 오픈 
+        if (!isUpgrade) {
+            AdsControl.main.ShowInterstitial();
+        }
     }
 
 

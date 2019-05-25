@@ -227,6 +227,7 @@ public class InputManager : MonoBehaviour {
                 InGame.main.MoveTiles(Moving.Left);
             else if (endPos.x > pressPos.x && endPos.y < pressPos.y)
                 InGame.main.MoveTiles(Moving.Down);
+            
 
             _isAreaHit = false;
 
