@@ -55,13 +55,13 @@ public class KySceneMainMenu : KyScene {
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Inconsider, KyText.GetText(20021)));
 				// dataSet.Add(new KyButtonLabeled.Data((int)Result.Trial, KyText.GetText(20024)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Extra, KyText.GetText(20022)));
-				dataSet.Add(new KyButtonLabeled.Data((int)Result.Chapter, KyText.GetText(20023)));
+				// dataSet.Add(new KyButtonLabeled.Data((int)Result.Chapter, KyText.GetText(20023)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Secret, KyText.GetText(20025)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Record, KyText.GetText(20026)));
                 // dataSet.Add(new KyButtonLabeled.Data((int)Result.Unlock, KyText.GetText(24102)));
                 // dataSet.Add(new KyButtonLabeled.Data((int)Result.Redirect, KyText.GetText(20046)));
                 dataSet.Add(new KyButtonLabeled.Data((int)Result.Option, KyText.GetText(20027)));
-				dataSet.Add(new KyButtonLabeled.Data((int)Result.License, KyText.GetText(20029)));
+				// dataSet.Add(new KyButtonLabeled.Data((int)Result.License, KyText.GetText(20029)));
 			} else {
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Consider, KyText.GetText(20000)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Trial, KyText.GetText(20024)));

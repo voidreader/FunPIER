@@ -36,6 +36,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
 
     void Awake() {
 
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         DontDestroyOnLoad(this.gameObject);
 
     }

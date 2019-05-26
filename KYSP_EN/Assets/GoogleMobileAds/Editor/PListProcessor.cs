@@ -13,7 +13,7 @@ public static class PListProcessor
     {
         // Replace with your iOS AdMob app ID. Your AdMob App ID will look
         // similar to this sample ID: ca-app-pub-3940256099942544~1458002511
-        string appId = "ADMOB_APPLICATION_ID";
+        string appId = "ca-app-pub-8118299571958162~6245980702";
 
         string plistPath = Path.Combine(path, "Info.plist");
         PlistDocument plist = new PlistDocument();

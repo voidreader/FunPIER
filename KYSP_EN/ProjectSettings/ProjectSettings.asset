@@ -130,7 +130,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0.1
+  bundleVersion: 1.0.0
   preloadedAssets: []
   metroInputSource: 1
   wsaTransparentSwapchain: 0
@@ -165,16 +165,16 @@ PlayerSettings:
     Android: pier.own.android.kyspengpro
     Standalone: "unity.gmode.\uCFE0\uD0A4\uC694\uBBF8"
     Tizen: 
-    iOS: pier.own.ios.kysp
+    iOS: pier.own.ios.kyspengpro
     tvOS: 
   buildNumber:
-    iOS: 5
+    iOS: 1
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
   aotOptions: 
-  stripEngineCode: 0
+  stripEngineCode: 1
   iPhoneStrippingLevel: 1
   iPhoneScriptCallOptimization: 0
   ForceInternetPermission: 0
@@ -197,17 +197,15 @@ PlayerSettings:
   uIStatusBarHidden: 1
   uIExitOnSuspend: 0
   uIStatusBarStyle: 0
-  iPhoneSplashScreen: {fileID: 2800000, guid: 1894e1a1fb30a437ba90ab96bcd8a43e, type: 3}
-  iPhoneHighResSplashScreen: {fileID: 2800000, guid: 1894e1a1fb30a437ba90ab96bcd8a43e,
-    type: 3}
+  iPhoneSplashScreen: {fileID: 0}
+  iPhoneHighResSplashScreen: {fileID: 0}
   iPhoneTallHighResSplashScreen: {fileID: 0}
   iPhone47inSplashScreen: {fileID: 0}
   iPhone55inPortraitSplashScreen: {fileID: 0}
   iPhone55inLandscapeSplashScreen: {fileID: 0}
   iPhone58inPortraitSplashScreen: {fileID: 0}
   iPhone58inLandscapeSplashScreen: {fileID: 0}
-  iPadPortraitSplashScreen: {fileID: 2800000, guid: 1894e1a1fb30a437ba90ab96bcd8a43e,
-    type: 3}
+  iPadPortraitSplashScreen: {fileID: 0}
   iPadHighResPortraitSplashScreen: {fileID: 0}
   iPadLandscapeSplashScreen: {fileID: 0}
   iPadHighResLandscapeSplashScreen: {fileID: 0}
@@ -271,26 +269,9 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 8ed34742071c7ad498aa4478c483166d, type: 3}
+      m_Icon: {fileID: 2800000, guid: 7a227c6db55f140ddabb1bb819db0bd3, type: 3}
       m_Width: 128
       m_Height: 128
-      m_Kind: 0
-  - m_BuildTarget: iPhone
-    m_Icons:
-    - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 0268f75a6726a4492a08d5cc1bcfb130, type: 3}
-      m_Width: 114
-      m_Height: 114
-      m_Kind: 0
-    - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 336b24f3dca404182aaa029c68bcfd2f, type: 3}
-      m_Width: 72
-      m_Height: 72
-      m_Kind: 0
-    - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 23f57dc28894e4f009c214d3538ac599, type: 3}
-      m_Width: 57
-      m_Height: 57
       m_Kind: 0
   m_BuildTargetBatching:
   - m_BuildTarget: Android
@@ -335,7 +316,7 @@ PlayerSettings:
   actionOnDotNetUnhandledException: 1
   enableInternalProfiler: 0
   logObjCUncaughtExceptions: 1
-  enableCrashReportAPI: 0
+  enableCrashReportAPI: 1
   cameraUsageDescription: 
   locationUsageDescription: 
   microphoneUsageDescription: 
