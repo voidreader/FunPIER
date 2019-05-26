@@ -61,6 +61,11 @@ public class GuiButton : GuiComponent {
 
 	protected virtual void UpdateInput() {
 
+        if(!Application.isEditor) {
+            if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(0))
+                return;
+        }
+
 		if (State == ButtonState.Disabled) { return; }
 
 		if (Type == ButtonType.Push) {
@@ -115,9 +120,18 @@ public class GuiButton : GuiComponent {
 
 	public override bool HitTest(Vector3 pos) {
 
-        if (EventSystem.current.IsPointerOverGameObject()) {
-            return false;
+        if (Application.isEditor) {
+            if (EventSystem.current.IsPointerOverGameObject()) {
+                return false;
+            }
         }
+        else {
+            if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(0))
+                return false;
+        }
+
+
+
 
 
         if (HitRect.width != 0 || HitRect.height != 0) {

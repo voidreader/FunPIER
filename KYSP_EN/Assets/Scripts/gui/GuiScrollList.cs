@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class GuiScrollList : GuiComponent {
 
@@ -42,7 +43,18 @@ public class GuiScrollList : GuiComponent {
 	#region GuiComponent Methods
 
 	public override bool HitTest(Vector3 pos) {
-		if (HitRect.width != 0 || HitRect.height != 0) {
+
+        if (Application.isEditor) {
+            if (EventSystem.current.IsPointerOverGameObject()) {
+                return false;
+            }
+        }
+        else {
+            if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(0))
+                return false;
+        }
+
+        if (HitRect.width != 0 || HitRect.height != 0) {
 			Rect rect = HitRect;
 			rect.x += transform.position.x;
 			rect.y += transform.position.y;

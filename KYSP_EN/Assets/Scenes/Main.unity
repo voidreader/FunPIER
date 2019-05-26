@@ -848,7 +848,6 @@ GameObject:
   - component: {fileID: 636654575}
   - component: {fileID: 636654574}
   - component: {fileID: 636654577}
-  - component: {fileID: 636654578}
   m_Layer: 5
   m_Name: CrossPlayer
   m_TagString: Untagged
@@ -942,18 +941,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _data: 
---- !u!65 &636654578
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 636654572}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 299, y: 351, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &682048331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1412,7 +1399,7 @@ MonoBehaviour:
   bannerUnitID: 
   interstitialID: 
   rewardUnitID: 
-  _isAdsOn: 0
+  _isAdsOn: 1
 --- !u!4 &1715098742
 Transform:
   m_ObjectHideFlags: 0

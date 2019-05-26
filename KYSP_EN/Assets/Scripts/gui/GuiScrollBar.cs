@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class GuiScrollBar : GuiComponent {
 
@@ -41,6 +42,9 @@ public class GuiScrollBar : GuiComponent {
 	#region Methods
 
 	private void UpdateInput() {
+
+        
+
 		if (State == ButtonState.Up) {
 			if (Input.GetMouseButtonDown(0)) {
 				if (HitTest(Camera.main.ScreenToWorldPoint(Input.mousePosition))) {
@@ -61,7 +65,19 @@ public class GuiScrollBar : GuiComponent {
 	}
 
 	public override bool HitTest(Vector3 pos) {
-		if (HitRect.width != 0 || HitRect.height != 0) {
+
+        if (Application.isEditor) {
+            if (EventSystem.current.IsPointerOverGameObject()) {
+                return false;
+            }
+        }
+        else {
+            if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(0))
+                return false;
+        }
+
+
+        if (HitRect.width != 0 || HitRect.height != 0) {
 			Rect rect = HitRect;
 			rect.x += transform.position.x;
 			rect.y += transform.position.y;
