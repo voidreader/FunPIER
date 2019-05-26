@@ -186,8 +186,9 @@ public class AdsControl : MonoBehaviour
             return;
 
         if(this.interstitial.IsLoaded()) {
-            this.interstitial.Show();
             IsCoolingPauseAds = true;
+            this.interstitial.Show();
+            
         }
     }
 

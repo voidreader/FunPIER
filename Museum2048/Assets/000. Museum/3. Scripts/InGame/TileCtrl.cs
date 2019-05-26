@@ -114,6 +114,9 @@ public class TileCtrl : MonoBehaviour {
 
         InputManager.main.LockUIClose(); // 입력 막기.
 
+        InGame.main.SetScores();
+
+
     }
 
     /// <summary>

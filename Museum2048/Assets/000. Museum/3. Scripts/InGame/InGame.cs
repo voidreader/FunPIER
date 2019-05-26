@@ -159,6 +159,7 @@ public class InGame : MonoBehaviour {
         StartSession(currentTheme);
     }
 
+    #region 카메라 제어 
     void InitCamera() {
 
         /*
@@ -169,6 +170,16 @@ public class InGame : MonoBehaviour {
         _mainCamera.transform.position = OriginCameraPos;
         _mainCamera.orthographicSize = 13;
     }
+
+    public void ShakeCamera() {
+        // _mainCamera.transform.do
+        _mainCamera.transform.DOShakePosition(0.1f, 0.2f, 8, 30).OnComplete(OnCompleteShakeCamera);
+    }
+    void OnCompleteShakeCamera() {
+        _mainCamera.transform.position = OriginCameraPos;
+    }
+
+    #endregion
 
     public void SetResolutionPos(bool isTall) {
         if(isTall) {
@@ -257,7 +268,7 @@ public class InGame : MonoBehaviour {
     /// <summary>
     /// 스코어 계산
     /// </summary>
-    void SetScores() {
+    public void SetScores() {
         tempCollectScore = 0;
 
         // 전체 칩을 통해 수집
@@ -901,6 +912,9 @@ public class InGame : MonoBehaviour {
             else if (PierSystem.main.MoveCount == 1000)
                 PlatformManager.main.UnlockAchievements(MIMAchievement.Move1000);
         }
+        else {
+            ShakeCamera();
+        }
 
         yield return null;
 
@@ -1415,6 +1429,12 @@ public class InGame : MonoBehaviour {
                 sortIndex--;
             }
         }
+
+        InputManager.inputLock = false;
+        LobbyManager.isAnimation = false;
+
+        SaveInGameSnapShot();
+
     }
 
 
@@ -1529,6 +1549,8 @@ public class InGame : MonoBehaviour {
         PierSystem.main.itemBack--;
         PierSystem.main.SaveProfile();
         ItemCounter.RefreshItems();
+
+        SetScores();
 
         CallDelayedRecoverState();
     }
