@@ -36,8 +36,11 @@ public class GoogleAdmobMgr : MonoBehaviour {
 
     void Awake() {
 
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        
         DontDestroyOnLoad(this.gameObject);
+
+        if(!_isAdsOn)
+            Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
     }
 
@@ -103,6 +106,8 @@ public class GoogleAdmobMgr : MonoBehaviour {
         if (!_isAdsOn)
             return;
 
+
+
         _cross.OpenCrossPlayer();
     }
 
@@ -140,7 +145,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
 
         // Create a 320x50 banner at the top of the screen.
         Debug.Log("Request Banner :: " + bannerUnitID);
-        bannerView = new BannerView(bannerUnitID, AdSize.SmartBanner, AdPosition.Top);
+        bannerView = new BannerView(bannerUnitID, AdSize.Banner, AdPosition.Top);
 
 
         // Called when an ad request has successfully loaded.

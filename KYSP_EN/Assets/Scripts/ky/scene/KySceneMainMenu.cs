@@ -58,7 +58,7 @@ public class KySceneMainMenu : KyScene {
 				//dataSet.Add(new KyButtonLabeled.Data((int)Result.Chapter, KyText.GetText(20023)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Secret, KyText.GetText(20025)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.Record, KyText.GetText(20026)));
-                // dataSet.Add(new KyButtonLabeled.Data((int)Result.Unlock, KyText.GetText(24102)));
+                dataSet.Add(new KyButtonLabeled.Data((int)Result.Unlock, KyText.GetText(24102)));
                 // dataSet.Add(new KyButtonLabeled.Data((int)Result.Redirect, KyText.GetText(20046)));
                 dataSet.Add(new KyButtonLabeled.Data((int)Result.Option, KyText.GetText(20027)));
 				dataSet.Add(new KyButtonLabeled.Data((int)Result.License, KyText.GetText(20029)));
@@ -209,7 +209,8 @@ public class KySceneMainMenu : KyScene {
 			scene.tweetMessage = KyText.GetText(23101) + Random.Range(0, System.Int32.MaxValue).ToString();
 		}
         else if (mSceneResult == Result.Unlock) {
-            Application.OpenURL("http://onelink.to/v35ghw"); // 프로버전 오픈 
+
+            Application.OpenURL("http://onelink.to/9xfpaw"); // 프로버전 오픈 
             ChangeScene("KySceneMainMenu");
         }
         else if (mSceneResult == Result.Redirect) {

@@ -157,14 +157,14 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: pier.own.android.kyspengpro
+    Android: pier.own.android.kyspeng
     Standalone: "unity.gmode.\uCFE0\uD0A4\uC694\uBBF8"
     Tizen: 
     iOS: pier.own.ios.kyspengpro
     tvOS: 
   buildNumber:
     iOS: 1
-  AndroidBundleVersionCode: 3
+  AndroidBundleVersionCode: 4
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
@@ -253,8 +253,8 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 2
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Git/FunPIER/KYSP_EN/pro.keystore
-  AndroidKeyaliasName: kypro_global
+  AndroidKeystoreName: C:/Git/FunPIER/KYSP_EN/user.keystore
+  AndroidKeyaliasName: kyeng
   AndroidBuildApkPerCpuArchitecture: 1
   AndroidTVCompatibility: 0
   AndroidIsGame: 0
@@ -271,7 +271,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 1aa7acbdbd7ac674c8f60f965221b799, type: 3}
+      m_Icon: {fileID: 2800000, guid: d74f20a3b3ab88743b5fca9c610ff1d6, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -613,7 +613,9 @@ PlayerSettings:
   webGLCompressionFormat: 1
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    1: AN_FIREBASE_ANALYTICS
+    7: AN_FIREBASE_ANALYTICS
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
