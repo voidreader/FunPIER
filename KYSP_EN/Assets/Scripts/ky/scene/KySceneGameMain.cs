@@ -216,7 +216,11 @@ public class KySceneGameMain : KyScene {
 
                 if (mStageIndex < 95) {
 
-                    GoogleAdmobMgr.Instance.OpenFrontAD();
+
+                    if (mStageIndex == 50)
+                        GoogleAdmobMgr.Instance.ShowWatchAd(delegate { });
+                    else 
+                        GoogleAdmobMgr.Instance.OpenFrontAD();
 
                 }
             }
