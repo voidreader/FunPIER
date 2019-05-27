@@ -10,7 +10,7 @@ public class SpriteWindow : Sprite {
 			gameObject.AddComponent<MeshRenderer>();
 		}
 		if (GetComponent<Renderer>().sharedMaterial == null) {
-			GetComponent<Renderer>().sharedMaterial = new Material(Shader.Find("Particles/Alpha Blended"));
+			GetComponent<Renderer>().sharedMaterial = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 		}
 		if (Texture != null) {
 			GetComponent<Renderer>().sharedMaterial.mainTexture = Texture;

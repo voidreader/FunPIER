@@ -12,7 +12,7 @@ public class KySprite : MonoBehaviour {
 		Assert.AssertNotNull(mesh);
 		meshFilter.sharedMesh = mesh;
 		gameObject.AddComponent<MeshRenderer>();
-		GetComponent<Renderer>().material = new Material(Shader.Find("Particles/Alpha Blended"));
+		GetComponent<Renderer>().material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 
 		if (ClipRect.width != 0 && ClipRect.height != 0) {
 			GetComponent<Renderer>().material.mainTextureOffset = new Vector2(

@@ -9,7 +9,7 @@ public class SpriteSimple : Sprite {
 			
 		}
 		if (GetComponent<Renderer>().sharedMaterial == null) {
-			GetComponent<Renderer>().sharedMaterial = new Material(Shader.Find("Particles/Alpha Blended"));
+			GetComponent<Renderer>().sharedMaterial = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 			DebugUtil.Log("create material : " + gameObject.name);
 		}
 		if (Texture != null) {

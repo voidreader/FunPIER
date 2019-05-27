@@ -5,7 +5,7 @@ public class SpriteTiled : Sprite {
 
 	protected void Awake() {
 		MeshRenderer renderer = gameObject.AddComponent<MeshRenderer>();
-		renderer.material = new Material(Shader.Find("Particles/Alpha Blended"));
+		renderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 		renderer.material.mainTexture = Texture;
 
 		MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();

@@ -58,10 +58,10 @@ public class KySpriteAnimation : MonoBehaviour {
 
 		if (GetComponent<Renderer>() == null) {
 			gameObject.AddComponent<MeshRenderer>();
-			GetComponent<Renderer>().material = new Material(Shader.Find("Particles/Alpha Blended"));
+			GetComponent<Renderer>().material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 		}
 		if (GetComponent<Renderer>().material == null) {
-			GetComponent<Renderer>().material = new Material(Shader.Find("Particles/Alpha Blended"));
+			GetComponent<Renderer>().material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 		}
 	}
 	

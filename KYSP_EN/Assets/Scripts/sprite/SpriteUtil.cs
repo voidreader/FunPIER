@@ -13,7 +13,7 @@ public class SpriteUtil {
 		}
 		if (obj.GetComponent<MeshRenderer>() == null && texture != null) {
 			MeshRenderer renderer = obj.AddComponent<MeshRenderer>();
-			Material material = new Material(Shader.Find("Particles/Alpha Blended"));
+			Material material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 			DebugUtil.Log("create material : " + obj.name);
 			renderer.sharedMaterial = material;
 			renderer.sharedMaterial.mainTexture = texture;

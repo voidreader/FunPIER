@@ -11,7 +11,7 @@ public class KySyogekiMosaic : MonoBehaviour {
 		mColors = new Color[mMesh.vertexCount];
 		MeshFilter meshFilter = gameObject.AddComponent<MeshFilter>();
 		gameObject.AddComponent<MeshRenderer>();
-		GetComponent<Renderer>().material = new Material(Shader.Find("Particles/Alpha Blended"));
+		GetComponent<Renderer>().material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 		meshFilter.sharedMesh = mMesh;
 		GenerateColors();
 	}

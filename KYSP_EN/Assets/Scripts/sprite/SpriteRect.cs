@@ -15,7 +15,7 @@ public class SpriteRect : Sprite {
 
 		UpdateMesh();
 
-		renderer.material = new Material(Shader.Find("Particles/Alpha Blended"));
+		renderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended"));
 		renderer.material.mainTexture = Texture;
 	}
 
