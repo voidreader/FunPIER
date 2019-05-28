@@ -24,13 +24,16 @@ public enum MIMAchievement {
     CompleteCar,
     CompleteWine,
     CompleteViking,
+    
 
     Move100,
     Move500,
     Move1000,
     Make10,
     Make11,
-    Make12
+    Make12,
+
+    CompleteIce
 
 }
 
@@ -41,11 +44,13 @@ public class PlatformManager : MonoBehaviour
     string leaderboardCarID = "CgkIgYf6gpcYEAIQCg";
     string leaderboardWineID = "CgkIgYf6gpcYEAIQCw";
     string leaderboardVikingID = "CgkIgYf6gpcYEAIQDA";
+    string leaderboardIceID = " CgkIgYf6gpcYEAIQDg";
 
     // 업적리스트 
     string ah_completeCarID = "CgkIgYf6gpcYEAIQAQ";
     string ah_completeWineID = "CgkIgYf6gpcYEAIQAg";
     string ah_completeVikingID = "CgkIgYf6gpcYEAIQAw";
+    string ah_completeIceID = " CgkIgYf6gpcYEAIQDQ";
 
     string ah_move100 = "CgkIgYf6gpcYEAIQBA";
     string ah_move500 = "CgkIgYf6gpcYEAIQBQ";
@@ -111,6 +116,10 @@ public class PlatformManager : MonoBehaviour
 
             case Theme.Viking:
                 SubmitGooglePlayLeaderboard(leaderboardVikingID, score);
+                break;
+
+            case Theme.Ice:
+                SubmitGooglePlayLeaderboard(leaderboardIceID, score);
                 break;
 
                 // 추가!!

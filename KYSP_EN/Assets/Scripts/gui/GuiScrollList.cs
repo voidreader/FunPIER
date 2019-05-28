@@ -199,7 +199,7 @@ public class GuiScrollList : GuiComponent {
 		}
 		for (int i = 0; i <= count; ++i) {
             //           196 - 79 * count;
-            float y = StandardHight - OffsetHight * i; // x가 79씩이면 된다.
+            float y = StandardHight - (OffsetHight * i) -5; // x가 79씩이면 된다.
 
             if (i < count) {
 				
@@ -300,9 +300,9 @@ public class GuiScrollList : GuiComponent {
 
 	public Rect HitRect;
     public float ListItemStride = -48; //-48;
-    public float SeparatorDisplacement = 36; // -26;
+    public float SeparatorDisplacement = 26; // 36→26 ;
     public float StandardHight = 196;
-	public float OffsetHight = 79; // OffsetWidth
+	public float OffsetHight = 69; // OffsetWidth 79 - 69
     public float MarginHead = 0.0f;
 	public float MarginTail = 0.0f; //1128
 	public float GridLength = 96;

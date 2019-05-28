@@ -71,10 +71,10 @@ namespace Google2u
 	public sealed class MData : IGoogle2uDB
 	{
 		public enum rowIds {
-			CAR_MUSEUM, WINE_MUSEUM, VIKING_MUSEUM
+			CAR_MUSEUM, WINE_MUSEUM, VIKING_MUSEUM, ICE_MUSEUM
 		};
 		public string [] rowNames = {
-			"CAR_MUSEUM", "WINE_MUSEUM", "VIKING_MUSEUM"
+			"CAR_MUSEUM", "WINE_MUSEUM", "VIKING_MUSEUM", "ICE_MUSEUM"
 		};
 		public System.Collections.Generic.List<MDataRow> Rows = new System.Collections.Generic.List<MDataRow>();
 
@@ -94,6 +94,7 @@ namespace Google2u
 			Rows.Add( new MDataRow("CAR_MUSEUM", "9"));
 			Rows.Add( new MDataRow("WINE_MUSEUM", "11"));
 			Rows.Add( new MDataRow("VIKING_MUSEUM", "12"));
+			Rows.Add( new MDataRow("ICE_MUSEUM", "14"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

@@ -60,14 +60,14 @@ public class KyApplication : KyScene {
 		if (pause) {
             return;
         }
-        else {
 
-            /*
-            if (!Application.isEditor)
-                GoogleAdmobMgr.Instance.ShowInterstitial();
-            */
-                //GoogleAdmobMgr.Instance.Interstitial.Show();
+        if (GoogleAdmobMgr.Instance.IsCoolingPauseAds) {
+            GoogleAdmobMgr.Instance.Cooling();
+            return;
         }
+
+
+
 
 		if (KyDebugPrefs.DontPauseWhenResume) { return; }
 		if (KySoftKeys.Instance == null) { return; }
@@ -77,6 +77,10 @@ public class KyApplication : KyScene {
 		if (button != null) {
 			button.ChangeState(GuiButton.ButtonState.Selected);
 		}
+
+        GoogleAdmobMgr.Instance.ShowInterstitial();
+
+        
 	}
 
 	public void OpenOfficialUrl() {
@@ -234,7 +238,7 @@ public static class KyDebugPrefs {
 	public const bool OpenFullMainMenu = true;		//	はじめからメインメニューがフルオープン。
 	public const bool OpenDevelopMenu = false;		//	開発用メニューをオープン。
 	public const bool OpenAllSecrets = false;		//	すべての隠しのリストを解除する。
-	public const bool DontPauseWhenResume = true;	//	비활성화할때 Pause 창 띄우지 않음.
+	public const bool DontPauseWhenResume = false;	//	비활성화할때 Pause 창 띄우지 않음.
 	public const bool TweetTestString = false;		//	Twitterのつぶやきでテスト用文字列を使用する。
 	public const bool TweetFromMainMenu = false;		//	メインメニューからつぶやくことができる。
 	public const bool HideGangBanner = false;		//	タイトル画面でGangバナーを非表示にします。
@@ -250,7 +254,7 @@ public static class KyDebugPrefs {
 	public const bool OpenFullMainMenu = false; // Pro
 	public const bool OpenDevelopMenu = false;
 	public const bool OpenAllSecrets = false;
-	public const bool DontPauseWhenResume = true;
+	public const bool DontPauseWhenResume = false;
 	public const bool TweetTestString = false;
 	public const bool TweetFromMainMenu = false;
 	public const bool HideGangBanner = false;

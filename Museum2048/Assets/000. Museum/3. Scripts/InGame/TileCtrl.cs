@@ -21,6 +21,7 @@ public class TileCtrl : MonoBehaviour {
     public GameObject _carTile;
     public GameObject _wineTile;
     public GameObject _vikingTile;
+    public GameObject _iceTile;
 
     #region Properties
     public Chip chip {
@@ -135,6 +136,8 @@ public class TileCtrl : MonoBehaviour {
         InGame.main.MergeCheck(id);
 
         InputManager.main.LockUIClose(); // 입력 막기.
+
+        InGame.main.SetScores();
     }
 
     public Vector3 GetChipPosition() {
@@ -152,8 +155,9 @@ public class TileCtrl : MonoBehaviour {
         _carTile.gameObject.SetActive(false);
         _wineTile.gameObject.SetActive(false);
         _vikingTile.gameObject.SetActive(false);
+        _iceTile.gameObject.SetActive(false);
 
-        if(LobbyManager.main.currentTheme == Theme.Car) {
+        if (LobbyManager.main.currentTheme == Theme.Car) {
             _carTile.gameObject.SetActive(true);
         }
         else if (LobbyManager.main.currentTheme == Theme.Wine) {
@@ -161,6 +165,9 @@ public class TileCtrl : MonoBehaviour {
         }
         else if(LobbyManager.main.currentTheme == Theme.Viking) {
             _vikingTile.gameObject.SetActive(true);
+        }
+        else if (LobbyManager.main.currentTheme == Theme.Ice) {
+            _iceTile.gameObject.SetActive(true);
         }
     }
 

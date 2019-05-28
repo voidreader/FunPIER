@@ -41,6 +41,9 @@ public class LobbyManager : MonoBehaviour {
     #region 파티클 
     public ParticleSystem _Firework1, _Firework2, _Firework3;
     public ParticleSystem _upgradeStar;
+    public ParticleSystem _snowing;
+    ParticleSystem _spawnedSnowing = null;
+
     #endregion
 
     public GameObject bgLobby, bgInGame;
@@ -282,6 +285,7 @@ public class LobbyManager : MonoBehaviour {
         listStructs[0].InitMuseumStep(PierSystem.main.carMuseumStep, PierSystem.main.MaxCarMuseumStep);
         listStructs[1].InitMuseumStep(PierSystem.main.wineMuseumStep, PierSystem.main.MaxWineMuseumStep);
         listStructs[2].InitMuseumStep(PierSystem.main.vikingMuseumStep, PierSystem.main.MaxVikingMuseumStep);
+        listStructs[3].InitMuseumStep(PierSystem.main.iceMuseumStep, PierSystem.main.MaxIceMuseumStep);
     }
 
     public void HideStructs() {
@@ -326,11 +330,34 @@ public class LobbyManager : MonoBehaviour {
             tutorialButton.transform.DOScale(0, 0.2f).SetEase(Ease.InBack).OnComplete(()=>OnScaleZero(tutorialButton));
         }
 
+
+        if (currentTheme == Theme.Ice) {
+            EnableSnow();
+        }
+        else {
+            DisableSnow();
+        }
+
     }
 
     void OnScaleZero(GameObject obj) {
         obj.SetActive(false);
     }
+
+    void EnableSnow() {
+        _spawnedSnowing = PoolManager.Pools[ConstBox.poolIngame].Spawn(_snowing, new Vector3(0, 9, 0), Quaternion.identity);
+    }
+
+    void DisableSnow() {
+        if (_spawnedSnowing == null)
+            return;
+
+        if (PoolManager.Pools[ConstBox.poolIngame].IsSpawned(_spawnedSnowing.transform)) {
+            PoolManager.Pools[ConstBox.poolIngame].Despawn(_spawnedSnowing.transform);
+            _spawnedSnowing = null;
+        }
+    }
+    
 
 
     /// <summary>
@@ -359,6 +386,8 @@ public class LobbyManager : MonoBehaviour {
         CheckLeftRightButton();
 
         // themeIndex - 1이 -20으로 이동. 
+
+
 
 
     }
@@ -486,19 +515,11 @@ public class LobbyManager : MonoBehaviour {
             yield return StartCoroutine(SplashingClear());
 
             // previousStep은 오직 이부분에서만 수정해야한다.
-            switch (currentTheme) {
-                case Theme.Car:
-                    PierSystem.main.carMuseumPreviousStep = PierSystem.main.GetCurrentProgress(currentTheme);
-                    break;
+            PierSystem.main.SetPreviousProgress(currentTheme);
 
-                case Theme.Wine:
-                    PierSystem.main.wineMuseumPreviousStep = PierSystem.main.GetCurrentProgress(currentTheme);
-                    break;
 
-                case Theme.Viking:
-                    PierSystem.main.vikingMuseumPreviousStep = PierSystem.main.GetCurrentProgress(currentTheme);
-                    break;
-            }
+
+
             PierSystem.main.SaveProfile(); // 이전단계 정보 저장
 
         }
@@ -561,7 +582,8 @@ public class LobbyManager : MonoBehaviour {
                 return listStructs[1];
             case Theme.Viking:
                 return listStructs[2];
-
+            case Theme.Ice:
+                return listStructs[3];
         }
 
         return null;

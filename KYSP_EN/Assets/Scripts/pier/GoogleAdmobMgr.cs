@@ -268,6 +268,8 @@ public class GoogleAdmobMgr : MonoBehaviour {
     /// </summary>
     public void ShowInterstitial() {
 
+        Debug.Log("Called ShowInterstitial");
+
         if (!_isAdsOn)
             return;
 
@@ -277,6 +279,9 @@ public class GoogleAdmobMgr : MonoBehaviour {
         if (this.interstitial.IsLoaded()) {
             IsCoolingPauseAds = true;
             this.interstitial.Show();
+        }
+        else {
+            RequestInterstitial();
         }
     }
 
@@ -425,6 +430,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
     /// <param name="pause"></param>
     private void OnApplicationPause(bool pause) {
 
+        /*
         if (pause) // 활성화될때에만 로직 실행
             return;
 
@@ -436,7 +442,12 @@ public class GoogleAdmobMgr : MonoBehaviour {
 
         // 전면 배너 오픈 
         ShowInterstitial();
+        */
 
+    }
+
+    public void Cooling() {
+        StartCoroutine(CoolingPauseADs());
     }
 
     IEnumerator CoolingPauseADs() {

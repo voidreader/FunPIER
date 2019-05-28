@@ -51,7 +51,11 @@ public class DisplayItem : MonoBehaviour {
             case Theme.Viking:
                 _sprite.atlas = PierSystem.main._themeAtlas[2];
                 break;
-                
+
+            case Theme.Ice:
+                _sprite.atlas = PierSystem.main._themeAtlas[3];
+                break;
+
         }
 
         if (isOpen)

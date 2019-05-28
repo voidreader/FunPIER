@@ -160,12 +160,9 @@ public class KySceneTitle : KyScene {
 			mState.Sequence++;
 		} else if (mState.Sequence == 3) {
 			if (!ScreenFader.Main.FadeRunning) {
-				if (Application.platform == RuntimePlatform.WindowsEditor) {
-					Application.Quit();
-				} else {
-					System.Diagnostics.Process.GetCurrentProcess().Kill();
-				}
-			}
+                Debug.Log("Quit!");
+                Application.Quit();
+            }
 		}
 		return 0;
 	}

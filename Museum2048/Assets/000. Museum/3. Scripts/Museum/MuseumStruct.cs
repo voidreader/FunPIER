@@ -96,6 +96,55 @@ public class MuseumStruct : MonoBehaviour {
         _baseTransform.DOKill();
 
         switch(theme) {
+
+            case Theme.Ice:
+                #region 윈터 초기화 
+
+                _baseTransform.localEulerAngles = new Vector3(-90, 30, 0);
+
+                listStep1[0].transform.DOKill();
+                listStep2[0].transform.DOKill();
+                listStep3[0].transform.DOKill();
+                listStep4[0].transform.DOKill();
+                listStep5[0].transform.DOKill();
+                listStep6[0].transform.DOKill();
+                listStep7[0].transform.DOKill();
+                listStep8[0].transform.DOKill();
+                listStep9[0].transform.DOKill();
+                listStep10[0].transform.DOKill();
+                listStep11[0].transform.DOKill();
+                listStep12[0].transform.DOKill();
+                listStep13[0].transform.DOKill();
+                listStep14[0].transform.DOKill();
+
+                listStep1[0].transform.localEulerAngles = Vector3.zero;
+                listStep2[0].transform.localEulerAngles = Vector3.zero;
+                listStep3[0].transform.localEulerAngles = Vector3.zero;
+                listStep4[0].transform.localEulerAngles = Vector3.zero;
+                listStep5[0].transform.localEulerAngles = Vector3.zero;
+                listStep6[0].transform.localEulerAngles = Vector3.zero;
+                listStep7[0].transform.localEulerAngles = Vector3.zero;
+                listStep8[0].transform.localEulerAngles = Vector3.zero;
+                listStep9[0].transform.localEulerAngles = Vector3.zero;
+                listStep10[0].transform.localEulerAngles = Vector3.zero;
+                listStep11[0].transform.localEulerAngles = Vector3.zero;
+                listStep12[0].transform.localEulerAngles = Vector3.zero;
+                listStep13[0].transform.localEulerAngles = Vector3.zero;
+                listStep14[0].transform.localEulerAngles = Vector3.zero;
+
+                listStep5[1].transform.DOKill();
+                listStep5[1].transform.localPosition = new Vector3(-0.05253333f, 0.00508543f, 0.1251894f);
+                listStep5[2].transform.DOKill();
+                listStep5[2].transform.localPosition = new Vector3(-0.1015225f, -0.002055187f, 0.1263285f);
+                listStep8[1].transform.DOKill();
+                listStep8[1].transform.localPosition = new Vector3(0.002802391f, 0.04457294f, 0.1305452f);
+                listStep8[2].transform.DOKill();
+                listStep8[2].transform.localPosition = new Vector3(-0.003382988f, 0.09884683f, 0.1269524f);
+
+                #endregion
+
+                break;
+
             case Theme.Car:
                 // _baseTransform.localEulerAngles = new Vector3(0, 0, 0);
                 _baseTransform.localEulerAngles = new Vector3(0, 50, 0);
@@ -210,7 +259,8 @@ public class MuseumStruct : MonoBehaviour {
             PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteWine);
         else if (s == maxStep && theme == Theme.Viking)
             PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteViking);
-
+        else if (s == maxStep && theme == Theme.Ice)
+            PlatformManager.main.UnlockAchievements(MIMAchievement.CompleteIce);
 
 
         for (int i = currentStep; i < s; i++) {
@@ -319,8 +369,11 @@ public class MuseumStruct : MonoBehaviour {
                 _baseTransform.localEulerAngles = new Vector3(-90, 20, 0);
                 _baseTransform.DOLocalRotate(new Vector3(_baseTransform.localEulerAngles.x, -70, 0), Random.Range(10f, 16f), RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
             }
+            else if (theme == Theme.Ice) {
+                _baseTransform.localEulerAngles = new Vector3(-90, 30, 0);
+                _baseTransform.DOLocalRotate(new Vector3(_baseTransform.localEulerAngles.x, -30, 0), Random.Range(10f, 16f), RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+            }
 
-            
 
         }
 
@@ -473,6 +526,113 @@ public class MuseumStruct : MonoBehaviour {
                     listStep10[0].transform.DOLocalRotate(new Vector3(10, 0, 0), 2, RotateMode.Fast).SetLoops(-1, LoopType.Yoyo);
                 }
 
+
+                break;
+
+            case Theme.Ice:
+                #region 겨울 박물관 스텝 무빙 
+                if(step == 1) {
+                    listStep1[0].transform.DOKill();
+                    listStep1[0].transform.localEulerAngles = Vector3.zero;
+                    listStep1[0].transform.DOLocalRotate(new Vector3(0, 0, -720), Random.Range(4f,18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 2) {
+                    listStep2[0].transform.DOKill();
+                    listStep2[0].transform.localEulerAngles = Vector3.zero;
+                    listStep2[0].transform.DOLocalRotate(new Vector3(0, 0, -720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 3) {
+                    listStep3[0].transform.DOKill();
+                    listStep3[0].transform.localEulerAngles = Vector3.zero;
+                    listStep3[0].transform.DOLocalRotate(new Vector3(0, 0, -720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 4) {
+                    listStep4[0].transform.DOKill();
+                    listStep4[0].transform.localEulerAngles = Vector3.zero;
+                    listStep4[0].transform.DOLocalRotate(new Vector3(0, 0, -720), Random.Range(4f, 15f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 5) {
+                    listStep5[0].transform.DOKill();
+                    listStep5[0].transform.localEulerAngles = Vector3.zero;
+                    listStep5[0].transform.DOLocalRotate(new Vector3(0, 0, -720), Random.Range(4f, 15f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+
+                    listStep5[1].transform.DOKill();
+                    listStep5[1].transform.localPosition = new Vector3(-0.05253333f, 0.00508543f, 0.1251894f);
+                    listStep5[1].transform.DOLocalMoveZ(0.1787f, 4).SetLoops(-1, LoopType.Yoyo);
+
+                    listStep5[2].transform.DOKill();
+                    listStep5[2].transform.localPosition = new Vector3(-0.1015225f, -0.002055187f, 0.1263285f);
+                    listStep5[2].transform.DOLocalMoveZ(0.1542f, 4.8f).SetLoops(-1, LoopType.Yoyo);
+
+
+                }
+
+                if (step == 6) {
+                    listStep6[0].transform.DOKill();
+                    listStep6[0].transform.localEulerAngles = Vector3.zero;
+                    listStep6[0].transform.DOLocalRotate(new Vector3(0, 0, -720), Random.Range(4f, 17f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 7) {
+                    listStep7[0].transform.DOKill();
+                    listStep7[0].transform.localEulerAngles = Vector3.zero;
+                    listStep7[0].transform.DOLocalRotate(new Vector3(0, 0, 720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 8) {
+                    listStep8[0].transform.DOKill();
+                    listStep8[0].transform.localEulerAngles = Vector3.zero;
+                    listStep8[0].transform.DOLocalRotate(new Vector3(0, 0, 720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+
+                    listStep8[1].transform.DOKill();
+                    listStep8[1].transform.localPosition = new Vector3(0.002802391f, 0.04457294f, 0.1305452f);
+                    listStep8[1].transform.DOLocalMoveZ(0.1775f, 3.4f).SetLoops(-1, LoopType.Yoyo);
+                    listStep8[2].transform.DOKill();
+                    listStep8[2].transform.localPosition = new Vector3(-0.003382988f, 0.09884683f, 0.1269524f);
+                    listStep8[2].transform.DOLocalMoveZ(0.1338f, 3).SetLoops(-1, LoopType.Yoyo);
+
+                }
+
+                if (step == 9) {
+                    listStep9[0].transform.DOKill();
+                    listStep9[0].transform.localEulerAngles = Vector3.zero;
+                    listStep9[0].transform.DOLocalRotate(new Vector3(0, 0, 720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 10) {
+                    listStep10[0].transform.DOKill();
+                    listStep10[0].transform.localEulerAngles = Vector3.zero;
+                    listStep10[0].transform.DOLocalRotate(new Vector3(0, 0, 720), Random.Range(4f, 17f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 11) {
+                    listStep11[0].transform.DOKill();
+                    listStep11[0].transform.localEulerAngles = Vector3.zero;
+                    listStep11[0].transform.DOLocalRotate(new Vector3(0, 0, 720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+                if (step == 12) {
+                    listStep12[0].transform.DOKill();
+                    listStep12[0].transform.localEulerAngles = Vector3.zero;
+                    listStep12[0].transform.DOLocalRotate(new Vector3(0, 0, 720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+                if (step == 13) {
+                    listStep13[0].transform.DOKill();
+                    listStep13[0].transform.localEulerAngles = Vector3.zero;
+                    listStep13[0].transform.DOLocalRotate(new Vector3(0, 0, 720), Random.Range(4f, 17f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+                if (step == 14) {
+                    listStep14[0].transform.DOKill();
+                    listStep14[0].transform.localEulerAngles = Vector3.zero;
+                    listStep14[0].transform.DOLocalRotate(new Vector3(0, 0, -720), Random.Range(4f, 18f), RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+                }
+
+
+                #endregion
 
                 break;
         }

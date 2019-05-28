@@ -26,17 +26,20 @@ public class PierSystem : MonoBehaviour {
     public ObscuredInt carHighScore = 0;
     public ObscuredInt wineHighScore = 0;
     public ObscuredInt vikingHighScore = 0;
+    public ObscuredInt iceHighScore = 0;
     public ObscuredInt currentScore = 0;
 
     // 각 박물관 진척도 
     public ObscuredInt carMuseumStep = 0;
     public ObscuredInt wineMuseumStep = 0;
     public ObscuredInt vikingMuseumStep = 0;
+    public ObscuredInt iceMuseumStep = 0;
 
     // 연출을 위한 백업용 step 값. 2048 플레이 전의 스텝 값
     public int carMuseumPreviousStep = 0;
     public int wineMuseumPreviousStep = 0;
     public int vikingMuseumPreviousStep = 0;
+    public int iceMuseumPreviousStep = 0;
 
 
     public ObscuredInt NoAds = 0; // 노 광고..  0(광고있음), 1(광고없음)
@@ -44,14 +47,13 @@ public class PierSystem : MonoBehaviour {
     public int MaxCarMuseumStep = 0;
     public int MaxWineMuseumStep = 0;
     public int MaxVikingMuseumStep = 0;
+    public int MaxIceMuseumStep = 0;
 
     public ObscuredLong MoveCount = 0; // 오브젝트 이동 카운트 
 
     public int themeIndex = 0;
 
 
-    public Material[] wineTileMaterials;
-    public Material[] carTileMaterials;
 
     public List<NGUIAtlas> _themeAtlas; // 진행상황용 Atlas 
 
@@ -86,10 +88,11 @@ public class PierSystem : MonoBehaviour {
         MaxCarMuseumStep = MData.Instance.GetRow(MData.rowIds.CAR_MUSEUM)._Step;
         MaxWineMuseumStep = MData.Instance.GetRow(MData.rowIds.WINE_MUSEUM)._Step;
         MaxVikingMuseumStep = MData.Instance.GetRow(MData.rowIds.VIKING_MUSEUM)._Step;
+        MaxIceMuseumStep = MData.Instance.GetRow(MData.rowIds.ICE_MUSEUM)._Step;
 
 
         // 언어 처리 ! 중요
-        if(ES2.Exists(ConstBox.KeySavedLang)) {
+        if (ES2.Exists(ConstBox.KeySavedLang)) {
             currentLang = LoadLanguage();
         } 
         else {
@@ -129,6 +132,11 @@ public class PierSystem : MonoBehaviour {
             case Theme.Viking:
                 vikingMuseumStep = step;
                 break;
+
+            case Theme.Ice:
+                iceMuseumStep = step;
+                break;
+
         }
     }
 
@@ -151,6 +159,7 @@ public class PierSystem : MonoBehaviour {
             carMuseumStep = 0;
             wineMuseumStep = 0;
             vikingMuseumStep = 0;
+            iceMuseumStep = 0;
 
             NoAds = 0;
             themeIndex = 0;
@@ -158,10 +167,12 @@ public class PierSystem : MonoBehaviour {
             carMuseumPreviousStep = 0;
             wineMuseumPreviousStep = 0;
             vikingMuseumPreviousStep = 0;
+            iceMuseumPreviousStep = 0;
 
             carHighScore = 0;
             wineHighScore = 0;
             vikingHighScore = 0;
+            iceHighScore = 0;
 
             MoveCount = 0;
 
@@ -175,14 +186,17 @@ public class PierSystem : MonoBehaviour {
             carMuseumStep = node["carstep"].AsInt;
             wineMuseumStep = node["winestep"].AsInt;
             vikingMuseumStep = node["vikingstep"].AsInt;
+            iceMuseumStep = node["icestep"].AsInt;
 
             carMuseumPreviousStep = node["carpreviousstep"].AsInt;
             wineMuseumPreviousStep = node["winepreviousstep"].AsInt;
             vikingMuseumPreviousStep = node["vikingpreviousstep"].AsInt;
+            iceMuseumPreviousStep = node["icepreviousstep"].AsInt;
 
             carHighScore = node[Theme.Car.ToString() + "highscore"].AsInt;
             wineHighScore = node[Theme.Wine.ToString() + "highscore"].AsInt;
             vikingHighScore = node[Theme.Viking.ToString() + "highscore"].AsInt;
+            iceHighScore = node[Theme.Ice.ToString() + "highscore"].AsInt;
 
             NoAds = node["noads"].AsInt;
             themeIndex = node["themeindex"].AsInt;
@@ -209,6 +223,7 @@ public class PierSystem : MonoBehaviour {
         node["carstep"].AsInt = carMuseumStep;
         node["winestep"].AsInt = wineMuseumStep;
         node["vikingstep"].AsInt = vikingMuseumStep;
+        node["icestep"].AsInt = iceMuseumStep;
 
         node["noads"].AsInt = NoAds;
         node["themeindex"].AsInt = themeIndex;
@@ -216,10 +231,12 @@ public class PierSystem : MonoBehaviour {
         node["carpreviousstep"].AsInt = carMuseumPreviousStep;
         node["winepreviousstep"].AsInt = wineMuseumPreviousStep;
         node["vikingpreviousstep"].AsInt = vikingMuseumPreviousStep;
+        node["icepreviousstep"].AsInt = iceMuseumPreviousStep;
 
         node[Theme.Car.ToString() + "highscore"].AsInt = carHighScore;
         node[Theme.Wine.ToString() + "highscore"].AsInt = wineHighScore;
         node[Theme.Viking.ToString() + "highscore"].AsInt = vikingHighScore;
+        node[Theme.Ice.ToString() + "highscore"].AsInt = iceHighScore;
 
         node["movecount"].AsLong = MoveCount;
 
@@ -259,6 +276,8 @@ public class PierSystem : MonoBehaviour {
                 return GetLocalizedText(MLocal.rowIds.TEXT2);
             case Theme.Viking:
                 return GetLocalizedText(MLocal.rowIds.TEXT3);
+            case Theme.Ice:
+                return GetLocalizedText(MLocal.rowIds.TEXT63);
         }
 
         return string.Empty;
@@ -298,6 +317,9 @@ public class PierSystem : MonoBehaviour {
                 return MaxWineMuseumStep;
             case Theme.Viking:
                 return MaxVikingMuseumStep;
+            case Theme.Ice:
+                return MaxIceMuseumStep;
+
         }
 
         return 0;
@@ -316,6 +338,8 @@ public class PierSystem : MonoBehaviour {
                 return wineHighScore;
             case Theme.Viking:
                 return vikingHighScore;
+            case Theme.Ice:
+                return iceHighScore;
         }
 
         return 0;
@@ -333,6 +357,10 @@ public class PierSystem : MonoBehaviour {
 
             case Theme.Viking:
                 vikingHighScore = score;
+                break;
+
+            case Theme.Ice:
+                iceHighScore = score;
                 break;
         }
 
@@ -353,9 +381,29 @@ public class PierSystem : MonoBehaviour {
                 return wineMuseumStep;
             case Theme.Viking:
                 return vikingMuseumStep;
+            case Theme.Ice:
+                return iceMuseumStep;
         }
 
         return 0;
+    }
+
+    public void SetPreviousProgress(Theme t) {
+        switch(t) {
+            case Theme.Car:
+                carMuseumPreviousStep = GetCurrentProgress(t);
+                break;
+            case Theme.Wine:
+                wineMuseumPreviousStep = GetCurrentProgress(t);
+                break;
+            case Theme.Viking:
+                vikingMuseumPreviousStep = GetCurrentProgress(t);
+                break;
+
+            case Theme.Ice:
+                iceMuseumPreviousStep = GetCurrentProgress(t);
+                break;
+        }
     }
 
     /// <summary>
@@ -371,6 +419,8 @@ public class PierSystem : MonoBehaviour {
                 return wineMuseumPreviousStep;
             case Theme.Viking:
                 return vikingMuseumPreviousStep;
+            case Theme.Ice:
+                return iceMuseumPreviousStep;
         }
 
         return 0;

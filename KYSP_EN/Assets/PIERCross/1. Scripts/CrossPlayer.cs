@@ -8,6 +8,8 @@ using SimpleJSON;
 public class CrossPlayer : MonoBehaviour {
 
     public static CrossPlayer main = null;
+    public int OpenCounter = 3;
+    public int CurrentOpenCounter = 0;
 
     public Vector3 targetPos = Vector3.zero;
     [SerializeField] AnimatedGifPlayer _animatedGifPlayer;
@@ -40,6 +42,16 @@ public class CrossPlayer : MonoBehaviour {
     }
 
     public void OpenCrossPlayer() {
+        if(CurrentOpenCounter != 0) {
+            CurrentOpenCounter++;
+
+            if (CurrentOpenCounter >= OpenCounter)
+                CurrentOpenCounter = 0;
+
+            return;
+        }
+
+
         this.gameObject.SetActive(true);
 
     }
@@ -92,11 +104,14 @@ public class CrossPlayer : MonoBehaviour {
         // this.gameObject.SetActive(true);
         _animatedGifPlayer.Play();
         this.transform.localPosition = targetPos;
+        CurrentOpenCounter++;
 
+        _animatedGifPlayer.OnReady -= OnGifLoaded;
     }
 
     private void OnGifLoadError() {
         Debug.Log("Error Loading GIF");
+        _animatedGifPlayer.OnLoadError -= OnGifLoadError;
     }
 
     public void OnClickClose() {

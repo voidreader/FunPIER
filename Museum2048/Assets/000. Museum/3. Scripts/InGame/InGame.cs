@@ -18,7 +18,8 @@ public enum Theme {
     Prototype,
     Car,
     Wine,
-    Viking
+    Viking,
+    Ice
 }
 
 public class InGame : MonoBehaviour {
@@ -308,6 +309,11 @@ public class InGame : MonoBehaviour {
                 lblHighScore.text = "★ " + string.Format("{0:n0}", PierSystem.main.vikingHighScore);
                 currentHighScore = PierSystem.main.vikingHighScore;
                 break;
+
+            case Theme.Ice:
+                lblHighScore.text = "★ " + string.Format("{0:n0}", PierSystem.main.iceHighScore);
+                currentHighScore = PierSystem.main.iceHighScore;
+                break;
         }
     }
 
@@ -579,29 +585,40 @@ public class InGame : MonoBehaviour {
                 break;
 
 
-            case Theme.Prototype:
-                switch(id) {
+            case Theme.Ice:
+                switch (id) {
                     case 2:
-                        return "Temp_2";
+                        return "Ice_2";
                     case 4:
-                        return "Temp_4";
+                        return "Ice_4";
                     case 8:
-                        return "Temp_8";
+                        return "Ice_8";
                     case 16:
-                        return "Temp_16";
+                        return "Ice_16";
                     case 32:
-                        return "Temp_32";
+                        return "Ice_32";
                     case 64:
-                        return "Temp_64";
+                        return "Ice_64";
                     case 128:
-                        return "Temp_128";
+                        return "Ice_128";
                     case 256:
-                        return "Temp_256";
+                        return "Ice_256";
                     case 512:
-                        return "Temp_512";
+                        return "Ice_512";
+                    case 1024:
+                        return "Ice_1024";
+                    case 2048:
+                        return "Ice_2048";
+                    case 4096:
+                        return "Ice_4096";
+                    case 8192:
+                        return "Ice_8192";
+                    case 16384:
+                        return "Ice_16384";
                 }
 
                 break;
+
         }
 
         return string.Empty;
@@ -1568,6 +1585,15 @@ public class InGame : MonoBehaviour {
             return;
         }
         */
+
+        if(PierSystem.main.itemUpgrade == 0 && PierSystem.main.AdminPlay) {
+            PierSystem.main.itemUpgrade += 5; 
+            PierSystem.main.SaveProfile();
+            ItemCounter.RefreshItems();
+            return;
+        }
+            
+
 
         if (PierSystem.main.itemUpgrade <= 0) {
             PageManager.main.OpenShop();

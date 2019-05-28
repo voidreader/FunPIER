@@ -127,6 +127,10 @@ public class Chip : MonoBehaviour {
                 return id * 4;
             case 4096:
                 return id * 6;
+            case 8192:
+                return id * 8;
+            case 16384:
+                return id * 10;
         }
 
         return 0;
