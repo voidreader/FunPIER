@@ -141,6 +141,10 @@ public class PlatformManager : MonoBehaviour
                 SubmitGameCenterLeaderboard(leaderboardVikingID, score);
                 break;
 
+            case Theme.Ice:
+                SubmitGameCenterLeaderboard(leaderboardIceID, score);
+                break;
+
                 // 추가!!
 
         }
@@ -193,6 +197,10 @@ public class PlatformManager : MonoBehaviour
                 break;
             case MIMAchievement.CompleteViking:
                 targetID = ah_completeVikingID;
+                break;
+
+            case MIMAchievement.CompleteIce:
+                targetID = ah_completeIceID;
                 break;
 
             case MIMAchievement.Move100:
@@ -313,7 +321,15 @@ public class PlatformManager : MonoBehaviour
 
                         });
                     }
+                    else if (leaderboards.Identifier == leaderboardIceID) {
+                        leaderboards.LoadScores((callback) => {
 
+                            if (callback.IsSucceeded) {
+                                PierSystem.main.iceHighScore = (int)leaderboards.LocalPlayerScore.Value;
+                            }
+
+                        });
+                    }
 
 
                 } // end of foreach 
@@ -372,7 +388,7 @@ public class PlatformManager : MonoBehaviour
     }
 
 #endif
-#endregion
+    #endregion
 
     #region Google (Android)
 
@@ -469,6 +485,7 @@ public class PlatformManager : MonoBehaviour
         GetGooglePlayLeaderScore(leaderboardCarID);
         GetGooglePlayLeaderScore(leaderboardWineID);
         GetGooglePlayLeaderScore(leaderboardVikingID);
+        GetGooglePlayLeaderScore(leaderboardIceID);
 
         /*
         AN_PlayersClient client = AN_Games.GetPlayersClient();
@@ -517,6 +534,11 @@ public class PlatformManager : MonoBehaviour
                     PierSystem.main.vikingHighScore = (int)result.Data.RawScore;
                     Debug.Log("Get Viking leaderboard score :: " + PierSystem.main.vikingHighScore);
                 }
+                else if (id == leaderboardIceID) {
+                                PierSystem.main.iceHighScore = (int)result.Data.RawScore;
+                                Debug.Log("Get Ice leaderboard score :: " + PierSystem.main.iceHighScore);
+                }
+
 
                 PierSystem.main.SaveProfile();
 

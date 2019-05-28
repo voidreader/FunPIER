@@ -13,15 +13,78 @@ MonoBehaviour:
   m_Name: ISD_Settings
   m_EditorClassIdentifier: 
   LastVersionCode: 
-  Frameworks: []
+  Frameworks:
+  - IsOptional: 0
+    IsEmbeded: 0
+    Type: 35
   EmbededFrameworks: []
   Libraries: []
   Flags: []
-  PlistVariables: []
+  PlistVariables:
+  - IsOpen: 1
+    IsListOpen: 1
+    Name: NSCameraUsageDescription
+    Type: 0
+    StringValue: Please change 'Camera Usage Description' with IOS Native UI Kit Editor
+      Settings
+    IntegerValue: 0
+    FloatValue: 0
+    BooleanValue: 1
+    ChildrensIds: []
+  - IsOpen: 1
+    IsListOpen: 1
+    Name: NSPhotoLibraryUsageDescription
+    Type: 0
+    StringValue: Please change 'Photo Library Usage Description' with IOS Native UI
+      Kit Editor Settings
+    IntegerValue: 0
+    FloatValue: 0
+    BooleanValue: 1
+    ChildrensIds: []
+  - IsOpen: 1
+    IsListOpen: 1
+    Name: NSPhotoLibraryAddUsageDescription
+    Type: 0
+    StringValue: Please change 'Photo Library Add Usage Description' with IOS Native
+      UI Kit Editor Settings
+    IntegerValue: 0
+    FloatValue: 0
+    BooleanValue: 1
+    ChildrensIds: []
+  - IsOpen: 1
+    IsListOpen: 1
+    Name: NSMicrophoneUsageDescription
+    Type: 0
+    StringValue: Please change 'Microphone Usage Description' with IOS Native UI Kit
+      Editor Settings
+    IntegerValue: 0
+    FloatValue: 0
+    BooleanValue: 1
+    ChildrensIds: []
   VariableDictionary: []
   Languages: []
   ShellScripts: []
-  m_buildProperties: []
+  m_buildProperties:
+  - m_name: ENABLE_BITCODE
+    m_value: NO
+    m_options:
+    - YES
+    - NO
+  - m_name: ENABLE_TESTABILITY
+    m_value: NO
+    m_options:
+    - YES
+    - NO
+  - m_name: GENERATE_PROFILING_CODE
+    m_value: NO
+    m_options:
+    - YES
+    - NO
+  - m_name: GCC_ENABLE_OBJC_EXCEPTIONS
+    m_value: YES
+    m_options:
+    - YES
+    - NO
   Capability:
     iCloud:
       Enabled: 0
