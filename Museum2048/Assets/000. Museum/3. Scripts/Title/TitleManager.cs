@@ -11,6 +11,8 @@ public class TitleManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
+        SetAppsFlyer();
+
 
         float screenw = (float)Screen.width;
         float screenh = (float)Screen.height;
@@ -36,5 +38,21 @@ public class TitleManager : MonoBehaviour {
 
         yield return new WaitForSeconds(3);
         SceneManager.LoadScene("Main");
+    }
+
+    void SetAppsFlyer() {
+
+        #if UNITY_IOS
+
+        /* Mandatory - set your AppsFlyer’s Developer key. */
+        AppsFlyer.setAppsFlyerKey("zcKrZYJWnrWWctCxcLNnyT");
+        /* For detailed logging */
+        /* AppsFlyer.setIsDebug (true); */
+        AppsFlyer.setAppID("1460681288");
+        AppsFlyer.trackAppLaunch();
+
+        #endif
+
+
     }
 }
