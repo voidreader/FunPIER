@@ -19,7 +19,8 @@ public enum Message {
     AlreadyHaveNoAds,
     NotInitBilling,
     RestoreCompleted, // 복원 완료
-    ExitGame
+    ExitGame,
+    NeedVikingComplete
 
 
 }
@@ -139,6 +140,11 @@ public class PageMessage : UILayer {
             case Message.ExitGame:
                 lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT61);
                 SetDoubleButton();
+                break;
+
+            case Message.NeedVikingComplete:
+                lblMessage.text = PierSystem.GetLocalizedText(Google2u.MLocal.rowIds.TEXT62);
+                SetSingleButton();
                 break;
 
         }

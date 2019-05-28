@@ -28474,6 +28474,9 @@ MonoBehaviour:
   - name: Confetti
     clips:
     - {fileID: 8300000, guid: 9c2512203e498144abe51d42cf90a6cd, type: 3}
+  - name: Error
+    clips:
+    - {fileID: 8300000, guid: 16f62a57a92b22e44a37047a5b33c0a2, type: 3}
   mute: 0
   quiet_mode: 0
 --- !u!82 &1801886464
@@ -34568,6 +34571,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: IceMuseum
       objectReference: {fileID: 0}
+    - target: {fileID: 2236919737398805632, guid: bccad68557141964ca7b53d8415a2f6b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2236919737398805634, guid: bccad68557141964ca7b53d8415a2f6b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -34622,16 +34630,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2236919736907298608, guid: bccad68557141964ca7b53d8415a2f6b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2236919736907298608, guid: bccad68557141964ca7b53d8415a2f6b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bccad68557141964ca7b53d8415a2f6b, type: 3}

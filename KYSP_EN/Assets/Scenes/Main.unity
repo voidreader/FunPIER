@@ -917,6 +917,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeca40d5b853f7a478514271c737068d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OpenCounter: 3
+  CurrentOpenCounter: 0
   targetPos: {x: 180, y: -200, z: 100}
   _animatedGifPlayer: {fileID: 80698478}
   _lblName: {fileID: 97962616}
@@ -1460,7 +1462,7 @@ MonoBehaviour:
   bannerUnitID: 
   interstitialID: 
   rewardUnitID: 
-  _isAdsOn: 1
+  _isAdsOn: 0
 --- !u!4 &1715098742
 Transform:
   m_ObjectHideFlags: 0

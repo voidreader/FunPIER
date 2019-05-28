@@ -175,6 +175,7 @@ public class InGame : MonoBehaviour {
     public void ShakeCamera() {
         // _mainCamera.transform.do
         _mainCamera.transform.DOShakePosition(0.1f, 0.2f, 8, 30).OnComplete(OnCompleteShakeCamera);
+        AudioAssistant.Shot("Error");
     }
     void OnCompleteShakeCamera() {
         _mainCamera.transform.position = OriginCameraPos;

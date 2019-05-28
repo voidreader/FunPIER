@@ -487,6 +487,13 @@ public class LobbyManager : MonoBehaviour {
     /// 게임 플레이 
     /// </summary>
     public void PlayGame(bool resume = false) {
+
+        // 겨울 박물관은 바이킹 완료해야 이용 가능
+        if(currentTheme == Theme.Ice && PierSystem.main.vikingMuseumStep != PierSystem.main.MaxVikingMuseumStep) {
+            PageManager.main.OpenMessage(Message.NeedVikingComplete, delegate { });
+            return;
+        }
+
         // InGame.main.StartSession(currentTheme);
         StartCoroutine(OnPlayGameRoutine(resume));
     }
