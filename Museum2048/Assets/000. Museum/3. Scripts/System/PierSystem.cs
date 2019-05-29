@@ -62,7 +62,8 @@ public class PierSystem : MonoBehaviour {
     private void Awake() {
         main = this;
 
-        Application.targetFrameRate = 30;
+        // 프레임레이트 고정
+        Application.targetFrameRate = 60;
 
         // listMuseums[0].transform.position = new Vector3(20, 8, 20);
         InitGameBaseData(); // 게임 데이터 초기화
