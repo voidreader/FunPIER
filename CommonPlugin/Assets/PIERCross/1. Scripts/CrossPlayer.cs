@@ -8,6 +8,8 @@ using SimpleJSON;
 public class CrossPlayer : MonoBehaviour {
 
     public static CrossPlayer main = null;
+    public int OpenCounter = 3;
+    public int CurrentOpenCounter = 0;
 
     public Vector3 targetPos = Vector3.zero;
     [SerializeField] AnimatedGifPlayer _animatedGifPlayer;
@@ -18,18 +20,50 @@ public class CrossPlayer : MonoBehaviour {
     [SerializeField] string _onelink = string.Empty;
 
 
+    private void OnEnable() {
+        Debug.Log("OnEnable in Cross");
+        SetInitPos();
+    }
+
     void Awake() {
+
+    }
+
+    void SetInitPos() {
         main = this;
         this.transform.localPosition = new Vector3(-2000, 0, 0);
+        StartCoroutine(OnDelayPost());
     }
 
     // Start is called before the first frame update
     void Start() {
         // InitPlayer();
+
+    }
+
+    public void OpenCrossPlayer() {
+        if (CurrentOpenCounter != 0) {
+            CurrentOpenCounter++;
+
+            if (CurrentOpenCounter >= OpenCounter)
+                CurrentOpenCounter = 0;
+
+            return;
+        }
+
+
+        this.gameObject.SetActive(true);
+
+    }
+
+    IEnumerator OnDelayPost() {
+        yield return new WaitForSeconds(0.2f);
         GetCrossMarketingInfo();
     }
 
     public void GetCrossMarketingInfo() {
+
+        Debug.Log("GetCrossMarketingInfo");
         WWWHelper.main.Post(RequestID.request_crossinfo, CallbackDownload, null);
     }
 
@@ -70,11 +104,14 @@ public class CrossPlayer : MonoBehaviour {
         // this.gameObject.SetActive(true);
         _animatedGifPlayer.Play();
         this.transform.localPosition = targetPos;
+        CurrentOpenCounter++;
 
+        _animatedGifPlayer.OnReady -= OnGifLoaded;
     }
 
     private void OnGifLoadError() {
         Debug.Log("Error Loading GIF");
+        _animatedGifPlayer.OnLoadError -= OnGifLoadError;
     }
 
     public void OnClickClose() {
