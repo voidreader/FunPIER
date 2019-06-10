@@ -124,11 +124,16 @@ public class Player : MonoBehaviour
 
     private IEnumerator Shoot()
     {
+
+        Debug.Log("Shoot!");
+
         WeaponManager.ShootAction();
         AimImage.SetActive(false);
         yield return new WaitForSeconds(1f);
         if (Stairs.StairsList[_currentStairs].EnemyPrefab == null)
         {
+            Debug.Log("Enemy Killed");
+
             _isMoving = true;
             _moveFlag = true;
             AimController.ResetAimAction();
@@ -136,6 +141,8 @@ public class Player : MonoBehaviour
         }
         else
         {
+
+            Debug.Log("Aim Missed!!!!");
             Stairs.StairsList[_currentStairs].EnemyPrefab.GetComponent<Enemy>()._canShoot = true;
         }
     }
