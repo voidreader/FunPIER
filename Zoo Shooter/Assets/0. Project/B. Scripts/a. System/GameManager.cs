@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public float posFirstStairY = -2.5f;
     public int indexStair = 0;
-    public float currentStairY; // 기준 Y 좌표 
+    public float topStairY; // 꼭대기 계단 Y 좌표
     public int indexPlayerStair = 0; // 플레이어 캐릭터가 서있는 발판 index 
 
     Stair stair;
@@ -71,10 +71,7 @@ public class GameManager : MonoBehaviour
         listStairs = new List<Stair>();
 
         for(int i=0; i<6; i++) {
-            stair = GetNewStair();
-            currentStairY = stair.transform.localPosition.y; // 높이 처리
-            indexStair++;
-            listStairs.Add(stair);
+            InsertNewStair();
         }
 
         // 가장 하단 계단을 플레이어 위치로
@@ -128,6 +125,7 @@ public class GameManager : MonoBehaviour
                 currentStair = listStairs[indexPlayerStair + 1];
 
 
+
                 // 적 생성 
                 enemy = GetNewEnemy();
                 currentStair.SetEnemey(enemy);
@@ -154,7 +152,7 @@ public class GameManager : MonoBehaviour
 
         // 카메라 이동 처리 
         MoveMainCamera(GetDistance(listStairs[indexPlayerStair].transform.position.y, currentStair.transform.position.y));
-       
+        InsertNewStair(); // 새 계단 생성
 
         while(player.isMoving) {
             yield return null;
@@ -218,6 +216,12 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    void InsertNewStair() {
+        stair = GetNewStair();
+        topStairY = stair.transform.localPosition.y; // 높이 처리
+        indexStair++;
+        listStairs.Add(stair);
+    }
 
     /// <summary>
     /// 새로운 발판 생성
@@ -242,12 +246,12 @@ public class GameManager : MonoBehaviour
         // 좌우 체크
         if (indexStair % 2 == 0) { // 오른쪽 
             posX = Random.Range(2.9f, 3.5f);
-            posY = currentStairY + Random.Range(0.8f, 2.2f);
+            posY = topStairY + Random.Range(0.8f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽
             posX = Random.Range(-3.5f, -2.9f);
-            posY = currentStairY + Random.Range(0.8f, 2.2f);
+            posY = topStairY + Random.Range(0.8f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), true);
         }
 

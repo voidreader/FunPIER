@@ -87,9 +87,9 @@ public class Stair : MonoBehaviour
         
 
         if (isLeftStair)
-            pos = new Vector3(pos.x + Random.Range(0.7f, 1f), pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x + Random.Range(1.4f, 1.9f), pos.y + 0.5f, 0);
         else
-            pos = new Vector3(pos.x - Random.Range(0.7f, 1f), pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.4f), pos.y + 0.5f, 0);
 
         // x:0.7~1
         // y:0.5
@@ -102,9 +102,9 @@ public class Stair : MonoBehaviour
         Vector3 pos = this.spriteGround.transform.position;
 
         if(isLeftStair)
-            pos = new Vector3(pos.x + 1, pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x + 1.8f, pos.y + 0.5f, 0);
         else
-            pos = new Vector3(pos.x - 1, pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x - 1.8f, pos.y + 0.5f, 0);
 
         return pos;
     }
