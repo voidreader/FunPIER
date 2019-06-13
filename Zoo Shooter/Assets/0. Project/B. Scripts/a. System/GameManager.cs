@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitGame();
+        // InitGame();
     }
 
     // Update is called once per frame
@@ -50,7 +50,11 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K)) {
             enemy.KillEnemy();
         }
+
+
+
     }
+
 
     /// <summary>
     /// 카메라 초기화

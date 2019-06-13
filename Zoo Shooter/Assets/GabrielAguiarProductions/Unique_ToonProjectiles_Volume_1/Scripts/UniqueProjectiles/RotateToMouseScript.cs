@@ -21,9 +21,14 @@ public class RotateToMouseScript : MonoBehaviour {
 	private WaitForSeconds updateTime = new WaitForSeconds (0.01f); 
 
 
+
 	public void StartUpdateRay (){
-		StartCoroutine (UpdateRay());
+		// StartCoroutine (UpdateRay());
 	}
+
+
+    
+
 
 	IEnumerator UpdateRay (){
 		if (cam != null) {

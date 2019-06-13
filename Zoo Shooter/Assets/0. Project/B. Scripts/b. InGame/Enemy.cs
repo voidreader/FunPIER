@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using Google2u;
 
+/// <summary>
+/// 적 등장 스타일 
+/// </summary>
+public enum NormalEnmeyMove {
+    Jump,
+    Walk
+}
 
 public enum EnemyType {
     Normal,
@@ -19,6 +26,12 @@ public class Enemy : MonoBehaviour {
     public int HP = 1;
 
     public SpriteRenderer sp;
+
+    public float jumpPower;
+    public float walkSpeed;
+
+    public Animator anim;
+
 
     EnemyDataRow data;
     public bool isKilling = false;
@@ -53,6 +66,10 @@ public class Enemy : MonoBehaviour {
         GameManager.main.isEnemyDead = true; // 게임매니저에게 죽었다고 전달.
     }
 
+    public virtual void KillingEffect() {
+        
+    }
+
     /// <summary>
     /// 스프라이트 방향 설정 
     /// </summary>
@@ -61,6 +78,23 @@ public class Enemy : MonoBehaviour {
 
         sp.flipX = !isLeft;
 
+    }
+
+
+    /// <summary>
+    /// 점프 
+    /// </summary>
+    public void Jump() {
+        anim.SetBool("isJump", true);
+    }
+
+    public void Walk() {
+        anim.SetBool("isWalk", true);
+    }
+
+    public void OnGround() {
+        anim.SetBool("isWalk", false);
+        anim.SetBool("isJump", false);
     }
 
 

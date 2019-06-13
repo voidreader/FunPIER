@@ -36,6 +36,50 @@ public class Stair : MonoBehaviour
         enemy.SetSpriteDirection(isLeftStair);
     }
 
+
+    /// <summary>
+    /// 적, 움직임과 함께 등장
+    /// </summary>
+    /// <param name="e"></param>
+    public void SetEnemyWithMove(Enemy e) {
+
+        int r; // 랜덤 변수
+        NormalEnmeyMove move = NormalEnmeyMove.Jump; // 무빙 타입 
+
+        enemy = e;
+        enemy.SetSpriteDirection(isLeftStair);
+
+        r = Random.Range(0, 2);
+
+        if (r % 2 == 0)
+            move = NormalEnmeyMove.Jump;
+        else
+            move = NormalEnmeyMove.Walk;
+
+
+        if(move == NormalEnmeyMove.Jump) {
+            enemy.transform.position = GetEnemyJumpPosition();
+            enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
+            enemy.Jump();
+            // enemy.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.FastBeyond360).SetDelay(0.1f);
+        }
+        else {
+            enemy.transform.position = GetEnemyJumpPosition();
+            enemy.Walk();
+            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
+
+        }
+
+        
+    }
+
+    void OnCompleteEnemyAppear() {
+        enemy.OnGround();
+    }
+
+    
+
+
     /// <summary>
     /// 플레이어 위치 세팅!
     /// </summary>
@@ -105,6 +149,22 @@ public class Stair : MonoBehaviour
             pos = new Vector3(pos.x + 1.8f, pos.y + 0.5f, 0);
         else
             pos = new Vector3(pos.x - 1.8f, pos.y + 0.5f, 0);
+
+        return pos;
+    }
+
+    /// <summary>
+    /// 적 점프 뛰는 위치 
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetEnemyJumpPosition() {
+        Vector3 pos = this.spriteGround.transform.position;
+
+
+        if (isLeftStair)
+            pos = new Vector3(pos.x - 3, pos.y + 0.5f, 0);
+        else
+            pos = new Vector3(pos.x + 3, pos.y + 0.5f, 0);
 
         return pos;
     }

@@ -10,9 +10,7 @@ public class AimController : MonoBehaviour
     public Image AimLine;
     public GameObject Mask;
 
-    [HideInInspector]
     public float AimSpeed;
-    [HideInInspector]
     public float AimRange;
 
     private bool _UpAiming;

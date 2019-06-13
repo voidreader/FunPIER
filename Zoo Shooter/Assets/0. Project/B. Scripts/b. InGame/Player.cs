@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     public SpriteRenderer sp;
     public bool isMoving = false;
     Vector3 targetPos;
+    public bool isLeft = false;
+
+    public WeaponManager weapon; // 무기 
 
 
     public void InitPlayer() {
@@ -51,5 +54,16 @@ public class Player : MonoBehaviour
 
     public void SetSpriteDirection(bool isLeft) {
         sp.flipX = isLeft;
+    }
+
+    /// <summary>
+    /// 총 겨누기 시작 
+    /// </summary>
+    public void Aim() {
+        weapon.StartAim(isLeft);
+    }
+
+    public void Shoot() {
+        weapon.Shoot();
     }
 }

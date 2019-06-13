@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3036672799143916761}
   m_Layer: 0
   m_Name: Stair
-  m_TagString: Untagged
+  m_TagString: Stair
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,7 +46,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.141397, y: 0.4241909}
+  m_Offset: {x: 1.0052935, y: 0.3920624}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -57,7 +57,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4977603, y: 0.7172057}
+  m_Size: {x: 2.4692013, y: 0.6529487}
   m_EdgeRadius: 0
 --- !u!114 &3036672799143916761
 MonoBehaviour:
@@ -74,6 +74,7 @@ MonoBehaviour:
   spriteGround: {fileID: 6348630022410648141}
   isLeftStair: 1
   enemy: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &6348630022410648179
 GameObject:
   m_ObjectHideFlags: 0
