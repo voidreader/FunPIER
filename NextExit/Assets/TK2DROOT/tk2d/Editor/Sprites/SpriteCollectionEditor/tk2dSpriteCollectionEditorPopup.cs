@@ -50,7 +50,27 @@ namespace tk2dEditor.SpriteCollectionEditor
 
 public class tk2dSpriteCollectionEditorPopup : EditorWindow, IEditorHost
 {
-	tk2dSpriteCollection _spriteCollection; // internal tmp var
+    tk2dSpriteCollection __spriteCollection;
+    [SerializeField] string __spriteCollectionPath = "";
+
+    tk2dSpriteCollection _spriteCollection
+    {
+        get
+        {
+            if (__spriteCollection == null)
+            {
+                __spriteCollection = AssetDatabase.LoadAssetAtPath<tk2dSpriteCollection>(__spriteCollectionPath);
+            }
+            return __spriteCollection;
+        }
+        set
+        {
+            __spriteCollection = value;
+            __spriteCollectionPath = AssetDatabase.GetAssetPath(__spriteCollection);
+        }
+    }
+
+
 	SpriteView spriteView;
 	SettingsView settingsView;
 	FontView fontView;

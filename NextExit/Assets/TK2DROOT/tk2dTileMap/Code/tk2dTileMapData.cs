@@ -76,7 +76,8 @@ public class tk2dTileMapData : ScriptableObject
 	public bool generateUv2 = false;
 	public bool layersFixedZ = false;
 	public bool useSortingLayers = false;
-	
+	public bool usePolygonColliders = false;
+
 	public GameObject[] tilePrefabs = new GameObject[0];
 	[SerializeField]
 	tk2dRuntime.TileMap.TileInfo[] tileInfo = new tk2dRuntime.TileMap.TileInfo[0];
@@ -114,7 +115,7 @@ public class tk2dTileMapData : ScriptableObject
 	
 	public tk2dRuntime.TileMap.TileInfo[] GetOrCreateTileInfo(int numTiles)
 	{
-#if UNITY_EDITOR || !UNITY_FLASH
+#if UNITY_EDITOR
 		bool needInit = false;
 		if (tileInfo == null)
 		{

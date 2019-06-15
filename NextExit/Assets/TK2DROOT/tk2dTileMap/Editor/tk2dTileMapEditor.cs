@@ -696,6 +696,7 @@ public class tk2dTileMapEditor : Editor, ITileMapEditorHost
 
 			tileMap.data.colorMode = (tk2dTileMapData.ColorMode)EditorGUILayout.EnumPopup("Color Mode", tileMap.data.colorMode);
 			tileMap.data.generateUv2 = EditorGUILayout.Toggle("Generate UV2", tileMap.data.generateUv2);
+			tileMap.data.usePolygonColliders = EditorGUILayout.Toggle("Use 2D Polygon Colliders", tileMap.data.usePolygonColliders);
 			
 			if (tk2dGuiUtility.EndChangeCheck())
 			{

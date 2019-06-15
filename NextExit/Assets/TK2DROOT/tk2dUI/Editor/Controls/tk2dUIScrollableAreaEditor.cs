@@ -27,8 +27,8 @@ public class tk2dUIScrollableAreaEditor : Editor
         }
 
         tk2dUIMethodBindingHelper methodBindingUtil = new tk2dUIMethodBindingHelper();
-        scrollableArea.SendMessageTarget = methodBindingUtil.BeginMessageGUI(scrollableArea.SendMessageTarget);
-        methodBindingUtil.MethodBinding( "On Scroll", typeof(tk2dUIScrollableArea), scrollableArea.SendMessageTarget, ref scrollableArea.SendMessageOnScrollMethodName );
+        methodBindingUtil.BeginMessageGUI(scrollableArea, "sendMessageTarget", scrollableArea.backgroundUIItem);
+        methodBindingUtil.MethodBinding( "On Scroll", typeof(tk2dUIScrollableArea), scrollableArea.SendMessageTarget, "SendMessageOnScrollMethodName" );
         methodBindingUtil.EndMessageGUI();
 
         if (GUI.changed)

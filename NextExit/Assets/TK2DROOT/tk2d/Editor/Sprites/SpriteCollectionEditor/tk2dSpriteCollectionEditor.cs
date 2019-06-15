@@ -47,22 +47,33 @@ public class tk2dSpriteCollectionEditor : Editor
 			}
 			else 
 			{
-				GUILayout.BeginHorizontal();
+                string message = @"Due to changes in the prefab system in Unity 2018.3, the edit functionality has been moved." + 
+                                  "Exit prefab edit mode, select your sprite collection and click 2D Toolikt / Edit... in the main menu";
+
+
+                tk2dGuiUtility.InfoBox(message, tk2dGuiUtility.WarningLevel.Warning);
+
+                GUILayout.BeginHorizontal();
 				GUILayout.FlexibleSpace();
+
 				if (GUILayout.Button("Open Editor...", GUILayout.MinWidth(120)))
 				{
-					if (gen.name == defaultSpriteCollectionName)
-					{
-						EditorUtility.DisplayDialog("Invalid Sprite Collection name", "Please rename sprite collection before proceeding", "Ok");
-					}
-					else
-					{
-						tk2dSpriteCollectionEditorPopup v = EditorWindow.GetWindow( typeof(tk2dSpriteCollectionEditorPopup), false, "SpriteCollection" ) as tk2dSpriteCollectionEditorPopup;
-						v.SetGenerator(gen);
-						v.Show();
-					}
-				}
-				GUILayout.FlexibleSpace();
+                    UnityEditor.EditorUtility.DisplayDialog("Open Editor has moved",
+                        message,
+                        "Ok");
+
+                    //if (gen.name == defaultSpriteCollectionName)
+                    //{
+                    //	EditorUtility.DisplayDialog("Invalid Sprite Collection name", "Please rename sprite collection before proceeding", "Ok");
+                    //}
+                    //else
+                    //{
+                    //	tk2dSpriteCollectionEditorPopup v = EditorWindow.GetWindow( typeof(tk2dSpriteCollectionEditorPopup), false, "SpriteCollection" ) as tk2dSpriteCollectionEditorPopup;
+                    //	v.SetGenerator(gen);
+                    //	v.Show();
+                    //}
+                }
+                GUILayout.FlexibleSpace();
 				GUILayout.EndHorizontal();
 			}
 		}
@@ -85,9 +96,7 @@ public class tk2dSpriteCollectionEditor : Editor
         spriteCollection.version = tk2dSpriteCollection.CURRENT_VERSION;
         tk2dEditorUtility.SetGameObjectActive(go, false);
 
-		Object p = PrefabUtility.CreateEmptyPrefab(path);
-        PrefabUtility.ReplacePrefab(go, p, ReplacePrefabOptions.ConnectToPrefab);
-		
+        PrefabUtility.SaveAsPrefabAsset(go, path);
         GameObject.DestroyImmediate(go);
 
         return AssetDatabase.LoadAssetAtPath(path, typeof(tk2dSpriteCollection)) as tk2dSpriteCollection;
@@ -113,9 +122,7 @@ public class tk2dSpriteCollectionEditor : Editor
             }
 	        tk2dEditorUtility.SetGameObjectActive(go, false);
 
-			Object p = PrefabUtility.CreateEmptyPrefab(path);
-            PrefabUtility.ReplacePrefab(go, p, ReplacePrefabOptions.ConnectToPrefab);
-			
+			Object p = PrefabUtility.SaveAsPrefabAsset(go, path);
             GameObject.DestroyImmediate(go);
 
 			// Select object

@@ -90,7 +90,11 @@ class tk2dTextMeshEditor : Editor
 
 		if (drawRightHandle)
 		{
+#if UNITY_5_6_OR_NEWER
+			Vector3 newp1 = Handles.Slider(p1, transform.right, HandleUtility.GetHandleSize(p1), Handles.ArrowHandleCap, 0.0f);
+#else
 			Vector3 newp1 = Handles.Slider(p1, transform.right, HandleUtility.GetHandleSize(p1), Handles.ArrowCap, 0.0f);
+#endif
 			if (newp1 != p1)
 			{
 				tk2dUndo.RecordObject(textMesh, "TextMesh Wrap Length");
@@ -103,7 +107,11 @@ class tk2dTextMeshEditor : Editor
 
 		if (drawLeftHandle)
 		{
+#if UNITY_5_6_OR_NEWER
+			Vector3 newp0 = Handles.Slider(p0, -transform.right, HandleUtility.GetHandleSize(p0), Handles.ArrowHandleCap, 0.0f);
+#else
 			Vector3 newp0 = Handles.Slider(p0, -transform.right, HandleUtility.GetHandleSize(p0), Handles.ArrowCap, 0.0f);
+#endif
 			if (newp0 != p0)
 			{
 				tk2dUndo.RecordObject(textMesh, "TextMesh Wrap Length");

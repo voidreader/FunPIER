@@ -183,7 +183,6 @@ namespace tk2dRuntime
 
 		// Texture packer import
 		public static tk2dSpriteCollectionData CreateFromTexturePacker( tk2dSpriteCollectionSize spriteCollectionSize, string texturePackerFileContents, Texture texture ) {
-#if !UNITY_FLASH
 			List<string> names = new List<string>();
 			List<Rect> rects = new List<Rect>();
 			List<Rect> trimRects = new List<Rect>();
@@ -270,9 +269,6 @@ namespace tk2dRuntime
 				trimRects.ToArray(),
 				anchors.ToArray(),
 				rotated.ToArray() );
-#else
-			return null;
-#endif
 		}		
 	}
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-#if UNITY_EDITOR || !UNITY_FLASH
+#if !STRIP_PHYSICS_3D
 
 namespace tk2dRuntime.TileMap
 {

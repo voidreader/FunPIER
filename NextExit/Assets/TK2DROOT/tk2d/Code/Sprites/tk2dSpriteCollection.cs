@@ -594,7 +594,9 @@ public class tk2dSpriteCollection : MonoBehaviour
 	public float atlasWastage;
 	public bool allowMultipleAtlases = false;
 	public bool removeDuplicates = true;
-	
+
+    public bool allowSpannedDicing = false;
+
     public tk2dSpriteCollectionDefinition[] textureParams;
     
 	public tk2dSpriteCollectionData spriteCollection;

@@ -335,6 +335,7 @@ public class tk2dSpriteAnimator : MonoBehaviour
 					{
 						// warp to last frame
 						WarpClipToLocalTime(currentClip, currentClip.frames.Length - 1);
+						OnAnimationCompleted();
 						state &= ~State.Playing;
 					}
 					else

@@ -378,19 +378,6 @@ public class tk2dTextMesh : MonoBehaviour, tk2dRuntime.ISpriteCollectionForceBui
 		}
 	}
 
-
-#if UNITY_EDITOR
-	void OnValidate()
-	{
-		MeshFilter meshFilter = GetComponent<MeshFilter>();
-		if (meshFilter != null)
-		{
-			meshFilter.sharedMesh = mesh;
-		}
-	}
-#endif
-	
-
 	Renderer _cachedRenderer = null;
 	Renderer CachedRenderer {
 		get {

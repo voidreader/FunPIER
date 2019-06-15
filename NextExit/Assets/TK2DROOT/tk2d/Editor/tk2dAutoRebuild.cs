@@ -48,12 +48,12 @@ public static class tk2dAutoRebuild
 
 	static tk2dAutoRebuild()
 	{
-		EditorApplication.playmodeStateChanged += PlayModeStateChanged;
+		EditorApplication.playModeStateChanged += PlayModeStateChanged;
 		EditorApplication.update += EditorUpdate;
 		waitCounter = rebuildWaitCount; 
 	}
 
-	static void PlayModeStateChanged()
+	static void PlayModeStateChanged(PlayModeStateChange stateChange)
 	{
 		TriggerBuild();
 	}

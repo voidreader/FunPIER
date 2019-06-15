@@ -5,7 +5,25 @@ using System.Linq;
 
 public class tk2dSpriteAnimationEditorPopup : EditorWindow 
 {
-	tk2dSpriteAnimation anim;
+    tk2dSpriteAnimation _anim;
+    [SerializeField] string animAssetPath = "";
+
+    tk2dSpriteAnimation anim
+    {
+        get
+        {
+            if (_anim == null)
+            {
+                _anim = AssetDatabase.LoadAssetAtPath<tk2dSpriteAnimation>(animAssetPath);
+            }
+            return _anim;
+        }
+        set
+        {
+            this._anim = value;
+            animAssetPath = AssetDatabase.GetAssetPath(_anim);
+        }
+    }
 	tk2dEditor.SpriteAnimationEditor.ClipEditor clipEditor = null;
 
 	tk2dEditor.SpriteAnimationEditor.AnimOperator[] animOps = new tk2dEditor.SpriteAnimationEditor.AnimOperator[0];

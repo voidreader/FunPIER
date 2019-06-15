@@ -58,6 +58,7 @@ class tk2dStaticSpriteBatcherEditor : Editor
 
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_3D && !STRIP_PHYSICS_2D
 			MeshCollider[] childMeshColliders = GetComponentsInChildrenExcludeSelf<MeshCollider>(batcher.transform);
 			BoxCollider[] childBoxColliders = GetComponentsInChildrenExcludeSelf<BoxCollider>(batcher.transform);
 			BoxCollider2D[] childBoxCollider2Ds = GetComponentsInChildrenExcludeSelf<BoxCollider2D>(batcher.transform);
@@ -68,6 +69,7 @@ class tk2dStaticSpriteBatcherEditor : Editor
 				EditorUtility.DisplayDialog("StaticSpriteBatcher", "Error: Can't mix 2D and 3D colliders", "Ok");
 				return;
 			}
+#endif
 #endif
 
 			Dictionary<Transform, int> batchedSpriteLookup = new Dictionary<Transform, int>();
@@ -169,6 +171,7 @@ class tk2dStaticSpriteBatcherEditor : Editor
 	}
 
 	static void RestoreBoxColliderSettings( GameObject go, float offset, float extents ) {
+#if !STRIP_PHYSICS_3D
 		BoxCollider boxCollider = go.GetComponent<BoxCollider>();
 		if (boxCollider != null) {
 			Vector3 p = boxCollider.center;
@@ -178,6 +181,7 @@ class tk2dStaticSpriteBatcherEditor : Editor
 			p.z = extents * 2;
 			boxCollider.size = p;
 		}
+#endif
 	}
 	
 	public static void FillBatchedSprite(tk2dBatchedSprite bs, GameObject go) {
@@ -192,12 +196,15 @@ class tk2dStaticSpriteBatcherEditor : Editor
 		bs.baseScale = baseSprite.scale;
 		bs.color = baseSprite.color;
 		bs.renderLayer = baseSprite.SortingOrder;
+#if !STRIP_PHYSICS_3D
 		if (baseSprite.boxCollider != null)
 		{
 			bs.BoxColliderOffsetZ = baseSprite.boxCollider.center.z;
 			bs.BoxColliderExtentZ = baseSprite.boxCollider.size.z * 0.5f;
 		}
-		else {
+		else 
+#endif
+		{
 			bs.BoxColliderOffsetZ = 0.0f;
 			bs.BoxColliderExtentZ = 1.0f;
 		}

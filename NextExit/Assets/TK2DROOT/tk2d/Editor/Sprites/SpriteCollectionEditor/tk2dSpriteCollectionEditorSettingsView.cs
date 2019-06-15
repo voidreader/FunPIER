@@ -504,7 +504,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 				SpriteCollection.forceSquareAtlas = EditorGUILayout.Toggle("Force Square", SpriteCollection.forceSquareAtlas);
 			}
 			EditorGUI.indentLevel--;
-			
+
 			bool allowMultipleAtlases = EditorGUILayout.Toggle("Multiple Atlases", SpriteCollection.allowMultipleAtlases);
 			if (allowMultipleAtlases != SpriteCollection.allowMultipleAtlases)
 			{
@@ -521,6 +521,11 @@ namespace tk2dEditor.SpriteCollectionEditor
 							break;
 						}
 					}
+
+                    if (SpriteCollection.allowSpannedDicing)
+                    {
+                        hasDicing = false;
+                    }
 					
 					if (SpriteCollection.fonts.Count > 0 || hasDicing)
 					{
@@ -541,7 +546,14 @@ namespace tk2dEditor.SpriteCollectionEditor
 					"Avoid using it unless you are simply importing a" +
 					" large sequence of sprites for an animation.", tk2dGuiUtility.WarningLevel.Info);
 			}
-			
+
+            // Spanned dicing (Experimental)
+            var type = System.Type.GetType("tk2dExtAllowSpannedDicing");
+            if (type != null)
+            {
+                SpriteCollection.allowSpannedDicing = EditorGUILayout.Toggle("MultiAtlas Dicing (Ext)", SpriteCollection.allowSpannedDicing);
+            }
+
 			if (SpriteCollection.allowMultipleAtlases)
 			{
 				EditorGUILayout.LabelField("Num Atlases", SpriteCollection.atlasTextures.Length.ToString());

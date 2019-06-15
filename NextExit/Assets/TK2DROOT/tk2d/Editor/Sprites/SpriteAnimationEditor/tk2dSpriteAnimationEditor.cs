@@ -18,13 +18,17 @@ class tk2dSpriteAnimationEditor : Editor
         GUILayout.Space(8);
         if (anim != null)
         {
+            string message = @"Due to changes in the prefab system in Unity 2018.3, the edit functionality has been moved." +
+                              "Exit prefab edit mode, select your sprite animation and click 2D Toolikt / Edit... in the main menu";
+            tk2dGuiUtility.InfoBox(message, tk2dGuiUtility.WarningLevel.Warning);
+
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Open Editor...", GUILayout.MinWidth(120)))
             {
-                tk2dSpriteAnimationEditorPopup v = EditorWindow.GetWindow( typeof(tk2dSpriteAnimationEditorPopup), false, "SpriteAnimation" ) as tk2dSpriteAnimationEditorPopup;
-                v.SetSpriteAnimation(anim);
-                v.Show();
+                UnityEditor.EditorUtility.DisplayDialog("Open Editor has moved",
+                    message,
+                    "Ok");
             }
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -54,11 +58,10 @@ class tk2dSpriteAnimationEditor : Editor
             go.AddComponent<tk2dSpriteAnimation>();
 	        tk2dEditorUtility.SetGameObjectActive(go, false);
 
-			Object p = PrefabUtility.CreateEmptyPrefab(path);
-            PrefabUtility.ReplacePrefab(go, p, ReplacePrefabOptions.ConnectToPrefab);
+            PrefabUtility.SaveAsPrefabAsset(go, path);
             GameObject.DestroyImmediate(go);
-			
-			tk2dEditorUtility.GetOrCreateIndex().AddSpriteAnimation(AssetDatabase.LoadAssetAtPath(path, typeof(tk2dSpriteAnimation)) as tk2dSpriteAnimation);
+
+            tk2dEditorUtility.GetOrCreateIndex().AddSpriteAnimation(AssetDatabase.LoadAssetAtPath(path, typeof(tk2dSpriteAnimation)) as tk2dSpriteAnimation);
 			tk2dEditorUtility.CommitIndex();
 
 			// Select object

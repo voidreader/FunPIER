@@ -38,11 +38,11 @@ public class tk2dUIItemEditor : Editor
 
         btn.isHoverEnabled = EditorGUILayout.Toggle("Is Hover Events Enabled?", btn.isHoverEnabled);
 
-        btn.sendMessageTarget = methodBindingUtil.BeginMessageGUI(btn.sendMessageTarget);
-        methodBindingUtil.MethodBinding( "On Down", typeof(tk2dUIItem), btn.sendMessageTarget, ref btn.SendMessageOnDownMethodName );
-        methodBindingUtil.MethodBinding( "On Up", typeof(tk2dUIItem), btn.sendMessageTarget, ref btn.SendMessageOnUpMethodName );
-        methodBindingUtil.MethodBinding( "On Click", typeof(tk2dUIItem), btn.sendMessageTarget, ref btn.SendMessageOnClickMethodName );
-        methodBindingUtil.MethodBinding( "On Release", typeof(tk2dUIItem), btn.sendMessageTarget, ref btn.SendMessageOnReleaseMethodName );
+        methodBindingUtil.BeginMessageGUI(btn, "sendMessageTarget");
+        methodBindingUtil.MethodBinding( "On Down", typeof(tk2dUIItem), btn.sendMessageTarget, "SendMessageOnDownMethodName");
+        methodBindingUtil.MethodBinding( "On Up", typeof(tk2dUIItem), btn.sendMessageTarget, "SendMessageOnUpMethodName" );
+        methodBindingUtil.MethodBinding( "On Click", typeof(tk2dUIItem), btn.sendMessageTarget, "SendMessageOnClickMethodName" );
+        methodBindingUtil.MethodBinding( "On Release", typeof(tk2dUIItem), btn.sendMessageTarget, "SendMessageOnReleaseMethodName" );
         methodBindingUtil.EndMessageGUI();
 
         if (btn.GetComponent<Collider>() != null) {

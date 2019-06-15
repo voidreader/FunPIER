@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-#if UNITY_EDITOR || !UNITY_FLASH
+#if !STRIP_PHYSICS_2D
 
 namespace tk2dRuntime.TileMap
 {
@@ -30,12 +30,20 @@ namespace tk2dRuntime.TileMap
 						
 						if (chunk.IsEmpty)
 							continue;
-						
-						BuildForChunk(tileMap, chunk, baseX, baseY);
+
+						if (tileMap.data.usePolygonColliders)
+						{
+							BuildPolygonCollidersForChunk(tileMap, chunk, baseX, baseY);
+						}
+						else
+						{
+							BuildForChunk(tileMap, chunk, baseX, baseY);
+						}
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
 						PhysicsMaterial2D material = tileMap.data.Layers[layerId].physicsMaterial2D;
-						foreach (EdgeCollider2D ec in chunk.edgeColliders) {
+						foreach (EdgeCollider2D ec in chunk.edgeColliders) 
+						{
 							if (ec != null) {
 								ec.sharedMaterial = material;
 							}
@@ -43,6 +51,130 @@ namespace tk2dRuntime.TileMap
 #endif
 					}
 				}
+			}
+		}
+
+		public static void BuildPolygonCollidersForChunk(tk2dTileMap tileMap, SpriteChunk chunk, int baseX, int baseY)
+		{
+			// Clear colliders
+			EdgeCollider2D[] edgeColliders = chunk.gameObject.GetComponents<EdgeCollider2D>();
+			foreach (var ec in edgeColliders)
+			{
+				tk2dUtil.DestroyImmediate(ec);
+			}
+			chunk.edgeColliders.Clear();
+
+			PolygonCollider2D[] polyColliders = chunk.gameObject.GetComponents<PolygonCollider2D>();
+			foreach (var pc in polyColliders)
+			{
+				tk2dUtil.DestroyImmediate(pc);
+			}
+
+
+			Vector2[] boxPos = new Vector2[4]; // used for box collider
+			List<List<Vector2>> paths = new List<List<Vector2>>();
+
+			int spriteCount = tileMap.SpriteCollectionInst.spriteDefinitions.Length;
+			Vector2 tileSize = new Vector3(tileMap.data.tileSize.x, tileMap.data.tileSize.y);
+
+			var tilePrefabs = tileMap.data.tilePrefabs;
+
+			float xOffsetMult = 0.0f, yOffsetMult = 0.0f;
+			tileMap.data.GetTileOffset(out xOffsetMult, out yOffsetMult);
+
+			List<Vector2> cachedPoints = new List<Vector2>();
+
+			var chunkData = chunk.spriteIds;
+			for (int y = 0; y < tileMap.partitionSizeY; ++y)
+			{
+				float xOffset = ((baseY + y) & 1) * xOffsetMult;
+				for (int x = 0; x < tileMap.partitionSizeX; ++x)
+				{
+					int spriteId = chunkData[y * tileMap.partitionSizeX + x];
+					int spriteIdx = BuilderUtil.GetTileFromRawTile(spriteId);
+					Vector2 currentPos = new Vector2(tileSize.x * (x + xOffset), tileSize.y * y);
+
+					if (spriteIdx < 0 || spriteIdx >= spriteCount) 
+						continue;
+
+					if (tilePrefabs[spriteIdx])
+						continue;
+
+					bool flipH = BuilderUtil.IsRawTileFlagSet(spriteId, tk2dTileFlags.FlipX);
+					bool flipV = BuilderUtil.IsRawTileFlagSet(spriteId, tk2dTileFlags.FlipY);
+					bool rot90 = BuilderUtil.IsRawTileFlagSet(spriteId, tk2dTileFlags.Rot90);
+
+					bool reverseIndices = false;
+					if (flipH) reverseIndices = !reverseIndices;
+					if (flipV) reverseIndices = !reverseIndices;
+
+					tk2dSpriteDefinition spriteData = tileMap.SpriteCollectionInst.spriteDefinitions[spriteIdx];
+					if (spriteData.colliderType == tk2dSpriteDefinition.ColliderType.Box)
+					{
+						Vector3 origin = spriteData.colliderVertices[0];
+						Vector3 extents = spriteData.colliderVertices[1];
+						Vector3 min = origin - extents;
+						Vector3 max = origin + extents;
+
+						boxPos[0] = new Vector2(min.x, min.y);
+						boxPos[1] = new Vector2(max.x, min.y);
+						boxPos[2] = new Vector2(max.x, max.y);
+						boxPos[3] = new Vector2(min.x, max.y);
+
+						List<Vector2> thisList = new List<Vector2>();
+						int start = reverseIndices ? 3 : 0;
+						int end = reverseIndices ? -1 : 4;
+						int inc = reverseIndices ? -1 : 1;
+						for (int i = start; i != end; i += inc) 
+						{
+							thisList.Add( BuilderUtil.ApplySpriteVertexTileFlags(tileMap, spriteData, boxPos[i], flipH, flipV, rot90) + currentPos );
+						}
+
+						paths.Add(thisList);
+					}
+					else if (spriteData.colliderType == tk2dSpriteDefinition.ColliderType.Mesh)
+					{
+						cachedPoints.Clear();
+						List<Vector2> points = new List<Vector2>();
+
+						foreach (tk2dCollider2DData dat in spriteData.polygonCollider2D) {
+							foreach (Vector2 pos in dat.points) {
+								cachedPoints.Add( BuilderUtil.ApplySpriteVertexTileFlags(tileMap, spriteData, pos, flipH, flipV, rot90) + currentPos );
+							}
+							int numVerts = dat.points.Length;
+							if (reverseIndices) {
+								for (int i = cachedPoints.Count - 1; i >= 0; --i) {
+									points.Add(cachedPoints[i]);
+								}
+							}
+							else {
+								for (int i = 0; i < numVerts; ++i) {
+									points.Add(cachedPoints[i]);
+								}
+							}
+						}
+
+						paths.Add(points);
+					}
+				}
+			}
+
+			int numPathsPerObject = 64;
+			int startPath = 0;
+			int pathsRemaining = paths.Count;
+			while (pathsRemaining > 0)
+			{
+				int pathsThisRound = Mathf.Min(numPathsPerObject, pathsRemaining);
+
+				PolygonCollider2D newPc = chunk.gameObject.AddComponent<PolygonCollider2D>();
+				newPc.pathCount = pathsThisRound;
+				for (int i = 0; i < pathsThisRound; ++i)
+				{
+					newPc.SetPath(i, paths[startPath + i].ToArray());
+				}
+
+				startPath += pathsThisRound;
+				pathsRemaining -= pathsThisRound;
 			}
 		}
 
@@ -80,6 +212,12 @@ namespace tk2dRuntime.TileMap
 			if (chunk.meshCollider != null) {
 				tk2dUtil.DestroyImmediate(chunk.meshCollider);
 				chunk.meshCollider = null;
+			}
+
+			PolygonCollider2D[] polyColliders = chunk.gameObject.GetComponents<PolygonCollider2D>();
+			foreach (var pc in polyColliders)
+			{
+				tk2dUtil.DestroyImmediate(pc);
 			}
 
 			if (mergedEdges.Count == 0) {

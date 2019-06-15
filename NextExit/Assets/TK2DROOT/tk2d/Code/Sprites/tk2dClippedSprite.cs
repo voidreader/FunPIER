@@ -147,8 +147,13 @@ public class tk2dClippedSprite : tk2dBaseSprite
 	{
 		var sprite = CurrentSprite;
 
+#if !STRIP_PHYSICS_3D
 		float colliderOffsetZ = ( boxCollider != null ) ? ( boxCollider.center.z ) : 0.0f;
 		float colliderExtentZ = ( boxCollider != null ) ? ( boxCollider.size.z * 0.5f ) : 0.5f;
+#else
+		float colliderOffsetZ = 0.0f;
+		float colliderExtentZ = 0.5f;
+#endif
 		tk2dSpriteGeomGen.SetClippedSpriteGeom( meshVertices, meshUvs, 0, out boundsCenter, out boundsExtents, sprite, _scale, _clipBottomLeft, _clipTopRight, colliderOffsetZ, colliderExtentZ );
 
 		if (meshNormals.Length > 0 || meshTangents.Length > 0) {
@@ -257,13 +262,16 @@ public class tk2dClippedSprite : tk2dBaseSprite
 	{
 		if (CreateBoxCollider) {
 			if (CurrentSprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics3D) {
+#if !STRIP_PHYSICS_3D
 				if (boxCollider != null) {
 					boxCollider.size = 2 * boundsExtents;
 					boxCollider.center = boundsCenter;
 				}
+#endif
 			}
 			else if (CurrentSprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics2D) {
-	#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
+#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
 				if (boxCollider2D != null) {
 					boxCollider2D.size = 2 * boundsExtents;
 
@@ -273,7 +281,8 @@ public class tk2dClippedSprite : tk2dBaseSprite
 					boxCollider2D.offset = boundsCenter;
 #endif
 				}
-	#endif
+#endif
+#endif
 			}
 		}
 	}

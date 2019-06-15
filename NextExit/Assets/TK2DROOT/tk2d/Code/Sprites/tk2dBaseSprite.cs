@@ -60,11 +60,14 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 	[SerializeField] protected int _spriteId = 0;
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 	public BoxCollider2D boxCollider2D = null;
 	public List<PolygonCollider2D> polygonCollider2D = new List<PolygonCollider2D>(1);
 	public List<EdgeCollider2D> edgeCollider2D = new List<EdgeCollider2D>(1);
 #endif
-	
+#endif
+
+#if !STRIP_PHYSICS_3D
 	/// <summary>
 	/// Internal cached version of the box collider created for this sprite, if present.
 	/// </summary>
@@ -75,7 +78,8 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 	public MeshCollider meshCollider = null;
 	public Vector3[] meshColliderPositions = null;
 	public Mesh meshColliderMesh = null;
-	
+#endif	
+
 	/// <summary>
 	/// This event is called whenever a sprite is changed. 
 	/// A sprite is considered to be changed when the sprite itself
@@ -524,6 +528,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		tk2dSpriteDefinition sprite = collectionInst.spriteDefinitions[_spriteId];
 
 		if (sprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics3D) {
+#if !STRIP_PHYSICS_3D
 			if (sprite.colliderType == tk2dSpriteDefinition.ColliderType.Box && boxCollider == null)
 			{
 				// Has the user created a box collider?
@@ -542,7 +547,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 				if (sprite.colliderType == tk2dSpriteDefinition.ColliderType.Box)
 				{
 					boxCollider.center = new Vector3(sprite.colliderVertices[0].x * _scale.x, sprite.colliderVertices[0].y * _scale.y, sprite.colliderVertices[0].z * _scale.z);
-					boxCollider.size = new Vector3(2 * sprite.colliderVertices[1].x * _scale.x, 2 * sprite.colliderVertices[1].y * _scale.y, 2 * sprite.colliderVertices[1].z * _scale.z);
+					boxCollider.size = new Vector3(Mathf.Abs(2 * sprite.colliderVertices[1].x * _scale.x), Mathf.Abs(2 * sprite.colliderVertices[1].y * _scale.y), Mathf.Abs(2 * sprite.colliderVertices[1].z * _scale.z));
 				}
 				else if (sprite.colliderType == tk2dSpriteDefinition.ColliderType.Unset)
 				{
@@ -558,9 +563,11 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 					}
 				}
 			}
+#endif
 		}
 		else if (sprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics2D) {
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 				if (sprite.colliderType == tk2dSpriteDefinition.ColliderType.Box)
 				{
 					if (boxCollider2D == null) {
@@ -695,6 +702,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 						}
 					}
 				}
+#endif // STRIP_PHYSICS_2D
 #endif			
 		}
 	}
@@ -710,6 +718,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		}
 
 		if (sprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics3D) {
+#if !STRIP_PHYSICS_3D
 			// User has created a collider
 			if (GetComponent<Collider>() != null)
 			{
@@ -761,10 +770,13 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 			}
 			
 			UpdateCollider();
+#endif
 		}
 		else if (sprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics2D) {
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 			UpdateCollider();
+#endif
 #endif
 		}
 	}
@@ -782,32 +794,44 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		tk2dSpriteDefinition sprite = collectionInst.spriteDefinitions[_spriteId];
 		if (sprite.colliderType == tk2dSpriteDefinition.ColliderType.Unset)
 			return;
-		
+
+		bool isTrigger = false;
+
+#if !STRIP_PHYSICS_3D
 		PhysicMaterial physicsMaterial = GetComponent<Collider>()?GetComponent<Collider>().sharedMaterial:null;
-		bool isTrigger = GetComponent<Collider>()?GetComponent<Collider>().isTrigger:false;
+		isTrigger = GetComponent<Collider>()?GetComponent<Collider>().isTrigger:false;
+#endif
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 		PhysicsMaterial2D physicsMaterial2D = GetComponent<Collider2D>()?GetComponent<Collider2D>().sharedMaterial:null;
 		if (GetComponent<Collider2D>() != null) {
 			isTrigger = GetComponent<Collider2D>().isTrigger;
 		}
 #endif
+#endif
 
+#if !STRIP_PHYSICS_3D
 		boxCollider = gameObject.GetComponent<BoxCollider>();
 		meshCollider = gameObject.GetComponent<MeshCollider>();
-
+#endif
+		
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 		boxCollider2D = gameObject.GetComponent<BoxCollider2D>();
 		edgeCollider2D.Clear();
 		edgeCollider2D.AddRange( gameObject.GetComponents<EdgeCollider2D>() );
 		polygonCollider2D.Clear();
 		polygonCollider2D.AddRange( gameObject.GetComponents<PolygonCollider2D>() );
 #endif
+#endif
 
 		// Sanitize colliders - get rid of unused / incorrect ones in editor
 		if (sprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics3D) {
+#if !STRIP_PHYSICS_3D
 			// Delete colliders from wrong physics engine
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 			if (boxCollider2D != null) {
 				DestroyImmediate(boxCollider2D, true);
 			}
@@ -823,6 +847,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 				}
 			}
 			edgeCollider2D.Clear();
+#endif
 #endif
 
 			// Delete mismatched collider
@@ -845,9 +870,13 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 					DestroyImmediate(boxCollider, true);
 				}
 			}
+#endif
 		}
 		else if (sprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics2D) {
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
+
+#if !STRIP_PHYSICS_3D
 			// Delete colliders from wrong physics engine
 			if (boxCollider != null) {
 				DestroyImmediate(boxCollider, true);
@@ -855,6 +884,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 			if (meshCollider != null) {
 				DestroyImmediate(meshCollider, true);
 			}
+#endif
 			foreach (PolygonCollider2D c2d in polygonCollider2D) {
 				if (c2d != null) {
 					DestroyImmediate(c2d, true);
@@ -872,17 +902,21 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 				boxCollider2D = null;
 			}
 #endif
+#endif
 		}
 
 		CreateCollider();
 		
+#if !STRIP_PHYSICS_3D
 		if (GetComponent<Collider>())
 		{
 			GetComponent<Collider>().isTrigger = isTrigger;
 			GetComponent<Collider>().material = physicsMaterial;
 		}
+#endif
 
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 		if (boxCollider2D) {
 			boxCollider2D.isTrigger = isTrigger;
 			boxCollider2D.sharedMaterial = physicsMaterial2D;
@@ -897,6 +931,7 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 			pc.isTrigger = isTrigger;
 			pc.sharedMaterial = physicsMaterial2D;
 		}
+#endif
 #endif
 
 	}
@@ -928,27 +963,35 @@ public abstract class tk2dBaseSprite : MonoBehaviour, tk2dRuntime.ISpriteCollect
 			return;
 		}
 		if (CurrentSprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics3D) {
+#if !STRIP_PHYSICS_3D
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 			boxCollider2D = GetComponent<BoxCollider2D>();
 			if (boxCollider2D != null) {
 				Object.DestroyImmediate(boxCollider2D, true);
 			}
 #endif
+#endif
 			boxCollider = GetComponent<BoxCollider>();
 			if (boxCollider == null) {
 				boxCollider = gameObject.AddComponent<BoxCollider>();
 			}
+#endif
 		}
 		else if (CurrentSprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics2D) {
+#if !STRIP_PHYSICS_2D
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_3D
 			boxCollider = GetComponent<BoxCollider>();
 			if (boxCollider != null) {
 				Object.DestroyImmediate(boxCollider, true);
 			}
+#endif
 			boxCollider2D = GetComponent<BoxCollider2D>();
 			if (boxCollider2D == null) {
 				boxCollider2D = gameObject.AddComponent<BoxCollider2D>();
 			}
+#endif
 #endif
 		}
 	}	

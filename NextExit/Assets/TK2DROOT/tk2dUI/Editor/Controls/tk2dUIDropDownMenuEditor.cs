@@ -19,8 +19,8 @@ public class tk2dUIDropDownMenuEditor : Editor
 			dropdownMenu.height = EditorGUILayout.FloatField("Height", dropdownMenu.height, GUILayout.ExpandWidth(false));
 
         tk2dUIMethodBindingHelper methodBindingUtil = new tk2dUIMethodBindingHelper();
-        dropdownMenu.SendMessageTarget = methodBindingUtil.BeginMessageGUI(dropdownMenu.SendMessageTarget);
-        methodBindingUtil.MethodBinding( "On Selected Item Change", typeof(tk2dUIDropDownMenu), dropdownMenu.SendMessageTarget, ref dropdownMenu.SendMessageOnSelectedItemChangeMethodName );
+        methodBindingUtil.BeginMessageGUI(dropdownMenu, "sendMessageTarget", dropdownMenu?.dropDownButton);
+        methodBindingUtil.MethodBinding( "On Selected Item Change", typeof(tk2dUIDropDownMenu), dropdownMenu.SendMessageTarget, "SendMessageOnSelectedItemChangeMethodName" );
         methodBindingUtil.EndMessageGUI();
 
 		if (GUI.changed) {

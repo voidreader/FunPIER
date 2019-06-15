@@ -15,7 +15,7 @@ public class tk2dUIHoverItemEditor : tk2dUIBaseItemControlEditor
         hoverBtn.outStateGO = tk2dUICustomEditorGUILayout.SceneObjectField("Out State GameObject", hoverBtn.outStateGO,target);
 
         BeginMessageGUI();
-        methodBindingUtil.MethodBinding( "On Toggle Hover", typeof(tk2dUIHoverItem), hoverBtn.SendMessageTarget, ref hoverBtn.SendMessageOnToggleHoverMethodName );
+        methodBindingUtil.MethodBinding( "On Toggle Hover", typeof(tk2dUIHoverItem), hoverBtn.SendMessageTarget, "SendMessageOnToggleHoverMethodName" );
         EndMessageGUI();
 
         if (GUI.changed)

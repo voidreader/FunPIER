@@ -59,8 +59,8 @@ public class tk2dUIProgressBarEditor : Editor
         }
 
         tk2dUIMethodBindingHelper methodBindingUtil = new tk2dUIMethodBindingHelper();
-        progressBar.sendMessageTarget = methodBindingUtil.BeginMessageGUI(progressBar.sendMessageTarget);
-        methodBindingUtil.MethodBinding( "On Progress Complete", typeof(tk2dUIProgressBar), progressBar.sendMessageTarget, ref progressBar.SendMessageOnProgressCompleteMethodName );
+        methodBindingUtil.BeginMessageGUI(progressBar, "sendMessageTarget");
+        methodBindingUtil.MethodBinding( "On Progress Complete", typeof(tk2dUIProgressBar), progressBar.sendMessageTarget, "SendMessageOnProgressCompleteMethodName");
         methodBindingUtil.EndMessageGUI();
 
         if (markAsDirty || GUI.changed)

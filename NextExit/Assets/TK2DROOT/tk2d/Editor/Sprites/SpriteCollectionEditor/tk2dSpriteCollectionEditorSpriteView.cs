@@ -344,7 +344,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 			}
 
 			// Sanity check dicing & multiple atlases
-			if (param.dice && SpriteCollection.allowMultipleAtlases)
+            if (!SpriteCollection.allowSpannedDicing && param.dice && SpriteCollection.allowMultipleAtlases)
 			{
 				EditorUtility.DisplayDialog("Sprite dicing", 
 					"Sprite dicing is unavailable when multiple atlases is enabled. " +

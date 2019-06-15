@@ -23,9 +23,9 @@ public class tk2dSpritePickerPopup  : EditorWindow
 
 		public Vector2 rectDims;
 
-		public void Update(int numTiles) {
+		public void Update(int numTiles, int screenWidth) {
 			tileSizeInt = TileSize;
-			int w = Screen.width - scrollbarWidth - border * 2;
+			int w = screenWidth - scrollbarWidth - border * 2;
 			numTilesPerRow = Mathf.Max((w + tileSep) / (tileSizeInt + tileSep), 1);
 			numRows = (numTiles + numTilesPerRow - 1) / numTilesPerRow;
 			tileWidth = tileSizeInt + tileSep;
@@ -180,14 +180,14 @@ public class tk2dSpritePickerPopup  : EditorWindow
 	void OnGUI()
 	{
 		HandleKeyboardShortcuts();
-		presentParams.Update(selectedDefinitions.Count);
+		presentParams.Update(selectedDefinitions.Count, (int)this.position.width);
 
 		if (makeSelectionVisible) {
 			scroll.y = presentParams.GetYForIndex(selectedIndex);
 			makeSelectionVisible = false;
 		}
 
-		GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
+		GUILayout.BeginArea(new Rect(0, 0, this.position.width, this.position.height));
 
 		GUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
 

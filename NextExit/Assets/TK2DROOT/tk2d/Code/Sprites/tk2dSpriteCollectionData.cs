@@ -139,7 +139,6 @@ public class tk2dSpriteDefinition
 	/// </summary>
     public Vector2[] uvs;
 
-
 	/// <summary>
 	/// Array of normalized (0..1) space UVs matching above
 	/// </summary>
@@ -164,6 +163,15 @@ public class tk2dSpriteDefinition
 	/// </summary>
 	public int materialId;
 	
+
+    /// <summary>
+    /// If not null or empty, this will be the material id [0], followed by the start index [1] into the index buffer, 
+    /// and number of indices [3] for this material allowing the reconstruction of submesh indices. Must be a multiple 
+    /// of 3 for obvious reasons
+    /// </summary>
+    public int[] materialIndexData;
+
+
 	
 	/// <summary>
 	/// Source texture GUID - this is used by the inspector to find the source image without adding a unity dependency.
@@ -662,7 +670,13 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 			string path = UnityEditor.AssetDatabase.GetAssetPath( materialInsts[0].mainTexture );
 			if (path.Length > 0) {
 				UnityEditor.TextureImporter importer = UnityEditor.TextureImporter.GetAtPath(path) as UnityEditor.TextureImporter;
-				if (importer != null && (importer.alphaIsTransparency || importer.grayscaleToAlpha)) {
+				if (importer != null && (importer.alphaIsTransparency 
+#if UNITY_5_5_OR_NEWER
+					|| importer.alphaSource == UnityEditor.TextureImporterAlphaSource.FromGrayScale
+#else
+					|| importer.grayscaleToAlpha
+#endif
+				)) {
 					if (UnityEditor.EditorUtility.DisplayDialog(
 							"Atlas texture incompatibility", 
 							string.Format("Atlas texture '{0}' for sprite collection '{1}' must be reimported to display correctly in Unity 4.3 when in 2D mode.", materialInsts[0].mainTexture.name, name), 
@@ -676,9 +690,19 @@ public class tk2dSpriteCollectionData : MonoBehaviour
 								path = UnityEditor.AssetDatabase.GetAssetPath( materialInsts[i].mainTexture );
 								if (path.Length > 0) {
 									importer = UnityEditor.TextureImporter.GetAtPath(path) as UnityEditor.TextureImporter;
-									if (importer != null && (importer.alphaIsTransparency || importer.grayscaleToAlpha) ) {
-										importer.alphaIsTransparency = false;
+									if (importer != null && (importer.alphaIsTransparency 
+#if UNITY_5_5_OR_NEWER
+																|| importer.alphaSource == UnityEditor.TextureImporterAlphaSource.FromGrayScale
+#else
+																|| importer.grayscaleToAlpha
+#endif
+									)) {
+#if UNITY_5_5_OR_NEWER
+										importer.alphaSource = UnityEditor.TextureImporterAlphaSource.FromInput;
+#else
 										importer.grayscaleToAlpha = false;
+#endif
+										importer.alphaIsTransparency = false;
 										tk2dUtil.SetDirty(importer);
 										UnityEditor.AssetDatabase.ImportAsset(path);
 									}

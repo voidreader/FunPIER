@@ -129,6 +129,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 			target.allowMultipleAtlases = source.allowMultipleAtlases;
 			target.disableRotation = source.disableRotation;
 			target.removeDuplicates = source.removeDuplicates;
+            target.allowSpannedDicing = source.allowSpannedDicing;
 			
 			target.premultipliedAlpha = source.premultipliedAlpha;
 
@@ -371,6 +372,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 			target.allowMultipleAtlases = source.allowMultipleAtlases;
 			target.disableRotation = source.disableRotation;
 			target.removeDuplicates = source.removeDuplicates;
+            target.allowSpannedDicing = source.allowSpannedDicing;
 			
 			target.spriteCollection = source.spriteCollection;
 			target.premultipliedAlpha = source.premultipliedAlpha;
@@ -615,6 +617,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 		public bool allowMultipleAtlases;
 		public bool disableRotation;
 		public bool removeDuplicates;
+        public bool allowSpannedDicing;
 		public tk2dSpriteCollectionData spriteCollection;
 	    public bool premultipliedAlpha;
 

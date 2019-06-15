@@ -236,7 +236,6 @@ public class tk2dButton : MonoBehaviour
 			bool cursorActive = true;
 
 			// slightly akward arrangement to keep exact backwards compatibility
-#if !UNITY_FLASH
 			if (fingerId != -1)
 			{
 				bool found = false;
@@ -255,7 +254,6 @@ public class tk2dButton : MonoBehaviour
 				if (!found) cursorActive = false;
 			} 			
 			else
-#endif
 			{
 				if (!Input.GetMouseButton(0))
 					cursorActive = false;
@@ -268,8 +266,13 @@ public class tk2dButton : MonoBehaviour
 
             Ray ray = viewCamera.ScreenPointToRay(cursorPosition);
 
-            RaycastHit hitInfo;
+			RaycastHit hitInfo;
+#if !STRIP_PHYSICS_3D
 			bool colliderHit = GetComponent<Collider>().Raycast(ray, out hitInfo, Mathf.Infinity);
+#else
+			bool colliderHit = false;
+			Debug.LogError("tk2dButton - doesn't work with 3D physics stripped");
+#endif
             if (buttonPressed && !colliderHit)
 			{
 				if (targetScale != 1.0f)
@@ -358,7 +361,6 @@ public class tk2dButton : MonoBehaviour
 		if (buttonDown) // only need to process if button isn't down
 			return;
 
-#if !UNITY_FLASH
 		bool detected = false;
 		if (Input.multiTouchEnabled)
 		{
@@ -367,29 +369,46 @@ public class tk2dButton : MonoBehaviour
 				Touch touch = Input.GetTouch(i);
 				if (touch.phase != TouchPhase.Began) continue;
 	            Ray ray = viewCamera.ScreenPointToRay(touch.position);
-	            RaycastHit hitInfo;
-	            if (GetComponent<Collider>().Raycast(ray, out hitInfo, 1.0e8f))
+
+				RaycastHit hitInfo;
+#if !STRIP_PHYSICS_3D
+				bool colliderHit = GetComponent<Collider>().Raycast(ray, out hitInfo, 1.0e8f);
+#else
+				bool colliderHit = false;
+				Debug.LogError("tk2dButton - doesn't work with 3D physics stripped");
+#endif
+
+	            if (colliderHit)
 	            {
+#if !STRIP_PHYSICS_3D
 					if (!Physics.Raycast(ray, hitInfo.distance - 0.01f))
 					{
 						StartCoroutine(coHandleButtonPress(touch.fingerId));
 						detected = true;
 						break; // only one finger on a buton, please.
 					}
+#endif
 	            }	            
 			}
 		}
 		if (!detected)
-#endif
 		{
 			if (Input.GetMouseButtonDown(0))
 	        {
 	            Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
-	            RaycastHit hitInfo;
-	            if (GetComponent<Collider>().Raycast(ray, out hitInfo, 1.0e8f))
+				RaycastHit hitInfo;
+#if !STRIP_PHYSICS_3D
+				bool colliderHit = GetComponent<Collider>().Raycast(ray, out hitInfo, 1.0e8f);
+#else
+				bool colliderHit = false;
+				Debug.LogError("tk2dButton - doesn't work with 3D physics stripped");
+#endif
+	            if (colliderHit)
 	            {
+#if !STRIP_PHYSICS_3D
 					if (!Physics.Raycast(ray, hitInfo.distance - 0.01f))
 						StartCoroutine(coHandleButtonPress(-1));
+#endif
 	            }
 	        }
 		}

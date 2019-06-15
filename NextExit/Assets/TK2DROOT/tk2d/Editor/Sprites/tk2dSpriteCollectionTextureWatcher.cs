@@ -21,7 +21,20 @@ public class tk2dSpriteCollectionTextureWatcher : AssetPostprocessor
 	{
 		if (tk2dPreferences.inst.autoRebuild && importedAssets != null && importedAssets.Length	!= 0)
 		{
-			tk2dSpriteCollectionBuilder.RebuildOutOfDate(importedAssets);
+			// Unity 2017 includes assets from outside Assets as well, which we don't care about
+			string basePath = Application.dataPath;
+
+			List<string> changedRelativePaths = new List<string>();
+			foreach (var v in importedAssets)
+			{
+				string p = System.IO.Path.GetFullPath(v).Replace('\\', '/');
+				if (p.IndexOf(basePath) == 0)
+				{
+					changedRelativePaths.Add(v);
+				}
+			}
+
+			tk2dSpriteCollectionBuilder.RebuildOutOfDate(changedRelativePaths.ToArray());
 		}
 	}
 }

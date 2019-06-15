@@ -10,6 +10,15 @@ public class tk2dUILayoutEditor : Editor {
 
 	bool updateChildren = true;
 
+	void ArrowCapProxy(int controlId, Vector3 position, Quaternion rotation, float size)
+	{
+#if UNITY_5_6_OR_NEWER
+		Handles.ArrowHandleCap(controlId, position, rotation, size, Event.current.type);
+#else
+		Handles.ArrowCap(controlId, position, rotation, size);
+#endif
+	}
+
 	void DrawLayoutOutline(Transform t) {
 		var layout = t.GetComponent<tk2dUILayout>();
 		if (layout != null) {
@@ -29,11 +38,11 @@ public class tk2dUILayoutEditor : Editor {
 				Handles.color = Color.cyan;
 				float arrowSize = 0.3f * HandleUtility.GetHandleSize(p[0]);
 				if (sizer.horizontal) {
-					Handles.ArrowCap(0, (p[0] + p[3]) * 0.5f, Quaternion.LookRotation(p[1] - p[0]), arrowSize);
-					Handles.ArrowCap(0, (p[1] + p[2]) * 0.5f, Quaternion.LookRotation(p[0] - p[1]), arrowSize);
+					ArrowCapProxy(0, (p[0] + p[3]) * 0.5f, Quaternion.LookRotation(p[1] - p[0]), arrowSize);
+					ArrowCapProxy(0, (p[1] + p[2]) * 0.5f, Quaternion.LookRotation(p[0] - p[1]), arrowSize);
 				} else {
-					Handles.ArrowCap(0, (p[0] + p[1]) * 0.5f, Quaternion.LookRotation(p[3] - p[0]), arrowSize);
-					Handles.ArrowCap(0, (p[2] + p[3]) * 0.5f, Quaternion.LookRotation(p[0] - p[3]), arrowSize);
+					ArrowCapProxy(0, (p[0] + p[1]) * 0.5f, Quaternion.LookRotation(p[3] - p[0]), arrowSize);
+					ArrowCapProxy(0, (p[2] + p[3]) * 0.5f, Quaternion.LookRotation(p[0] - p[3]), arrowSize);
 				}
 			}
 		}

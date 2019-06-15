@@ -657,7 +657,7 @@ public class tk2dCameraEditor : Editor
 #else
 		go.AddComponent<FlareLayer>();
 #endif
-		go.AddComponent<GUILayer>();
+//		go.AddComponent<GUILayer>();
 		if (Object.FindObjectsOfType(typeof(AudioListener)).Length == 0) {
 			go.AddComponent<AudioListener>();
 		}

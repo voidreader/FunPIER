@@ -495,8 +495,11 @@ public class tk2dTileMapSceneGUI
 
 		// Toolbar and scratchpad
 		if (editorData.editMode == tk2dTileMapEditorData.EditMode.Paint) {
+			Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+			screenRect = EditorGUIUtility.PixelsToPoints(screenRect);
+
 			Handles.BeginGUI();
-			GUILayout.BeginArea(new Rect(0, 0, Screen.width, Screen.height));
+			GUILayout.BeginArea(screenRect);
 
 			Event ev = Event.current;
 			bool mouseOverToolbar = false;
@@ -508,7 +511,7 @@ public class tk2dTileMapSceneGUI
 			mouseOverToolbar = GUILayoutUtility.GetLastRect().Contains(ev.mousePosition);
 
 			if (tk2dTileMapToolbar.scratchpadOpen) {
-				GUILayout.BeginVertical(tk2dEditorSkin.GetStyle("TilemapToolbarBG"), GUILayout.Width(20), GUILayout.Height(Screen.height - 74));
+				GUILayout.BeginVertical(tk2dEditorSkin.GetStyle("TilemapToolbarBG"), GUILayout.Width(20), GUILayout.Height(screenRect.height - 74));
 				scratchpadGUI.DrawGUI();
 				GUILayout.EndVertical();
 				mouseOverScratchpad = GUILayoutUtility.GetLastRect().Contains(ev.mousePosition);

@@ -583,9 +583,6 @@ public class RPGDefine {
 
     public static void writeStringToFile( string str, string filename, string path )
     {
-        // 웹플레이어에서는 작동되지 않도록 한다.
-        if (Application.isWebPlayer)
-            return;
 
         path = Path.Combine(path, filename);
         FileStream file = new FileStream (path, FileMode.Create, FileAccess.Write);
@@ -600,9 +597,7 @@ public class RPGDefine {
 
     public static void writeByteToFile(byte[] data, string filename)
     {
-        // 웹플레이어에서는 작동되지 않도록 한다.
-        if (Application.isWebPlayer)
-            return;
+
 #if !UNITY_WEBPLAYER        
         string path = pathForDocumentsFile( filename );
         File.WriteAllBytes(path, data);
@@ -616,9 +611,7 @@ public class RPGDefine {
     /// <param name="filename">Filename.</param>
     public static string readStringFromFile(string filename)//, int lineIndex )
     {
-        // 웹플레이어에서는 작동되지 않도록 한다.
-        if (Application.isWebPlayer)
-            return null;
+
 
         string path = pathForDocumentsFile( filename );
 
@@ -692,9 +685,7 @@ public class RPGDefine {
     /// <param name="fullpath">Fullpath.</param>
     public static string readStringFromFullPath(string fullpath)
     {
-        // 웹플레이어에서는 작동되지 않도록 한다.
-        if (Application.isWebPlayer)
-            return fullpath;
+        
 
         if (File.Exists(fullpath))
         {
@@ -722,9 +713,7 @@ public class RPGDefine {
     /// <param name="filename">Filename.</param>
     public static void deleteFile(string filename)
     {
-        // 웹플레이어에서는 작동되지 않도록 한다.
-        if (Application.isWebPlayer)
-            return;
+        
 
         string path = pathForDocumentsFile( filename );
         if (File.Exists(path))

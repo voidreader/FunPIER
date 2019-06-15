@@ -17,7 +17,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
     /// Length of all the content in the scrollable area
     /// </summary>
     [SerializeField]
-    private float contentLength = 1;
+    protected float contentLength = 1;
 
     public float ContentLength
     {
@@ -32,7 +32,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
     /// Length of visible area of content, what can be seen
     /// </summary>
     [SerializeField]
-    private float visibleAreaLength = 1;
+    protected float visibleAreaLength = 1;
 
     public float VisibleAreaLength
     {
@@ -111,18 +111,18 @@ public class tk2dUIScrollableArea : MonoBehaviour
 		}
 	}
 
-    private bool isBackgroundButtonDown = false;
+    protected bool isBackgroundButtonDown = false;
     private bool isBackgroundButtonOver = false;
 
     private Vector3 swipeScrollingPressDownStartLocalPos = Vector3.zero;
     private Vector3 swipeScrollingContentStartLocalPos = Vector3.zero;
-    private Vector3 swipeScrollingContentDestLocalPos = Vector3.zero;
-    private bool isSwipeScrollingInProgress = false;
-    private const float SWIPE_SCROLLING_FIRST_SCROLL_THRESHOLD = .02f*5.0f; //at what point swipe scrolling will start moving the list
+    protected Vector3 swipeScrollingContentDestLocalPos = Vector3.zero;
+    protected bool isSwipeScrollingInProgress = false;
+    public const float SWIPE_SCROLLING_FIRST_SCROLL_THRESHOLD = .02f; //at what point swipe scrolling will start moving the list
     private const float WITHOUT_SCROLLBAR_FIXED_SCROLL_WHEEL_PERCENT = .1f; //if not scrollbar attached how much scroll wheel will move list
     private Vector3 swipePrevScrollingContentPressLocalPos = Vector3.zero;
-    private float swipeCurrVelocity = 0; //velocity of current frame (used for inertia swipe scrolling)
-    private float snapBackVelocity = 0;
+    protected float swipeCurrVelocity = 0; //velocity of current frame (used for inertia swipe scrolling)
+    protected float snapBackVelocity = 0;
 
     public GameObject SendMessageTarget
     {
@@ -154,7 +154,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
 
     public string SendMessageOnScrollMethodName = "";
 
-    private float percent = 0; //0-1
+    protected float percent = 0; //0-1
 
     /// <summary>
     /// Scroll position percent 0-1
@@ -334,7 +334,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
         }
     }
 
-    Vector3 ContentContainerOffset {
+    protected Vector3 ContentContainerOffset {
         get { 
             return Vector3.Scale(new Vector3(-1, 1, 1), contentContainer.transform.localPosition);
         }
@@ -362,7 +362,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
         ContentContainerOffset = localPos;
     }
 
-    private void BackgroundButtonDown()
+    protected void BackgroundButtonDown()
     {
         if (allowSwipeScrolling && contentLength > visibleAreaLength)
         {
@@ -375,11 +375,27 @@ public class tk2dUIScrollableArea : MonoBehaviour
             swipeScrollingContentStartLocalPos = ContentContainerOffset;
             swipeScrollingContentDestLocalPos = swipeScrollingContentStartLocalPos;
             isBackgroundButtonDown = true;
-            swipeCurrVelocity = 0;
+
+			// Is during inertial scrolling?
+			if (swipeCurrVelocity != 0)
+			{
+				// Call OverrideClearAllChildrenPresses at the end of the frame to make sure the
+				// item doesn't register a click when dragged and let go < threshold when dragging
+				// during inertial scrolling.
+				StartCoroutine(coDeferredClearChildrenPresses());
+			}
+
+			swipeCurrVelocity = 0;
         }
     }
 
-    private void BackgroundOverUpdate()
+	IEnumerator coDeferredClearChildrenPresses()
+	{
+		yield return new WaitForEndOfFrame();
+		tk2dUIManager.Instance.OverrideClearAllChildrenPresses(backgroundUIItem);
+	}
+
+    protected virtual void BackgroundOverUpdate()
     {
         if (isBackgroundButtonDown)
         {
@@ -506,7 +522,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
         }
     }
 
-    private void UpdateSwipeScrollDestintationPosition()
+    protected void UpdateSwipeScrollDestintationPosition()
     {
         Vector3 currTouchPosLocal = transform.InverseTransformPoint(CalculateClickWorldPos(backgroundUIItem));
  
@@ -565,6 +581,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
                 if (!isSwipeScrollingInProgress)
                 {
                     tk2dUIManager.Instance.OnInputUpdate -= BackgroundOverUpdate;
+                    swipeCurrVelocity = 0;
                 }
             }
             isBackgroundButtonDown = false;
@@ -602,7 +619,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
         return worldPos;
     }
 
-    private void UpdateScrollbarActiveState()
+    protected void UpdateScrollbarActiveState()
     {
         bool scrollBarVisible = (contentLength > visibleAreaLength);
         if (scrollBar != null)
@@ -640,7 +657,7 @@ public class tk2dUIScrollableArea : MonoBehaviour
     {
     }
 
-    private void TargetOnScrollCallback()
+    protected void TargetOnScrollCallback()
     {
         if (SendMessageTarget != null && SendMessageOnScrollMethodName.Length > 0)
         {

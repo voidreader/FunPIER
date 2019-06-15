@@ -17,9 +17,9 @@ namespace tk2dEditor.TextureProcessing
 				quantShiftR = quantShiftG = quantShiftB = quantShiftA = 4;
 				break;
 			case TextureFormat.RGB565:
-				quantShiftR = 5;
-				quantShiftB = 6;
-				quantShiftG = 5;
+				quantShiftR = 3;
+				quantShiftG = 2;
+				quantShiftB = 3;
 				quantShiftA = 0;
 				break;
 			}

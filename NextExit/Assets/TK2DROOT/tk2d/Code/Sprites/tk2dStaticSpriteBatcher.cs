@@ -663,6 +663,7 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		GetComponent<Renderer>().sharedMaterials = materials.ToArray();
 	}
 
+#if !STRIP_PHYSICS_3D && !STRIP_PHYSICS_2D
 	void BuildPhysicsMesh()
 	{
 		// Check if the Generate Colliders flag is cleared
@@ -1032,6 +1033,15 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 		
 		meshCollider.sharedMesh = colliderMesh;
 	}
+
+#else
+
+	void BuildPhysicsMesh()
+	{
+		Debug.Log("tk2dStaticSpriteBatcher - Unsupported");
+	}
+
+#endif
 	
 	public bool UsesSpriteCollection(tk2dSpriteCollectionData spriteCollection)
 	{

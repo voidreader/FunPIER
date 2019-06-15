@@ -128,17 +128,6 @@ public class tk2dSlicedSprite : tk2dBaseSprite
 		}
 	}
 
-#if UNITY_EDITOR
-	void OnValidate()
-	{
-		MeshFilter meshFilter = GetComponent<MeshFilter>();
-		if (meshFilter != null)
-		{
-			meshFilter.sharedMesh = mesh;
-		}
-	}
-#endif
-
 	new void Awake()
 	{
 		base.Awake();
@@ -151,14 +140,18 @@ public class tk2dSlicedSprite : tk2dBaseSprite
 		mesh.hideFlags = HideFlags.DontSave;
 		GetComponent<MeshFilter>().mesh = mesh;
 	
+#if !STRIP_PHYSICS_3D
 		// Cache box collider		
 		if (boxCollider == null) {
 			boxCollider = GetComponent<BoxCollider>();
 		}
+#endif
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
+#if !STRIP_PHYSICS_2D
 		if (boxCollider2D == null) {
 			boxCollider2D = GetComponent<BoxCollider2D>();
 		}
+#endif
 #endif
 
 		// This will not be set when instantiating in code
@@ -198,8 +191,14 @@ public class tk2dSlicedSprite : tk2dBaseSprite
 	{
 		var sprite = CurrentSprite;
 
+#if !STRIP_PHYSICS_3D
 		float colliderOffsetZ = ( boxCollider != null ) ? ( boxCollider.center.z ) : 0.0f;
 		float colliderExtentZ = ( boxCollider != null ) ? ( boxCollider.size.z * 0.5f ) : 0.5f;
+#else
+		float colliderOffsetZ = 0.0f;
+		float colliderExtentZ = 0.5f;
+#endif
+
 		tk2dSpriteGeomGen.SetSlicedSpriteGeom(meshVertices, meshUvs, 0, out boundsCenter, out boundsExtents, sprite, _scale, dimensions, new Vector2(borderLeft, borderBottom), new Vector2(borderRight, borderTop), anchor, colliderOffsetZ, colliderExtentZ);
 
 		if (meshNormals.Length > 0 || meshTangents.Length > 0) {
@@ -364,12 +363,15 @@ public class tk2dSlicedSprite : tk2dBaseSprite
 	{
 		if (CreateBoxCollider) {
 			if (CurrentSprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics3D) {
-				if (boxCollider != null) {
+#if !STRIP_PHYSICS_3D
+					if (boxCollider != null) {
 					boxCollider.size = 2 * boundsExtents;
 					boxCollider.center = boundsCenter;
 				}
+#endif
 			}
 			else if (CurrentSprite.physicsEngine == tk2dSpriteDefinition.PhysicsEngine.Physics2D) {
+#if !STRIP_PHYSICS_2D
 #if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_0_1 || UNITY_4_1 || UNITY_4_2)
 				if (boxCollider2D != null) {
 					boxCollider2D.size = 2 * boundsExtents;
@@ -379,6 +381,7 @@ public class tk2dSlicedSprite : tk2dBaseSprite
 					boxCollider2D.offset = boundsCenter;
 #endif
 				}
+#endif
 #endif
 			}
 		}

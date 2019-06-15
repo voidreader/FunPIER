@@ -26,12 +26,13 @@ public class tk2dUIToggleButtonGroupEditor : Editor
         toggleBtnGroup.SelectedIndex = EditorGUILayout.IntField("Selected Index", toggleBtnGroup.SelectedIndex);
 
         tk2dUIMethodBindingHelper methodBindingUtil = new tk2dUIMethodBindingHelper();
-        toggleBtnGroup.sendMessageTarget = methodBindingUtil.BeginMessageGUI(toggleBtnGroup.sendMessageTarget);
-        methodBindingUtil.MethodBinding( "On Change", typeof(tk2dUIToggleButtonGroup), toggleBtnGroup.sendMessageTarget, ref toggleBtnGroup.SendMessageOnChangeMethodName );
+        methodBindingUtil.BeginMessageGUI(toggleBtnGroup, "sendMessageTarget");
+        methodBindingUtil.MethodBinding( "On Change", typeof(tk2dUIToggleButtonGroup), toggleBtnGroup.sendMessageTarget, "SendMessageOnChangeMethodName" );
         methodBindingUtil.EndMessageGUI();
 
         if (GUI.changed)
         {
+            Debug.Log("Dirty");
             tk2dUtil.SetDirty(toggleBtnGroup);
         }
     }

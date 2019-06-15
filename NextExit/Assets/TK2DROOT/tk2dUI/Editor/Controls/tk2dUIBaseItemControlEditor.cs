@@ -39,11 +39,7 @@ public class tk2dUIBaseItemControlEditor : Editor
     // Convenient non-essential wrappers
     protected void BeginMessageGUI() {
         tk2dUIBaseItemControl baseButtonControl = (tk2dUIBaseItemControl)target;
-        GameObject newSendMessageTarget = methodBindingUtil.BeginMessageGUI( baseButtonControl.SendMessageTarget );
-        if (newSendMessageTarget != baseButtonControl.SendMessageTarget) {
-            baseButtonControl.SendMessageTarget = newSendMessageTarget;
-            tk2dUtil.SetDirty( baseButtonControl.uiItem );
-        }
+        methodBindingUtil.BeginMessageGUI(baseButtonControl, "sendMessageTarget", baseButtonControl?.uiItem );
     }
 
     protected void EndMessageGUI() {

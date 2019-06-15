@@ -16,8 +16,8 @@ public class tk2dUIScrollbarEditor : Editor
 		tk2dUIScrollbar scrollbar = (tk2dUIScrollbar)target;
 		scrollbar.BarLayoutItem = EditorGUILayout.ObjectField("Bar LayoutItem", scrollbar.BarLayoutItem, typeof(tk2dUILayout), true) as tk2dUILayout;
 
-        scrollbar.SendMessageTarget = methodBindingUtil.BeginMessageGUI(scrollbar.SendMessageTarget);
-        methodBindingUtil.MethodBinding( "On Scroll", typeof(tk2dUIScrollbar), scrollbar.SendMessageTarget, ref scrollbar.SendMessageOnScrollMethodName );
+        methodBindingUtil.BeginMessageGUI(scrollbar, "sendMessageTarget", scrollbar.barUIItem);
+        methodBindingUtil.MethodBinding( "On Scroll", typeof(tk2dUIScrollbar), scrollbar.SendMessageTarget, "SendMessageOnScrollMethodName" );
         methodBindingUtil.EndMessageGUI();
 
         if (GUI.changed)

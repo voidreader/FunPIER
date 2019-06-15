@@ -22,7 +22,7 @@ public class tk2dUIToggleButtonEditor : tk2dUIBaseItemControlEditor
         DrawGUI();
 
         BeginMessageGUI();
-        methodBindingUtil.MethodBinding( "On Toggle", typeof(tk2dUIToggleButton), toggleBtn.SendMessageTarget, ref toggleBtn.SendMessageOnToggleMethodName );
+        methodBindingUtil.MethodBinding( "On Toggle", typeof(tk2dUIToggleButton), toggleBtn.SendMessageTarget, "SendMessageOnToggleMethodName" );
         EndMessageGUI();
 
         if (GUI.changed)

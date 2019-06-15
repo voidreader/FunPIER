@@ -26,7 +26,7 @@ public class tk2dUIMultiStateToggleButtonEditor : tk2dUIBaseItemControlEditor
         multiStateToggleBtn.activateOnPress = EditorGUILayout.Toggle("Activate On Press", multiStateToggleBtn.activateOnPress);
 
         BeginMessageGUI();
-        methodBindingUtil.MethodBinding( "On State Toggle", typeof(tk2dUIMultiStateToggleButton), multiStateToggleBtn.SendMessageTarget, ref multiStateToggleBtn.SendMessageOnStateToggleMethodName );
+        methodBindingUtil.MethodBinding( "On State Toggle", typeof(tk2dUIMultiStateToggleButton), multiStateToggleBtn.SendMessageTarget, "SendMessageOnStateToggleMethodName" );
         EndMessageGUI();
 
         if (GUI.changed)

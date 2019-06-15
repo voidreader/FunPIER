@@ -43,7 +43,7 @@ public class tk2dUIMethodBindingHelper {
         }
     }
 
-    public void MethodBinding( string name, System.Type supportedOptionalParameterType, GameObject target, ref string methodName ) {
+    public void MethodBinding( string name, System.Type supportedOptionalParameterType, GameObject target, string variableName ) {
         if (target == null) {
             bool oge = GUI.enabled;
             GUI.enabled = false;
@@ -51,6 +51,9 @@ public class tk2dUIMethodBindingHelper {
             GUI.enabled = oge;
             return;
         }
+
+        var property = serializedObject.FindProperty(variableName);
+        var methodName = property.stringValue;
 
         if (displayHelp) {
             GUILayout.BeginVertical("box");
@@ -69,11 +72,15 @@ public class tk2dUIMethodBindingHelper {
         GUILayout.BeginHorizontal();
         int nidx = EditorGUILayout.Popup( name, idx, cachedMethods.ToArray() );
         if (nidx != idx) {
+			GUI.changed = true;
             methodName = cachedMethods[nidx];
+            property.stringValue = methodName;
         }
         if (methodName.Length != 0) {
             if (GUILayout.Button("Clear", EditorStyles.miniButton, GUILayout.ExpandWidth(false))) {
                 methodName = "";
+                property.stringValue = "";
+                GUI.changed = true;
                 HandleUtility.Repaint();
             }
         }
@@ -94,8 +101,21 @@ public class tk2dUIMethodBindingHelper {
     }
 
     static bool displayHelp = false;
+    SerializedObject serializedObject;
+    SerializedObject serializedTargetObject;
 
-    public GameObject BeginMessageGUI(GameObject target) {
+    public void BeginMessageGUI(Object @object, string targetVariableName, Object targetVariableParentObject = null) {
+        if (targetVariableParentObject == null)
+        {
+            targetVariableParentObject = @object;
+        }
+
+        serializedObject = new SerializedObject(@object);
+        serializedTargetObject = new SerializedObject(targetVariableParentObject);
+
+        var property = serializedTargetObject.FindProperty(targetVariableName);
+        var target = property.objectReferenceValue;
+
         tk2dGuiUtility.LookLikeControls();
         GUILayout.BeginHorizontal();
         GUILayout.Label("Send Message", EditorStyles.boldLabel);
@@ -105,15 +125,17 @@ public class tk2dUIMethodBindingHelper {
         EditorGUI.indentLevel++;
         GameObject newSendMessageTarget = EditorGUILayout.ObjectField("Target", target, typeof(GameObject), true, null) as GameObject;
         if (newSendMessageTarget != target) {
-            target = newSendMessageTarget;
+            property.objectReferenceValue = newSendMessageTarget;
             GUI.changed = true;
         }
         EditorGUI.indentLevel++;
-        return target;
     }
 
     public void EndMessageGUI() {
         EditorGUI.indentLevel--;
         EditorGUI.indentLevel--;
+
+        serializedObject.ApplyModifiedProperties();
+        serializedTargetObject.ApplyModifiedProperties();
     }
 }

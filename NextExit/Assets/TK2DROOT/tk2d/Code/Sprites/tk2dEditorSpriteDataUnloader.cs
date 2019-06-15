@@ -1,4 +1,5 @@
-#define ENABLE_UNLOAD_MANAGER
+// #define ENABLE_UNLOAD_MANAGER
+// Disabled, was an old workaround on memory hungry platforms
 
 using UnityEngine;
 using System.Collections;

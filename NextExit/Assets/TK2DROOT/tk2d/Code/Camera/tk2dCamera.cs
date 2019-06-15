@@ -653,10 +653,17 @@ public class tk2dCamera : MonoBehaviour
 		float zoomScale = 1.0f / ZoomFactor;
 
 		// Only need the half texel offset on PC/D3D, when not running in d3d11 mode
+		bool isWebPlayer = false;
+		#if !UNITY_5_4_OR_NEWER
+		isWebPlayer = Application.platform == RuntimePlatform.WindowsWebPlayer;
+		#endif
 		bool needHalfTexelOffset = (Application.platform == RuntimePlatform.WindowsPlayer ||
-						   			Application.platform == RuntimePlatform.WindowsWebPlayer ||
+									isWebPlayer ||
 						   			Application.platform == RuntimePlatform.WindowsEditor);
-		float halfTexel = (halfTexelOffset && needHalfTexelOffset && SystemInfo.graphicsShaderLevel < 40) ? 0.5f : 0.0f;
+
+        // D3D9 No longer supported in Unity 2018
+       bool isDirect3D9Device = false; // SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Direct3D9
+       float halfTexel = (halfTexelOffset && needHalfTexelOffset && isDirect3D9Device) ? 0.5f : 0.0f;
 
 		float orthoSize = settings.cameraSettings.orthographicSize;
 		switch (settings.cameraSettings.orthographicType) {
@@ -787,15 +794,17 @@ public class tk2dCamera : MonoBehaviour
 			// Find an override if necessary
 			Matrix4x4 m = GetProjectionMatrixForOverride( settings, settings.CurrentResolutionOverride, _targetResolution.x, _targetResolution.y, true, out _screenExtents, out _nativeScreenExtents );
 
-#if !(UNITY_3_5 || UNITY_4_0 || UNITY_4_1)
-			// Windows phone?
-			if (Application.platform == RuntimePlatform.WP8Player &&
-			    (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)) {
+			// Windows handheld, rotate as needed.
+			if (
+				(Application.platform == RuntimePlatform.WSAPlayerARM || Application.platform == RuntimePlatform.WSAPlayerX64 || Application.platform == RuntimePlatform.WSAPlayerX86) &&
+				(SystemInfo.deviceType == DeviceType.Handheld) && 
+			    (Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight)
+				) 
+			{
 				float angle = (Screen.orientation == ScreenOrientation.LandscapeRight) ? 90.0f : -90.0f;
 				Matrix4x4 m2 = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, 0, angle), Vector3.one);
 				m = m2 * m;
 			}			
-#endif
 
 			if (unityCamera.projectionMatrix != m) {
 				unityCamera.projectionMatrix = m;

@@ -142,8 +142,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 							GameObject go = new GameObject();
 							go.AddComponent<tk2dFontData>();
 					        tk2dEditorUtility.SetGameObjectActive(go, false);
-							Object p = PrefabUtility.CreateEmptyPrefab(dataObjectPath);
-							PrefabUtility.ReplacePrefab(go, p);
+							PrefabUtility.SaveAsPrefabAsset(go, dataObjectPath);
 							GameObject.DestroyImmediate(go);
 							AssetDatabase.SaveAssets();
 							font.data = AssetDatabase.LoadAssetAtPath(dataObjectPath, typeof(tk2dFontData)) as tk2dFontData;
@@ -157,8 +156,7 @@ namespace tk2dEditor.SpriteCollectionEditor
 							f.data = font.data;
 					        tk2dEditorUtility.SetGameObjectActive(go, false);
 				
-							Object p = PrefabUtility.CreateEmptyPrefab(editorDataPath);
-							PrefabUtility.ReplacePrefab(go, p, ReplacePrefabOptions.ConnectToPrefab);
+							PrefabUtility.SaveAsPrefabAsset(go, editorDataPath);
 							GameObject.DestroyImmediate(go);
 							
 							tk2dFont loadedFont = AssetDatabase.LoadAssetAtPath(editorDataPath, typeof(tk2dFont)) as tk2dFont;
