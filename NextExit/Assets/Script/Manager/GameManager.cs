@@ -40,9 +40,9 @@ public class GameManager : RPGSingleton<GameManager> {
     tk2dSprite m_spriteBtnRight;
     tk2dSprite m_spriteBtnJump;
 
-    Transform m_BtnLeft;
-    Transform m_BtnRight;
-    Transform m_BtnJump;
+    [SerializeField] Transform m_BtnLeft;
+    [SerializeField] Transform m_BtnRight;
+    [SerializeField] Transform m_BtnJump;
 
     /// <summary>
     /// 케릭터. SceneManager에서 셋팅됨.
@@ -102,9 +102,9 @@ public class GameManager : RPGSingleton<GameManager> {
     public RPGLayer EffectLayer { get; set; }
 
 
-    bool IsBtnLeft = false;
-    bool IsBtnRight = false;
-    bool IsBtnJump = false;
+    [SerializeField] bool IsBtnLeft = false;
+    [SerializeField] bool IsBtnRight = false;
+    [SerializeField] bool IsBtnJump = false;
 
     //eGameMode m_GameMode = eGameMode.None;
 

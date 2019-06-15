@@ -1,3 +1,5 @@
+#define RPGSTYLEINPUT
+
 using UnityEngine;
 #if !UNITY_4_6 && !UNITY_4_7 && !UNITY_5_1 && !UNITY_5_2
 using UnityEngine.SceneManagement;
@@ -437,6 +439,12 @@ namespace PlatformerPro
 		{
 			get
 			{
+
+
+#if RPGSTYLEINPUT
+                return PlatformerInputManager.Instance.HorizontalAxisDigital;
+#else
+
 				// Controller
 				if (enableController)
 				{
@@ -458,8 +466,10 @@ namespace PlatformerPro
 				}
 				// Otherwise 0
 				return 0;
-			}
-		}
+#endif
+            }
+
+        }
 
 		/// <summary>
 		/// Return ButtonState.DOWN if the axis state went from <= 0 to 1 or >= 0 to -1.
@@ -590,8 +600,11 @@ namespace PlatformerPro
 		{
 			get
 			{
-				// Controller
-				if (enableController)
+
+
+
+                // Controller
+                if (enableController)
 				{
 					if (altHorizontalAxisName != null && altHorizontalAxisName != "" && altHorizontalAxisName != "none")
 					{
@@ -692,9 +705,13 @@ namespace PlatformerPro
 		{
 			get
 			{
-				return GetStateForKey(jump);
-			}
-		}
+#if RPGSTYLEINPUT
+                return PlatformerInputManager.Instance.JumpButton;
+#else
+                return GetStateForKey(jump);
+#endif
+            }
+        }
 		
 		/// <summary>
 		/// State of the run button.
@@ -933,7 +950,7 @@ namespace PlatformerPro
 			return SaveInputData(dataToLoad);
 		}
 
-		#endregion
+#endregion
 
 	}
 
