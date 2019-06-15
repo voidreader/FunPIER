@@ -72,8 +72,8 @@ public class UI_Main_Prisoner : RPGLayer {
 	void Update()
 	{
 		InputControl();
-		if ( m_adsOn != AdvertisingManager.Instance.AdsOpen )
-			OnAdsButton();
+
+		
 	}
 	
 	void InputControl()
@@ -292,42 +292,12 @@ public class UI_Main_Prisoner : RPGLayer {
 	public void OnBtnNoads()
 	{
 
-		Popup_RemoveAds.show();
+		
 	}
 
 	public void OnAdsButton() {
 
-        buttonNoads.gameObject.SetActive(AdvertisingManager.Instance.adsOnCheck);
 
-
-        /*
-        m_adsOn = AdvertisingManager.Instance.AdsOpen;
-        if (m_adsOn)
-        {
-            // 광고 구매 가능
-            buttonNoads.gameObject.SetActive(true);
-
-            // 광고를 이미 구매하였고 만료된 경우에 팝업을 노출합니다.
-            if (AdvertisingManager.Instance.IsReBuyAD)
-            {
-                AdvertisingManager.Instance.IsReBuyAD = false;
-
-                MessageBox box = MessageBox.show();
-                box.setMessage(DefineMessage.getMsg(10013));
-                box.addYesButton((b) =>
-                {
-                    b.Close();
-                    Popup_RemoveAds.show();
-                });
-                box.addNoButton();
-                box.addCloseButton();
-            }
-        }
-        else // 광고 구매 불가
-            buttonNoads.gameObject.SetActive(false);
-
-		//buttonNoads.gameObject.SetActive( AdvertisingManager.Instance.AdsOpen );
-        */
 	}
 
 	public void OnStageClick( Item_StageInfo_Main _stageNum )
@@ -447,26 +417,7 @@ public class UI_Main_Prisoner : RPGLayer {
 	public void OnRankCliock()
 	{
 		
-#if UNITY_ANDROID
-		AndroidManager.GetInstance.ShowLeaderboardUI();
-#elif UNITY_IOS
-        //YSY::추후에는 소셜클래스를 생성해서 처리 할 것.
-        if (Social.localUser.authenticated == false)
-        {
-            Social.localUser.Authenticate((bool success) =>
-            {
-                if (success)
-                {
-                    // Sign In 성공
-                    // 바로 리더보드 UI 표시 요청
-                    UnityEngine.SocialPlatforms.GameCenter.GameCenterPlatform.ShowLeaderboardUI("Score_Leaderboard", UnityEngine.SocialPlatforms.TimeScope.AllTime);
-                    return;
-                }
-            });
-        }
-        else
-            UnityEngine.SocialPlatforms.GameCenter.GameCenterPlatform.ShowLeaderboardUI("Score_Leaderboard", UnityEngine.SocialPlatforms.TimeScope.AllTime);
-#endif
+
 	}
 
 	private IEnumerator C_StageMoveAction( bool _r )
@@ -575,6 +526,6 @@ public class UI_Main_Prisoner : RPGLayer {
 	}
 
     public void CheckNoAds() {
-        buttonNoads.gameObject.SetActive(AdvertisingManager.Instance.adsOnCheck);
+        
     }
 }

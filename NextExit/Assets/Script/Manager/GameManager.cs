@@ -213,7 +213,7 @@ public class GameManager : RPGSingleton<GameManager> {
 		DataSaveManager.Instance.DataInit();
 		
 		LoadChar( DataSaveManager.Instance.CharId );
-		AdvertisingManager.Instance.AdInit();
+		// AdvertisingManager.Instance.AdInit();
 		RPGSceneManager.Instance.InitScene();
 
 		UI_Main_Prisoner.show();
@@ -221,7 +221,7 @@ public class GameManager : RPGSingleton<GameManager> {
         StartCoroutine("cPlayerTimer");
 
 
-        AndroidManager.GetInstance.Init();
+        
 
 
     }
@@ -671,7 +671,7 @@ public class GameManager : RPGSingleton<GameManager> {
                     m_deathCountAds = 0;
                     m_adsprobability = 0;
 
-                    AdvertisingManager.Instance.ShowRewardedAd();
+                    // AdvertisingManager.Instance.ShowRewardedAd();
 
                 }
 

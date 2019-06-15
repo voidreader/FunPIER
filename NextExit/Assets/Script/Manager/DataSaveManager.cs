@@ -288,28 +288,10 @@ public class DataSaveManager : RPGSingleton<DataSaveManager> {
 	}
 	void Update()
 	{
-        if (!scoreLeaderboard && m_LeaderboardScoreList.Count > 0)
-        {
-            scoreLeaderboard = true;
-
-            //AndroidManager.GetInstance.SetScore(m_LeaderboardScoreList[0], null, OnSetScoreCompletion);
-
-            GooglePlayManager.ActionScoreSubmited += OnSetScoreCompletion;
-
-#if UNITY_EDITOR
-#elif UNITY_ANDROID
-			AndroidManager.GetInstance.SetScore( m_LeaderboardScoreList[0], null);
-#elif UNITY_IOS
-            Social.ReportScore(m_LeaderboardScoreList[0], "Score_Leaderboard", OnSetScoreCompletion);
-#endif
-        }
+        
 	}
-	private void OnSetScoreCompletion(GP_LeaderboardResult result)	{
-        GooglePlayManager.ActionScoreSubmited -= OnSetScoreCompletion;
+	
 
-        m_LeaderboardScoreList.Remove( m_LeaderboardScoreList[0] );
-		scoreLeaderboard = false;
-	}
 
 
 
