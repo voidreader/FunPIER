@@ -577,14 +577,7 @@ public class DataSaveManager : RPGSingleton<DataSaveManager> {
 				}
 			}
 		}
-#if UNITY_EDITOR
-#elif UNITY_ANDROID
-		for ( int index = 0; index < googleQuestIdList.Count; ++index )
-			AndroidManager.GetInstance.AchievementStepUp( googleQuestIdList[index]);
-#elif UNITY_IOS
-        for (int index = 0; index < googleQuestIdList.Count; ++index)
-            Social.ReportProgress(googleQuestIdList[index], 100f, QuestCallBack);
-#endif
+
 
         m_questData.SaveData();
 	}

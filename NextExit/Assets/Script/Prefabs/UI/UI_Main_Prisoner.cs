@@ -263,29 +263,6 @@ public class UI_Main_Prisoner : RPGLayer {
 
 	public void OnBtnWork()
 	{
-		
-#if UNITY_EDITOR
-#elif UNITY_ANDROID
-		AndroidManager.GetInstance.ShowAchievementsUI();
-#elif UNITY_IOS
-        //YSY::추후에는 소셜클래스를 생성해서 처리 할 것.
-        if (Social.localUser.authenticated == false)
-        {
-            Social.localUser.Authenticate((bool success) =>
-            {
-                if (success)
-                {
-                    // Sign In 성공
-                    // 바로 리더보드 UI 표시 요청
-                    Social.ShowAchievementsUI();
-                    return;
-                }
-            });
-        }
-        else
-            Social.ShowAchievementsUI();
-
-#endif
 
     }
 
