@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c58705f215734483496dce8c227ce840, type: 3}
   m_Name: AN_Settings
   m_EditorClassIdentifier: 
-  LastVersionCode: 2019.4.13
-  UseUnityJarResolver: 1
+  LastVersionCode: 
+  UseUnityJarResolver: 0
   ManifestManagement: 1
   LogLevel:
     Info: 1
@@ -24,12 +24,13 @@ MonoBehaviour:
   Vending: 0
   Contacts: 0
   Social: 0
-  GooglePlay: 1
+  GooglePlay: 0
   CameraAndGallery: 0
   MediaPlayer: 0
   LocalNotifications: 0
   SkipPermissionsDialog: 0
-  RSAPublicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnr5k8+fJelwr3yqoejISxLTJaRFhdacwgoqhFKj0QzGe9z0NqKZuWx5EF3Zqd9GSofjjUZX8j35PlzRsYDLIwtgxWmyJ+qmtGwWPZEnWIUwcr26XxFlx/63Vn20XgU2+B+zA/ju2kWj1qcTJ5xElyS894KOf4EW14w94ZEzHA+JIzwEzO5l+ZTZ5e9Ls9BV7YmZ4SSLHdlBrOxgcPk38++t48QR4uEmdngUaPtYc4tr0PW17XZDkaV4dCHbezo6VSSd722VOKshAwK84Xxvgb9j2nBI+sr+1UjTY1OIctw7F452UinlVpMQNhvMjAqNTA+zdVGntysOjP90ZdBLlUQIDAQAB
+  RSAPublicKey: Base64-encoded RSA public key to include in your binary. Please remove
+    any spaces.
   InAppProducts: []
   Licensing: 0
   GooglePlayGamesAPI: 1

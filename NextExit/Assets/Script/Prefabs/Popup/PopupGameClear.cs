@@ -264,6 +264,18 @@ public class PopupGameClear : RPGLayer
 			Time.timeScale = defaultTimeScale;
 			GameManager.Instance.ReStart( false );
 		}
+
+        
+        
+        if(GameManager.Instance.StageNumber - 2 > 15) {
+            int r = UnityEngine.Random.Range(0, 100);
+            Debug.Log("! Next Stage Go! :: "  + r);
+            if (r <= 20) {
+                Debug.Log("Call Show Pick");
+                AdmobManager.main.ShowPick();
+            }
+        }
+
 		
     }
 

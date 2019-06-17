@@ -263,7 +263,7 @@ public class UI_Main_Prisoner : RPGLayer {
 
 	public void OnBtnWork()
 	{
-
+        Application.OpenURL("https://www.pier-showcase.com/policy/nextexit_privacy_policy.html");
     }
 
 	public void OnBtnNoads()

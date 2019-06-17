@@ -657,27 +657,17 @@ public class GameManager : RPGSingleton<GameManager> {
     {
         // 죽어서 리셋되는 경우.
         if (IsDeath) {
+
+            
+
             CountDeath++;
 			m_deathCountAds++;
 
-			if ( m_deathCountAds > 5 )	{
-
-                // 5데스 이후부터 광고 등장 확률이 5%씩 증가. 
-                // 6데스 = 5, 7데스 = 10
-                m_adsprobability = (m_deathCountAds - 5) * 5; 
-
-                if(Random.Range(0, 100) <= m_adsprobability ) {
-
-                    m_deathCountAds = 0;
-                    m_adsprobability = 0;
-
-                    // AdvertisingManager.Instance.ShowRewardedAd();
-
-                }
+            Debug.Log("StageNumber/DeathCount :: " + StageNumber + "/" + CountDeath);
+            CheckAdPossibility();
 
 
-			}
-			HPlayerPrefs.SetInt( _Key_DeathCountAds, m_deathCountAds );
+            HPlayerPrefs.SetInt( _Key_DeathCountAds, m_deathCountAds );
         }
         else {
             // 처음부터 재시작 되는 경우.
@@ -688,6 +678,30 @@ public class GameManager : RPGSingleton<GameManager> {
         TextDeath.Text = CountDeath.ToString();
 		PrintTime();
         startInGameReady(PlayMode);
+    }
+
+    void CheckAdPossibility() {
+
+        int stagenum = StageNumber - 2;
+        int death = CountDeath;
+
+        Debug.Log("Check Ad Possibility!! :: " + stagenum + "/" + death);
+
+        if(stagenum <= 35) {
+            if(death % 5 == 0) {
+                AdmobManager.main.ShowInterstitial();
+            }
+        }
+        else if(stagenum >35 && stagenum <= 50) {
+            if(death % 7 == 0) {
+                AdmobManager.main.ShowInterstitial();
+            }
+        }
+        else {
+            if (death % 10 == 0) {
+                AdmobManager.main.ShowInterstitial();
+            }
+        }
     }
 
 	/**/
