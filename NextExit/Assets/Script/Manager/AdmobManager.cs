@@ -54,6 +54,9 @@ public class AdmobManager : MonoBehaviour
     #region 전면배너 
 
     public void ShowInterstitial() {
+
+        Debug.Log("ShowInterstitial :: " + this.interstitial.IsLoaded());
+
         if (this.interstitial.IsLoaded()) {
             this.interstitial.Show();
         }
@@ -64,7 +67,7 @@ public class AdmobManager : MonoBehaviour
 
     private void RequestInterstitial() {
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+        string adUnitId = "ca-app-pub-8118299571958162/9507007208";
 #elif UNITY_IPHONE
         string adUnitId = "ca-app-pub-3940256099942544/4411468910";
 #else
@@ -120,7 +123,10 @@ public class AdmobManager : MonoBehaviour
     #region 동영상 광고
 
     public void ShowVideoAD() {
-        if(rewardedAd.IsLoaded()) {
+
+        Debug.Log("ShowVideoAD :: " + this.rewardedAd.IsLoaded());
+
+        if (rewardedAd.IsLoaded()) {
             rewardedAd.Show();
         }
         else {
@@ -131,7 +137,7 @@ public class AdmobManager : MonoBehaviour
     public void RequestRewardVideo() {
         string adUnitId;
 #if UNITY_ANDROID
-        adUnitId = "ca-app-pub-3940256099942544/5224354917";
+        adUnitId = "ca-app-pub-8118299571958162/9315435514";
 #elif UNITY_IPHONE
             adUnitId = "ca-app-pub-3940256099942544/1712485313";
 #else

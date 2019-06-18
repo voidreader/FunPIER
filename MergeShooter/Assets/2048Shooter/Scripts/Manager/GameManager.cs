@@ -125,7 +125,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
-        /*
+        
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
         var dependencyStatus = task.Result;
         if (dependencyStatus == Firebase.DependencyStatus.Available) {
@@ -140,7 +140,7 @@ public class GameManager : MonoSingleton<GameManager>
             // Firebase Unity SDK is not safe to use here.
         }
         });
-        */
+        
 
         // Log an event with no parameters.
         //Firebase.Analytics.FirebaseAnalytics
