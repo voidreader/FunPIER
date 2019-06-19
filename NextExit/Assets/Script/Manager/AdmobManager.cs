@@ -18,14 +18,16 @@ public class AdmobManager : MonoBehaviour
     private InterstitialAd interstitial;
     private RewardedAd rewardedAd;
 
-    
 
+    private void Awake() {
+        main = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
 
-        main = this;
+        
 
 
 #if UNITY_ANDROID
@@ -36,10 +38,13 @@ public class AdmobManager : MonoBehaviour
             string appId = "unexpected_platform";
 #endif
 
+        Debug.Log("Admob Init :: " + appId);
+
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appId);
 
         RequestInterstitial();
+        RequestRewardVideo();
         
     }
 
@@ -58,6 +63,7 @@ public class AdmobManager : MonoBehaviour
         Debug.Log("ShowInterstitial :: " + this.interstitial.IsLoaded());
 
         if (this.interstitial.IsLoaded()) {
+            IsCoolingPauseAds = true;
             this.interstitial.Show();
         }
         else {
@@ -73,6 +79,8 @@ public class AdmobManager : MonoBehaviour
 #else
         string adUnitId = "unexpected_platform";
 #endif
+
+        Debug.Log("RequestInterstitial Init :: " + adUnitId);
 
         // Initialize an InterstitialAd.
         this.interstitial = new InterstitialAd(adUnitId);
@@ -97,25 +105,25 @@ public class AdmobManager : MonoBehaviour
     }
 
     public void HandleOnAdLoaded(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdLoaded event received");
+        Debug.Log("HandleAdLoaded event received");
     }
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) {
-        MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
+        Debug.Log("HandleFailedToReceiveAd event received with message: "
                             + args.Message);
     }
 
     public void HandleOnAdOpened(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdOpened event received");
+        Debug.Log("HandleAdOpened event received");
     }
 
     public void HandleOnAdClosed(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdClosed event received");
+        Debug.Log("HandleAdClosed event received");
         RequestInterstitial();
     }
 
     public void HandleOnAdLeavingApplication(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleAdLeavingApplication event received");
+        Debug.Log("HandleAdLeavingApplication event received");
     }
     #endregion
 
@@ -127,6 +135,7 @@ public class AdmobManager : MonoBehaviour
         Debug.Log("ShowVideoAD :: " + this.rewardedAd.IsLoaded());
 
         if (rewardedAd.IsLoaded()) {
+            IsCoolingPauseAds = true;
             rewardedAd.Show();
         }
         else {
@@ -135,6 +144,9 @@ public class AdmobManager : MonoBehaviour
     }
 
     public void RequestRewardVideo() {
+
+        
+
         string adUnitId;
 #if UNITY_ANDROID
         adUnitId = "ca-app-pub-8118299571958162/9315435514";
@@ -144,6 +156,7 @@ public class AdmobManager : MonoBehaviour
             adUnitId = "unexpected_platform";
 #endif
 
+        Debug.Log("RequestRewardVideo Init :: " + adUnitId);
         this.rewardedAd = new RewardedAd(adUnitId);
 
         // Called when an ad request has successfully loaded.
@@ -167,38 +180,63 @@ public class AdmobManager : MonoBehaviour
 
 
     public void HandleRewardedAdLoaded(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleRewardedAdLoaded event received");
+        Debug.Log("HandleRewardedAdLoaded event received");
     }
 
     public void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs args) {
-        MonoBehaviour.print(
+        Debug.Log(
             "HandleRewardedAdFailedToLoad event received with message: "
                              + args.Message);
     }
 
     public void HandleRewardedAdOpening(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleRewardedAdOpening event received");
+        Debug.Log("HandleRewardedAdOpening event received");
     }
 
     public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args) {
-        MonoBehaviour.print(
+        Debug.Log(
             "HandleRewardedAdFailedToShow event received with message: "
                              + args.Message);
     }
 
     public void HandleRewardedAdClosed(object sender, EventArgs args) {
-        MonoBehaviour.print("HandleRewardedAdClosed event received");
+        Debug.Log("HandleRewardedAdClosed event received");
         RequestRewardVideo();
     }
 
     public void HandleUserEarnedReward(object sender, Reward args) {
         string type = args.Type;
         double amount = args.Amount;
-        MonoBehaviour.print(
+        Debug.Log(
             "HandleRewardedAdRewarded event received for "
                         + amount.ToString() + " " + type);
     }
     #endregion
+
+    bool _isCoolingPauseAds = false;
+    public bool IsCoolingPauseAds { get => _isCoolingPauseAds; set => _isCoolingPauseAds = value; }
+    private void OnApplicationPause(bool pause) {
+        if(pause) {
+            return;
+        }
+
+        if (AdmobManager.main == null)
+            return;
+
+        if (IsCoolingPauseAds) {
+            StartCoroutine(CoolingPauseADs());
+            return;
+        }
+
+
+        // 전면 배너 오픈 
+        ShowInterstitial();
+    }
+
+    IEnumerator CoolingPauseADs() {
+        yield return new WaitForSeconds(3);
+        IsCoolingPauseAds = false;
+    }
 
 
 }

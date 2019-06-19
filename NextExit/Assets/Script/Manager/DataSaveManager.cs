@@ -119,7 +119,7 @@ public class DataSaveManager : RPGSingleton<DataSaveManager> {
 				{
 					//Debug.Log( dic["GOOGLE_QUEST_ID"].ToString() );
 					string questId = dic["QUEST_ID"].ToString();
-					Debug.Log( "questId : " + questId );
+					// Debug.Log( "questId : " + questId );
 					string complete = "N";
 					Dictionary<string, object> questInfo = new Dictionary<string, object>();
 					questInfo.Add( "QUEST_ID", questId );
@@ -134,7 +134,7 @@ public class DataSaveManager : RPGSingleton<DataSaveManager> {
 			if ( m_QuestInfoList != null )
 				m_QuestInfoList.Clear();
 			string result = HPlayerPrefs.GetString( cPlayerPrefsKey.QuestDataInfo );
-			Debug.Log( "result : " + result );
+			// Debug.Log( "result : " + result );
 			JSONObject json_result = new JSONObject( result );
 			Dictionary<string, object> info = RPGDefine.JsonToDictionary( json_result );
 			Dictionary<string, object> questInfo = RPGDefine.JsonToDictionary( new JSONObject( info["info"].ToString() ) );
@@ -566,7 +566,7 @@ public class DataSaveManager : RPGSingleton<DataSaveManager> {
 					float per = 0f;
 					if ( CheckQuestComplete( questType, value, out per ) )
 					{
-						Debug.Log( "questId : " + questId );
+						// Debug.Log( "questId : " + questId );
 						m_questData.QuestComplete( questId );
 #if UNITY_ANDROID
 						googleQuestIdList.Add( dic["GOOGLE_QUEST_ID"].ToString() );
