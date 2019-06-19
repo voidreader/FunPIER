@@ -43,6 +43,8 @@ public class NENetworkManager : RPGSingleton<NENetworkManager> {
 
     public override void Init()
     {
+        Debug.Log("NENetworkManager #1");
+
         base.Init();
 
         Gold = 0;
@@ -81,6 +83,9 @@ public class NENetworkManager : RPGSingleton<NENetworkManager> {
 #elif UNITY_ANDROID
         WebConnector.Instance.CommonRequest.os = rpgames.game.CommonRequest.OS.Android;
 #endif
+
+
+        Debug.Log("NENetworkManager #2");
     }
 
     public void request_login(System.Action<WebObject> selector)

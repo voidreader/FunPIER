@@ -15,8 +15,8 @@ public class AdmobManager : MonoBehaviour
     public string appID_Android = string.Empty;
     public string appID_iOS = string.Empty;
 
-    private InterstitialAd interstitial;
-    private RewardedAd rewardedAd;
+    private InterstitialAd interstitial = null;
+    private RewardedAd rewardedAd = null;
 
 
     private void Awake() {
@@ -60,7 +60,14 @@ public class AdmobManager : MonoBehaviour
 
     public void ShowInterstitial() {
 
+        if (AdmobManager.main == null)
+            return;
+
+        if (this.interstitial == null)
+            return;
+
         Debug.Log("ShowInterstitial :: " + this.interstitial.IsLoaded());
+ 
 
         if (this.interstitial.IsLoaded()) {
             IsCoolingPauseAds = true;
@@ -131,6 +138,9 @@ public class AdmobManager : MonoBehaviour
     #region 동영상 광고
 
     public void ShowVideoAD() {
+
+        if (AdmobManager.main == null)
+            return;
 
         Debug.Log("ShowVideoAD :: " + this.rewardedAd.IsLoaded());
 

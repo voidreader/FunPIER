@@ -44,6 +44,8 @@ public class GameManager : RPGSingleton<GameManager> {
     [SerializeField] Transform m_BtnRight;
     [SerializeField] Transform m_BtnJump;
 
+    public List<TextAsset> _listMaps;
+
     /// <summary>
     /// 케릭터. SceneManager에서 셋팅됨.
     /// </summary>
@@ -171,6 +173,9 @@ public class GameManager : RPGSingleton<GameManager> {
 
     public override void Init()
     {
+
+        Debug.Log("GameManager Init #1");
+
 		is_Test = false;
         base.Init();
         if (UICamera == null)
@@ -189,6 +194,8 @@ public class GameManager : RPGSingleton<GameManager> {
 
         exitInGame();
 
+        Debug.Log("GameManager Init #2");
+
         // 스테이지 목록을 생성합니다.
         StageList.Clear();
 
@@ -198,18 +205,42 @@ public class GameManager : RPGSingleton<GameManager> {
         // 데이터 압축해제.
         string stageData = Zipper.UnzipString(compressData);
 
+        Debug.Log("GameManager Init #3");
+
+
         // json 변환.
         JSONObject json = new JSONObject(stageData);
         // dictionary 변환.
         ArrayList list = json.ToArray();
 
-        foreach (string str in list)
-        {
+        Debug.Log("GameManager Init #4 :: " + list.Count);
+        TextAsset map;
+        foreach (string str in list) {
+
+            map = null;
+            // Debug.Log(str);
+            for(int i =0; i<_listMaps.Count;i++) {
+                if (_listMaps[i].name == str) {
+                    map = _listMaps[i];
+                    break;
+                }
+            }
+
+            if(map != null)
+                StageList.Add(BlockManager.MapDataToList(map.text));
+
+            /*
             TextAsset obj = Resources.Load<TextAsset>(GameConfig._SaveFileResPath + str);
+
             if (obj)
                 StageList.Add(BlockManager.MapDataToList(obj.text));
+            */
         }
+
+
+
         TotalStage = StageList.Count;
+        Debug.Log("GameManager Init #5 TotalStage :: " + TotalStage);
 		DataSaveManager.Instance.DataInit();
 		
 		LoadChar( DataSaveManager.Instance.CharId );
@@ -221,8 +252,8 @@ public class GameManager : RPGSingleton<GameManager> {
         StartCoroutine("cPlayerTimer");
 
 
-        
 
+        Debug.Log("GameManager Init #6");
 
     }
 	public void LoadChar( string _charId )

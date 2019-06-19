@@ -82,6 +82,9 @@ public class RPGSheetManager : RPGSingleton<RPGSheetManager>
 	/// </summary>
 	public void startGetInfo( EndLoadingDelegate endEvent = null )
 	{
+
+        Debug.Log("RPGSheetManager startGetInfo #1 ");
+
 		if ( endEvent != null )
 			m_EndEvent = endEvent;
 		// 이미 시트를 읽어온 상태라면 읽어오지 않습니다.
@@ -103,7 +106,9 @@ public class RPGSheetManager : RPGSingleton<RPGSheetManager>
 		}
 
 		endLoading();
-	}
+
+        Debug.Log("RPGSheetManager startGetInfo #2 ");
+    }
 
 	void endLoading()
 	{
