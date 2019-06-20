@@ -68,6 +68,19 @@ public class BlockManager : RPGSingleton<BlockManager> {
         return blockList;
     }
 
+    public static ArrayList MapDateToListDecrypted(string map) {
+        JSONObject json = new JSONObject(map);
+        //Debug.Log( "json : " + json.print() );
+        // dictionary 변환.
+        Dictionary<string, object> data = json.ToDictionary();
+        // 버전정보.
+        string version = data["version"].ToString();
+        //Debug.Log("mapData version = " + version);
+        // array로 변환.
+        ArrayList blockList = data["block"] as ArrayList;
+        return blockList;
+    }
+
     /*
 	// Use this for initialization
 	void Start () {
