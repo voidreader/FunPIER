@@ -44,8 +44,8 @@ public class GameManager : RPGSingleton<GameManager> {
     [SerializeField] Transform m_BtnRight;
     [SerializeField] Transform m_BtnJump;
 
-    public List<TextAsset> _listMaps;
-    public List<TextAsset> listDeMaps;
+    // public List<TextAsset> _listMaps;
+    // public List<TextAsset> listDeMaps;
 
     /// <summary>
     /// 케릭터. SceneManager에서 셋팅됨.
@@ -210,15 +210,16 @@ public class GameManager : RPGSingleton<GameManager> {
 
 
         // json 변환.
-        JSONObject json = new JSONObject(stageData);
+        // JSONObject json = new JSONObject(stageData);
         // dictionary 변환.
-        ArrayList list = json.ToArray();
+        // ArrayList list = json.ToArray();
 
-        Debug.Log("GameManager Init #4 :: " + list.Count);
+        Debug.Log("GameManager Init #4");
 
 
 
-        
+
+        /*
         TextAsset map;
 
         for (int i = 0; i < listDeMaps.Count; i++) {
@@ -226,6 +227,8 @@ public class GameManager : RPGSingleton<GameManager> {
             StageList.Add(BlockManager.MapDateToListDecrypted(map.text));
             
         }
+        */
+        StageList = TitleCtrl.main.StageList;
 
         /*
         foreach (string str in list) {
