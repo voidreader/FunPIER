@@ -20,7 +20,7 @@ public class PopupReview : RPGLayer
 
 	public override void init()
 	{
-		textM.Text = DefineMessage.getMsg( 10012 );
+		// textM.Text = DefineMessage.getMsg( 10012 );
 		base.init();
 		StartCoroutine( C_StartAction() );
 	}
@@ -93,14 +93,9 @@ public class PopupReview : RPGLayer
 	{
 		if ( m_action )
 			return;
-#if UNITY_ANDROID
-		if ( GameConfig.Market == GameConfig.eMarketType.Google )
-			Application.OpenURL( "market://details?id=pier.rpg.android.nextexit" );
-		else if ( GameConfig.Market == GameConfig.eMarketType.OnStore )
-			Application.OpenURL( "onestore://common/product/OA00719075?view_type=1" );
-#elif UNITY_IOS 
-		Application.OpenURL( "https://itunes.apple.com/us/app/nextexit/id1272683032?l=ko&ls=1&mt=8" );
-#endif
+
+        Application.OpenURL("http://onelink.to/he8tqx");
+
 		GameManager.Instance.SetReview( true );
 		m_action = true;
 		StartCoroutine( C_EndAction() );

@@ -146,6 +146,11 @@ public class Player : MonoBehaviour {
             }
         }
         */
+
+        // TEst
+        if(UnityEngine.Input.GetKeyDown(KeyCode.N)) {
+            StartCoroutine(NextFrame(() => { GameManager.Instance.ShowGameClear(); }, 0));
+        }
     }
 
     public void KeyDown(KeyCode code)
