@@ -33,6 +33,14 @@ public class GameManager : MonoBehaviour
     Enemy enemy;
     Player player;
 
+    #region InGame Vars
+
+    public bool isEntering = false;
+    [SerializeField] SpriteRenderer _whiteBox, _nightBox, _botGround; // 배경 스플래쉬 및 낮밤 바꾸기 용도 
+
+
+    #endregion
+
 
     private void Awake() {
         main = this;
@@ -41,7 +49,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // InitGame();
+        InitGame();
     }
 
     // Update is called once per frame
@@ -74,17 +82,19 @@ public class GameManager : MonoBehaviour
 
         listStairs = new List<Stair>();
 
+        // 6개의 계단 생성
         for(int i=0; i<6; i++) {
             InsertNewStair();
         }
 
         // 가장 하단 계단을 플레이어 위치로
         // 두번째 계단에 적 설정 
+        // currentStair는 항상 적이 등장하는 계단. 
         currentStair = listStairs[indexPlayerStair+1];
 
         // 적 생성 
-        enemy = GetNewEnemy();
-        currentStair.SetEnemey(enemy);
+        // enemy = GetNewEnemy();
+        // currentStair.SetEnemey(enemy);
 
 
         // 플레이어 생성
@@ -95,8 +105,22 @@ public class GameManager : MonoBehaviour
 
     } // end of InitGame
 
+
+    /// <summary>
+    /// 일반적 생성 
+    /// </summary>
+    public void SpawnNormalEnemy() {
+        enemy = GetNewEnemy();
+        currentStair.SetEnemyWithMove(enemy);
+    }
+
+    /// <summary>
+    /// 게임 시작 클릭!
+    /// </summary>
     public void OnClickPlay() {
         isPlaying = true;
+
+        StartCoroutine(EnteringMission());
         StartCoroutine(PlayRoutine());
 
         Debug.Log("OnClickPlay is clicked");
@@ -104,13 +128,53 @@ public class GameManager : MonoBehaviour
 
     #region Routine 
 
+    void EnterMission() {
+        Debug.Log("EnterMission Start");
+    }
+
+    IEnumerator EnteringMission() {
+
+        isEntering = true;
+        _nightBox.color = new Color(1, 1, 1, 0);
+        _nightBox.transform.localPosition = new Vector3(0, 20, 0);
+        _nightBox.gameObject.SetActive(true);
+        _nightBox.DOColor(new Color(1, 1, 1, 1), 0.5f);
+        _nightBox.transform.DOLocalMoveY(0, 0.5f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        _botGround.color = new Color(1, 1, 1, 0);
+        _botGround.transform.localPosition = new Vector3(0, -12, 0);
+        _botGround.gameObject.SetActive(true);
+        _botGround.DOColor(new Color(1, 1, 1, 1), 0.5f);
+        _botGround.transform.DOLocalMoveY(-4f, 0.5f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        isEntering = false;
+
+
+    }
+
     /// <summary>
     /// 한번의 플레이 세션 
     /// </summary>
     /// <returns></returns>
     IEnumerator PlayRoutine() {
 
-        while(isPlaying) {
+
+        // 게임 시작 연출 끝날때까지 기다린다. 
+        while(isEntering) {
+            yield return null;
+        }
+
+        // 연출 끝나면 첫번째 적 등장 
+        SpawnNormalEnemy();
+
+        // 조준 시작
+        player.Aim();
+
+        while (isPlaying) {
 
             // 대기중.. 
             while (isPause) {
@@ -158,7 +222,7 @@ public class GameManager : MonoBehaviour
         MoveMainCamera(GetDistance(listStairs[indexPlayerStair].transform.position.y, currentStair.transform.position.y));
         InsertNewStair(); // 새 계단 생성
 
-        while(player.isMoving) {
+        while(Player.isMoving) {
             yield return null;
         }
 
@@ -250,7 +314,7 @@ public class GameManager : MonoBehaviour
         // 좌우 체크
         if (indexStair % 2 == 0) { // 오른쪽 
             posX = Random.Range(2.9f, 3.5f);
-            posY = topStairY + Random.Range(0.8f, 2.2f);
+            posY = topStairY + Random.Range(0.4f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽

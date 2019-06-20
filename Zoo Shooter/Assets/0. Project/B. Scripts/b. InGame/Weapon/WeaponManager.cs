@@ -1,87 +1,136 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
-public class WeaponManager : MonoBehaviour
-{
-    public bool _isAimPossible = false;
-    private Quaternion _startAimRotation;
+public class WeaponManager : MonoBehaviour {
 
-    public bool _UpAiming = true;
-    public bool _isLeft = false;
-    public float _aimSpeed;
+    public static Action ShootAction;
+    public static Action InitAction;
 
-    public Transform GunPointTransform;
+    private Weapon _currenWeapon;
+    public AimController CurrentAim;
+    public SpriteRenderer CurentWeaponRenderer;
+    public Transform GunpointTransform;
     public GameObject BulletPrefab;
-    int _direction = -1;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private int _bulletsCount;
+    private int _direction;
+
+    public static float StartAimDistance;
+
+    private void OnEnable() {
+        ShootAction += Shoot;
+        InitAction += Init;
     }
 
-    public void StartAim(bool left) {
-        _startAimRotation = this.transform.rotation;
-        _isAimPossible = true;
-        _UpAiming = true;
-        _isLeft = left;
+    private void OnDisable() {
+        ShootAction -= Shoot;
+        InitAction -= Init;
     }
 
-    // Update is called once per frame
-    void Update() {
-        if (!_isAimPossible)
-            return;
+    private void Start() {
+        InitAction();
+    }
 
-        if(_UpAiming) {
-            transform.Rotate(Vector3.back * Time.deltaTime * _aimSpeed); // 위로 들기 
-        }
-        else {
-            transform.Rotate(-Vector3.back * Time.deltaTime * _aimSpeed); // 아래로 내리기 
-        }
-
-        CheckRotateRange();
-
-
+    /// <summary>
+    /// 무기 초기화 
+    /// </summary>
+    public void Init() {
+        _currenWeapon = Stocks.main.ListWeapons[0];
+        CurrentAim.AimSpeed = _currenWeapon.AimSpeed;
+        CurrentAim.AimRange = _currenWeapon.WeaponRange;
+        CurentWeaponRenderer.sprite = _currenWeapon.WeaponSprite;
+        _bulletsCount = _currenWeapon.BulletsCount;
+        StartAimDistance = _currenWeapon.StartAimLineDistance;
+        CurrentAim.Init();
+        _direction = -1;
     }
 
     public void Shoot() {
+        switch (_currenWeapon.CurrentType) {
+            case Weapon.WeaponType.Gun:
+                ShootWithGun();
+                break;
+            case Weapon.WeaponType.Shotgun:
+                StartCoroutine(ShootWithShotgun());
+                break;
+            case Weapon.WeaponType.MachineGun:
+                StartCoroutine(ShootWithMachineGun());
+                break;
+        }
 
-        /*
-        _direction *= -1;
-        PlayerBullet newBullet = GameObject.Instantiate(BulletPrefab, null, false).GetComponent<PlayerBullet>();
-        newBullet.transform.position = GunPointTransform.position;
-        */
+        Invoke("Reload", 1f);
+    }
 
+    void ShotBullet() {
         PlayerBullet b = GameObject.Instantiate(BulletPrefab, null, false).GetComponent<PlayerBullet>();
-        b.transform.position = GunPointTransform.position;
+        b.transform.position = GunpointTransform.position;
         b.transform.rotation = Quaternion.identity;
         // b.transform.rotation = this.transform.rotation;
 
         b.AddBulletForce(transform, _direction);
-        // BulletPrefab.transform.rotation = this.transform.rotation;
-        // newBullet.AddBulletForce(transform, _direction);
-        // Bullet b = Instantiate()
     }
 
-    void CheckRotateRange() {
-        if(_UpAiming) {
 
-            // Debug.Log("eulerAngles z :: " + transform.rotation.z);
-            if (transform.rotation.z < -0.4f) {
-                // Debug.Log("Change Aim Direction");
-                _UpAiming = false;
-                transform.eulerAngles = new Vector3(0, 0, -40);
-            }
+    /// <summary>
+    /// 단발형 총 발사 
+    /// </summary>
+    private void ShootWithGun() {
+        _direction *= -1;
+        // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
+        // Bullet newBullet = Instantiate(BulletPrefab, null, false);
+        ShotBullet();
+        // newBullet.transform.position = GunpointTransform.position;
+        // newBullet.AddBulletForce(transform, _direction);
+        AimController.Wait = true;
+    }
 
+    /// <summary>
+    /// 샷건 발사 
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ShootWithShotgun() {
+        _direction *= -1;
+        // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
+        for (int i = 0; i < _bulletsCount; i++) {
+            /*
+            float randPos = UnityEngine.Random.Range(-0.1f, 0.1f);
+            Bullet newBullet = Instantiate(BulletPrefab, null, false);
+            newBullet.transform.position = new Vector2(GunpointTransform.position.x, GunpointTransform.position.y + randPos * i);
+            newBullet.AddBulletForce(transform, _direction);
+            */
+            ShotBullet();
+            yield return new WaitForSeconds(0.01f);
         }
-        else {
-            if (transform.rotation.z > 0) {
-                _UpAiming = true;
-                transform.eulerAngles = new Vector3(0, 0, 0);
-            }
+        AimController.Wait = true;
+    }
 
+    /// <summary>
+    /// 머신건 발사 
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ShootWithMachineGun() {
+        _direction *= -1;
+        for (int i = 0; i < _bulletsCount; i++) {
+            // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
+            /*
+            Bullet newBullet = Instantiate(BulletPrefab, null, false);
+            newBullet.transform.position = GunpointTransform.position;
+            newBullet.AddBulletForce(transform, _direction);
+            */
+
+            ShotBullet();
+            yield return new WaitForSeconds(0.08f);
         }
+        yield return new WaitForSeconds(0.2f);
+        AimController.Wait = true;
+    }
+
+    /// <summary>
+    /// 재장전(소리)
+    /// </summary>
+    private void Reload() {
+        // AudioManager.Instance.PlayAudio(_currenWeapon.ReloadSound);
     }
 }

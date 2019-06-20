@@ -20,11 +20,12 @@ MonoBehaviour:
   - {fileID: 114544731185790530}
   - {fileID: 114479201678604990}
   - {fileID: 114083841158680824}
+  - {fileID: 114598646312550378}
   m_isSubGraph: 0
   m_version: 1
   m_description: 
   m_id: 627b7fb3-de48-4823-8c4e-5de939b09928
-  m_lastModified: 132047971922934857
+  m_lastModified: 132054843838980628
 --- !u!114 &114016810714697590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -122,6 +123,13 @@ MonoBehaviour:
       m_inputSocketId: c9f7d4f4-c5c0-40d3-84a4-20ed39fd2cd5
       m_outputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
       m_outputSocketId: 0691f3b3-ceb0-4620-a717-b7e45e5975c7
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: 40dee929-5900-4b21-83fc-ff1d4f607bda
+      m_inputNodeId: bdbd7157-edfa-4784-b871-4173849cf325
+      m_inputSocketId: c9f7d4f4-c5c0-40d3-84a4-20ed39fd2cd5
+      m_outputNodeId: 19009393-6e6d-4840-a2e9-ec576fe0568f
+      m_outputSocketId: 791ce2e9-5b26-4ce1-87f6-c38c54d5c0cc
     m_connectionPoints:
     - {x: -2, y: 4}
     - {x: 202, y: 4}
@@ -562,9 +570,9 @@ MonoBehaviour:
     m_connections:
     - m_inputConnectionPoint: {x: -2, y: 4}
       m_outputConnectionPoint: {x: 202, y: 4}
-      m_id: d325aa54-db7d-4317-9d47-871e8814cf11
-      m_inputNodeId: bdbd7157-edfa-4784-b871-4173849cf325
-      m_inputSocketId: c9f7d4f4-c5c0-40d3-84a4-20ed39fd2cd5
+      m_id: 4ffbd813-61c5-4b27-9b55-cedb38d9d145
+      m_inputNodeId: 19009393-6e6d-4840-a2e9-ec576fe0568f
+      m_inputSocketId: 49799e60-9428-4e88-8671-64322bd2301d
       m_outputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
       m_outputSocketId: 0691f3b3-ceb0-4620-a717-b7e45e5975c7
     m_connectionPoints:
@@ -785,6 +793,93 @@ MonoBehaviour:
   - Category: General
     InstantAction: 0
     Name: GunShop
+--- !u!114 &114598646312550378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97aebf4d1c7c46d9843e5c78fd464d44, type: 3}
+  m_Name: GameEventNode
+  m_EditorClassIdentifier: 
+  ErrorNodeNameIsEmpty: 0
+  ErrorDuplicateNameFoundInGraph: 0
+  m_inputSockets:
+  - m_connectionMode: 1
+    m_connections:
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: 4ffbd813-61c5-4b27-9b55-cedb38d9d145
+      m_inputNodeId: 19009393-6e6d-4840-a2e9-ec576fe0568f
+      m_inputSocketId: 49799e60-9428-4e88-8671-64322bd2301d
+      m_outputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
+      m_outputSocketId: 0691f3b3-ceb0-4620-a717-b7e45e5975c7
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 0
+    m_canBeDeleted: 0
+    m_canBeReordered: 0
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 38
+    m_id: 49799e60-9428-4e88-8671-64322bd2301d
+    m_nodeId: 19009393-6e6d-4840-a2e9-ec576fe0568f
+    m_socketName: InputSocket_0
+    m_value: '{}'
+    m_valueTypeQualifiedName: Doozy.Engine.Nody.Connections.PassthroughConnection,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_outputSockets:
+  - m_connectionMode: 0
+    m_connections:
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: 40dee929-5900-4b21-83fc-ff1d4f607bda
+      m_inputNodeId: bdbd7157-edfa-4784-b871-4173849cf325
+      m_inputSocketId: c9f7d4f4-c5c0-40d3-84a4-20ed39fd2cd5
+      m_outputNodeId: 19009393-6e6d-4840-a2e9-ec576fe0568f
+      m_outputSocketId: 791ce2e9-5b26-4ce1-87f6-c38c54d5c0cc
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 1
+    m_canBeDeleted: 0
+    m_canBeReordered: 0
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 62
+    m_id: 791ce2e9-5b26-4ce1-87f6-c38c54d5c0cc
+    m_nodeId: 19009393-6e6d-4840-a2e9-ec576fe0568f
+    m_socketName: OutputSocket_0
+    m_value: '{}'
+    m_valueTypeQualifiedName: Doozy.Engine.Nody.Connections.PassthroughConnection,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_nodeType: 4
+  m_allowDuplicateNodeName: 0
+  m_allowEmptyNodeName: 0
+  m_canBeDeleted: 1
+  m_debugMode: 0
+  m_useFixedUpdate: 0
+  m_useLateUpdate: 0
+  m_useUpdate: 0
+  m_height: 152
+  m_width: 216
+  m_x: -624
+  m_y: 252
+  m_minimumInputSocketsCount: 1
+  m_minimumOutputSocketsCount: 1
+  m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
+  m_id: 19009393-6e6d-4840-a2e9-ec576fe0568f
+  m_name: EnterMission
+  ErrorNotSendingAnyGameEvent: 0
+  GameEvent: EnterMission
 --- !u!114 &114649739430141922
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AimController : MonoBehaviour
 {
     public static Action ResetAimAction;
 
-    // public Image AimImage;
-    // public Image AimLine;
-    public SpriteRenderer AimLine;
     
+    public GameObject AimLine;
+    public GameObject Mask;
 
     public float AimSpeed;
     public float AimRange;
@@ -41,36 +41,26 @@ public class AimController : MonoBehaviour
     public void Init() {
         _UpAiming = true;
         _DownAiming = false;
-
-        
-
         // AimImage.rectTransform.sizeDelta = new Vector2(AimRange * 100f, AimRange * 100f);
         // AimLine.rectTransform.sizeDelta = new Vector2(-WeaponManager.StartAimDistance, 2f);
     }
 
     void Update() {
+        if (!Player.isMoving && GameManager.main.isPlaying && !GameManager.main.isWaiting) {
+            if (!_flip) {
+                RotateAimRight();
+            }
+            else {
+                RotateAimLeft();
+            }
 
-
-        if (!_flip) {
-            RotateAimRight();
+            if (_UpAiming) {
+                transform.Rotate(-Vector3.back * Time.deltaTime * AimSpeed);
+            }
+            if (_DownAiming) {
+                transform.Rotate(Vector3.back * Time.deltaTime * AimSpeed);
+            }
         }
-        else {
-            RotateAimLeft();
-        }
-
-        if (_UpAiming) {
-            transform.Rotate(-Vector3.back * Time.deltaTime * AimSpeed);
-        }
-        if (_DownAiming) {
-            transform.Rotate(Vector3.back * Time.deltaTime * AimSpeed);
-        }
-
-        /*
-
-        if (!Player._isMoving && !Wait && GameManager.IsStartGame && !GameManager.IsGameOver) {
-            
-        }
-        */
     }
 
     private void RotateAimRight() {
@@ -97,6 +87,11 @@ public class AimController : MonoBehaviour
     private void ResetAim() {
         transform.rotation = _startAimRotation;
         _flip = !_flip;
-
+        if (_flip) {
+            // Mask.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else {
+            // Mask.transform.rotation = Quaternion.Euler(0, 0f, 0);
+        }
     }
 }

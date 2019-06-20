@@ -200,8 +200,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7166074203738288926, guid: 19b8887ec3b56de419eb5abb50a79e4b,
         type: 3}
-      propertyPath: m_Layer
-      value: 12
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7166074203738288923, guid: 19b8887ec3b56de419eb5abb50a79e4b,
         type: 3}
@@ -257,35 +257,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 471109293, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 471109296, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
-      propertyPath: BulletPrefab
-      value: 
-      objectReference: {fileID: 8765837480586491699, guid: 79b3f00215e84434ba512b1973ab0e46,
-        type: 3}
-    - target: {fileID: 1522213992, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1522213994, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1522213994, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1522213994, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1981834878, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
-      propertyPath: m_Layer
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
@@ -582,6 +553,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5069371769890641983, guid: d1b0d67ccee425e49aec15e1a6b31f73,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1110244469}
     - target: {fileID: 5069371769890641982, guid: d1b0d67ccee425e49aec15e1a6b31f73,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -637,11 +613,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5069371769890641983, guid: d1b0d67ccee425e49aec15e1a6b31f73,
-        type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 1110244469}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1b0d67ccee425e49aec15e1a6b31f73, type: 3}
 --- !u!1 &1826295608

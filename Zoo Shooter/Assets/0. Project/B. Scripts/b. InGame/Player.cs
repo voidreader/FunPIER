@@ -6,9 +6,10 @@ using DG.Tweening;
 
 public class Player : MonoBehaviour
 {
+    
 
     public SpriteRenderer sp;
-    public bool isMoving = false;
+    public static bool isMoving = false;
     Vector3 targetPos;
     public bool isLeft = false;
 
@@ -60,10 +61,10 @@ public class Player : MonoBehaviour
     /// 총 겨누기 시작 
     /// </summary>
     public void Aim() {
-        weapon.StartAim(isLeft);
+        // weapon.StartAim(isLeft);
     }
 
     public void Shoot() {
-        weapon.Shoot();
+        // weapon.Shoot();
     }
 }
