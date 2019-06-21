@@ -13,12 +13,16 @@ MonoBehaviour:
   m_Name: banana
   m_EditorClassIdentifier: 
   CurrentType: 0
+  HowToGet: 0
   WeaponID: banana
   DisplayName: Banana
   WeaponSprite: {fileID: 21300000, guid: 5de876ab4d85549469cf487fbb13bfde, type: 3}
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
+  bullet: {fileID: 8046498250144703993, guid: 79b3f00215e84434ba512b1973ab0e46, type: 3}
   BulletsCount: 1
-  WeaponRange: 2.7
+  Damage: 3
   AimSpeed: 37
-  StartAimLineDistance: 50
+  AimRange: 0
+  posEquip: {x: 0, y: 0, z: 0}
+  posGunPoint: {x: 0, y: 0, z: 0}

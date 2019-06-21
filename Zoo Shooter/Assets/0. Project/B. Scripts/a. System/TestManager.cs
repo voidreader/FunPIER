@@ -26,9 +26,6 @@ public class TestManager : MonoBehaviour
 
     void Update() {
      
-        if(Input.GetKeyDown(KeyCode.J)) {
-            stair.SetEnemyWithMove(enemy);
-        }
 
         if (Input.GetKeyDown(KeyCode.A)) {
             player.Aim();

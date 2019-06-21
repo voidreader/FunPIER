@@ -23,6 +23,10 @@ public class Enemy : MonoBehaviour {
     public string id = string.Empty;
     public BoxCollider2D headCol;
     public BoxCollider2D bodyCol;
+    public GameObject head;
+    
+
+    public Rigidbody2D rigid; // rigidbody2D
     public int HP = 1;
 
     public SpriteRenderer sp;
@@ -35,6 +39,8 @@ public class Enemy : MonoBehaviour {
 
     EnemyDataRow data;
     public bool isKilling = false;
+
+
 
     void InitEnemy() {
         isKilling = false;
@@ -60,10 +66,17 @@ public class Enemy : MonoBehaviour {
         HP = data._hp; // HP
 
         sp.sprite = GameManager.GetEnemySprite(id);
+
+
+        rigid.bodyType = RigidbodyType2D.Dynamic;
     }
 
     public virtual void KillEnemy() {
         GameManager.main.isEnemyDead = true; // 게임매니저에게 죽었다고 전달.
+        anim.SetBool("isKill", true);
+
+        head.layer = 15;
+        this.gameObject.layer = 15;
     }
 
     public virtual void KillingEffect() {
@@ -92,9 +105,14 @@ public class Enemy : MonoBehaviour {
         anim.SetBool("isWalk", true);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public void OnGround() {
         anim.SetBool("isWalk", false);
         anim.SetBool("isJump", false);
+
+        rigid.bodyType = RigidbodyType2D.Dynamic;
     }
 
 

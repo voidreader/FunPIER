@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff257dcb3949744b9feb7e7fbdfb938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EquipWeapon: {fileID: 0}
   CurrentAim: {fileID: 4187115519088573618}
   CurentWeaponRenderer: {fileID: 471109297}
   GunpointTransform: {fileID: 1981834879}
@@ -111,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c1990a71401e9469675460acb8471b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EquipWeapon: {fileID: 0}
   AimLine: {fileID: 1522213992}
-  Mask: {fileID: 0}
   AimSpeed: 0
   AimRange: 0
 --- !u!1 &1522213992
@@ -140,7 +141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1522213992}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.084, y: 0.152, z: 0}
+  m_LocalPosition: {x: -0.524, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 471109294}

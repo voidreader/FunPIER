@@ -167,8 +167,13 @@ public class PlayerBullet : MonoBehaviour
 
 
         // 적 죽이기
-        if(co.tag == "Body" || co.tag == "Head") {
+        if(co.tag == "Body") {
             co.GetComponent<Enemy>().KillEnemy();
+            Debug.Log("Body Shot!!");
+        }
+        else if(co.tag == "Head") {
+            co.GetComponent<Enemy>().KillEnemy();
+            Debug.Log("Head Shot!!");
         }
     }
 

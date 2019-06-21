@@ -7,6 +7,10 @@ using DG.Tweening;
 
 public class Stair : MonoBehaviour
 {
+    //최초 생성 x,y좌표 
+    static float initY = 1.7f; 
+    static float initX = 2.6f; 
+
     public SpriteRenderer spriteGround;
     public bool isLeftStair = true; // 좌측 발판인지 체크 
     public Enemy enemy = null;
@@ -31,8 +35,8 @@ public class Stair : MonoBehaviour
     public void SetEnemey(Enemy e) {
         enemy = e;
 
-        // 등장
-        enemy.transform.position = GetEnemyPosition();
+        // 등장시켜놓고 대기시킨다. 
+        enemy.transform.position = GetFirstPosition();
         enemy.SetSpriteDirection(isLeftStair);
     }
 
@@ -41,15 +45,11 @@ public class Stair : MonoBehaviour
     /// 적, 움직임과 함께 등장
     /// </summary>
     /// <param name="e"></param>
-    public void SetEnemyWithMove(Enemy e) {
+    public void SetReadyEnemy() {
 
-        int r; // 랜덤 변수
+        int r = Random.Range(0, 2); // 랜덤 변수
         NormalEnmeyMove move = NormalEnmeyMove.Jump; // 무빙 타입 
-
-        enemy = e;
-        enemy.SetSpriteDirection(isLeftStair);
-
-        r = Random.Range(0, 2);
+        
 
         if (r % 2 == 0)
             move = NormalEnmeyMove.Jump;
@@ -58,14 +58,12 @@ public class Stair : MonoBehaviour
 
 
         if(move == NormalEnmeyMove.Jump) {
-            enemy.transform.position = GetEnemyJumpPosition();
             enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
-            enemy.Jump();
+            enemy.Jump(); 
             // enemy.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.FastBeyond360).SetDelay(0.1f);
         }
-        else {
-            enemy.transform.position = GetEnemyJumpPosition();
-            enemy.Walk();
+        else { // 걷기 
+            enemy.Walk(); //(애니메이션)
             enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
 
         }
@@ -122,7 +120,7 @@ public class Stair : MonoBehaviour
     }
 
     /// <summary>
-    /// 적 등장 포지션 가져오기 
+    /// 적 준비 포지션 가져오기 
     /// </summary>
     /// <returns></returns>
     public Vector3 GetEnemyPosition() {
@@ -131,40 +129,40 @@ public class Stair : MonoBehaviour
         
 
         if (isLeftStair)
-            pos = new Vector3(pos.x + Random.Range(1.4f, 1.9f), pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x + Random.Range(1.4f, 1.9f), enemy.transform.position.y, 0);
         else
-            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.4f), pos.y + 0.5f, 0);
-
-        // x:0.7~1
-        // y:0.5
-
-        // return new Vector3(Random.Range(0.7f, 1f), 0.5f, 0);
-        return pos;
-    }
-
-    public Vector3 GetPlayerPosition() {
-        Vector3 pos = this.spriteGround.transform.position;
-
-        if(isLeftStair)
-            pos = new Vector3(pos.x + 1.8f, pos.y + 0.5f, 0);
-        else
-            pos = new Vector3(pos.x - 1.8f, pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.4f), enemy.transform.position.y, 0);
 
         return pos;
     }
 
     /// <summary>
-    /// 적 점프 뛰는 위치 
+    /// 플레이어 기준 위치 
     /// </summary>
     /// <returns></returns>
-    public Vector3 GetEnemyJumpPosition() {
+    public Vector3 GetPlayerPosition() {
+        Vector3 pos = this.spriteGround.transform.position;
+
+        if(isLeftStair)
+            pos = new Vector3(pos.x + 1.8f, pos.y + 0.7f, 0);
+        else
+            pos = new Vector3(pos.x - 1.8f, pos.y + 0.7f, 0);
+
+        return pos;
+    }
+
+    /// <summary>
+    /// 적 첫 등장 위치.
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetFirstPosition() {
         Vector3 pos = this.spriteGround.transform.position;
 
 
         if (isLeftStair)
-            pos = new Vector3(pos.x - 3, pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x - initX, pos.y + initY, 0);
         else
-            pos = new Vector3(pos.x + 3, pos.y + 0.5f, 0);
+            pos = new Vector3(pos.x + initX, pos.y + initY, 0);
 
         return pos;
     }

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public Camera mainCamera; // 메인카메라 
 
+    public bool AutoInit;
     public bool isPlaying = false; // 게임 시작여부 
     public bool isPause = false; // 일시정지 
     public bool isWaiting = false; // 캐릭터 무빙 등으로 조작 및 로직 방지 
@@ -49,12 +50,22 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitGame();
+
+        if(AutoInit)
+            InitGame();
+        else {
+            // test 환경 
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        if (!AutoInit)
+            return;
+
+        
         if(Input.GetKeyDown(KeyCode.K)) {
             enemy.KillEnemy();
         }
@@ -111,7 +122,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void SpawnNormalEnemy() {
         enemy = GetNewEnemy();
-        currentStair.SetEnemyWithMove(enemy);
+        currentStair.SetEnemey(enemy);
     }
 
     /// <summary>
