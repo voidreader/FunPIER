@@ -145,7 +145,8 @@ public class PlayerBullet : MonoBehaviour
         }
 
         speed = 0;
-        Vector3 pos = co.transform.position;
+        //Vector3 pos = co.transform.position;
+        Vector3 pos = transform.position;
 
         if (hitPrefab != null) {
             var hitVFX = Instantiate(hitPrefab, pos, Quaternion.identity) as GameObject;
@@ -172,9 +173,14 @@ public class PlayerBullet : MonoBehaviour
             Debug.Log("Body Shot!!");
         }
         else if(co.tag == "Head") {
-            co.GetComponent<Enemy>().KillEnemy();
+            // co.GetComponent<Enemy>().KillEnemy();
+            co.GetComponentInParent<Enemy>().KillEnemy();
             Debug.Log("Head Shot!!");
         }
+        else if (co.tag == "Stair") {
+            Debug.Log("Hit Stair");
+        }
+        
     }
 
 

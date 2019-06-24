@@ -14,21 +14,22 @@ public class AimController : MonoBehaviour
     public float AimSpeed;
     public float AimRange;
 
-    private bool _UpAiming;
-    private bool _DownAiming;
+    [SerializeField] private bool _UpAiming;
+    [SerializeField] private bool _DownAiming;
 
-    public static bool Wait;
+    public static bool Wait = true;
 
     private Quaternion _startAimRotation;
 
-    private bool _flip;
-
+    
+    [SerializeField] Quaternion currentRotation;
+    [SerializeField] Vector3 currentAuler;
 
 
     private void Start() {
         _startAimRotation = transform.rotation;
-        _flip = false;
-        Wait = false;
+        
+        // Wait = false;
     }
 
     /// <summary>
@@ -47,6 +48,7 @@ public class AimController : MonoBehaviour
 
         AimLine.transform.localScale = new Vector3(AimRange, 1.5f, 1); // Line 길이 설정 
         AimLine.transform.localPosition = EquipWeapon.posGunPoint; // Line 위치 설정
+     
             
 
         // AimImage.rectTransform.sizeDelta = new Vector2(AimRange * 100f, AimRange * 100f);
@@ -56,21 +58,38 @@ public class AimController : MonoBehaviour
     }
 
     void Update() {
+
+        if (AimController.Wait)
+            return;
+
         if (!Player.isMoving && GameManager.main.isPlaying && !GameManager.main.isWaiting) {
 
+
+            /*
             if (!_flip) {
                 RotateAimRight();
             }
             else {
                 RotateAimLeft();
             }
+            */
+
+
+            RotateAimRight();
+
 
             if (_UpAiming) {
-                transform.Rotate(Vector3.back * Time.deltaTime * AimSpeed);
+                // transform.Rotate(Vector3.back * Time.deltaTime * AimSpeed);
+                transform.Rotate(0, 0, -1 * Time.deltaTime * AimSpeed);
             }
             if (_DownAiming) {
-                transform.Rotate(-Vector3.back * Time.deltaTime * AimSpeed);
+                transform.Rotate(0, 0, 1 * Time.deltaTime * AimSpeed);
+                //transform.Rotate(-Vector3.back * Time.deltaTime * AimSpeed);
             }
+
+            currentRotation = transform.localRotation;
+            currentAuler = transform.localRotation.eulerAngles;
+
         }
     }
 
@@ -78,11 +97,11 @@ public class AimController : MonoBehaviour
     /// 오른쪽에서 조준..
     /// </summary>
     private void RotateAimRight() {
-        if (transform.rotation.z < -0.4f) {
+        if (transform.localRotation.z < -0.4f) {
             _UpAiming = false;
             _DownAiming = true;
         }
-        if (transform.rotation.z > 0) {
+        if (transform.localRotation.z > 0) {
             _UpAiming = true;
             _DownAiming = false;
         }
@@ -92,24 +111,17 @@ public class AimController : MonoBehaviour
     /// 왼쪽에서 조준
     /// </summary>
     private void RotateAimLeft() {
-        if (transform.rotation.z > 0.4f) {
+        if (transform.localRotation.z > 1.6f) {
             _UpAiming = false;
             _DownAiming = true;
         }
-        if (transform.rotation.z < 0f) {
+        if (transform.localRotation.z < 0f) {
             _UpAiming = true;
             _DownAiming = false;
         }
     }
 
-    private void ResetAim() {
-        transform.rotation = _startAimRotation;
-        _flip = !_flip;
-        if (_flip) {
-            // Mask.transform.rotation = Quaternion.Euler(0, 180, 0);
-        }
-        else {
-            // Mask.transform.rotation = Quaternion.Euler(0, 0f, 0);
-        }
+    public void ResetAim() {
+        this.transform.localEulerAngles = Vector3.zero;
     }
 }

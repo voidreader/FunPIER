@@ -8,6 +8,8 @@ public class Stocks : MonoBehaviour
 
     public List<Weapon> ListWeapons;
 
+    public GameObject prefabNormalEnemy;
+
     private void Awake() {
         main = this;
     }

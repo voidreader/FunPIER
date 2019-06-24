@@ -84,8 +84,17 @@ public class Player : MonoBehaviour
 
 
 
-    public void SetSpriteDirection(bool isLeft) {
-        sp.flipX = isLeft;
+    public void SetSpriteDirection(bool p) {
+        isLeft = p;
+
+        // sp.flipX = isLeft;
+        if (isLeft)
+            this.transform.localEulerAngles = new Vector3(0, 180, 0);
+        else
+            this.transform.localEulerAngles = Vector3.zero;
+
+
+        weapon.Init();
     }
 
     /// <summary>
@@ -93,7 +102,9 @@ public class Player : MonoBehaviour
     /// </summary>
     public void Aim() {
         // weapon.StartAim(isLeft);
-        weapon.Init();
+
+        weapon.CurrentAim.ResetAim();
+        AimController.Wait = false;
         
     }
 

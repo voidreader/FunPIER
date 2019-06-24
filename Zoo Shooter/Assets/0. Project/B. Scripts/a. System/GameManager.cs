@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
         listStairs = new List<Stair>();
 
         // 6개의 계단 생성
-        for(int i=0; i<6; i++) {
+        for(int i=0; i<2; i++) {
             InsertNewStair();
         }
 
@@ -117,13 +117,6 @@ public class GameManager : MonoBehaviour
     } // end of InitGame
 
 
-    /// <summary>
-    /// 일반적 생성 
-    /// </summary>
-    public void SpawnNormalEnemy() {
-        enemy = GetNewEnemy();
-        currentStair.SetEnemey(enemy);
-    }
 
     /// <summary>
     /// 게임 시작 클릭!
@@ -180,7 +173,8 @@ public class GameManager : MonoBehaviour
         }
 
         // 연출 끝나면 첫번째 적 등장 
-        SpawnNormalEnemy();
+        currentStair.SetReadyEnemy();
+        enemy = currentStair.enemy;
 
         // 조준 시작
         player.Aim();
@@ -202,13 +196,8 @@ public class GameManager : MonoBehaviour
                 isEnemyDead = false; // 다시 enemyDead 초기화
                 currentStair.enemy = null;
                 currentStair = listStairs[indexPlayerStair + 1];
-
-
-
-                // 적 생성 
-                enemy = GetNewEnemy();
-                currentStair.SetEnemey(enemy);
-
+                currentStair.SetReadyEnemy(); // 적 등장 처리 
+                enemy = currentStair.enemy;
             }
 
             
@@ -216,6 +205,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 적을 죽이고 새로운 계단을 생성한다. 
+    /// </summary>
+    /// <returns></returns>
     IEnumerator KillEnemyRoutine() {
         // '현재' 적이 다 죽었는지 확인 
         while (enemy.isKilling) {
@@ -231,7 +225,7 @@ public class GameManager : MonoBehaviour
 
         // 카메라 이동 처리 
         MoveMainCamera(GetDistance(listStairs[indexPlayerStair].transform.position.y, currentStair.transform.position.y));
-        InsertNewStair(); // 새 계단 생성
+        InsertNewStair(); // 단일 새 계단 생성
 
         while(Player.isMoving) {
             yield return null;
@@ -239,10 +233,7 @@ public class GameManager : MonoBehaviour
 
         indexPlayerStair++;
         listStairs[indexPlayerStair].SetPlayer(player);
-
-        
-
-
+        player.Aim();
     }
 
 
@@ -265,11 +256,16 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     Enemy GetNewEnemy() {
 
+        /*
         Enemy enemy = PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabEnemy).GetComponent<NormalEnemy>();
         enemy.SetEnemy(EnemyType.Normal, GetRandomNormalEnemyID()); // 정보 설정 
         isEnemyDead = false; // 적 생성되면 적 죽지 않았다고 처리
+        */
 
-        return enemy;
+        Enemy e = GameObject.Instantiate(Stocks.main.prefabNormalEnemy, Vector3.zero, Quaternion.identity).GetComponent<Enemy>();
+        e.SetEnemy(EnemyType.Normal, GetRandomNormalEnemyID()); // 정보 설정 
+
+        return e;
     }
 
     /// <summary>
@@ -295,9 +291,19 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+
+    /// <summary>
+    /// 가장 상단에 새로운 계단 생성
+    /// </summary>
     void InsertNewStair() {
         stair = GetNewStair();
         topStairY = stair.transform.localPosition.y; // 높이 처리
+
+        // Enemy 설정 
+        if (indexStair> 0) // 0번째 칸은 생성하지 않음 
+            stair.SetEnemey(GetNewEnemy());
+
+        // 인덱스 증가 처리 
         indexStair++;
         listStairs.Add(stair);
     }
@@ -324,12 +330,12 @@ public class GameManager : MonoBehaviour
 
         // 좌우 체크
         if (indexStair % 2 == 0) { // 오른쪽 
-            posX = Random.Range(2.9f, 3.5f);
+            posX = Random.Range(2.9f, 4.6f);
             posY = topStairY + Random.Range(0.4f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽
-            posX = Random.Range(-3.5f, -2.9f);
+            posX = Random.Range(-4.6f, -2.9f);
             posY = topStairY + Random.Range(0.8f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), true);
         }

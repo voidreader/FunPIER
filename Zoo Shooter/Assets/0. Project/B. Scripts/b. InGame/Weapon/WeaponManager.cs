@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour {
 
-
+    public bool isInit = false;
     public Weapon EquipWeapon; // 장착한 무기 
     public AimController CurrentAim;  // Aim Controller 
     public SpriteRenderer CurentWeaponRenderer;
@@ -25,6 +25,12 @@ public class WeaponManager : MonoBehaviour {
     /// 무기 초기화 
     /// </summary>
     public void Init() {
+
+        if (isInit)
+            return;
+
+        isInit = true;
+
         EquipWeapon = Stocks.main.ListWeapons[0]; // 임시 
         CurentWeaponRenderer.sprite = EquipWeapon.WeaponSprite;
 
@@ -34,8 +40,11 @@ public class WeaponManager : MonoBehaviour {
         // Aim 설정
         CurrentAim.Init(EquipWeapon);
 
+        _direction = -1; // 방향은 -1로 고정이다. 
+    }
 
-        _direction = 1;
+    public void AfterShoot() {
+        CurrentAim.ResetAim();
     }
 
     public void Shoot() {
@@ -72,7 +81,7 @@ public class WeaponManager : MonoBehaviour {
 
         Debug.Log("Shoot With Gun");
 
-        _direction *= -1;
+        // _direction *= -1;
         // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
         // Bullet newBullet = Instantiate(BulletPrefab, null, false);
         ShotBullet();
@@ -80,7 +89,9 @@ public class WeaponManager : MonoBehaviour {
         // newBullet.AddBulletForce(transform, _direction);
 
         // wait
-        // AimController.Wait = true;
+        AimController.Wait = true; // 한방 쏘고 더이상 조준하지 않음.. 
+
+        // 조준선 정렬은 다 이동하고 처리 .
     }
 
     /// <summary>
@@ -88,7 +99,7 @@ public class WeaponManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private IEnumerator ShootWithShotgun() {
-        _direction *= -1;
+        //_direction *= -1;
         // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
             /*
@@ -108,7 +119,7 @@ public class WeaponManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private IEnumerator ShootWithMachineGun() {
-        _direction *= -1;
+        //_direction *= -1;
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
             // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
             /*

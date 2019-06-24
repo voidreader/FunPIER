@@ -24,7 +24,6 @@ public class EnemyTester : MonoBehaviour
             StartCoroutine(MakeingEnemyTest());
         }
 
-
     }
 
 

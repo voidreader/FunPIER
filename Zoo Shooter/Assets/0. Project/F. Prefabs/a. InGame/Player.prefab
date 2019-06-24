@@ -99,7 +99,8 @@ MonoBehaviour:
   CurrentAim: {fileID: 4187115519088573618}
   CurentWeaponRenderer: {fileID: 471109297}
   GunpointTransform: {fileID: 1981834879}
-  BulletPrefab: {fileID: 0}
+  BulletPrefab: {fileID: 8765837480586491699, guid: 79b3f00215e84434ba512b1973ab0e46,
+    type: 3}
 --- !u!114 &4187115519088573618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +236,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8763759519496878708}
   - component: {fileID: 5927750578148546718}
-  m_Layer: 0
+  - component: {fileID: 4050823949382013761}
+  m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,6 +306,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &4050823949382013761
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3095966625402803420}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.945}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.14, y: 1.89}
+    newSize: {x: 1.14, y: 1.89}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.14, y: 1.89}
+  m_EdgeRadius: 0
 --- !u!1 &7166074203738288926
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,7 +342,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7166074203738288923}
   - component: {fileID: 7166074203738288925}
-  - component: {fileID: 4741044494426986578}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -353,29 +380,3 @@ MonoBehaviour:
   sp: {fileID: 5927750578148546718}
   isLeft: 0
   weapon: {fileID: 471109296}
---- !u!61 &4741044494426986578
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7166074203738288926}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.2, y: 1}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.14, y: 1.89}
-    newSize: {x: 1.14, y: 1.89}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.14, y: 1.89}
-  m_EdgeRadius: 0

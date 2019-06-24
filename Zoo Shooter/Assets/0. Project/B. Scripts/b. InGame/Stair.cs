@@ -100,10 +100,16 @@ public class Stair : MonoBehaviour
         this.transform.localPosition = p;
         isLeftStair = left;
 
-        if (!isLeftStair)
+        if (!isLeftStair) {
             spriteGround.flipX = true;
-        else
+            this.GetComponent<BoxCollider2D>().offset = new Vector2(0.9822102f, 0.3920624f);
+            this.GetComponent<BoxCollider2D>().size = new Vector2(6.428232f, 0.6529487f);
+        }
+        else {
             spriteGround.flipX = false;
+            this.GetComponent<BoxCollider2D>().offset = new Vector2(-1.660136f, 0.3920624f);
+            this.GetComponent<BoxCollider2D>().size = new Vector2(7.800061f, 0.6529487f);
+        }
     }
 
 
