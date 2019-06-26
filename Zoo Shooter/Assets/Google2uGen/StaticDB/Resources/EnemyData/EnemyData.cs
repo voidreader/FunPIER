@@ -14,6 +14,7 @@ namespace Google2u
 	[System.Serializable]
 	public class EnemyDataRow : IGoogle2uRow
 	{
+		public string _enemytype;
 		public string _sprite;
 		public string _identifier;
 		public string _name;
@@ -26,8 +27,9 @@ namespace Google2u
 		public float _hsizeX;
 		public float _hsizeY;
 		public int _hp;
-		public EnemyDataRow(string __ID, string __sprite, string __identifier, string __name, string __offsetX, string __offsetY, string __sizeX, string __sizeY, string __hoffsetX, string __hoffsetY, string __hsizeX, string __hsizeY, string __hp) 
+		public EnemyDataRow(string __ID, string __enemytype, string __sprite, string __identifier, string __name, string __offsetX, string __offsetY, string __sizeX, string __sizeY, string __hoffsetX, string __hoffsetY, string __hsizeX, string __hsizeY, string __hp) 
 		{
+			_enemytype = __enemytype.Trim();
 			_sprite = __sprite.Trim();
 			_identifier = __identifier.Trim();
 			_name = __name.Trim();
@@ -96,7 +98,7 @@ namespace Google2u
 			}
 		}
 
-		public int Length { get { return 12; } }
+		public int Length { get { return 13; } }
 
 		public string this[int i]
 		{
@@ -112,39 +114,42 @@ namespace Google2u
 			switch( index )
 			{
 				case 0:
-					ret = _sprite.ToString();
+					ret = _enemytype.ToString();
 					break;
 				case 1:
-					ret = _identifier.ToString();
+					ret = _sprite.ToString();
 					break;
 				case 2:
-					ret = _name.ToString();
+					ret = _identifier.ToString();
 					break;
 				case 3:
-					ret = _offsetX.ToString();
+					ret = _name.ToString();
 					break;
 				case 4:
-					ret = _offsetY.ToString();
+					ret = _offsetX.ToString();
 					break;
 				case 5:
-					ret = _sizeX.ToString();
+					ret = _offsetY.ToString();
 					break;
 				case 6:
-					ret = _sizeY.ToString();
+					ret = _sizeX.ToString();
 					break;
 				case 7:
-					ret = _hoffsetX.ToString();
+					ret = _sizeY.ToString();
 					break;
 				case 8:
-					ret = _hoffsetY.ToString();
+					ret = _hoffsetX.ToString();
 					break;
 				case 9:
-					ret = _hsizeX.ToString();
+					ret = _hoffsetY.ToString();
 					break;
 				case 10:
-					ret = _hsizeY.ToString();
+					ret = _hsizeX.ToString();
 					break;
 				case 11:
+					ret = _hsizeY.ToString();
+					break;
+				case 12:
 					ret = _hp.ToString();
 					break;
 			}
@@ -157,6 +162,9 @@ namespace Google2u
 			var ret = System.String.Empty;
 			switch( colID )
 			{
+				case "enemytype":
+					ret = _enemytype.ToString();
+					break;
 				case "sprite":
 					ret = _sprite.ToString();
 					break;
@@ -200,6 +208,7 @@ namespace Google2u
 		public override string ToString()
 		{
 			string ret = System.String.Empty;
+			ret += "{" + "enemytype" + " : " + _enemytype.ToString() + "} ";
 			ret += "{" + "sprite" + " : " + _sprite.ToString() + "} ";
 			ret += "{" + "identifier" + " : " + _identifier.ToString() + "} ";
 			ret += "{" + "name" + " : " + _name.ToString() + "} ";
@@ -238,17 +247,17 @@ namespace Google2u
 
 		private EnemyData()
 		{
-			Rows.Add( new EnemyDataRow("alligator", "alligator", "alligator", "alligator", "-0.1998554", "-0.258684", "1.206346", "0.8023167", "0.2868674", "0.4918259", "1.095168", "0.5437449", "1"));
-			Rows.Add( new EnemyDataRow("alpaca", "alpaca", "alpaca", "alpaca", "-0.04292327", "-0.3871344", "1.008498", "0.6759346", "0.06168884", "0.3097668", "0.7693776", "0.668312", "1"));
-			Rows.Add( new EnemyDataRow("bear", "bear", "bear", "bear", "-0.02336353", "-0.3643147", "1.047617", "1.008451", "0.1301482", "0.5281846", "0.6324589", "0.6878716", "1"));
-			Rows.Add( new EnemyDataRow("cat", "cat", "cat", "cat", "0.07443547", "-0.2795554", "0.8520193", "0.6954941", "0.2638068", "0.3488864", "0.4694605", "0.4987931", "1"));
-			Rows.Add( new EnemyDataRow("deer", "deer", "deer", "deer", "-0.03640345", "-0.3056351", "0.8780989", "0.8519724", "0.2344671", "0.3749661", "0.4759805", "0.4466337", "1"));
-			Rows.Add( new EnemyDataRow("elephant", "elephant", "elephant", "elephant", "-0.02988353", "-0.2860752", "0.9432982", "0.7085338", "0.1203682", "0.384746", "0.7432979", "0.6096321", "1"));
-			Rows.Add( new EnemyDataRow("giraffe", "giraffe", "giraffe", "giraffe", "-0.08779693", "-0.439375", "1.140885", "1.096894", "0.2181673", "0.5999039", "0.5607398", "0.9225887", "1"));
-			Rows.Add( new EnemyDataRow("Hippo", "Hippo", "Hippo", "Hippo", "-0.108237", "-0.3133284", "1.100005", "0.6131476", "0.1466274", "0.3444041", "0.6765664", "0.6568694", "1"));
-			Rows.Add( new EnemyDataRow("octopus", "octopus", "octopus", "octopus", "-0.002630472", "-0.3337683", "0.9705513", "0.6540275", "-0.006672591", "0.3512175", "0.6016197", "0.6704962", "1"));
-			Rows.Add( new EnemyDataRow("Penguin", "Penguin", "Penguin", "Penguin", "-0.02307048", "-0.2656351", "0.9296712", "0.9538144", "-0.006672591", "0.5249574", "0.6016197", "0.568296", "1"));
-			Rows.Add( new EnemyDataRow("pig", "pig", "pig", "pig", "0.01780951", "-0.2792618", "1.011431", "0.7766679", "0.1772873", "0.4329778", "0.6970063", "0.5751091", "1"));
+			Rows.Add( new EnemyDataRow("alligator", "normal", "alligator", "alligator", "alligator", "-0.1998554", "-0.258684", "1.206346", "0.8023167", "0.2868674", "0.4918259", "1.095168", "0.5437449", "1"));
+			Rows.Add( new EnemyDataRow("alpaca", "normal", "alpaca", "alpaca", "alpaca", "-0.04292327", "-0.3871344", "1.008498", "0.6759346", "0.06168884", "0.3097668", "0.7693776", "0.668312", "1"));
+			Rows.Add( new EnemyDataRow("bear", "normal", "bear", "bear", "bear", "-0.02336353", "-0.3643147", "1.047617", "1.008451", "0.1301482", "0.5281846", "0.6324589", "0.6878716", "1"));
+			Rows.Add( new EnemyDataRow("cat", "normal", "cat", "cat", "cat", "0.07443547", "-0.2795554", "0.8520193", "0.6954941", "0.2638068", "0.3488864", "0.4694605", "0.4987931", "1"));
+			Rows.Add( new EnemyDataRow("deer", "normal", "deer", "deer", "deer", "-0.03640345", "-0.3056351", "0.8780989", "0.8519724", "0.2344671", "0.3749661", "0.4759805", "0.4466337", "1"));
+			Rows.Add( new EnemyDataRow("elephant", "normal", "elephant", "elephant", "elephant", "-0.02988353", "-0.2860752", "0.9432982", "0.7085338", "0.1203682", "0.384746", "0.7432979", "0.6096321", "1"));
+			Rows.Add( new EnemyDataRow("giraffe", "normal", "giraffe", "giraffe", "giraffe", "-0.08779693", "-0.439375", "1.140885", "1.096894", "0.2181673", "0.5999039", "0.5607398", "0.9225887", "1"));
+			Rows.Add( new EnemyDataRow("Hippo", "normal", "Hippo", "Hippo", "Hippo", "-0.108237", "-0.3133284", "1.100005", "0.6131476", "0.1466274", "0.3444041", "0.6765664", "0.6568694", "1"));
+			Rows.Add( new EnemyDataRow("octopus", "normal", "octopus", "octopus", "octopus", "-0.002630472", "-0.3337683", "0.9705513", "0.6540275", "-0.006672591", "0.3512175", "0.6016197", "0.6704962", "1"));
+			Rows.Add( new EnemyDataRow("Penguin", "normal", "Penguin", "Penguin", "Penguin", "-0.02307048", "-0.2656351", "0.9296712", "0.9538144", "-0.006672591", "0.5249574", "0.6016197", "0.568296", "1"));
+			Rows.Add( new EnemyDataRow("pig", "normal", "pig", "pig", "pig", "0.01780951", "-0.2792618", "1.011431", "0.7766679", "0.1772873", "0.4329778", "0.6970063", "0.5751091", "1"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

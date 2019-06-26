@@ -101,7 +101,7 @@ RectTransform:
   m_GameObject: {fileID: 4085439026892873813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.95, z: 1}
   m_Children:
   - {fileID: 2507154284168278474}
   - {fileID: 7269161438837601372}
@@ -125,6 +125,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94cbef04ae9408940b25b4c6786692d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _captureSprite: {fileID: 21300000, guid: 8df12de4d02ac6348bd2b8226e021b49, type: 3}
+  _uncaptureSprite: {fileID: 21300000, guid: 2aa742e88212c8748a7ffb84e0166ead, type: 3}
+  _spLabel: {fileID: 2125338606337619703}
+  _lblName: {fileID: 2162714599002774291}
+  _jail: {fileID: 7050982629449146073}
+  _spFace: {fileID: 3230931419538313680}
 --- !u!1 &4543114191508830772
 GameObject:
   m_ObjectHideFlags: 0

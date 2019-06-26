@@ -9,4 +9,13 @@ public static class ConstBox {
     public static string prefabStair = "Stair";
     public static string prefabEnemy = "Enemy";
     public static string prefabPlayer = "Player";
+
+    // 저장용 key 
+    public static string keyCurrentList = "keyCurrentList"; // 현재 진행중인 포스터 리스트 순번 
+    public static string keyCurrentLevel = "keyCurrentLevel"; // 현재 스테이지 
+    public static string keyCurrentCollectionIndex = "keyCurrentCollectionIndex"; // 컬렉션 인덱스 
+
+    public static string keyCurrentCoin = "keyCoin"; // 현재 보유 코인 
+    public static string keyNoAds = "keyNoAds"; // 광고 있음!
+
 }

@@ -107,7 +107,17 @@ public class ADs : MonoBehaviour {
      }*/
 
     public void ShowRewardedBoost() {
-/*
+
+        Debug.Log("Video completed - Offer a reward to the player");
+        GameManager._instance.boostTime = 120;
+        Toast.instance.ShowMessage("Boost activated");
+
+        foreach (Level l in Statistics._instance.levels) {
+            if (l.type == Level.Type.useBoosters)
+                l.progression++;
+        }
+
+        /*
         Analytics.CustomEvent("video_request_boost");
 
         ShowOptions options = new ShowOptions();
