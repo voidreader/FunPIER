@@ -8,6 +8,7 @@ public class EnemyTester : MonoBehaviour
     public GameObject prefabNormalEnemy;
     public Enemy _enemy;
     public Stair _stair;
+    public Transform _fakeTarget;
 
     IEnumerator Start() {
         SetNewEnemy();
@@ -22,6 +23,10 @@ public class EnemyTester : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K)) {
             _enemy.KillEnemy();
             StartCoroutine(MakeingEnemyTest());
+        }
+        
+        if(Input.GetKeyDown(KeyCode.S)) {
+            _enemy.KillPlayer(_fakeTarget);
         }
 
     }

@@ -129,11 +129,13 @@ namespace Google2u
 	{
 		public enum rowIds {
 			boss0, boss1, boss2, boss3, boss4, boss5, boss6, boss7, boss8, boss9, boss10, boss11, boss12, boss13, boss14, boss15, boss16, boss17
-			, boss18
+			, boss18, boss19, boss20, boss21, boss22, boss23, boss24, boss25, boss26, boss27, boss28, boss29, boss30, boss31, boss32, boss33, boss34, boss35, boss36, boss37
+			, boss38, boss39, boss40, boss41, boss42
 		};
 		public string [] rowNames = {
 			"boss0", "boss1", "boss2", "boss3", "boss4", "boss5", "boss6", "boss7", "boss8", "boss9", "boss10", "boss11", "boss12", "boss13", "boss14", "boss15", "boss16", "boss17"
-			, "boss18"
+			, "boss18", "boss19", "boss20", "boss21", "boss22", "boss23", "boss24", "boss25", "boss26", "boss27", "boss28", "boss29", "boss30", "boss31", "boss32", "boss33", "boss34", "boss35", "boss36", "boss37"
+			, "boss38", "boss39", "boss40", "boss41", "boss42"
 		};
 		public System.Collections.Generic.List<BossDataRow> Rows = new System.Collections.Generic.List<BossDataRow>();
 
@@ -152,23 +154,47 @@ namespace Google2u
 		{
 			Rows.Add( new BossDataRow("boss0", "0", "0", "GasMask", "Gas Mask", "12", "gasmask"));
 			Rows.Add( new BossDataRow("boss1", "0", "1", "Clown", "Clown", "12", "clown"));
-			Rows.Add( new BossDataRow("boss2", "0", "2", "S.Witch", "S.Witch", "18", "S.witch"));
-			Rows.Add( new BossDataRow("boss3", "1", "3", "Surprise", "Surprise Man", "15", "Surprise"));
-			Rows.Add( new BossDataRow("boss4", "1", "4", "Freddy", "Freddy", "17", "Freddy"));
-			Rows.Add( new BossDataRow("boss5", "1", "5", "Hotkey", "Hotkey", "20", "hotkey"));
-			Rows.Add( new BossDataRow("boss6", "1", "6", "Texas", "Texas", "20", "Texas"));
-			Rows.Add( new BossDataRow("boss7", "1", "7", "Trick", "Trick", "22", "Trick"));
-			Rows.Add( new BossDataRow("boss8", "2", "8", "BadPenguin", "Bad Penguin", "25", "badpenguin"));
-			Rows.Add( new BossDataRow("boss9", "2", "9", "CatAunt", "Cat Aunt", "28", "cataunt"));
-			Rows.Add( new BossDataRow("boss10", "2", "10", "Halface", "Half Face", "30", "halface"));
-			Rows.Add( new BossDataRow("boss11", "2", "11", "Pigin", "Pig In", "35", "pigin"));
-			Rows.Add( new BossDataRow("boss12", "3", "12", "Alien-Yo", "Alien-Yo", "35", "Alien-Yo"));
-			Rows.Add( new BossDataRow("boss13", "3", "13", "Princess-A", "Princess-A", "35", "Princess-A"));
-			Rows.Add( new BossDataRow("boss14", "3", "14", "Hero-Je", "Hero-Je", "35", "Hero-Je"));
-			Rows.Add( new BossDataRow("boss15", "3", "15", "Father", "Big Daddy", "35", "father"));
-			Rows.Add( new BossDataRow("boss16", "4", "16", "R.Harry", "R.Harry", "35", "R.harry"));
-			Rows.Add( new BossDataRow("boss17", "4", "17", "R.Marv", "R.Marv", "35", "R.marv"));
-			Rows.Add( new BossDataRow("boss18", "4", "18", "Gevin", "Gevin Lonely", "35", "Gevin"));
+			Rows.Add( new BossDataRow("boss2", "0", "2", "S.Witch", "S.Witch", "15", "S.witch"));
+			Rows.Add( new BossDataRow("boss3", "1", "3", "Surprise", "Surprise Man", "18", "Surprise"));
+			Rows.Add( new BossDataRow("boss4", "1", "4", "Freddy", "Freddie, Not Mercury", "12", "Freddy"));
+			Rows.Add( new BossDataRow("boss5", "1", "5", "Hotkey", "Hotkey", "16", "hotkey"));
+			Rows.Add( new BossDataRow("boss6", "1", "6", "Texas", "Texas Man", "16", "Texas"));
+			Rows.Add( new BossDataRow("boss7", "1", "7", "Trick", "Trick", "20", "Trick"));
+			Rows.Add( new BossDataRow("boss8", "2", "8", "BadPenguin", "Bad Penguin", "20", "badpenguin"));
+			Rows.Add( new BossDataRow("boss9", "2", "9", "CatAunt", "Cat Aunt", "20", "cataunt"));
+			Rows.Add( new BossDataRow("boss10", "2", "10", "Halface", "Half Face", "20", "halface"));
+			Rows.Add( new BossDataRow("boss11", "2", "11", "Pigin", "Pig In", "20", "pigin"));
+			Rows.Add( new BossDataRow("boss12", "3", "12", "Alien-Yo", "Alien-Yo", "20", "Alien-Yo"));
+			Rows.Add( new BossDataRow("boss13", "3", "13", "Princess-A", "Princess-A", "20", "Princess-A"));
+			Rows.Add( new BossDataRow("boss14", "3", "14", "Hero-Je", "Hero-Je", "20", "Hero-Je"));
+			Rows.Add( new BossDataRow("boss15", "3", "15", "Father", "Big Daddy", "20", "father"));
+			Rows.Add( new BossDataRow("boss16", "4", "16", "R.Harry", "R.Harry", "20", "R.harry"));
+			Rows.Add( new BossDataRow("boss17", "4", "17", "R.Marv", "R.Marv", "20", "R.marv"));
+			Rows.Add( new BossDataRow("boss18", "4", "18", "Gevin", "Gevin Lonely", "20", "Gevin"));
+			Rows.Add( new BossDataRow("boss19", "5", "19", "PinkRabbit", "Pink Rabbit", "20", "PinkRabbit"));
+			Rows.Add( new BossDataRow("boss20", "5", "20", "HorrorNurse", "Horror Nurse", "20", "horrornurse"));
+			Rows.Add( new BossDataRow("boss21", "5", "21", "Triangle", "Triangle", "20", "triangle"));
+			Rows.Add( new BossDataRow("boss22", "6", "22", "Dr.Bald", "Dr.Bald", "20", "Dr.bald"));
+			Rows.Add( new BossDataRow("boss23", "6", "23", "Greenman", "Greeny", "20", "greenman"));
+			Rows.Add( new BossDataRow("boss24", "6", "24", "Chief-buggle", "Chief-Buggle", "20", "Chief-buggle"));
+			Rows.Add( new BossDataRow("boss25", "6", "25", "Lizard", "Lizard", "20", "Lizard"));
+			Rows.Add( new BossDataRow("boss26", "6", "26", "Sand", "Sandy", "20", "Sand"));
+			Rows.Add( new BossDataRow("boss27", "7", "27", "MagicGirl", "Enchanter", "20", "MagicGirl"));
+			Rows.Add( new BossDataRow("boss28", "7", "28", "Killer", "Ugly Croc", "20", "Killer"));
+			Rows.Add( new BossDataRow("boss29", "7", "29", "ShooterMan", "Head Shot", "20", "ShooterMan"));
+			Rows.Add( new BossDataRow("boss30", "7", "30", "Diablo", "Diablo", "20", "Diablo"));
+			Rows.Add( new BossDataRow("boss31", "7", "31", "Hollyshit", "Holly Queen", "20", "hollyshit"));
+			Rows.Add( new BossDataRow("boss32", "7", "32", "Pocker", "Poker", "20", "poker"));
+			Rows.Add( new BossDataRow("boss33", "8", "33", "FishMan", "Walking Fish", "20", "FishMan"));
+			Rows.Add( new BossDataRow("boss34", "8", "34", "StarFish", "Star Fish", "20", "StarFish"));
+			Rows.Add( new BossDataRow("boss35", "8", "35", "Sparrow", "Sparrow", "20", "sparrow"));
+			Rows.Add( new BossDataRow("boss36", "8", "36", "Octo-Johns", "Octo-Johns", "20", "Octo-Johns"));
+			Rows.Add( new BossDataRow("boss37", "9", "37", "ryu", "White Fighter", "20", "ryu"));
+			Rows.Add( new BossDataRow("boss38", "9", "38", "ken", "Red Fighter", "20", "ken"));
+			Rows.Add( new BossDataRow("boss39", "9", "39", "Dhalim", "Darling", "20", "Dhalim"));
+			Rows.Add( new BossDataRow("boss40", "9", "40", "Guile", "AlliGuile", "20", "Guile"));
+			Rows.Add( new BossDataRow("boss41", "9", "41", "Chun-li", "Street Girl", "20", "Chun-li"));
+			Rows.Add( new BossDataRow("boss42", "9", "42", "HeyGrandfa", "Tekken Papa", "20", "heygrandfa"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Google2u;
+using DG.Tweening;
 
 /// <summary>
 /// 적 등장 스타일 
@@ -24,6 +25,8 @@ public class Enemy : MonoBehaviour {
     public BoxCollider2D headCol;
     public BoxCollider2D bodyCol;
     public GameObject head;
+    public bool isLeft = false;
+    public EnemyWeapon weapon; // 들고있는 무기 
     
 
     public Rigidbody2D rigid; // rigidbody2D
@@ -51,11 +54,7 @@ public class Enemy : MonoBehaviour {
         id = pID;
 
         data = EnemyData.Instance.GetRow(pID); // 기준정보 불러오기
-       
-        
-
         spriteName = data._sprite; // 스프라이트 이름
-        
 
         // Collider 
         bodyCol.offset = new Vector2(data._offsetX, data._offsetY);
@@ -66,17 +65,49 @@ public class Enemy : MonoBehaviour {
         HP = data._hp; // HP
 
         sp.sprite = GameManager.GetEnemySprite(id);
-
-
         rigid.bodyType = RigidbodyType2D.Dynamic;
+
+        EquipWeapon(); // 무기 장착
     }
 
+    /// <summary>
+    /// 무기 장착
+    /// </summary>
+    void EquipWeapon() {
+        weapon = GameObject.Instantiate(Stocks.main.prefabEnemyWeapon, Vector3.zero, Quaternion.identity).GetComponent<EnemyWeapon>();
+        
+        weapon.transform.SetParent(this.transform);
+        weapon.transform.localPosition = new Vector2(data._gunposX, data._gunposY);
+        weapon.transform.localScale = Vector3.one;
+        weapon.SetEnemyWeapon(data._gun);
+        weapon.transform.localEulerAngles = new Vector3(0, 180, 0);
+
+
+    }
+
+
     public virtual void KillEnemy() {
+
+        this.transform.DOKill();
+
+
         GameManager.main.isEnemyDead = true; // 게임매니저에게 죽었다고 전달.
         anim.SetBool("isKill", true);
 
         head.layer = 15;
-        this.gameObject.layer = 15;
+        this.gameObject.layer = 15; // 레이어 수정해서 충돌 처리 되지 않도록 수정 
+
+        //Invoke("WeaponDrop", 0.25f);
+        WeaponDrop();
+
+    }
+
+    /// <summary>
+    /// 무기 떨어뜨리기 
+    /// </summary>
+    void WeaponDrop() {
+        weapon.transform.SetParent(null);
+        weapon.SetDrop(isLeft);
     }
 
     public virtual void KillingEffect() {
@@ -87,9 +118,11 @@ public class Enemy : MonoBehaviour {
     /// 스프라이트 방향 설정 
     /// </summary>
     /// <param name="isLeft"></param>
-    public void SetSpriteDirection(bool isLeft) {
-
-        sp.flipX = !isLeft;
+    public void SetSpriteDirection(bool p) {
+        isLeft = p;
+        // 좌측 등장이 아닌 경우 flip 처리 
+        if (!isLeft)
+            this.transform.localEulerAngles = new Vector3(0, 180, 0);
 
     }
 
@@ -115,7 +148,9 @@ public class Enemy : MonoBehaviour {
         rigid.bodyType = RigidbodyType2D.Dynamic;
     }
 
-
+    public void KillPlayer(Transform t) {
+        weapon.SetTarget(t);
+    }
 
 
 

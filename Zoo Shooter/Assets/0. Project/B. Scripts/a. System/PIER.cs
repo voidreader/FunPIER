@@ -29,6 +29,7 @@ public class PIER : MonoBehaviour {
 
     void Start() {
         ListBossData = BossData.Instance.Rows;
+        
     }
 
 
