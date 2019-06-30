@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
-  m_Name: pistol
+  m_Name: fake
   m_EditorClassIdentifier: 
   CurrentType: 0
   HowToGet: 0
-  WeaponID: pistol
-  DisplayName: Pistol
-  WeaponSprite: {fileID: 21300000, guid: de37cd5d19a12684f940b12801262edb, type: 3}
+  WeaponID: fake
+  DisplayName: Fake Gun
+  WeaponSprite: {fileID: 21300000, guid: 1c683a153f657ee4880c559ac09f98ad, type: 3}
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 8046498250144703993, guid: 79b3f00215e84434ba512b1973ab0e46, type: 3}
@@ -24,6 +24,6 @@ MonoBehaviour:
   Damage: 3
   AimSpeed: 35
   AimRange: 1
-  posEquip: {x: -0.354, y: 0.8, z: 0}
-  posGunPoint: {x: -0.524, y: 0.15, z: 0}
-  posScale: {x: 0.8, y: 0.8, z: 0.8}
+  posEquip: {x: -0.298, y: 0.812, z: 0}
+  posGunPoint: {x: -0.781, y: 0.263, z: 0}
+  posScale: {x: 0.7, y: 0.7, z: 1}
