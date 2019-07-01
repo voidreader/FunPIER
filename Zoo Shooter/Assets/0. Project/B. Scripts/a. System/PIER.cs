@@ -29,7 +29,7 @@ public class PIER : MonoBehaviour {
 
     void Start() {
         ListBossData = BossData.Instance.Rows;
-        
+        LoadData();
     }
 
 
@@ -57,8 +57,10 @@ public class PIER : MonoBehaviour {
     /// <summary>
     /// 데이터 저장 
     /// </summary>
-    void SaveData() {
-
+    public void SaveData() {
+        PlayerPrefs.SetInt(ConstBox.keyCurrentList, CurrentList); // 리스트 
+        PlayerPrefs.SetInt(ConstBox.keyCurrentLevel, CurrentLevel); // 스테이지 
+        PlayerPrefs.SetInt(ConstBox.keyCurrentCoin, Coin); // 코인
     }
 
     #endregion

@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour {
 
     EnemyDataRow data;
     public bool isKilling = false;
-
+    public bool isOnGroud = false;
 
 
     void InitEnemy() {
@@ -64,7 +64,8 @@ public class Enemy : MonoBehaviour {
         headCol.size = new Vector2(data._hsizeX, data._hsizeY);
         HP = data._hp; // HP
 
-        sp.sprite = GameManager.GetEnemySprite(id);
+        // sp.sprite = GameManager.GetEnemySprite(id);
+        sp.sprite = Stocks.GetEnemySprite(id);
         rigid.bodyType = RigidbodyType2D.Dynamic;
 
         EquipWeapon(); // 무기 장착
@@ -152,6 +153,12 @@ public class Enemy : MonoBehaviour {
         weapon.SetTarget(t);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.collider.tag == "Stair") {
+            isOnGroud = true;
+        }
+
+    }
 
 
 }

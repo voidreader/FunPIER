@@ -19,10 +19,21 @@ public class NormalEnemy : Enemy {
         Debug.Log("NormalEnemy Killed");
 
         this.rigid.AddForce(new Vector2(Random.Range(-100f, 0f), 450));
+        this.isKilling = true;
         // this.transform.DOLocalRotate(new Vector3(0, 0, 720), 2, RotateMode.FastBeyond360).SetEase(Ease.Linear);
         // this.rigid.isKinematic = true;
-        
+        StartCoroutine(Destroying());
 
     }
+
+    IEnumerator Destroying() {
+        yield return new WaitForSeconds(0.5f);
+        isKilling = false;
+
+        yield return new WaitForSeconds(4.5f);
+        Destroy(this.gameObject);
+    }
+
+
 
 }

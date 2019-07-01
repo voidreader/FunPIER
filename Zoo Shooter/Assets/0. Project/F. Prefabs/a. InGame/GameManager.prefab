@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
+  AutoInit: 1
   isPlaying: 0
   isPause: 0
   isWaiting: 0
@@ -67,5 +68,17 @@ MonoBehaviour:
   indexStair: 0
   topStairY: 0
   indexPlayerStair: 0
+  isEntering: 0
   _whiteBox: {fileID: 0}
   _nightBox: {fileID: 0}
+  _botGround: {fileID: 0}
+  _leftTreeGroup: {fileID: 0}
+  _rightTreeGroup: {fileID: 0}
+  _moon: {fileID: 0}
+  _listStars:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

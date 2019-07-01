@@ -9,7 +9,10 @@ public class Stair : MonoBehaviour
 {
     //최초 생성 x,y좌표 
     static float initY = 1.7f; 
-    static float initX = 2.6f; 
+    static float initX = 2.6f;
+
+    [SerializeField] float targetPosX = 0;
+    [SerializeField] bool isInPosition = false;
 
     public SpriteRenderer spriteGround;
     public bool isLeftStair = true; // 좌측 발판인지 체크 
@@ -22,18 +25,23 @@ public class Stair : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     /// <summary>
-    /// 적 세팅!
+    /// 적 세팅! (위치잡기 )
     /// </summary>
     /// <param name="e"></param>
     public void SetEnemey(Enemy e) {
         enemy = e;
+        StartCoroutine(SettingEnemy());
+    }
+
+    IEnumerator SettingEnemy() {
+        // 자리 잡기 이전이면 대기한다. 
+        while(!isInPosition) {
+            yield return null;
+        }
+
+        yield return null;
 
         // 등장시켜놓고 대기시킨다. 
         enemy.transform.position = GetFirstPosition();
@@ -41,15 +49,27 @@ public class Stair : MonoBehaviour
     }
 
 
+
+
     /// <summary>
     /// 적, 움직임과 함께 등장
     /// </summary>
     /// <param name="e"></param>
     public void SetReadyEnemy() {
+        StartCoroutine(EnemyPositionRoutine());
+    }
+
+    IEnumerator EnemyPositionRoutine() {
+        while (!isInPosition)
+            yield return null;
+
+        while (!enemy.isOnGroud)
+            yield return null;
+
 
         int r = Random.Range(0, 2); // 랜덤 변수
         NormalEnmeyMove move = NormalEnmeyMove.Jump; // 무빙 타입 
-        
+
 
         if (r % 2 == 0)
             move = NormalEnmeyMove.Jump;
@@ -57,9 +77,9 @@ public class Stair : MonoBehaviour
             move = NormalEnmeyMove.Walk;
 
 
-        if(move == NormalEnmeyMove.Jump) {
+        if (move == NormalEnmeyMove.Jump) {
             enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
-            enemy.Jump(); 
+            enemy.Jump();
             // enemy.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.FastBeyond360).SetDelay(0.1f);
         }
         else { // 걷기 
@@ -67,8 +87,6 @@ public class Stair : MonoBehaviour
             enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
 
         }
-
-        
     }
 
     void OnCompleteEnemyAppear() {
@@ -84,11 +102,21 @@ public class Stair : MonoBehaviour
     /// <param name="p"></param>
     public void SetPlayer(Player p) {
         player = p;
+
+        StartCoroutine(SettingPlayer());
+
+    }
+
+    IEnumerator SettingPlayer() {
+        // 자리 잡기 이전이면 대기한다. 
+        while (!isInPosition) {
+            yield return null;
+        }
+
         player.transform.position = GetPlayerPosition();
         player.SetSpriteDirection(isLeftStair);
     }
 
-    
 
 
     /// <summary>
@@ -97,8 +125,12 @@ public class Stair : MonoBehaviour
     /// <param name="p"></param>
     /// <param name="left"></param>
     public void SetStairPosition(Vector3 p, bool left) {
-        this.transform.localPosition = p;
+        // this.transform.localPosition = p;
+        targetPosX = p.x; // 
         isLeftStair = left;
+
+        isInPosition = false;
+
 
         if (!isLeftStair) {
             spriteGround.flipX = true;
@@ -110,6 +142,17 @@ public class Stair : MonoBehaviour
             this.GetComponent<BoxCollider2D>().offset = new Vector2(-1.660136f, 0.3920624f);
             this.GetComponent<BoxCollider2D>().size = new Vector2(7.800061f, 0.6529487f);
         }
+
+        if (isLeftStair)
+            this.transform.localPosition = new Vector3(-6, p.y, 0);
+        else
+            this.transform.localPosition = new Vector3(6, p.y, 0);
+
+        this.transform.DOLocalMoveX(targetPosX, 0.2f).OnComplete(OnCompletePos);
+    }
+
+    void OnCompletePos() {
+        isInPosition = true;
     }
 
 
@@ -119,6 +162,7 @@ public class Stair : MonoBehaviour
         enemy = null;
         isLeftStair = true;
         spriteGround.flipX = false;
+        isInPosition = false;
     }
 
     void OnDespawned() {

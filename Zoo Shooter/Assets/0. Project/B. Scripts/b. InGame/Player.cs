@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
     }
 
     IEnumerator Moving() {
-        this.transform.DOMove(targetPos, 0.5f).OnComplete(OnCompleteMove);
+        this.transform.DOJump(targetPos, 1.5f, 1, 0.5f).OnComplete(OnCompleteMove);
         yield return null;
     }
 

@@ -266,10 +266,14 @@ namespace Google2u
 	public sealed class EnemyData : IGoogle2uDB
 	{
 		public enum rowIds {
-			alligator, alpaca, bear, cat, deer, elephant, giraffe, Hippo, octopus, Penguin, pig
+			alligator, alpaca, bear, cat, deer, elephant, giraffe, Hippo, octopus, Penguin, pig, GasMask, Clown, SWitch, Surprise, Freddy, Hotkey, Texas
+			, Trick, BadPenguin, CatAunt, Halface, Pigin, AilenYo, PrincessA, HeroJe, Father, RHarry, RMarv, Gevin, PinkRabbit, HorrorNurse, Triangle, DrBald, Greenman, ChiefBuggle, Lizard, Sand
+			, MagicGirl, Killer, ShooterMan, Diablo, Hollyshit, Pocker, FishMan, StarFish, Sparrow, OctoJohns, ryu, ken, Dhalim, Guile, ChunLi, HeyGrandfa
 		};
 		public string [] rowNames = {
-			"alligator", "alpaca", "bear", "cat", "deer", "elephant", "giraffe", "Hippo", "octopus", "Penguin", "pig"
+			"alligator", "alpaca", "bear", "cat", "deer", "elephant", "giraffe", "Hippo", "octopus", "Penguin", "pig", "GasMask", "Clown", "SWitch", "Surprise", "Freddy", "Hotkey", "Texas"
+			, "Trick", "BadPenguin", "CatAunt", "Halface", "Pigin", "AilenYo", "PrincessA", "HeroJe", "Father", "RHarry", "RMarv", "Gevin", "PinkRabbit", "HorrorNurse", "Triangle", "DrBald", "Greenman", "ChiefBuggle", "Lizard", "Sand"
+			, "MagicGirl", "Killer", "ShooterMan", "Diablo", "Hollyshit", "Pocker", "FishMan", "StarFish", "Sparrow", "OctoJohns", "ryu", "ken", "Dhalim", "Guile", "ChunLi", "HeyGrandfa"
 		};
 		public System.Collections.Generic.List<EnemyDataRow> Rows = new System.Collections.Generic.List<EnemyDataRow>();
 
@@ -297,6 +301,49 @@ namespace Google2u
 			Rows.Add( new EnemyDataRow("octopus", "normal", "octopus", "octopus", "octopus", "-0.002630472", "-0.3337683", "0.9705513", "0.6540275", "-0.006672591", "0.3512175", "0.6016197", "0.6704962", "1", "0.448", "-0.163", "pistol"));
 			Rows.Add( new EnemyDataRow("Penguin", "normal", "Penguin", "Penguin", "Penguin", "-0.02307048", "-0.2656351", "0.9296712", "0.9538144", "-0.006672591", "0.5249574", "0.6016197", "0.568296", "1", "0.431", "-0.123", "pistol"));
 			Rows.Add( new EnemyDataRow("pig", "normal", "pig", "pig", "pig", "0.01780951", "-0.2792618", "1.011431", "0.7766679", "0.1772873", "0.4329778", "0.6970063", "0.5751091", "1", "0.434", "-0.146", "pistol"));
+			Rows.Add( new EnemyDataRow("GasMask", "boss", "GasMask", "GasMask", "GasMask", "-0.1228231", "-0.5644336", "0.8239207", "0.5969703", "-0.02584872", "0.2454677", "0.9157681", "0.9813813", "0", "-0.172", "-0.507", "uzi"));
+			Rows.Add( new EnemyDataRow("Clown", "boss", "Clown", "Clown", "Clown", "-0.06082463", "-0.4320275", "1.526323", "0.9887496", "0.06620383", "0.5348855", "1.473451", "0.8696633", "0", "0.344", "-0.4", "punch"));
+			Rows.Add( new EnemyDataRow("SWitch", "boss", "S.Witch", "S.Witch", "S.Witch", "-0.03326717", "-0.5606285", "1.177263", "0.8234051", "0.1810261", "0.2455335", "0.9314892", "0.6583898", "0", "0.417", "-0.392", "broom"));
+			Rows.Add( new EnemyDataRow("Surprise", "boss", "Surprise", "Surprise", "Surprise", "-0.03785998", "-0.505514", "1.168077", "1.043864", "0.2407336", "0.5900006", "0.7202165", "1.016635", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Freddy", "boss", "Freddy", "Freddy", "Freddy", "-0.005709648", "-0.54685", "1.232378", "1.126536", "0.1672473", "0.5900006", "0.7385881", "1.016635", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Hotkey", "boss", "Hotkey", "Hotkey", "Hotkey", "-0.005709648", "-0.5192927", "1.232378", "1.071422", "0.1672473", "0.5900006", "0.7385881", "1.016635", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Texas", "boss", "Texas", "Texas", "Texas", "-0.05163854", "-0.4825494", "1.14052", "1.181651", "0.10754", "0.6405224", "0.8028883", "0.9155917", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Trick", "boss", "Trick", "Trick", "Trick", "-0.0332669", "-0.4825494", "1.177263", "1.181651", "0.10754", "0.6083721", "0.8028883", "0.8512912", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("BadPenguin", "boss", "BadPenguin", "BadPenguin", "BadPenguin", "-0.04704559", "-0.5376641", "1.149706", "1.144909", "0.0845755", "0.4751779", "0.7569594", "0.7869906", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("CatAunt", "boss", "CatAunt", "CatAunt", "CatAunt", "0.09840484", "-0.3887506", "1.080444", "0.8470815", "0.3394909", "0.432692", "0.5870159", "0.6534637", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Halface", "boss", "Halface", "Halface", "Halface", "-0.02135986", "-0.4754768", "1.121742", "1.020534", "0.294063", "0.6185338", "0.49616", "1.025147", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Pigin", "boss", "Pigin", "Pigin", "Pigin", "-0.06678784", "-0.4383085", "1.361272", "0.9461974", "0.13713", "0.5689761", "0.9586996", "0.8269161", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("AilenYo", "boss", "Alien-Yo", "Alien-Yo", "Alien-Yo", "0.02406824", "-0.3846209", "0.9482901", "0.9874956", "0.02975479", "0.5359377", "0.7439492", "0.760839", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("PrincessA", "boss", "Princess-A", "Princess-A", "Princess-A", "-0.05852801", "-0.4052701", "1.146521", "0.7975242", "0.1742984", "0.4409517", "0.9174015", "0.8021374", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("HeroJe", "boss", "Hero-Je", "Hero-Je", "Hero-Je", "-0.05852801", "-0.3268035", "1.146521", "0.9544572", "0.343621", "0.4905095", "1.256047", "0.5543482", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Father", "boss", "Father", "Father", "Father", "-0.07504725", "-0.5498135", "1.476907", "0.8718611", "0.1784285", "0.5028991", "1.156931", "1.107743", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("RHarry", "boss", "R.Harry", "R.Harry", "R.Harry", "-0.01309997", "-0.5787222", "1.022627", "0.9957552", "0.4096982", "0.2468504", "1.17345", "0.5130491", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("RMarv", "boss", "R.Marv", "R.Marv", "R.Marv", "-0.08011448", "-0.3572828", "1.179965", "1.322087", "0.2698418", "0.7396539", "0.7305714", "0.7294455", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Gevin", "boss", "Gevin", "Gevin", "Gevin", "-0.01309991", "-0.4388656", "1.045936", "0.9607912", "0.1474674", "0.4861642", "0.6839527", "0.8518198", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("PinkRabbit", "boss", "PinkRabbit", "PinkRabbit", "PinkRabbit", "0.007295936", "-0.4942254", "1.040109", "1.071511", "0.1474674", "0.4045813", "0.6839527", "0.688654", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("HorrorNurse", "boss", "HorrorNurse", "HorrorNurse", "HorrorNurse", "-0.05971852", "-0.4388655", "1.430542", "1.298778", "0.0658845", "0.7046899", "1.126832", "0.7527548", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Triangle", "boss", "Triangle", "Triangle", "Triangle", "0.07709914", "-0.7379552", "1.156906", "0.9551425", "0.1429804", "0.4278907", "1.281024", "1.306353", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("DrBald", "boss", "Dr.Bald", "Dr.Bald", "Dr.Bald", "-0.006413102", "-0.6072403", "0.8010712", "0.9987143", "-0.009520501", "0.3080686", "0.772688", "0.761708", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Greenman", "boss", "Greenman", "Greenman", "Greenman", "-0.04272282", "-0.5564067", "0.7284517", "0.6210933", "0.1320873", "0.4787244", "0.7073306", "1.378973", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("ChiefBuggle", "boss", "Chief-buggle", "Chief-buggle", "Chief-buggle", "-0.2533191", "-0.3494413", "1.149644", "1.325502", "0.0485751", "0.758309", "0.5403061", "0.8198035", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Lizard", "boss", "Lizard", "Lizard", "Lizard", "0.2930693", "-0.2887314", "0.8460957", "1.204082", "0.4044101", "0.6820586", "0.8017362", "0.6673026", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Sand", "boss", "Sand", "Sand", "Sand", "0.008492112", "-0.3873851", "1.142056", "1.355856", "0.1729539", "0.6972362", "0.7486153", "0.7583672", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("MagicGirl", "boss", "MagicGirl", "MagicGirl", "MagicGirl", "-0.09395558", "-0.3760019", "1.195177", "1.33309", "0.214692", "0.7541516", "0.5892519", "0.8721981", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("Killer", "boss", "Killer", "Killer", "Killer", "-0.006685063", "-0.3380582", "0.8385068", "1.029541", "0.3550835", "0.4847516", "1.173584", "0.5762379", "0", "0.559", "-0.124", "fan"));
+			Rows.Add( new EnemyDataRow("ShooterMan", "boss", "ShooterMan", "ShooterMan", "ShooterMan", "-0.006685078", "-0.3608243", "0.8385068", "0.9840086", "0.006002069", "0.5075178", "0.7637931", "0.7128348", "0", "0.333", "-0.134", "pistol"));
+			Rows.Add( new EnemyDataRow("Diablo", "boss", "Diablo", "Diablo", "Diablo", "0.00849238", "-0.3987679", "0.975104", "1.059896", "0.1501879", "0.5075178", "0.6423735", "0.7128348", "0", "0.417", "-0.225", "nofire"));
+			Rows.Add( new EnemyDataRow("Hollyshit", "boss", "Hollyshit", "Hollyshit", "Hollyshit", "-0.1660482", "-0.4443003", "1.187588", "0.7867016", "0.05912322", "0.4164531", "0.8245029", "0.8949643", "0", "0.235", "-0.202", "bat"));
+			Rows.Add( new EnemyDataRow("Pocker", "boss", "Pocker", "Pocker", "Pocker", "0.003230751", "-0.4443002", "1.194497", "1.173625", "0.1732485", "0.5947882", "0.7340269", "0.8114879", "0", "0.456", "-0.12", "bluedragon"));
+			Rows.Add( new EnemyDataRow("FishMan", "boss", "FishMan", "FishMan", "FishMan", "0.2162286", "-0.3179455", "1.764898", "0.8487132", "0.2274003", "0.428722", "1.780965", "0.5659987", "0", "0.297", "-0.098", "fish"));
+			Rows.Add( new EnemyDataRow("StarFish", "boss", "StarFish", "StarFish", "StarFish", "-0.007599413", "-0.4479102", "1.201718", "0.8631535", "0.0107924", "0.4359423", "0.9000928", "0.86925", "0", "0.398", "-0.257", "fish"));
+			Rows.Add( new EnemyDataRow("Sparrow", "boss", "Sparrow", "Sparrow", "Sparrow", "-0.04370067", "-0.411809", "1.129515", "1.079761", "0.2418409", "0.5153652", "0.5535202", "0.7104042", "0", "0.29", "-0.156", "bluedragon"));
+			Rows.Add( new EnemyDataRow("OctoJohns", "boss", "Octo-Johns", "Octo-Johns", "Octo-Johns", "-0.02203983", "-0.4876217", "0.7973828", "1.014779", "-0.003648043", "0.3854005", "0.7845688", "0.6526417", "0", "0.369", "-0.207", "frog"));
+			Rows.Add( new EnemyDataRow("ryu", "boss", "ryu", "ryu", "ryu", "0.01406156", "-0.3973683", "0.9706694", "1.036439", "0.1479774", "0.5225855", "0.6401638", "0.7248442", "0", "0.463", "-0.214", "kitchenglove"));
+			Rows.Add( new EnemyDataRow("ken", "boss", "ken", "ken", "ken", "0.01406156", "-0.3973683", "0.9706694", "1.036439", "0.1479774", "0.5225855", "0.6401638", "0.7248442", "0", "0.42", "-0.005", "watermelon"));
+			Rows.Add( new EnemyDataRow("Dhalim", "boss", "Dhalim", "Dhalim", "Dhalim", "-0.0978525", "-0.4443001", "1.151176", "1.130303", "0.2165698", "0.6417199", "0.5029789", "0.963113", "0", "0.369", "0.002", "repeller"));
+			Rows.Add( new EnemyDataRow("Guile", "boss", "Guile", "Guile", "Guile", "-0.1195132", "-0.3793176", "1.107854", "1.000338", "0.3934665", "0.428722", "1.160023", "0.5371171", "0", "0.369", "-0.171", "dryer"));
+			Rows.Add( new EnemyDataRow("ChunLi", "boss", "Chun-li", "Chun-li", "Chun-li", "-0.1195133", "-0.4543293", "1.107854", "0.8029385", "0.08552399", "0.3813462", "0.8126013", "0.7739962", "0", "0.227", "-0.297", "macaron"));
+			Rows.Add( new EnemyDataRow("HeyGrandfa", "boss", "HeyGrandfa", "HeyGrandfa", "HeyGrandfa", "-0.001073748", "-0.3872137", "0.8235996", "0.9371696", "-0.01317555", "0.5155778", "0.7731214", "0.7582049", "0", "0.322", "-0.116", "recorder"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

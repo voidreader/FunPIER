@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager main = null;
 
+    public StageDataRow CurrentLevelData = null;
     public Camera mainCamera; // 메인카메라 
 
     public bool AutoInit;
@@ -18,15 +19,17 @@ public class GameManager : MonoBehaviour
     public bool isEnemyDead = false; // 적 죽었는지..?
     public bool isMissed = false; // 빗나감!
 
-    [SerializeField] List<Sprite> listEnemySprite;
+    
 
 
-
+    /// <summary>
+    /// 플레이어가 다음으로 이동'할' 발판
+    /// </summary>
     public Stair currentStair = null; // 적이 등장하는 발판 
     public List<Stair> listStairs;
 
     public float posFirstStairY = -2.5f;
-    public int indexStair = 0;
+    public int indexLastStair = 0;
     public float topStairY; // 꼭대기 계단 Y 좌표
     public int indexPlayerStair = 0; // 플레이어 캐릭터가 서있는 발판 index 
 
@@ -34,10 +37,13 @@ public class GameManager : MonoBehaviour
     Enemy enemy;
     Player player;
 
-    #region InGame Vars
+    #region InGame Environment Vars
 
     public bool isEntering = false;
     [SerializeField] SpriteRenderer _whiteBox, _nightBox, _botGround; // 배경 스플래쉬 및 낮밤 바꾸기 용도 
+    [SerializeField] Transform _leftTreeGroup, _rightTreeGroup, _moon;
+    [SerializeField] List<SpriteRenderer> _listStars;
+    [SerializeField] GameObject _nightTile;
 
 
     #endregion
@@ -56,6 +62,9 @@ public class GameManager : MonoBehaviour
         else {
             // test 환경 
         }
+
+        
+
     }
 
     // Update is called once per frame
@@ -70,8 +79,9 @@ public class GameManager : MonoBehaviour
             enemy.KillEnemy();
         }
 
-
-
+        if(Input.GetKeyDown(KeyCode.B)) {
+            GameViewManager.main.AppearBoss();
+        }
     }
 
 
@@ -83,33 +93,38 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 게임 시작~
+    /// 인게임 초기화
     /// </summary>
     public void InitGame() {
 
+        Debug.Log("Init InGame Starts.... :: " + CurrentLevelData);
+        CurrentLevelData = StageData.Instance.Rows[PIER.CurrentLevel];
+
+
+
+        // 카메라 초기화 및 계단 리스트 초기화 
         InitMainCamera();
-
-        indexStair = 0;
-
+        indexPlayerStair = 0; // 플레이어 계단 위치 
+        indexLastStair = 0;
         listStairs = new List<Stair>();
 
-        // 6개의 계단 생성
+        // 먼저 2개의 계단만 생성한다. 
         for(int i=0; i<2; i++) {
             InsertNewStair();
         }
 
-        // 가장 하단 계단을 플레이어 위치로
-        // 두번째 계단에 적 설정 
+        // 게임이 시작되면 플레이어가 한칸 뛰어올라와 우측을 겨냥한다. 
+        // 즉, 세번째 계단에서 적이 등장 
         // currentStair는 항상 적이 등장하는 계단. 
+
+        // 플레이어 다음 계단을 무조건 CurrentStair로 설정
         currentStair = listStairs[indexPlayerStair+1];
 
-        // 적 생성 
-        // enemy = GetNewEnemy();
-        // currentStair.SetEnemey(enemy);
-
-
         // 플레이어 생성
-        player = PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabPlayer).GetComponent<Player>();
+        player = PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabPlayer, new Vector3(20, 0 ,0), Quaternion.identity).GetComponent<Player>();
+        
+
+        // 플레이어를 첫번째 계단에 위치시킨다. 
         listStairs[indexPlayerStair].SetPlayer(player);
 
         
@@ -132,6 +147,9 @@ public class GameManager : MonoBehaviour
 
     #region Routine 
 
+    /// <summary>
+    /// 
+    /// </summary>
     void EnterMission() {
         Debug.Log("EnterMission Start");
     }
@@ -139,6 +157,22 @@ public class GameManager : MonoBehaviour
     IEnumerator EnteringMission() {
 
         isEntering = true;
+
+        // 초기화 ㄱ
+        _leftTreeGroup.localPosition = new Vector3(-3.5f, 0, 0);
+        _rightTreeGroup.localPosition = new Vector3(3.5f, -1.32f, 0);
+
+        // moon -1.13f, 4.15f
+        _moon.localPosition = new Vector3(-4.34f, 0.95f, 0);
+
+        for(int i =0; i<_listStars.Count; i++) {
+            _listStars[i].color = new Color(0, 0, 0, 0);
+            _listStars[i].DOKill();
+            _listStars[i].gameObject.SetActive(false);
+
+        }
+
+
         _nightBox.color = new Color(1, 1, 1, 0);
         _nightBox.transform.localPosition = new Vector3(0, 20, 0);
         _nightBox.gameObject.SetActive(true);
@@ -155,7 +189,22 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        isEntering = false;
+        _leftTreeGroup.DOLocalMoveX(-0.4f, 0.5f);
+        _rightTreeGroup.DOLocalMoveX(0.4f, 0.5f);
+
+        yield return new WaitForSeconds(0.2f);
+        _moon.DOLocalMove(new Vector3(2.56f, 3.79f, 0), 1f);
+
+        // 별. 
+        for(int i=0; i<_listStars.Count;i++) {
+            _listStars[i].gameObject.SetActive(true);
+            _listStars[i].DOColor(new Color(1, 1, 1, 1), Random.Range(1f, 3.5f)).SetLoops(-1, LoopType.Yoyo);
+        }
+
+        _nightTile.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+
+        isEntering = false; // 진입 연출 종료 
 
 
     }
@@ -172,12 +221,15 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        // 연출 끝나면 첫번째 적 등장 
+        // 연출 끝나면 플레이어가 한칸을 뛰어 올라간다. 
+        MovePlayer();
+        while (Player.isMoving)
+            yield return null;
+
+        // 무빙 끝나고 적 캐릭터 등장. 
+        currentStair = listStairs[indexLastStair-1];
         currentStair.SetReadyEnemy();
         enemy = currentStair.enemy;
-
-        // 조준 시작
-        player.Aim();
 
         while (isPlaying) {
 
@@ -190,12 +242,21 @@ public class GameManager : MonoBehaviour
                 yield return null;
             }
 
+            // 적 죽었을때.. 
             if(isEnemyDead) {
-                // 무빙 연출 
-                yield return StartCoroutine(KillEnemyRoutine());
+
+                // Kill 연출 종료 체크 
+                while (enemy.isKilling) {
+                    yield return null;
+                }
+
+                // 다음 칸으로 이동 
+                MovePlayer();
+
+                yield return null;
+
                 isEnemyDead = false; // 다시 enemyDead 초기화
-                currentStair.enemy = null;
-                currentStair = listStairs[indexPlayerStair + 1];
+                currentStair = listStairs[indexLastStair - 1];
                 currentStair.SetReadyEnemy(); // 적 등장 처리 
                 enemy = currentStair.enemy;
             }
@@ -205,36 +266,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     /// <summary>
-    /// 적을 죽이고 새로운 계단을 생성한다. 
+    /// 플레이어를 다음 계단으로 이동, 카메라 이동 및 신규 계단 생성까지 포함 
     /// </summary>
-    /// <returns></returns>
-    IEnumerator KillEnemyRoutine() {
-        // '현재' 적이 다 죽었는지 확인 
-        while (enemy.isKilling) {
-            yield return null;
-        }
-
-        // 캐릭터의 이동
-        // listStairs[indexPlayerStair + 1].SetPlayer(player);
-        listStairs[indexPlayerStair].player = null; // null 
-
-        // 다음 칸으로 이동 
+    void MovePlayer() {
+        listStairs[indexPlayerStair].player = null; // 현 계단의 player null 처리 
         player.MoveNextStair(listStairs[indexPlayerStair + 1].GetPlayerPosition());
+        
 
         // 카메라 이동 처리 
         MoveMainCamera(GetDistance(listStairs[indexPlayerStair].transform.position.y, currentStair.transform.position.y));
+
+
+
         InsertNewStair(); // 단일 새 계단 생성
+        indexPlayerStair++; // 플레이어 계단 위치 인덱스 ++ 
 
-        while(Player.isMoving) {
+        StartCoroutine(WaitingPlayerMoving());
+    }
+
+    IEnumerator WaitingPlayerMoving() {
+
+        // 캐릭터 움직일때는. 정지 
+        while (Player.isMoving)
             yield return null;
-        }
 
-        indexPlayerStair++;
         listStairs[indexPlayerStair].SetPlayer(player);
         player.Aim();
     }
+
 
 
     float GetDistance(float a, float b) {
@@ -262,50 +322,33 @@ public class GameManager : MonoBehaviour
         isEnemyDead = false; // 적 생성되면 적 죽지 않았다고 처리
         */
 
-        Enemy e = GameObject.Instantiate(Stocks.main.prefabNormalEnemy, Vector3.zero, Quaternion.identity).GetComponent<Enemy>();
-        e.SetEnemy(EnemyType.Normal, GetRandomNormalEnemyID()); // 정보 설정 
+        Enemy e = GameObject.Instantiate(Stocks.main.prefabNormalEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
+        e.SetEnemy(EnemyType.Normal, Stocks.GetRandomNormalEnemyID()); // 정보 설정 
 
         return e;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public static Sprite GetEnemySprite(string name) {
-        for (int i = 0; i < main.listEnemySprite.Count; i++) {
-            if (main.listEnemySprite[i].name == name)
-                return main.listEnemySprite[i];
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// 랜덤 노멀 에너미 아이디 가져오기
-    /// </summary>
-    /// <returns></returns>
-    public string GetRandomNormalEnemyID() {
-        return EnemyData.Instance.Rows[Random.Range(0, EnemyData.Instance.Rows.Count)]._identifier;
     }
 
     #endregion
 
 
     /// <summary>
-    /// 가장 상단에 새로운 계단 생성
+    /// 가장 상단에 새로운 계단 생성하고, Enemy 설정 
+    /// indexLastStair 증가 처리
+    /// listStairs에 추가 
+    /// 가장 첫번째와 두번째 계단은 적을 생성하지 않는다. 
     /// </summary>
     void InsertNewStair() {
         stair = GetNewStair();
         topStairY = stair.transform.localPosition.y; // 높이 처리
 
         // Enemy 설정 
-        if (indexStair> 0) // 0번째 칸은 생성하지 않음 
+        if (indexLastStair > 1) // 가장 첫번째와 두번째 계단은 적을 생성하지 않는다. 
             stair.SetEnemey(GetNewEnemy());
 
         // 인덱스 증가 처리 
-        indexStair++;
+        
         listStairs.Add(stair);
+        indexLastStair++;
     }
 
     /// <summary>
@@ -321,7 +364,7 @@ public class GameManager : MonoBehaviour
         // 계단 위치 지정 
         // 첫번째 계단만 예외.
 
-        if(indexStair == 0) {
+        if(indexLastStair == 0) {
             // 무조건 오른쪽 
             stair.SetStairPosition(new Vector2(Random.Range(2.9f, 3.5f), posFirstStairY), false);
             return stair;
@@ -329,7 +372,7 @@ public class GameManager : MonoBehaviour
 
 
         // 좌우 체크
-        if (indexStair % 2 == 0) { // 오른쪽 
+        if (indexLastStair % 2 == 0) { // 오른쪽 
             posX = Random.Range(2.9f, 4.6f);
             posY = topStairY + Random.Range(0.4f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
