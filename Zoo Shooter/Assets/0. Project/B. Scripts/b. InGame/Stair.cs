@@ -12,12 +12,14 @@ public class Stair : MonoBehaviour
     static float initX = 2.6f;
 
     [SerializeField] float targetPosX = 0;
-    [SerializeField] bool isInPosition = false;
+    [SerializeField] public bool isInPosition = false;
 
     public SpriteRenderer spriteGround;
     public bool isLeftStair = true; // 좌측 발판인지 체크 
     public Enemy enemy = null;
     public Player player = null;
+
+    [SerializeField] Vector3 bossJumpPos;
 
     // Start is called before the first frame update
     void Start()
@@ -27,11 +29,24 @@ public class Stair : MonoBehaviour
 
 
     /// <summary>
+    /// 보스 점프 뛰고, 방향 설정 
+    /// </summary>
+    /// <param name="e"></param>
+    public void SetJumpingBoss(Enemy e) {
+        enemy = e;
+        enemy.SetSpriteDirection(isLeftStair);
+    }
+
+    /// <summary>
     /// 적 세팅! (위치잡기 )
     /// </summary>
     /// <param name="e"></param>
     public void SetEnemey(Enemy e) {
         enemy = e;
+
+        if (enemy == null)
+            return;
+
         StartCoroutine(SettingEnemy());
     }
 
@@ -56,6 +71,10 @@ public class Stair : MonoBehaviour
     /// </summary>
     /// <param name="e"></param>
     public void SetReadyEnemy() {
+
+        if (enemy == null)
+            return;
+
         StartCoroutine(EnemyPositionRoutine());
     }
 
@@ -126,6 +145,7 @@ public class Stair : MonoBehaviour
     /// <param name="left"></param>
     public void SetStairPosition(Vector3 p, bool left) {
         // this.transform.localPosition = p;
+        isInPosition = false;
         targetPosX = p.x; // 
         isLeftStair = left;
 
@@ -134,13 +154,13 @@ public class Stair : MonoBehaviour
 
         if (!isLeftStair) {
             spriteGround.flipX = true;
-            this.GetComponent<BoxCollider2D>().offset = new Vector2(0.9822102f, 0.3920624f);
-            this.GetComponent<BoxCollider2D>().size = new Vector2(6.428232f, 0.6529487f);
+            this.GetComponent<BoxCollider2D>().offset = new Vector2(0.9822102f, 0.3704366f);
+            this.GetComponent<BoxCollider2D>().size = new Vector2(6.428232f, 0.6096972f);
         }
         else {
             spriteGround.flipX = false;
-            this.GetComponent<BoxCollider2D>().offset = new Vector2(-1.660136f, 0.3920624f);
-            this.GetComponent<BoxCollider2D>().size = new Vector2(7.800061f, 0.6529487f);
+            this.GetComponent<BoxCollider2D>().offset = new Vector2(-1.660136f, 0.3704366f);
+            this.GetComponent<BoxCollider2D>().size = new Vector2(7.800061f, 0.6096972f);
         }
 
         if (isLeftStair)
@@ -166,7 +186,7 @@ public class Stair : MonoBehaviour
     }
 
     void OnDespawned() {
-
+        isInPosition = false;
     }
 
     /// <summary>
@@ -194,9 +214,21 @@ public class Stair : MonoBehaviour
         Vector3 pos = this.spriteGround.transform.position;
 
         if(isLeftStair)
-            pos = new Vector3(pos.x + 1.8f, pos.y + 0.7f, 0);
+            pos = new Vector3(pos.x + 0.9f, pos.y + 0.6f, 0);
         else
-            pos = new Vector3(pos.x - 1.8f, pos.y + 0.7f, 0);
+            pos = new Vector3(pos.x - 0.9f, pos.y + 0.6f, 0);
+
+        return pos;
+    }
+
+    public Vector3 GetBossJumpPosition() {
+        Vector3 pos = this.spriteGround.transform.position;
+        bossJumpPos = pos;
+
+        if (isLeftStair)
+            pos = new Vector3(pos.x + Random.Range(1.4f, 1.9f), pos.y + 1.6f, 0);
+        else
+            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.4f), pos.y + 1.6f, 0);
 
         return pos;
     }

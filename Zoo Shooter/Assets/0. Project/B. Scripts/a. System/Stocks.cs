@@ -14,6 +14,7 @@ public class Stocks : MonoBehaviour
 
 
     public GameObject prefabNormalEnemy; // 일반 에너미 
+    public GameObject prefabBossEnemy; // 보스
     public GameObject prefabEnemyWeapon; // 적 무기 
     public GameObject prefabEnemyBullet; // 적 총알 
 
@@ -59,6 +60,17 @@ public class Stocks : MonoBehaviour
         }
 
         Debug.Log(">>> GetBossSprite returns null :: " + name);
+        return null;
+    }
+
+    public static EnemyDataRow GetBossDataRow(int level) {
+        string sp = BossData.Instance.Rows[level]._sprite;
+
+        for(int i=0; i<EnemyData.Instance.Rows.Count; i++) {
+            if (EnemyData.Instance.Rows[i]._sprite == sp)
+                return EnemyData.Instance.Rows[i];
+        }
+
         return null;
     }
 

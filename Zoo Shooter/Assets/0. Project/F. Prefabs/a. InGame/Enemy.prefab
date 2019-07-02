@@ -117,7 +117,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1644825613031849502
 Transform:
   m_ObjectHideFlags: 0
@@ -186,8 +186,10 @@ MonoBehaviour:
   jumpPower: 2
   walkSpeed: 0
   anim: {fileID: 6872766204458582908}
+  isKilled: 0
   isKilling: 0
   isOnGroud: 0
+  isMoving: 0
 --- !u!50 &1012492977
 Rigidbody2D:
   serializedVersion: 4
@@ -206,8 +208,8 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &7393336541124300423
 GameObject:

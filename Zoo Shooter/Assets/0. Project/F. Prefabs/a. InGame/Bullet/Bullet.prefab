@@ -4771,7 +4771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounce: 0
   bounceForce: 10
-  speed: 20
+  speed: 30
   accuracy: 95
   fireRate: 4
   muzzlePrefab: {fileID: 1696487207369030, guid: 1af983a16643a6d4a8831ab3bdfbb2de,
@@ -4783,6 +4783,7 @@ MonoBehaviour:
   - {fileID: 8765759524501567235}
   - {fileID: 8765973538069599757}
   rb: {fileID: 0}
+  isEnemy: 0
 --- !u!58 &6935593617157152316
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4817,8 +4818,8 @@ Rigidbody2D:
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1 &8765844893659699771
 GameObject:

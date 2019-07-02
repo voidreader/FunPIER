@@ -27,10 +27,9 @@ public class NormalEnemy : Enemy {
     }
 
     IEnumerator Destroying() {
-        yield return new WaitForSeconds(0.5f);
         isKilling = false;
 
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(5f);
         Destroy(this.gameObject);
     }
 

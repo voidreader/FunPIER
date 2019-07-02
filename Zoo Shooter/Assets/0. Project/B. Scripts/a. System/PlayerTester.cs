@@ -19,13 +19,13 @@ public class PlayerTester : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.R)) {
             player.Aim();
-            GameManager.main.isPlaying = true;
+            GameManager.isPlaying = true;
         }
 
 
         if (Input.GetKeyDown(KeyCode.C)) {
             player.SetSpriteDirection(!player.isLeft);
-            GameManager.main.isPlaying = true;
+            GameManager.isPlaying = true;
             // player.weapon.CurrentAim.ResetAim();
         }
     }

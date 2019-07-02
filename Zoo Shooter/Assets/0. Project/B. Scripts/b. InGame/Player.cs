@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     Vector3 targetPos;
     public bool isLeft = false;
 
+    
+
     public WeaponManager weapon; // 무기 
 
 
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
             return;
 
         // 플레이 중이 아닐 경우 체크 
-        if (!GameManager.main.isPlaying)
+        if (!GameManager.isPlaying)
             return;
 
 

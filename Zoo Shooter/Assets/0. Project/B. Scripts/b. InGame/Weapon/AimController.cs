@@ -62,7 +62,7 @@ public class AimController : MonoBehaviour
         if (AimController.Wait)
             return;
 
-        if (!Player.isMoving && GameManager.main.isPlaying && !GameManager.main.isWaiting) {
+        if (!Player.isMoving && GameManager.isPlaying) {
 
 
             /*

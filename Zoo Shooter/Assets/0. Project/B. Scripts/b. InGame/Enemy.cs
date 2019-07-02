@@ -41,14 +41,24 @@ public class Enemy : MonoBehaviour {
 
 
     EnemyDataRow data;
+    public bool isKilled = false;
     public bool isKilling = false;
     public bool isOnGroud = false;
 
+    Vector3 jumpPos;
+    public bool isMoving = false;
+    public System.Action JumpCallback;
 
     void InitEnemy() {
         isKilling = false;
     }
 
+
+    /// <summary>
+    /// 에너지 정보를 설정한다.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <param name="pID"></param>
     public virtual void SetEnemy(EnemyType t, string pID) {
         type = t;
         id = pID;
@@ -65,10 +75,16 @@ public class Enemy : MonoBehaviour {
         HP = data._hp; // HP
 
         // sp.sprite = GameManager.GetEnemySprite(id);
-        sp.sprite = Stocks.GetEnemySprite(id);
+        if(type == EnemyType.Normal)
+            sp.sprite = Stocks.GetEnemySprite(id);
+        else
+            sp.sprite = Stocks.GetBossSprite(data._sprite);
+
         rigid.bodyType = RigidbodyType2D.Dynamic;
 
         EquipWeapon(); // 무기 장착
+
+        this.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -82,17 +98,33 @@ public class Enemy : MonoBehaviour {
         weapon.transform.localScale = Vector3.one;
         weapon.SetEnemyWeapon(data._gun);
         weapon.transform.localEulerAngles = new Vector3(0, 180, 0);
-
-
     }
 
 
+    /// <summary>
+    /// Hit 처리 
+    /// </summary>
+    /// <param name="d"></param>
+    public virtual void HitEnemy(int d) {
+        HP -= d;
+
+        GameManager.isEnemyHit = true; // 명중했음!
+        Debug.Log("HP after hit :: " + HP);
+
+        if (HP > 0)
+            return;
+
+        KillEnemy();
+    }
+    
+
+    /// <summary>
+    /// Kill 처리 
+    /// </summary>
     public virtual void KillEnemy() {
 
+        isKilled = true;
         this.transform.DOKill();
-
-
-        GameManager.main.isEnemyDead = true; // 게임매니저에게 죽었다고 전달.
         anim.SetBool("isKill", true);
 
         head.layer = 15;
@@ -100,8 +132,29 @@ public class Enemy : MonoBehaviour {
 
         //Invoke("WeaponDrop", 0.25f);
         WeaponDrop();
-
     }
+
+    /// <summary>
+    /// 발사!
+    /// </summary>
+    public virtual void Shoot() {
+        weapon.Shoot();
+    }
+
+    public virtual void Move(Vector3 target, System.Action callback) {
+        isMoving = false;
+        JumpCallback = callback;
+
+        jumpPos = target;
+        this.transform.DOJump(jumpPos, 1.5f, 1, 0.4f).OnComplete(OnCompleteJump);
+   }
+
+    void OnCompleteJump() {
+        isMoving = false;
+        JumpCallback();
+    }
+
+
 
     /// <summary>
     /// 무기 떨어뜨리기 
@@ -111,9 +164,6 @@ public class Enemy : MonoBehaviour {
         weapon.SetDrop(isLeft);
     }
 
-    public virtual void KillingEffect() {
-        
-    }
 
     /// <summary>
     /// 스프라이트 방향 설정 
@@ -124,9 +174,13 @@ public class Enemy : MonoBehaviour {
         // 좌측 등장이 아닌 경우 flip 처리 
         if (!isLeft)
             this.transform.localEulerAngles = new Vector3(0, 180, 0);
+        else
+            this.transform.localEulerAngles = Vector3.zero;
 
     }
 
+
+    #region Animation 제어 
 
     /// <summary>
     /// 점프 
@@ -148,10 +202,10 @@ public class Enemy : MonoBehaviour {
 
         rigid.bodyType = RigidbodyType2D.Dynamic;
     }
+    #endregion
 
-    public void KillPlayer(Transform t) {
-        weapon.SetTarget(t);
-    }
+
+
 
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.collider.tag == "Stair") {

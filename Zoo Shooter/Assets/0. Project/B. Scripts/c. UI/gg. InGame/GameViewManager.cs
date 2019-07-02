@@ -55,6 +55,7 @@ public class GameViewManager : MonoBehaviour {
     public void AppearBoss() {
 
         Debug.Log("Appear Boss..!!");
+        GameManager.isWait = true; // 연출 끝날때까지 대기 
 
         
 
@@ -92,11 +93,11 @@ public class GameViewManager : MonoBehaviour {
 
         _frame.DOLocalMoveX(_frame.localPosition.x + 750, 0.6f);
         _warning.DOLocalMoveX(_warning.localPosition.x + 750, 0.6f);
-        _lblBossName1.transform.DOLocalMoveX(_lblBossName1.transform.localPosition.x + 750, 0.6f);
+        _lblBossName1.transform.DOLocalMoveX(_lblBossName1.transform.localPosition.x + 750, 0.6f).OnComplete(OnCompleteAppear);
     }
 
     void OnCompleteAppear() {
-        
+        GameManager.isWait = false;
     }
 
 

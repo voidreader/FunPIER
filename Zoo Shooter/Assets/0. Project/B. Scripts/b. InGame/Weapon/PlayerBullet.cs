@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerBullet : MonoBehaviour
 {
 
+    public static bool isHitEnemy = false;
+
     public bool bounce = false;
     public float bounceForce = 10;
     public float speed;
@@ -24,6 +26,8 @@ public class PlayerBullet : MonoBehaviour
     public  Rigidbody2D rb;
     
     private GameObject target;
+
+    public bool isEnemy = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -123,7 +127,7 @@ public class PlayerBullet : MonoBehaviour
         if (collided)
             return;
 
-        if (co.tag == "Player")
+        if (co.tag == "Player" && !isEnemy)
             return;
 
         
@@ -166,19 +170,30 @@ public class PlayerBullet : MonoBehaviour
         // 파티클 파괴 
         StartCoroutine(DestroyParticle(0f));
 
+        if(isEnemy && co.tag == "Player") {
+            // 플레이어 킬
+            Debug.Log(">> Player is hit! <<");
+            return;
+        }
+
 
         // 적 죽이기
         if(co.tag == "Body") {
-            co.GetComponent<Enemy>().KillEnemy();
             Debug.Log("Body Shot!!");
+            co.GetComponent<Enemy>().HitEnemy(GameManager.main.currentWeapon.Damage);
+            isHitEnemy = true;
+            
         }
         else if(co.tag == "Head") {
-            // co.GetComponent<Enemy>().KillEnemy();
-            co.GetComponentInParent<Enemy>().KillEnemy();
             Debug.Log("Head Shot!!");
+            co.GetComponentInParent<Enemy>().HitEnemy(GameManager.main.currentWeapon.Damage * 2); // 두배 
+
+            isHitEnemy = true;
+
         }
-        else if (co.tag == "Stair") {
-            Debug.Log("Hit Stair");
+        else  {
+            Debug.Log("Hit Others");
+            GameManager.isMissed = true; // 빗나갔다!
         }
         
     }
@@ -189,4 +204,9 @@ public class PlayerBullet : MonoBehaviour
 
     }
 
+
+
+
+
 }
+

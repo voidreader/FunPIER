@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Google2u;
-
+using Doozy.Engine;
 public class EnemyTester : MonoBehaviour
 {
     public GameObject prefabNormalEnemy;
@@ -16,6 +16,9 @@ public class EnemyTester : MonoBehaviour
 
         _stair.SetReadyEnemy();
         yield return null;
+
+        
+
     }
 
 
@@ -26,7 +29,7 @@ public class EnemyTester : MonoBehaviour
         }
         
         if(Input.GetKeyDown(KeyCode.S)) {
-            _enemy.KillPlayer(_fakeTarget);
+            _enemy.Shoot();
         }
 
     }

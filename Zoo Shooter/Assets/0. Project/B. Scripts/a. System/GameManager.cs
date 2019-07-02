@@ -4,20 +4,24 @@ using UnityEngine;
 using PathologicalGames;
 using Google2u;
 using DG.Tweening;
+using Doozy.Engine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager main = null;
+    public static bool isPlaying = false; // 게임 시작여부 
 
-    public StageDataRow CurrentLevelData = null;
+    public static bool isEnemyHit = false; // Enemy가 플레이어 총알에 맞았는지 체크 
+    public static bool isMissed = false; // 플레이어 총알 빗나갔는지? 
+    public static bool isWait = false;
+
+    public StageDataRow CurrentLevelData = null; // 현재 스테이지 정보
     public Camera mainCamera; // 메인카메라 
 
     public bool AutoInit;
-    public bool isPlaying = false; // 게임 시작여부 
-    public bool isPause = false; // 일시정지 
-    public bool isWaiting = false; // 캐릭터 무빙 등으로 조작 및 로직 방지 
-    public bool isEnemyDead = false; // 적 죽었는지..?
-    public bool isMissed = false; // 빗나감!
+
+    public int SpawnEnemyCount = 0;
+    
 
     
 
@@ -27,6 +31,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public Stair currentStair = null; // 적이 등장하는 발판 
     public List<Stair> listStairs;
+    public Weapon currentWeapon; // 현재 플레이어가 장착한 무기.
 
     public float posFirstStairY = -2.5f;
     public int indexLastStair = 0;
@@ -57,11 +62,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
 
-        if(AutoInit)
-            InitGame();
-        else {
-            // test 환경 
-        }
+        
 
         
 
@@ -97,10 +98,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void InitGame() {
 
+        PoolManager.Pools[ConstBox.poolGame].DespawnAll();
         Debug.Log("Init InGame Starts.... :: " + CurrentLevelData);
+        InitEnvironments();
+
+
+
         CurrentLevelData = StageData.Instance.Rows[PIER.CurrentLevel];
 
-
+        isMissed = false;
+        isEnemyHit = false;
+        isWait = false;
+        SpawnEnemyCount = 0;
 
         // 카메라 초기화 및 계단 리스트 초기화 
         InitMainCamera();
@@ -154,6 +163,23 @@ public class GameManager : MonoBehaviour
         Debug.Log("EnterMission Start");
     }
 
+    void InitEnvironments() {
+        _leftTreeGroup.gameObject.SetActive(false);
+        _rightTreeGroup.gameObject.SetActive(false);
+        _nightBox.gameObject.SetActive(false);
+        _botGround.gameObject.SetActive(false);
+        _moon.gameObject.SetActive(false);
+
+        _nightTile.SetActive(false);
+
+        for (int i = 0; i < _listStars.Count; i++) {
+            _listStars[i].color = new Color(0, 0, 0, 0);
+            _listStars[i].DOKill();
+            _listStars[i].gameObject.SetActive(false);
+        }
+
+    }
+
     IEnumerator EnteringMission() {
 
         isEntering = true;
@@ -165,12 +191,6 @@ public class GameManager : MonoBehaviour
         // moon -1.13f, 4.15f
         _moon.localPosition = new Vector3(-4.34f, 0.95f, 0);
 
-        for(int i =0; i<_listStars.Count; i++) {
-            _listStars[i].color = new Color(0, 0, 0, 0);
-            _listStars[i].DOKill();
-            _listStars[i].gameObject.SetActive(false);
-
-        }
 
 
         _nightBox.color = new Color(1, 1, 1, 0);
@@ -189,10 +209,14 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        _leftTreeGroup.gameObject.SetActive(true);
+        _rightTreeGroup.gameObject.SetActive(true);
+
         _leftTreeGroup.DOLocalMoveX(-0.4f, 0.5f);
         _rightTreeGroup.DOLocalMoveX(0.4f, 0.5f);
 
         yield return new WaitForSeconds(0.2f);
+        _moon.gameObject.SetActive(true);
         _moon.DOLocalMove(new Vector3(2.56f, 3.79f, 0), 1f);
 
         // 별. 
@@ -233,32 +257,77 @@ public class GameManager : MonoBehaviour
 
         while (isPlaying) {
 
-            // 대기중.. 
-            while (isPause) {
-                yield return null;
-            }
+            #region 빗나갔을때 Gameover, Enemy Shoot 처리 
 
-            while(isWaiting) {
-                yield return null;
+            if (isMissed) { // 빗나갔을때 Gameover, Enemy Shoot 처리 
+                enemy.Shoot();
+
+                yield return new WaitForSeconds(3f);
+                GameManager.isPlaying = false;
+                GameEventMessage.SendEvent("GameOverEvent");
+                GameObject[] es = GameObject.FindGameObjectsWithTag("Body");
+                for(int i=0; i<es.Length;i++) {
+                    Destroy(es[i]);
+                }
             }
+            #endregion 
+
 
             // 적 죽었을때.. 
-            if(isEnemyDead) {
+            if (isEnemyHit) {
 
-                // Kill 연출 종료 체크 
-                while (enemy.isKilling) {
-                    yield return null;
+                if(enemy.type == EnemyType.Boss) { // 보스 Hit. 
+
+                    // 죽은 경우
+                    if(enemy.isKilled) {
+                        // 점프 뛰지 않는다. 
+                        // 헬리콥터 등장해야 한다. 
+
+                    }
+                    else { // 안죽은 경우
+                           // 보스 한칸 이동 
+                        InsertNewStair();
+
+                        while (!stair.isInPosition)
+                            yield return null;
+
+                        yield return null;
+
+                        enemy.Move(stair.GetBossJumpPosition(), SetBossJumpDirection);
+
+                        yield return new WaitForSeconds(0.1f);
+
+                        MovePlayer(false); // 캐릭터 이동 처리 
+
+                        isEnemyHit = false; // 다시 enemyDead 초기화
+                        currentStair = listStairs[indexLastStair - 1];
+                    }
                 }
+                else {
+                    // Kill 연출 종료 체크 
+                    while (enemy.isKilling) {
+                        yield return null;
+                    }
 
-                // 다음 칸으로 이동 
-                MovePlayer();
+                    // 다음 칸으로 이동 
+                    MovePlayer();
+                    isEnemyHit = false; // 다시 enemyDead 초기화
+                    currentStair = listStairs[indexLastStair - 1]; // 다음 계단정보 가져오고. 
+                                                                   // 다음 적이 boss인지 체크한다.
+                    enemy = currentStair.enemy;
 
-                yield return null;
+                    if (enemy.type == EnemyType.Normal) {
+                        currentStair.SetReadyEnemy(); // 적 등장 처리 
+                    }
+                    else { // 보스일때는 연출을 기다린다.
+                        GameViewManager.main.AppearBoss();
 
-                isEnemyDead = false; // 다시 enemyDead 초기화
-                currentStair = listStairs[indexLastStair - 1];
-                currentStair.SetReadyEnemy(); // 적 등장 처리 
-                enemy = currentStair.enemy;
+                        while (isWait)
+                            yield return null;
+
+                        currentStair.SetReadyEnemy(); // 적 등장 처리 
+                    }
+                }
             }
 
             
@@ -266,10 +335,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void SetBossJumpDirection() {
+        stair.SetJumpingBoss(enemy);
+    }
+
     /// <summary>
     /// 플레이어를 다음 계단으로 이동, 카메라 이동 및 신규 계단 생성까지 포함 
     /// </summary>
-    void MovePlayer() {
+    void MovePlayer(bool makeStair = true) {
         listStairs[indexPlayerStair].player = null; // 현 계단의 player null 처리 
         player.MoveNextStair(listStairs[indexPlayerStair + 1].GetPlayerPosition());
         
@@ -278,8 +351,10 @@ public class GameManager : MonoBehaviour
         MoveMainCamera(GetDistance(listStairs[indexPlayerStair].transform.position.y, currentStair.transform.position.y));
 
 
+        if(makeStair)
+            InsertNewStair(); // 단일 새 계단 생성
 
-        InsertNewStair(); // 단일 새 계단 생성
+
         indexPlayerStair++; // 플레이어 계단 위치 인덱스 ++ 
 
         StartCoroutine(WaitingPlayerMoving());
@@ -315,15 +390,24 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     Enemy GetNewEnemy() {
+        Enemy e = null;
 
-        /*
-        Enemy enemy = PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabEnemy).GetComponent<NormalEnemy>();
-        enemy.SetEnemy(EnemyType.Normal, GetRandomNormalEnemyID()); // 정보 설정 
-        isEnemyDead = false; // 적 생성되면 적 죽지 않았다고 처리
-        */
+        //  숫자가 같아지면 보스를 생성한다. 
+        if (SpawnEnemyCount == CurrentLevelData._enemycount) {
+            Debug.Log(">> Spawn Boss!!! <<");
+            e = GameObject.Instantiate(Stocks.main.prefabBossEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
+            e.SetEnemy(EnemyType.Boss, Stocks.GetBossDataRow(CurrentLevelData._level)._identifier);
+        }
+        else if(SpawnEnemyCount < CurrentLevelData._enemycount) { // Normal Enemy 생성 
+            e = GameObject.Instantiate(Stocks.main.prefabNormalEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
+            e.SetEnemy(EnemyType.Normal, Stocks.GetRandomNormalEnemyID()); // 정보 설정 
+        }
+        else {
+            // spawn 수가 많아지면 더이상 적을 만들지 않음 
+            return null;
+        }
 
-        Enemy e = GameObject.Instantiate(Stocks.main.prefabNormalEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
-        e.SetEnemy(EnemyType.Normal, Stocks.GetRandomNormalEnemyID()); // 정보 설정 
+        SpawnEnemyCount++;
 
         return e;
     }
@@ -366,7 +450,10 @@ public class GameManager : MonoBehaviour
 
         if(indexLastStair == 0) {
             // 무조건 오른쪽 
-            stair.SetStairPosition(new Vector2(Random.Range(2.9f, 3.5f), posFirstStairY), false);
+            // stair.SetStairPosition(new Vector2(Random.Range(2.9f, 3.5f), posFirstStairY), false);
+            posX = Random.Range(2.9f, 4.6f);
+            stair.SetStairPosition(new Vector2(posX, posFirstStairY), false);
+
             return stair;
         }
 

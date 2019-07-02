@@ -13,7 +13,7 @@ public class EnemyWeapon : MonoBehaviour
     public bool _canShoot = false; // 쏠 수 있음 
     public bool _aiming = false; // 조준 중 
     
-    public Transform _target;
+    
     RaycastHit2D ray;
 
     /// <summary>
@@ -42,11 +42,11 @@ public class EnemyWeapon : MonoBehaviour
             }
         }
 
-        _gunPoint.transform.localPosition = _weaponData.posGunPoint;
-    }
+        _gunPoint.transform.localPosition = _weaponData.posGunPoint; // 건포인트
+        this.transform.localScale = _weaponData.posScale; // 크기 
+    } 
 
-    public void SetTarget(Transform t) {
-        _target = t;
+    public void Shoot() {
         _canShoot = true;
     }
 
@@ -65,10 +65,12 @@ public class EnemyWeapon : MonoBehaviour
             if(!ray || ray.collider.tag != "Player")
                 this.transform.Rotate(-Vector3.back * Time.deltaTime * 30);
             else {
+                this.transform.Rotate(-Vector3.back * Time.deltaTime * 30); // 한번 더 간다. 
                 _aiming = true;
                 Debug.Log("Enemy Aim Completed ");
                 _canShoot = false; // 발사 처리 
                 Invoke("ShotBullet", 0.5f);
+
             }
         }
     }
@@ -95,6 +97,8 @@ public class EnemyWeapon : MonoBehaviour
 
         this.GetComponent<Rigidbody2D>().AddTorque(360, ForceMode2D.Impulse);
         this.gameObject.layer = 15;
-        
+
+
+        Destroy(this.gameObject, 4);
     }
 }
