@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PathologicalGames;
 
 public class PlayerBullet : MonoBehaviour
 {
@@ -189,6 +190,11 @@ public class PlayerBullet : MonoBehaviour
             co.GetComponentInParent<Enemy>().HitEnemy(GameManager.main.currentWeapon.Damage * 2); // 두배 
 
             isHitEnemy = true;
+
+            // Vector3 headshotPos = new Vector3(co.transform.parent.position.x, co.transform.parent.position.y + 2.7f, 0);
+
+            PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabHeadshot, new Vector3(0, 6f, 0), Quaternion.identity);
+            // co.transform.parent
 
         }
         else  {
