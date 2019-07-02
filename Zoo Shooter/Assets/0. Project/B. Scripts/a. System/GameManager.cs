@@ -318,6 +318,7 @@ public class GameManager : MonoBehaviour
 
                     if (enemy.type == EnemyType.Normal) {
                         currentStair.SetReadyEnemy(); // 적 등장 처리 
+                        SetLevelProgressor();
                     }
                     else { // 보스일때는 연출을 기다린다.
                         GameViewManager.main.AppearBoss();
@@ -409,7 +410,23 @@ public class GameManager : MonoBehaviour
 
         SpawnEnemyCount++;
 
+        
+        
+
+
         return e;
+    }
+
+    /// <summary>
+    /// 레벨 프로그레서 처리
+    /// </summary>
+    void SetLevelProgressor() {
+        float t = (float)(SpawnEnemyCount-1) / (float)CurrentLevelData._enemycount;
+
+        if (t > 1)
+            t = 1;
+
+        GameViewManager.main.SetLevelProgressor(t);
     }
 
     #endregion

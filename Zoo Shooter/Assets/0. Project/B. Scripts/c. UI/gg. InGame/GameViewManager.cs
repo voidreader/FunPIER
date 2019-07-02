@@ -100,5 +100,20 @@ public class GameViewManager : MonoBehaviour {
         GameManager.isWait = false;
     }
 
+    /// <summary>
+    /// 레벨 프로그레서 
+    /// </summary>
+    /// <param name="v"></param>
+    public void SetLevelProgressor(float v) {
+        _levelProgressor.SetValue(v);
+    }
+
+    /// <summary>
+    /// 보스 HP
+    /// </summary>
+    /// <param name="v"></param>
+    public void SetBossHP(float v) {
+        _bossHP.SetValue(v);
+    }
 
 }
