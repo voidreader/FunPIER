@@ -111,6 +111,10 @@ public class Enemy : MonoBehaviour {
         GameManager.isEnemyHit = true; // 명중했음!
         Debug.Log("HP after hit :: " + HP);
 
+
+        // 보스의 경우 HP 게이지와 연동되어야 한다. 
+
+
         if (HP > 0)
             return;
 
@@ -132,6 +136,8 @@ public class Enemy : MonoBehaviour {
 
         //Invoke("WeaponDrop", 0.25f);
         WeaponDrop();
+
+
     }
 
     /// <summary>

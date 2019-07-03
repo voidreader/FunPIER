@@ -9,12 +9,11 @@ using Google2u;
 public class GameViewManager : MonoBehaviour {
 
     public static GameViewManager main = null;
-
+    public static bool isContinueWatchAD = false;
 
 
     public Text _lblScore, _lblLevel;
     public Text _lblBossName1, _lblBossName2;
-
     public Progressor _levelProgressor; // 스테이지 Progressor
     public Progressor _bossHP; // 보스 HP 
 
@@ -23,7 +22,10 @@ public class GameViewManager : MonoBehaviour {
     public Transform _redBox1, _redBox2, _redBox3, _frame, _warning;
     public Image _portrait; // 보스 초상화 
 
-    public BossDataRow _bossData;
+    public BossDataRow _bossData; // 보스데이터
+    public PlusScore _plusScore; // 스코어처리
+    public int _currentScore = 0;
+    public int _currentBossHP = 0;
 
     private void Awake() {
         main = this;
@@ -32,8 +34,14 @@ public class GameViewManager : MonoBehaviour {
 
     public void OnView() {
 
+        // 광고를 보고 돌아온 경우는 초기화 하지 않는다. 
+        if (isContinueWatchAD) 
+            return; 
+
+
         // 보스 데이터 처리 
         _bossData = BossData.Instance.Rows[PIER.CurrentLevel];
+        _currentBossHP = _bossData._hp;
         _bossGroup.SetActive(false);
         _lblBossName1.text = _bossData._name;
         _lblBossName2.text = _bossData._name;
@@ -45,6 +53,8 @@ public class GameViewManager : MonoBehaviour {
         _lblScore.text = "0";
         _lblLevel.text = "Level " + (PIER.CurrentLevel + 1).ToString();
         _levelProgressor.InstantSetValue(0);
+        _currentScore = 0;
+
 
     }
 
@@ -114,6 +124,36 @@ public class GameViewManager : MonoBehaviour {
     /// <param name="v"></param>
     public void SetBossHP(float v) {
         _bossHP.SetValue(v);
+    }
+
+    public void AddScore(int s, bool isDouble = false) {
+
+        _currentScore += s;
+        _lblScore.text = _currentScore.ToString();
+
+        // _lblScore.text =
+        _plusScore.GetScore(s, isDouble);
+    }
+
+
+    /// <summary>
+    /// 보스 체력 게이지 처리 
+    /// </summary>
+    /// <param name="damage"></param>
+    public void CalcBossHP(int damage) {
+        float v;
+        _currentBossHP -= damage;
+
+        if (_currentBossHP <= 0) {
+            _bossHP.SetValue(0);
+            return;
+        }
+
+        v = (float)_currentBossHP / (float)_bossData._hp;
+
+        _bossHP.SetValue(v);
+
+
     }
 
 }

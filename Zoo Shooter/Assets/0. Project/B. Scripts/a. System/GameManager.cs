@@ -6,8 +6,7 @@ using Google2u;
 using DG.Tweening;
 using Doozy.Engine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
     public static GameManager main = null;
     public static bool isPlaying = false; // 게임 시작여부 
 
@@ -19,11 +18,11 @@ public class GameManager : MonoBehaviour
     public Camera mainCamera; // 메인카메라 
 
     public bool AutoInit;
-
     public int SpawnEnemyCount = 0;
-    
+    public bool isRevived = false; // 광고보고 부활 여부. (Continue)
 
-    
+
+
 
 
     /// <summary>
@@ -40,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     Stair stair;
     Enemy enemy;
-    Player player;
+    public Player player;
 
     #region InGame Environment Vars
 
@@ -59,28 +58,26 @@ public class GameManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
 
-        
 
-        
+
+
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
         if (!AutoInit)
             return;
 
-        
-        if(Input.GetKeyDown(KeyCode.K)) {
+
+        if (Input.GetKeyDown(KeyCode.K)) {
             enemy.KillEnemy();
         }
 
-        if(Input.GetKeyDown(KeyCode.B)) {
+        if (Input.GetKeyDown(KeyCode.B)) {
             GameViewManager.main.AppearBoss();
         }
     }
@@ -106,6 +103,7 @@ public class GameManager : MonoBehaviour
 
         CurrentLevelData = StageData.Instance.Rows[PIER.CurrentLevel];
 
+        isRevived = false;
         isMissed = false;
         isEnemyHit = false;
         isWait = false;
@@ -118,7 +116,7 @@ public class GameManager : MonoBehaviour
         listStairs = new List<Stair>();
 
         // 먼저 2개의 계단만 생성한다. 
-        for(int i=0; i<2; i++) {
+        for (int i = 0; i < 2; i++) {
             InsertNewStair();
         }
 
@@ -127,32 +125,53 @@ public class GameManager : MonoBehaviour
         // currentStair는 항상 적이 등장하는 계단. 
 
         // 플레이어 다음 계단을 무조건 CurrentStair로 설정
-        currentStair = listStairs[indexPlayerStair+1];
+        currentStair = listStairs[indexPlayerStair + 1];
 
-        // 플레이어 생성
-        player = PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabPlayer, new Vector3(20, 0 ,0), Quaternion.identity).GetComponent<Player>();
-        
 
-        // 플레이어를 첫번째 계단에 위치시킨다. 
-        listStairs[indexPlayerStair].SetPlayer(player);
+        GetNewPlayer();
 
-        
 
     } // end of InitGame
 
+    void GetNewPlayer() {
+        // 플레이어 생성
+        player = GameObject.Instantiate(Stocks.main.prefabPlayer, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Player>();
 
+        // 플레이어를 첫번째 계단에 위치시킨다. 
+        listStairs[indexPlayerStair].SetPlayer(player);
+    }
 
     /// <summary>
     /// 게임 시작 클릭!
     /// </summary>
     public void OnClickPlay() {
-        isPlaying = true;
 
+        GameViewManager.isContinueWatchAD = false;
+
+
+        isPlaying = true;
         StartCoroutine(EnteringMission());
         StartCoroutine(PlayRoutine());
 
         Debug.Log("OnClickPlay is clicked");
     }
+
+    #region 부활 처리
+    public void Revive() {
+
+        if (isRevived)
+            return;
+
+        isRevived = true;
+        // 플레이어 생성
+        GetNewPlayer();
+
+        isPlaying = true;
+        isMissed = false;
+        player.Aim(); // 조준 다시 시작.
+    }
+    #endregion
+
 
     #region Routine 
 
@@ -220,13 +239,14 @@ public class GameManager : MonoBehaviour
         _moon.DOLocalMove(new Vector3(2.56f, 3.79f, 0), 1f);
 
         // 별. 
-        for(int i=0; i<_listStars.Count;i++) {
+        for (int i = 0; i < _listStars.Count; i++) {
             _listStars[i].gameObject.SetActive(true);
             _listStars[i].DOColor(new Color(1, 1, 1, 1), Random.Range(1f, 3.5f)).SetLoops(-1, LoopType.Yoyo);
         }
 
         _nightTile.SetActive(true);
-        yield return new WaitForSeconds(0.2f);
+
+        yield return new WaitForSeconds(1.2f);
 
         isEntering = false; // 진입 연출 종료 
 
@@ -241,7 +261,7 @@ public class GameManager : MonoBehaviour
 
 
         // 게임 시작 연출 끝날때까지 기다린다. 
-        while(isEntering) {
+        while (isEntering) {
             yield return null;
         }
 
@@ -251,7 +271,7 @@ public class GameManager : MonoBehaviour
             yield return null;
 
         // 무빙 끝나고 적 캐릭터 등장. 
-        currentStair = listStairs[indexLastStair-1];
+        currentStair = listStairs[indexLastStair - 1];
         currentStair.SetReadyEnemy();
         enemy = currentStair.enemy;
 
@@ -262,13 +282,18 @@ public class GameManager : MonoBehaviour
             if (isMissed) { // 빗나갔을때 Gameover, Enemy Shoot 처리 
                 enemy.Shoot();
 
-                yield return new WaitForSeconds(3f);
-                GameManager.isPlaying = false;
-                GameEventMessage.SendEvent("GameOverEvent");
-                GameObject[] es = GameObject.FindGameObjectsWithTag("Body");
-                for(int i=0; i<es.Length;i++) {
-                    Destroy(es[i]);
+                yield return new WaitForSeconds(4.5f);
+
+                
+
+                if (isRevived) {
+                    GameOver();
                 }
+                else {
+                    // 한번도 부활하지 않은 경우는 Continue 화면을 호출. 
+                    GameEventMessage.SendEvent("ContinueEvent");
+                }
+                isMissed = false;
             }
             #endregion 
 
@@ -276,10 +301,10 @@ public class GameManager : MonoBehaviour
             // 적 죽었을때.. 
             if (isEnemyHit) {
 
-                if(enemy.type == EnemyType.Boss) { // 보스 Hit. 
+                if (enemy.type == EnemyType.Boss) { // 보스 Hit. 
 
                     // 죽은 경우
-                    if(enemy.isKilled) {
+                    if (enemy.isKilled) {
                         // 점프 뛰지 않는다. 
                         // 헬리콥터 등장해야 한다. 
 
@@ -331,7 +356,7 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            
+
             yield return null;
         }
     }
@@ -346,13 +371,13 @@ public class GameManager : MonoBehaviour
     void MovePlayer(bool makeStair = true) {
         listStairs[indexPlayerStair].player = null; // 현 계단의 player null 처리 
         player.MoveNextStair(listStairs[indexPlayerStair + 1].GetPlayerPosition());
-        
+
 
         // 카메라 이동 처리 
         MoveMainCamera(GetDistance(listStairs[indexPlayerStair].transform.position.y, currentStair.transform.position.y));
 
 
-        if(makeStair)
+        if (makeStair)
             InsertNewStair(); // 단일 새 계단 생성
 
 
@@ -366,6 +391,9 @@ public class GameManager : MonoBehaviour
         // 캐릭터 움직일때는. 정지 
         while (Player.isMoving)
             yield return null;
+
+
+        Debug.Log("SetPlayer with Direction");
 
         listStairs[indexPlayerStair].SetPlayer(player);
         player.Aim();
@@ -381,8 +409,21 @@ public class GameManager : MonoBehaviour
         mainCamera.transform.DOMoveY(mainCamera.transform.position.y + dis, 1);
     }
 
-    #endregion
 
+    /// <summary>
+    /// 게임 오버 처리 
+    /// </summary>
+    public void GameOver() {
+        // 이벤트 발생시키고 모든 적 제거한다. 
+        GameEventMessage.SendEvent("GameOverEvent");
+        isPlaying = false;
+        GameObject[] es = GameObject.FindGameObjectsWithTag("Body");
+        for (int i = 0; i < es.Length; i++) {
+            Destroy(es[i]);
+        }
+    }
+
+    #endregion
 
     #region Enemy 처리 
 
@@ -492,4 +533,22 @@ public class GameManager : MonoBehaviour
     }
 
 
+    #region White Splash
+
+    public void Splash() {
+        _whiteBox.gameObject.SetActive(true);
+        _whiteBox.color = new Color(0, 0, 0, 0);
+        _whiteBox.gameObject.SetActive(true);
+        _whiteBox.DOColor(new Color(1, 1, 1, 1), 0.1f).OnComplete(SplashOff);
+    }
+
+    void SplashOff() {
+        _whiteBox.DOColor(new Color(0, 0, 0, 0), 0.1f).OnComplete(OnCompleteSplash);
+    }
+    void OnCompleteSplash() {
+        _whiteBox.gameObject.SetActive(false);
+    }
+
+
+    #endregion
 }

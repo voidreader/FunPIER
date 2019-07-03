@@ -13,11 +13,13 @@ public class Stocks : MonoBehaviour
     public List<Sprite> ListBossSprite; // 보스 스프라이트 
 
 
+    public GameObject prefabPlayer;
     public GameObject prefabNormalEnemy; // 일반 에너미 
     public GameObject prefabBossEnemy; // 보스
     public GameObject prefabEnemyWeapon; // 적 무기 
     public GameObject prefabEnemyBullet; // 적 총알 
 
+    public Color ColorHeadshotFont;
 
     private void Awake() {
         main = this;

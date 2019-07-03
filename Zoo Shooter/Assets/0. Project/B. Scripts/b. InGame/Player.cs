@@ -16,11 +16,9 @@ public class Player : MonoBehaviour
     
 
     public WeaponManager weapon; // 무기 
+    public BoxCollider2D collider;
+    public Rigidbody2D rigid;
 
-
-    public void InitPlayer() {
-        isMoving = false;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +45,16 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
             StartCoroutine(ShootRoutine());
 
+    }
+
+    public void KillPlayer() {
+        rigid.bodyType = RigidbodyType2D.Dynamic;
+        rigid.AddForce(new Vector2(Random.Range(-100f, 0f), 450));
+
+        this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        // rigid.AddTorque(360, ForceMode2D.Impulse);
+
+        Destroy(this, 5f);
     }
 
     /// <summary>
@@ -76,17 +84,26 @@ public class Player : MonoBehaviour
     }
 
     IEnumerator Moving() {
-        this.transform.DOJump(targetPos, 1.5f, 1, 0.5f).OnComplete(OnCompleteMove);
+        // anim.SetBool("isJump", true);
+        this.transform.DOJump(targetPos, 1.5f, 1, 0.8f).OnComplete(OnCompleteMove);
+        this.transform.DORotate(new Vector3(0, 0, 360), 0.6f, RotateMode.WorldAxisAdd);
+            
+
         yield return null;
+        //yield return new WaitForSeconds(0.4f);
+        // anim.SetBool("isJump", false);
     }
 
     void OnCompleteMove() {
         isMoving = false;
+        
     }
 
 
 
     public void SetSpriteDirection(bool p) {
+
+        Debug.Log("Player SetSpriteDirection " + p);
         isLeft = p;
 
         // sp.flipX = isLeft;
@@ -112,5 +129,21 @@ public class Player : MonoBehaviour
 
     public void Shoot() {
         // weapon.Shoot();
+    }
+
+    public void SetLargeCollider() {
+        collider.size = new Vector2(0.5971596f, 1.779226f);
+        collider.offset = new Vector2(-0.1229745f, 1.013624f);
+    }
+
+    public void SetRegularCollider() {
+        collider.size = new Vector2(0.5971596f, 1.005302f);
+        collider.offset = new Vector2(-0.1229745f, 0.6266615f);
+    }
+    
+
+    void OnSpawned() {
+        SetRegularCollider();
+        isMoving = false;
     }
 }

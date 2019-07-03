@@ -43,31 +43,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9d440229503e24ea8e7e6d3dd56aee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentLevelData:
+    _level: 0
+    _enemycount: 0
+    _bosshp: 0
+    _range: 0
   mainCamera: {fileID: 0}
   AutoInit: 1
-  isPlaying: 0
-  isPause: 0
-  isWaiting: 0
-  isEnemyDead: 0
-  isMissed: 0
-  listEnemySprite:
-  - {fileID: 21300000, guid: 55ad8ee059400b04db7c761e33ab82bd, type: 3}
-  - {fileID: 21300000, guid: f939fb55939e3174581e9c06e47f7fa1, type: 3}
-  - {fileID: 21300000, guid: 362858b2d577f6b44a0a853188d65479, type: 3}
-  - {fileID: 21300000, guid: edc936fbf627498409a897accb3b649c, type: 3}
-  - {fileID: 21300000, guid: 06f84f53835c5dd4e8f7c75a8dd43803, type: 3}
-  - {fileID: 21300000, guid: a89ef8145fbceb046b62ee65e0215a7c, type: 3}
-  - {fileID: 21300000, guid: 1edd6f9cc1bb2db48a2c227cc1f18caf, type: 3}
-  - {fileID: 21300000, guid: b87e19edf0f60424c900f633d3a0d143, type: 3}
-  - {fileID: 21300000, guid: c83e3c3986ccc594abc0e27325bfdd18, type: 3}
-  - {fileID: 21300000, guid: ba3ecebf2bf2c2645be867ac12ac1a85, type: 3}
-  - {fileID: 21300000, guid: 675a4557b9cccae4db6b11bc06c5c7a4, type: 3}
+  SpawnEnemyCount: 0
+  isRevived: 0
   currentStair: {fileID: 0}
   listStairs: []
+  currentWeapon: {fileID: 0}
   posFirstStairY: -2.5
-  indexStair: 0
+  indexLastStair: 0
   topStairY: 0
   indexPlayerStair: 0
+  player: {fileID: 0}
   isEntering: 0
   _whiteBox: {fileID: 0}
   _nightBox: {fileID: 0}
@@ -82,3 +74,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  _nightTile: {fileID: 0}

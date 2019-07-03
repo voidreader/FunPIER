@@ -11,6 +11,12 @@ public class BossEnemy : Enemy {
         base.SetEnemy(t, pID);
     }
 
+    public override void HitEnemy(int d) {
+        base.HitEnemy(d);
+
+        GameViewManager.main.CalcBossHP(d); // HP 게이지 연동 추가 
+    }
+
     public override void KillEnemy() {
 
         

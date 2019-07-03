@@ -29,6 +29,7 @@ public class PlayerBullet : MonoBehaviour
     private GameObject target;
 
     public bool isEnemy = false;
+    Enemy hitEnemy;
 
     // Start is called before the first frame update
     void Start() {
@@ -174,6 +175,8 @@ public class PlayerBullet : MonoBehaviour
         if(isEnemy && co.tag == "Player") {
             // 플레이어 킬
             Debug.Log(">> Player is hit! <<");
+
+            GameManager.main.player.KillPlayer();
             return;
         }
 
@@ -181,20 +184,34 @@ public class PlayerBullet : MonoBehaviour
         // 적 죽이기
         if(co.tag == "Body") {
             Debug.Log("Body Shot!!");
-            co.GetComponent<Enemy>().HitEnemy(GameManager.main.currentWeapon.Damage);
+            hitEnemy = co.GetComponent<Enemy>();
+            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage);
             isHitEnemy = true;
+
+
+            // Score 처리
+            // 스코어는 레벨에 영향을 받는다.
+            GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
+
+
             
         }
         else if(co.tag == "Head") {
             Debug.Log("Head Shot!!");
-            co.GetComponentInParent<Enemy>().HitEnemy(GameManager.main.currentWeapon.Damage * 2); // 두배 
+
+            hitEnemy = co.GetComponentInParent<Enemy>();
+            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage * 2); // 두배 
 
             isHitEnemy = true;
 
             // Vector3 headshotPos = new Vector3(co.transform.parent.position.x, co.transform.parent.position.y + 2.7f, 0);
 
-            PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabHeadshot, new Vector3(0, 6f, 0), Quaternion.identity);
+            PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabHeadshot, new Vector3(0, 5f, 0), Quaternion.identity);
             // co.transform.parent
+
+            // 헤드샷은 두배
+            GameViewManager.main.AddScore((GameManager.main.CurrentLevelData._level + 1) * 2, true);
+            GameManager.main.Splash();
 
         }
         else  {

@@ -97,13 +97,13 @@ public class Stair : MonoBehaviour
 
 
         if (move == NormalEnmeyMove.Jump) {
-            enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
+            enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.4f).OnComplete(OnCompleteEnemyAppear);
             enemy.Jump();
             // enemy.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.FastBeyond360).SetDelay(0.1f);
         }
         else { // 걷기 
             enemy.Walk(); //(애니메이션)
-            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
+            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 1.2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
 
         }
     }
@@ -168,7 +168,7 @@ public class Stair : MonoBehaviour
         else
             this.transform.localPosition = new Vector3(6, p.y, 0);
 
-        this.transform.DOLocalMoveX(targetPosX, 0.2f).OnComplete(OnCompletePos);
+        this.transform.DOLocalMoveX(targetPosX, 0.1f).OnComplete(OnCompletePos);
     }
 
     void OnCompletePos() {
@@ -214,9 +214,9 @@ public class Stair : MonoBehaviour
         Vector3 pos = this.spriteGround.transform.position;
 
         if(isLeftStair)
-            pos = new Vector3(pos.x + 0.9f, pos.y + 0.6f, 0);
+            pos = new Vector3(pos.x + 0.9f, pos.y + 1.2f, 0);
         else
-            pos = new Vector3(pos.x - 0.9f, pos.y + 0.6f, 0);
+            pos = new Vector3(pos.x - 0.9f, pos.y + 1.2f, 0);
 
         return pos;
     }
