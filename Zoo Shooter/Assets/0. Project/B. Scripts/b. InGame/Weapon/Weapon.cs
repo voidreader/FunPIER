@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum WeaponType {
+    Gun,
+    Shotgun,
+    MachineGun
+}
+
+public enum WeaponGetType {
+    Unlock250,
+    Daily,
+    Wanted,
+    Specialist,
+    Unlock500
+}
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
 public class Weapon : ScriptableObject {
-    public enum WeaponType {
-        Gun,
-        Shotgun,
-        MachineGun
-    }
 
-    public enum WeaponGetType {
-        Unlock250,
-        Daily,
-        Wanted,
-        Specialist,
-        Unlock500
-    }
 
     public WeaponType CurrentType;
     public WeaponGetType HowToGet;

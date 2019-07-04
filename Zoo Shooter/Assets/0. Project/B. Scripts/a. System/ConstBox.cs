@@ -19,5 +19,8 @@ public static class ConstBox {
     public static string keyCurrentCoin = "keyCoin"; // 현재 보유 코인 
     public static string keyNoAds = "keyNoAds"; // 광고 있음!
     public static string keyGunList = "keyGunList"; // 건 리스트 
+    public static string keyEquipGun = "keyEquipGun"; // 장착한 총 
+    
+        
 
 }

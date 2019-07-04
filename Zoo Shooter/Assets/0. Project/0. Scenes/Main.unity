@@ -2361,6 +2361,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4b8229add14fc3a47a6b7d64e9476cf1, type: 3}
   - {fileID: 21300000, guid: 3ce2e3bc4830bf04ea0d8d78d46bd8e4, type: 3}
   - {fileID: 21300000, guid: 1fe12ee69e90fe2489885bd0adb8ad6e, type: 3}
+  DebugGunList: 
+  CurrentWeapon: {fileID: 0}
 --- !u!4 &101835563
 Transform:
   m_ObjectHideFlags: 0
@@ -16897,6 +16899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 511989171}
   - component: {fileID: 511989172}
+  - component: {fileID: 511989173}
   m_Layer: 0
   m_Name: GunGroup
   m_TagString: Untagged
@@ -16952,6 +16955,29 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &511989173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511989170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b16255454b79499cce7d988a17ee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groupType: 0
+  _listGroupWeapon:
+  - {fileID: 11400000, guid: c851c9f2dfa4a7649990dd072555dcbb, type: 2}
+  - {fileID: 11400000, guid: 55405f2ad3a6e1f49b70ac2c9561c1c2, type: 2}
+  - {fileID: 11400000, guid: 47a5b336e0489a046a8b41ec32e129df, type: 2}
+  - {fileID: 11400000, guid: 29b7940de53ee0340a25687ef9d7b52a, type: 2}
+  - {fileID: 11400000, guid: 96168b7ad9ad0f9479c40b91f58d0e8b, type: 2}
+  - {fileID: 11400000, guid: 81284441221a15d45a55d74833db0800, type: 2}
+  - {fileID: 11400000, guid: 47f6b6deedeb27248a8c144dbc8aca89, type: 2}
+  - {fileID: 11400000, guid: 17cb278a1d811f3419412a6f05bcfb90, type: 2}
+  - {fileID: 11400000, guid: 4f5acb8cf9279a3439bdc9defa07fc5e, type: 2}
 --- !u!1 &515942423
 GameObject:
   m_ObjectHideFlags: 0
@@ -19648,16 +19674,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 127
       objectReference: {fileID: 0}
-    - target: {fileID: 6296319812631046228, guid: b968a92cd3440554fbaa07b20ec65521,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6296319813109264730, guid: b968a92cd3440554fbaa07b20ec65521,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6296319812631046218, guid: b968a92cd3440554fbaa07b20ec65521,
         type: 3}
       propertyPath: m_Sprite
@@ -19677,6 +19693,16 @@ PrefabInstance:
     - target: {fileID: 6296319812631046218, guid: b968a92cd3440554fbaa07b20ec65521,
         type: 3}
       propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296319812631046228, guid: b968a92cd3440554fbaa07b20ec65521,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296319813109264730, guid: b968a92cd3440554fbaa07b20ec65521,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5209814751407328385, guid: b968a92cd3440554fbaa07b20ec65521,
@@ -39204,7 +39230,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000050138486, y: 0}
+  m_AnchoredPosition: {x: 0.00011401105, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1248842170

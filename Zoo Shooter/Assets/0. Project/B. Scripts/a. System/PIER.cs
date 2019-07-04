@@ -24,6 +24,8 @@ public class PIER : MonoBehaviour {
     public string DebugGunList = string.Empty;
     string ColumnGun = "MyGun";
 
+    public Weapon CurrentWeapon = null;
+
 
     void Awake() {
         main = this;
@@ -46,20 +48,29 @@ public class PIER : MonoBehaviour {
         Coin = 0;
         GunListNode = JSON.Parse("{}");
 
+        // 현상수배범 리스트 번호 
         if(PlayerPrefs.HasKey(ConstBox.keyCurrentList))
             CurrentList = PlayerPrefs.GetInt(ConstBox.keyCurrentList);
 
+        // 현재 스테이지 
         if (PlayerPrefs.HasKey(ConstBox.keyCurrentLevel))
             CurrentLevel = PlayerPrefs.GetInt(ConstBox.keyCurrentLevel);
 
+        // 보유 코인 
         if (PlayerPrefs.HasKey(ConstBox.keyCurrentCoin))
             Coin = PlayerPrefs.GetInt(ConstBox.keyCurrentCoin); // 코인 
 
+        // 보유 무기 리스트 
         if (PlayerPrefs.HasKey(ConstBox.keyGunList))
             GunListNode = JSON.Parse(PlayerPrefs.GetString(ConstBox.keyGunList)); // 건리스트 
+        else {
+            GunListNode[ColumnGun][-1]["name"] = "pistol";
+        }
 
         DebugGunList = GunListNode.ToString();
 
+        // 장착한 무기 
+        LoadEquipWeapon();
 
     }
 
@@ -70,6 +81,9 @@ public class PIER : MonoBehaviour {
         PlayerPrefs.SetInt(ConstBox.keyCurrentList, CurrentList); // 리스트 
         PlayerPrefs.SetInt(ConstBox.keyCurrentLevel, CurrentLevel); // 스테이지 
         PlayerPrefs.SetInt(ConstBox.keyCurrentCoin, Coin); // 코인
+        PlayerPrefs.SetString(ConstBox.keyEquipGun, CurrentWeapon.name); // 장착한 무기 
+        PlayerPrefs.Save();
+
         SaveGun();
     }
 
@@ -106,6 +120,38 @@ public class PIER : MonoBehaviour {
     void SaveGun() {
         PlayerPrefs.SetString(ConstBox.keyGunList, GunListNode.ToString()); // 건리스트 
         DebugGunList = GunListNode.ToString();
+        PlayerPrefs.Save();
+    }
+
+
+    /// <summary>
+    /// 무기 장착하기 
+    /// </summary>
+    /// <param name="w"></param>
+    public void ChangeEquipWeapon(Weapon w) {
+        CurrentWeapon = w;
+        PlayerPrefs.SetString(ConstBox.keyEquipGun, CurrentWeapon.name);
+        PlayerPrefs.Save();
+    }
+
+
+    void LoadEquipWeapon() {
+        string name = string.Empty;
+
+        if (PlayerPrefs.HasKey(ConstBox.keyEquipGun))
+            name = PlayerPrefs.GetString(ConstBox.keyEquipGun);
+        else // 없으면 기본값 피스톨 
+            name = "pistol";
+
+        // name으로 무기 찾기 
+
+        for(int i = 0; i < Stocks.main.ListWeapons.Count; i++) {
+            if (Stocks.main.ListWeapons[i].name == name) {
+                CurrentWeapon = Stocks.main.ListWeapons[i];
+                return;
+            }
+        }
+        
     }
 
     #endregion

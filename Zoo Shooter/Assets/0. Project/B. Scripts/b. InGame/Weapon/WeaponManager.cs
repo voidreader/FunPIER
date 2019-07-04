@@ -73,15 +73,15 @@ public class WeaponManager : MonoBehaviour {
         isShooting = true;
 
         switch (EquipWeapon.CurrentType) {
-            case Weapon.WeaponType.Gun:
+            case WeaponType.Gun:
                 ShootWithGun();
                 Invoke("Reload", 1f);
                 break;
-            case Weapon.WeaponType.Shotgun:
+            case WeaponType.Shotgun:
                 ShootWithShotgun();
                 Invoke("Reload", 1f);
                 break;
-            case Weapon.WeaponType.MachineGun:
+            case WeaponType.MachineGun:
                 StartCoroutine(ShootWithMachineGun());
                 break;
         }
