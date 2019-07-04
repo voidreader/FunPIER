@@ -14,7 +14,8 @@ public class Weapon : ScriptableObject {
         Unlock250,
         Daily,
         Wanted,
-        Specialist
+        Specialist,
+        Unlock500
     }
 
     public WeaponType CurrentType;

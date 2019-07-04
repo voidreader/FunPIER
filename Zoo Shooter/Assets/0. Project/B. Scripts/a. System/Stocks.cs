@@ -19,7 +19,11 @@ public class Stocks : MonoBehaviour
     public GameObject prefabEnemyWeapon; // 적 무기 
     public GameObject prefabEnemyBullet; // 적 총알 
 
+    #region Colors 
     public Color ColorHeadshotFont;
+    public Color ColorUnlock250, ColorUnlock500, ColorSpecialist, ColorDailyReward, ColorWantedReward;
+    public Color ColorActiveGunName, ColorInactiveGunName;
+    #endregion
 
     private void Awake() {
         main = this;

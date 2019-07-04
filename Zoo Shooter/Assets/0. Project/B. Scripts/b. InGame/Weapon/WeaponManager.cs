@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour {
 
-    
+    public static bool isShooting = false;
 
     public bool isInit = false;
     public Weapon EquipWeapon; // 장착한 무기 
@@ -33,17 +33,34 @@ public class WeaponManager : MonoBehaviour {
 
         isInit = true;
 
-        EquipWeapon = Stocks.main.ListWeapons[0]; // 임시 
+        EquipWeapon = Stocks.main.ListWeapons[35]; // 임시 
         GameManager.main.currentWeapon = EquipWeapon;
         CurentWeaponRenderer.sprite = EquipWeapon.WeaponSprite;
 
         this.transform.localPosition = EquipWeapon.posEquip; // 위치 설정 
+        this.transform.localScale = EquipWeapon.posScale;
         GunpointTransform.transform.localPosition = EquipWeapon.posGunPoint; // 건포인트 설정
 
         // Aim 설정
         CurrentAim.Init(EquipWeapon);
 
         _direction = -1; // 방향은 -1로 고정이다. 
+    }
+
+    public void SetDrop(bool isLeft) {
+        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        this.GetComponent<Rigidbody2D>().isKinematic = false;
+
+        if (isLeft)
+            this.GetComponent<Rigidbody2D>().AddForce(new Vector2(UnityEngine.Random.Range(-150f, -20f), UnityEngine.Random.Range(100f, 250f)));
+        else
+            this.GetComponent<Rigidbody2D>().AddForce(new Vector2(UnityEngine.Random.Range(20f, 150f), UnityEngine.Random.Range(100f, 250f)));
+
+        this.GetComponent<Rigidbody2D>().AddTorque(360, ForceMode2D.Impulse);
+        this.gameObject.layer = 15;
+
+
+        Destroy(this.gameObject, 4);
     }
 
     public void AfterShoot() {
@@ -53,20 +70,23 @@ public class WeaponManager : MonoBehaviour {
     public void Shoot() {
 
         PlayerBullet.isHitEnemy = false;
+        isShooting = true;
 
         switch (EquipWeapon.CurrentType) {
             case Weapon.WeaponType.Gun:
                 ShootWithGun();
+                Invoke("Reload", 1f);
                 break;
             case Weapon.WeaponType.Shotgun:
-                StartCoroutine(ShootWithShotgun());
+                ShootWithShotgun();
+                Invoke("Reload", 1f);
                 break;
             case Weapon.WeaponType.MachineGun:
                 StartCoroutine(ShootWithMachineGun());
                 break;
         }
 
-        Invoke("Reload", 1f);
+        
     }
 
     void ShotBullet() {
@@ -77,6 +97,7 @@ public class WeaponManager : MonoBehaviour {
         
 
         b.AddBulletForce(transform, _direction);
+        
     }
 
 
@@ -90,26 +111,28 @@ public class WeaponManager : MonoBehaviour {
 
         // wait
         AimController.Wait = true; // 한방 쏘고 더이상 조준하지 않음.. 
+        isShooting = false;
     }
 
     /// <summary>
     /// 샷건 발사 
     /// </summary>
     /// <returns></returns>
-    private IEnumerator ShootWithShotgun() {
-        //_direction *= -1;
-        // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
-        for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
-            /*
-            float randPos = UnityEngine.Random.Range(-0.1f, 0.1f);
-            Bullet newBullet = Instantiate(BulletPrefab, null, false);
-            newBullet.transform.position = new Vector2(GunpointTransform.position.x, GunpointTransform.position.y + randPos * i);
-            newBullet.AddBulletForce(transform, _direction);
-            */
-            ShotBullet();
-            yield return new WaitForSeconds(0.01f);
+    private void ShootWithShotgun() {
+
+        float randPos;
+
+        // Audio
+        for(int i =0; i< EquipWeapon.BulletsCount; i++) {
+            randPos = UnityEngine.Random.Range(-0.1f, 0.1f);
+            PlayerBullet b = GameObject.Instantiate(EquipWeapon.bullet.gameObject, null, false).GetComponent<PlayerBullet>();
+            b.transform.position = new Vector2(GunpointTransform.position.x, GunpointTransform.position.y + randPos);
+            b.transform.rotation = Quaternion.identity;
+            b.AddBulletForce(transform, _direction);
         }
-        // AimController.Wait = true;
+
+        AimController.Wait = true;
+        isShooting = false;
     }
 
     /// <summary>
@@ -117,20 +140,20 @@ public class WeaponManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private IEnumerator ShootWithMachineGun() {
-        //_direction *= -1;
+
+        Debug.Log("ShootWithMachineGun :: " + EquipWeapon.BulletsCount);
+
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
-            // AudioManager.Instance.PlayAudio(_currenWeapon.ShootSound);
-            /*
-            Bullet newBullet = Instantiate(BulletPrefab, null, false);
-            newBullet.transform.position = GunpointTransform.position;
-            newBullet.AddBulletForce(transform, _direction);
-            */
 
             ShotBullet();
-            yield return new WaitForSeconds(0.08f);
+            yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.2f);
-        // AimController.Wait = true;
+
+        AimController.Wait = true;
+        isShooting = false;
+
+        yield return new WaitForSeconds(1);
+        Reload();
     }
 
     /// <summary>

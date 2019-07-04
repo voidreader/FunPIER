@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: kitchenknife
   m_EditorClassIdentifier: 
   CurrentType: 0
-  HowToGet: 0
+  HowToGet: 1
   WeaponID: kitchenknife
   DisplayName: Kitchen Knife
   WeaponSprite: {fileID: 21300000, guid: 6ae3086ed9c1e9d44b8f39a11e62b219, type: 3}
@@ -21,9 +21,9 @@ MonoBehaviour:
   ReloadSound: {fileID: 0}
   bullet: {fileID: 8046498250144703993, guid: 79b3f00215e84434ba512b1973ab0e46, type: 3}
   BulletsCount: 1
-  Damage: 3
-  AimSpeed: 35
-  AimRange: 1
-  posEquip: {x: -0.395, y: 0.837, z: 0}
+  Damage: 5
+  AimSpeed: 40
+  AimRange: 1.5
+  posEquip: {x: -0.41, y: -0.09, z: 0}
   posGunPoint: {x: -0.509, y: 0.112, z: 0}
   posScale: {x: 0.7, y: 0.7, z: 1}

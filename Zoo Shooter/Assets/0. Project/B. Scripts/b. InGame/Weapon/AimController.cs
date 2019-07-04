@@ -59,38 +59,34 @@ public class AimController : MonoBehaviour
 
     void Update() {
 
+        AimLine.gameObject.SetActive(false);
+
         if (AimController.Wait)
             return;
 
-        if (!Player.isMoving && GameManager.isPlaying) {
+        if (Player.isMoving)
+            return;
+
+        if (!GameManager.isPlaying)
+            return;
+
+        ////// 체크 끝 ////
+
+        AimLine.gameObject.SetActive(true);
+        RotateAimRight();
 
 
-            /*
-            if (!_flip) {
-                RotateAimRight();
-            }
-            else {
-                RotateAimLeft();
-            }
-            */
-
-
-            RotateAimRight();
-
-
-            if (_UpAiming) {
-                // transform.Rotate(Vector3.back * Time.deltaTime * AimSpeed);
-                transform.Rotate(0, 0, -1 * Time.deltaTime * AimSpeed);
-            }
-            if (_DownAiming) {
-                transform.Rotate(0, 0, 1 * Time.deltaTime * AimSpeed);
-                //transform.Rotate(-Vector3.back * Time.deltaTime * AimSpeed);
-            }
-
-            currentRotation = transform.localRotation;
-            currentAuler = transform.localRotation.eulerAngles;
-
+        if (_UpAiming) {
+            // transform.Rotate(Vector3.back * Time.deltaTime * AimSpeed);
+            transform.Rotate(0, 0, -1 * Time.deltaTime * AimSpeed);
         }
+        if (_DownAiming) {
+            transform.Rotate(0, 0, 1 * Time.deltaTime * AimSpeed);
+            //transform.Rotate(-Vector3.back * Time.deltaTime * AimSpeed);
+        }
+
+        currentRotation = transform.localRotation;
+        currentAuler = transform.localRotation.eulerAngles;
     }
 
     /// <summary>

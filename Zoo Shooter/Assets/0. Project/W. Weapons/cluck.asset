@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: cluck
   m_EditorClassIdentifier: 
-  CurrentType: 0
-  HowToGet: 0
+  CurrentType: 2
+  HowToGet: 1
   WeaponID: cluck
   DisplayName: Cluck
   WeaponSprite: {fileID: 21300000, guid: 417ec1b43b0a3dd4282af6a40fda1562, type: 3}
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 8046498250144703993, guid: 79b3f00215e84434ba512b1973ab0e46, type: 3}
-  BulletsCount: 1
+  BulletsCount: 3
   Damage: 3
-  AimSpeed: 40
-  AimRange: 0
-  posEquip: {x: -0.273, y: 0.766, z: 0}
+  AimSpeed: 45
+  AimRange: 1.2
+  posEquip: {x: -0.34, y: -0.22, z: 0}
   posGunPoint: {x: -0.977, y: 0.175, z: 0}
   posScale: {x: 0.75, y: 0.75, z: 1}

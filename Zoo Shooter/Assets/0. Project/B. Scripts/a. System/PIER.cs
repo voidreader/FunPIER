@@ -19,8 +19,10 @@ public class PIER : MonoBehaviour {
 
     public List<BossDataRow> ListBossData;
     public List<Sprite> ListBossPortrait;
-    
 
+    public JSONNode GunListNode;
+    public string DebugGunList = string.Empty;
+    string ColumnGun = "MyGun";
 
 
     void Awake() {
@@ -41,6 +43,8 @@ public class PIER : MonoBehaviour {
 
         CurrentList = 0;
         CurrentLevel = 0;
+        Coin = 0;
+        GunListNode = JSON.Parse("{}");
 
         if(PlayerPrefs.HasKey(ConstBox.keyCurrentList))
             CurrentList = PlayerPrefs.GetInt(ConstBox.keyCurrentList);
@@ -50,6 +54,11 @@ public class PIER : MonoBehaviour {
 
         if (PlayerPrefs.HasKey(ConstBox.keyCurrentCoin))
             Coin = PlayerPrefs.GetInt(ConstBox.keyCurrentCoin); // 코인 
+
+        if (PlayerPrefs.HasKey(ConstBox.keyGunList))
+            GunListNode = JSON.Parse(PlayerPrefs.GetString(ConstBox.keyGunList)); // 건리스트 
+
+        DebugGunList = GunListNode.ToString();
 
 
     }
@@ -61,6 +70,42 @@ public class PIER : MonoBehaviour {
         PlayerPrefs.SetInt(ConstBox.keyCurrentList, CurrentList); // 리스트 
         PlayerPrefs.SetInt(ConstBox.keyCurrentLevel, CurrentLevel); // 스테이지 
         PlayerPrefs.SetInt(ConstBox.keyCurrentCoin, Coin); // 코인
+        SaveGun();
+    }
+
+    /// <summary>
+    /// 보유중인 총 체크 
+    /// </summary>
+    /// <param name="w"></param>
+    /// <returns></returns>
+    public bool HasGun(Weapon w) {
+
+        for (int i = 0; i < GunListNode[ColumnGun].Count; i++) {
+
+            if(GunListNode[ColumnGun][i]["name"] == w.name) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// 구매한 총 추가
+    /// </summary>
+    /// <param name="w"></param>
+    public void AddGun(Weapon w) {
+        GunListNode[ColumnGun][-1]["name"] = w.name;
+        SaveGun();
+    }
+
+    /// <summary>
+    /// 저장 
+    /// </summary>
+    void SaveGun() {
+        PlayerPrefs.SetString(ConstBox.keyGunList, GunListNode.ToString()); // 건리스트 
+        DebugGunList = GunListNode.ToString();
     }
 
     #endregion

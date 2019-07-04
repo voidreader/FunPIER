@@ -53,8 +53,14 @@ public class Player : MonoBehaviour
 
         this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         // rigid.AddTorque(360, ForceMode2D.Impulse);
+        DropWeapon();
 
         Destroy(this, 5f);
+    }
+
+    void DropWeapon() {
+        weapon.transform.SetParent(null);
+        weapon.SetDrop(isLeft);
     }
 
     /// <summary>

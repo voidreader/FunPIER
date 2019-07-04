@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: musket
   m_EditorClassIdentifier: 
-  CurrentType: 0
-  HowToGet: 0
+  CurrentType: 1
+  HowToGet: 1
   WeaponID: musket
-  DisplayName: Musket
+  DisplayName: Mini Shotgun
   WeaponSprite: {fileID: 21300000, guid: 84b7379c22cf16344adc92bfd5739fbd, type: 3}
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 8046498250144703993, guid: 79b3f00215e84434ba512b1973ab0e46, type: 3}
-  BulletsCount: 1
-  Damage: 3
-  AimSpeed: 35
+  BulletsCount: 3
+  Damage: 2
+  AimSpeed: 45
   AimRange: 1
-  posEquip: {x: -0.326, y: 0.866, z: 0}
+  posEquip: {x: -0.38, y: -0.14, z: 0}
   posGunPoint: {x: -0.825, y: 0.126, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

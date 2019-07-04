@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: special_shotgun
   m_EditorClassIdentifier: 
-  CurrentType: 0
-  HowToGet: 0
+  CurrentType: 1
+  HowToGet: 3
   WeaponID: special_shotgun
   DisplayName: Rainbow Shotgun
-  WeaponSprite: {fileID: 21300000, guid: 9f97f72dd9432b642bbfe8e417303b7a, type: 3}
+  WeaponSprite: {fileID: 21300000, guid: d92dab3baf5f5ab438a691db0df35636, type: 3}
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 8046498250144703993, guid: 79b3f00215e84434ba512b1973ab0e46, type: 3}
-  BulletsCount: 1
-  Damage: 3
+  BulletsCount: 3
+  Damage: 4
   AimSpeed: 35
-  AimRange: 1
-  posEquip: {x: -0.314, y: 0.826, z: 0}
+  AimRange: 1.5
+  posEquip: {x: -0.27, y: -0.18, z: 0}
   posGunPoint: {x: -0.861, y: 0.054, z: 0}
   posScale: {x: 0.9, y: 0.9, z: 1}

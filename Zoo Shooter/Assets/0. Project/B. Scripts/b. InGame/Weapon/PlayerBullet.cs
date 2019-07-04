@@ -216,7 +216,7 @@ public class PlayerBullet : MonoBehaviour
         }
         else  {
             Debug.Log("Hit Others");
-            GameManager.isMissed = true; // 빗나갔다!
+            // GameManager.isMissed = true; // 빗나갔다!
             CameraShake.main.ShakeOnce(0.15f, 0.1f);
 
         }

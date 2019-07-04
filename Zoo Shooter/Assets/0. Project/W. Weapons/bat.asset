@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: bat
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 1
   HowToGet: 0
   WeaponID: bat
   DisplayName: Bat
@@ -20,10 +20,10 @@ MonoBehaviour:
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 8046498250144703993, guid: 79b3f00215e84434ba512b1973ab0e46, type: 3}
-  BulletsCount: 1
+  BulletsCount: 2
   Damage: 3
-  AimSpeed: 40
-  AimRange: 0
+  AimSpeed: 38
+  AimRange: 1.2
   posEquip: {x: -0.343, y: 0.792, z: 0}
   posGunPoint: {x: -1.089, y: 0.148, z: 0}
   posScale: {x: 0.6, y: 0.6, z: 0.6}

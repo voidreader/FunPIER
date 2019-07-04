@@ -277,9 +277,17 @@ public class GameManager : MonoBehaviour {
 
         while (isPlaying) {
 
+            // 쏘고 있을때(특히 머신건) 대기 
+            while (WeaponManager.isShooting)
+                yield return null;
+                     
+
             #region 빗나갔을때 Gameover, Enemy Shoot 처리 
 
             if (isMissed) { // 빗나갔을때 Gameover, Enemy Shoot 처리 
+
+                Debug.Log("Missed. Enemy is aiming...");
+
                 enemy.Shoot();
 
                 yield return new WaitForSeconds(4.5f);
@@ -416,6 +424,10 @@ public class GameManager : MonoBehaviour {
     public void GameOver() {
         // 이벤트 발생시키고 모든 적 제거한다. 
         GameEventMessage.SendEvent("GameOverEvent");
+        CleanGameObjects();
+    }
+
+    public void CleanGameObjects() {
         isPlaying = false;
         GameObject[] es = GameObject.FindGameObjectsWithTag("Body");
         for (int i = 0; i < es.Length; i++) {

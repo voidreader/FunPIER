@@ -37,7 +37,8 @@ public class WeaponManager : MonoBehaviour {
 
     public void Init()
     {
-        _currenWeapon = Resources.Load<Weapon>("Weapons/Gun_" + PlayerPrefs.GetInt("CurrenWeapon"));
+        // _currenWeapon = Resources.Load<Weapon>("Weapons/Gun_" + PlayerPrefs.GetInt("CurrenWeapon"));
+        _currenWeapon = Resources.Load<Weapon>("Weapons/Gun_6");
         CurrentAim.AimSpeed = _currenWeapon.AimSpeed;
         CurrentAim.AimRange = _currenWeapon.WeaponRange;
         CurentWeaponRenderer.sprite = _currenWeapon.WeaponSprite;

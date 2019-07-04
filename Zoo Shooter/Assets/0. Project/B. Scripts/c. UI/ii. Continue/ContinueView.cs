@@ -59,7 +59,7 @@ public class ContinueView : MonoBehaviour {
 
     public void OnClickNoThanks() {
         Debug.Log("No Thanks!");
-        GameManager.main.GameOver();
+        GameManager.main.CleanGameObjects();
     }
 
 }
