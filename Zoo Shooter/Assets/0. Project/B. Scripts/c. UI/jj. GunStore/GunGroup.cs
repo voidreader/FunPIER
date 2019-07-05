@@ -10,4 +10,15 @@ public class GunGroup : MonoBehaviour
     public List<Weapon> _listGroupWeapon; // 그룹에 보여질 무기 리스트 (9개 제한)
     public List<GunColumn> _listCols; // 컬럼스
 
+    public void OnInit() {
+
+        for (int i=0;i<_listCols.Count;i++) {
+            _listCols[i].gameObject.SetActive(false);
+        }
+
+        for(int i =0; i<_listGroupWeapon.Count;i++) {
+            _listCols[i].SetGunProduct(_listGroupWeapon[i]);
+        }
+    }
+
 }

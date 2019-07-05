@@ -9,6 +9,9 @@ public class Stocks : MonoBehaviour
 
     public List<Weapon> ListWeapons; // 무기 데이터 
     public List<Sprite> ListWeaponSprites; // 무기 스프라이트
+    public List<Sprite> ListWeaponStoreSprites; // 무기 스프라이트
+
+
     public List<Sprite> ListNormalEnemySprite; // 일반 적 스프라이트 
     public List<Sprite> ListBossSprite; // 보스 스프라이트 
 
@@ -29,6 +32,15 @@ public class Stocks : MonoBehaviour
         main = this;
     }
 
+    public static Sprite GetWeaponStoreSprite(Weapon data) {
+        for(int i =0; i < main.ListWeaponStoreSprites.Count; i++) {
+            if(main.ListWeaponStoreSprites[i].name == data.WeaponID) {
+                return main.ListWeaponStoreSprites[i];
+            }
+        }
+
+        return null;
+    }
 
 
     /// <summary>
