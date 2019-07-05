@@ -29,6 +29,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private Canvas canvas;
         private CanvasScaler canvasScaler;
 
+        public int currentPage = 0;
         public MovementType movementType = MovementType.Fixed;
         public MovementAxis movementAxis = MovementAxis.Horizontal;
         public bool automaticallyLayout = true;
@@ -685,6 +686,9 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
         public void GoToPanel(int panelNumber)
         {
+
+            
+
             targetPanel = panelNumber;
             selected = true;
             onPanelSelected.Invoke();
