@@ -19,12 +19,17 @@ public class CollectionManager : MonoBehaviour
 
 
     public void OnViewCollection() {
+
+        
+
         if (ListCollection == null)
             ListCollection = CollectionData.Instance.Rows;
 
         // 현 인덱스의 처리
         if (PlayerPrefs.HasKey(ConstBox.keyCurrentCollectionIndex))
             index = PlayerPrefs.GetInt(ConstBox.keyCurrentCollectionIndex);
+        else
+            index = 0;
 
 
         // PIER.CurrentList
@@ -32,6 +37,9 @@ public class CollectionManager : MonoBehaviour
 
         SetRecordInfo();
         SetButtonSide();
+
+
+        Debug.Log("List & Level & index :: " + PIER.CurrentList + "/" + PIER.CurrentLevel +"/" + index);
     }
 
 
@@ -39,7 +47,8 @@ public class CollectionManager : MonoBehaviour
     /// 레코드 이미지와 레이블 처리 
     /// </summary>
     void SetRecordInfo() {
-        recordImage.sprite = ListImages[index];
+        // recordImage.sprite = ListImages[index];
+        recordImage.sprite = Stocks.GetPosterSprite(index);
         lblRecord.text = "RECORD." + string.Format("{0:00}", (index + 1).ToString());
 
         if(index == PIER.CurrentList) { // 현재 상태는. 검은색
@@ -70,6 +79,9 @@ public class CollectionManager : MonoBehaviour
 
 
     public void OnClickRight() {
+
+        Debug.Log("OnClickRight index/CurrentList:: " + index + "/" + PIER.CurrentList);
+
         if (index + 1 >= PIER.CurrentList)
             return;
 

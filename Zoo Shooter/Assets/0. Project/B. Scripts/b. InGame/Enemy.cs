@@ -84,6 +84,9 @@ public class Enemy : MonoBehaviour {
 
         EquipWeapon(); // 무기 장착
 
+
+        // 크기 조정
+        this.transform.localScale = new Vector3(data._scale, data._scale, 1);
         this.gameObject.SetActive(true);
     }
 

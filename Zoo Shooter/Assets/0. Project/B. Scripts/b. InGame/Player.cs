@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetRegularCollider();
     }
 
     // Update is called once per frame
@@ -138,13 +138,15 @@ public class Player : MonoBehaviour
     }
 
     public void SetLargeCollider() {
-        collider.size = new Vector2(0.5971596f, 1.779226f);
-        collider.offset = new Vector2(-0.1229745f, 1.013624f);
+        collider.offset = new Vector2(-0.1229745f, 0.06598422f);
+        collider.size = new Vector2(0.5971596f, 1.648212f);
+        
     }
 
     public void SetRegularCollider() {
-        collider.size = new Vector2(0.5971596f, 1.005302f);
-        collider.offset = new Vector2(-0.1229745f, 0.6266615f);
+        collider.offset = new Vector2(-0.1229745f, -0.1582869f);
+        collider.size = new Vector2(0.5971596f, 0.8408363f);
+        
     }
     
 

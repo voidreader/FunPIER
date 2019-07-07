@@ -4,7 +4,7 @@ using UnityEngine;
 using Google2u;
 using SimpleJSON;
 using System;
-
+using Doozy.Engine;
 
 public class PIER : MonoBehaviour {
 
@@ -16,6 +16,7 @@ public class PIER : MonoBehaviour {
 
     public int Coin = 0; // 보유 코인 
     public int NoAds = 0; // false. 광고 
+    public int BestScore = 0;
 
     public List<BossDataRow> ListBossData;
     public List<Sprite> ListBossPortrait;
@@ -35,6 +36,71 @@ public class PIER : MonoBehaviour {
         ListBossData = BossData.Instance.Rows;
         LoadData();
     }
+
+    #region Level, List 처리
+
+    /// <summary>
+    /// 레벨 클리어. 
+    /// </summary>
+    public void ClearLevel() {
+
+        int maxListLevel = 0;
+        CurrentLevel++; //  레벨 증가 
+
+        // 현재 리스트에 제일 높은 레벨을 찾는다. 
+        maxListLevel = GetMaxLevelFromList(CurrentList);
+        if(maxListLevel < CurrentLevel) { // 현 원티드 리스트의 최고 레벨보다 현재 레벨이 더 높아졌다면..! 
+            CurrentList++; // 리스트도 증가. 
+
+            // 새로운 리스트가 있다! -- UI 호출해야함. 
+            Debug.Log(">> New List!");
+            GameEventMessage.SendEvent("GameClearEvent");
+        }
+        else {
+            Debug.Log(">> There is no new list!");
+            GameEventMessage.SendEvent("CallMain"); // 바로 메인으로 진입한다. 
+        }
+
+        SaveData();
+    }
+
+    int GetMaxLevelFromList(int l) {
+        int max = 0;
+        for(int i=0; i<ListBossData.Count;i++) {
+            if(ListBossData[i]._list == l) {
+                if (max < ListBossData[i]._level)
+                    max = ListBossData[i]._level;
+            }
+        }
+
+        return max;
+    }
+
+    /// <summary>
+    /// Wanted 진행도 
+    /// </summary>
+    /// <returns></returns>
+    public float GetWantedListProgressValue() {
+        int listNo = CurrentList;
+        int total = 0;
+        int current = 0;
+
+        for(int i=0; i< ListBossData.Count;i++) {
+            if(ListBossData[i]._list == listNo) {
+                total++;
+
+                if (ListBossData[i]._level < CurrentLevel)
+                    current++; // 이미 클리어한 보스 카운팅 
+
+            }
+        } // 리스트에 들어가는 보스(스테이지) 카운팅 
+
+
+        return (float)current / (float)total;
+
+    }
+
+    #endregion
 
 
     #region 저장된 데이터 로드 
@@ -60,6 +126,9 @@ public class PIER : MonoBehaviour {
         if (PlayerPrefs.HasKey(ConstBox.keyCurrentCoin))
             Coin = PlayerPrefs.GetInt(ConstBox.keyCurrentCoin); // 코인 
 
+        if (PlayerPrefs.HasKey(ConstBox.keyBestScore))
+            BestScore = PlayerPrefs.GetInt(ConstBox.keyBestScore); // 베스트 스코어 
+
         // 보유 무기 리스트 
         if (PlayerPrefs.HasKey(ConstBox.keyGunList))
             GunListNode = JSON.Parse(PlayerPrefs.GetString(ConstBox.keyGunList)); // 건리스트 
@@ -72,6 +141,9 @@ public class PIER : MonoBehaviour {
         // 장착한 무기 
         LoadEquipWeapon();
 
+        //CurrentList = 0;
+        //CurrentLevel = 2;
+
     }
 
     /// <summary>
@@ -81,6 +153,7 @@ public class PIER : MonoBehaviour {
         PlayerPrefs.SetInt(ConstBox.keyCurrentList, CurrentList); // 리스트 
         PlayerPrefs.SetInt(ConstBox.keyCurrentLevel, CurrentLevel); // 스테이지 
         PlayerPrefs.SetInt(ConstBox.keyCurrentCoin, Coin); // 코인
+        PlayerPrefs.SetInt(ConstBox.keyBestScore, BestScore);// 베스트 스코어 
         PlayerPrefs.SetString(ConstBox.keyEquipGun, CurrentWeapon.name); // 장착한 무기 
         PlayerPrefs.Save();
 

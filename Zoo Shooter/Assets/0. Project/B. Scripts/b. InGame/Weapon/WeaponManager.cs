@@ -33,7 +33,7 @@ public class WeaponManager : MonoBehaviour {
 
         isInit = true;
 
-        EquipWeapon = Stocks.main.ListWeapons[35]; // 임시 
+        EquipWeapon = Stocks.main.ListWeapons[0]; // 임시 
         GameManager.main.currentWeapon = EquipWeapon;
         CurentWeaponRenderer.sprite = EquipWeapon.WeaponSprite;
 
@@ -150,9 +150,9 @@ public class WeaponManager : MonoBehaviour {
         }
 
         AimController.Wait = true;
-        isShooting = false;
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.4f);
+        isShooting = false;
         Reload();
     }
 

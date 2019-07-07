@@ -15,6 +15,8 @@ public class Stocks : MonoBehaviour
     public List<Sprite> ListNormalEnemySprite; // 일반 적 스프라이트 
     public List<Sprite> ListBossSprite; // 보스 스프라이트 
 
+    public List<Sprite> ListPosters;
+
 
     public GameObject prefabPlayer;
     public GameObject prefabNormalEnemy; // 일반 에너미 
@@ -90,6 +92,24 @@ public class Stocks : MonoBehaviour
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// 포스터 스프라이트 가져오기 
+    /// </summary>
+    /// <param name="i"></param>
+    /// <returns></returns>
+    public static Sprite GetPosterSprite(int pLevel) {
+
+        string name = CollectionData.Instance.Rows[pLevel]._sprite;
+
+        for(int i=0; i<main.ListPosters.Count;i++) {
+            if (main.ListPosters[i].name == name)
+                return main.ListPosters[i];
+        }
+
+        return null;
+
     }
 
 }

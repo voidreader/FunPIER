@@ -7,20 +7,25 @@ using DG.Tweening;
 using Doozy.Engine;
 
 public class GameManager : MonoBehaviour {
+
     public static GameManager main = null;
-    public static bool isPlaying = false; // 게임 시작여부 
+
+    public static bool isGameStarted = true; // 초기화 하고 게임 한번이라도 시작 했는지 
+    public static bool isPlaying = false; // 게임 플레이 중
 
     public static bool isEnemyHit = false; // Enemy가 플레이어 총알에 맞았는지 체크 
     public static bool isMissed = false; // 플레이어 총알 빗나갔는지? 
     public static bool isWait = false;
 
+
     public StageDataRow CurrentLevelData = null; // 현재 스테이지 정보
     public Camera mainCamera; // 메인카메라 
+    public ClearMobility helicopter;
 
     public bool AutoInit;
     public int SpawnEnemyCount = 0;
     public bool isRevived = false; // 광고보고 부활 여부. (Continue)
-
+    
 
 
 
@@ -95,6 +100,13 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void InitGame() {
 
+        if (!isGameStarted)
+            return;
+
+        isGameStarted = false; // 한번 초기화 했으면 플레이할 때까지 또 초기화 시키지 않음. 
+
+
+
         PoolManager.Pools[ConstBox.poolGame].DespawnAll();
         Debug.Log("Init InGame Starts.... :: " + CurrentLevelData);
         InitEnvironments();
@@ -102,6 +114,7 @@ public class GameManager : MonoBehaviour {
 
 
         CurrentLevelData = StageData.Instance.Rows[PIER.CurrentLevel];
+        Debug.Log("Init Game.. Level ::" + CurrentLevelData._level);
 
         isRevived = false;
         isMissed = false;
@@ -150,10 +163,13 @@ public class GameManager : MonoBehaviour {
 
 
         isPlaying = true;
+        isGameStarted = true;
         StartCoroutine(EnteringMission());
         StartCoroutine(PlayRoutine());
 
         Debug.Log("OnClickPlay is clicked");
+
+        
     }
 
     #region 부활 처리
@@ -315,6 +331,12 @@ public class GameManager : MonoBehaviour {
                     if (enemy.isKilled) {
                         // 점프 뛰지 않는다. 
                         // 헬리콥터 등장해야 한다. 
+                        helicopter.CallMobility();
+
+                        yield return new WaitForSeconds(2);
+                        // 게임 클리어 처리 
+
+                        GameClear();
 
                     }
                     else { // 안죽은 경우
@@ -427,12 +449,32 @@ public class GameManager : MonoBehaviour {
         CleanGameObjects();
     }
 
+    public void GameClear() {
+        // GameEventMessage.SendEvent("GameClearEvent");
+
+        CleanGameObjects(); // 클리어 오브젝트 
+
+        PIER.main.ClearLevel(); // 클리어 레벨 처리 
+        // 다음 UI는 PIER.main.ClearLevel()에서 처리한다 .
+
+    }
+
     public void CleanGameObjects() {
         isPlaying = false;
         GameObject[] es = GameObject.FindGameObjectsWithTag("Body");
         for (int i = 0; i < es.Length; i++) {
             Destroy(es[i]);
         }
+
+        GameObject[] ps = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < ps.Length; i++) {
+            Destroy(ps[i]);
+        }
+
+
+        // 헬리콥터 
+        helicopter.OffMobility();
+
     }
 
     #endregion
@@ -521,7 +563,7 @@ public class GameManager : MonoBehaviour {
         if(indexLastStair == 0) {
             // 무조건 오른쪽 
             // stair.SetStairPosition(new Vector2(Random.Range(2.9f, 3.5f), posFirstStairY), false);
-            posX = Random.Range(2.9f, 4.6f);
+            posX = Random.Range(3.2f, 4.5f);
             stair.SetStairPosition(new Vector2(posX, posFirstStairY), false);
 
             return stair;
@@ -530,12 +572,12 @@ public class GameManager : MonoBehaviour {
 
         // 좌우 체크
         if (indexLastStair % 2 == 0) { // 오른쪽 
-            posX = Random.Range(2.9f, 4.6f);
+            posX = Random.Range(3.2f, 4.9f);
             posY = topStairY + Random.Range(0.4f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽
-            posX = Random.Range(-4.6f, -2.9f);
+            posX = Random.Range(-4.9f, -3.2f);
             posY = topStairY + Random.Range(0.8f, 2.2f);
             stair.SetStairPosition(new Vector2(posX, posY), true);
         }
