@@ -114,8 +114,32 @@ public class Stocks : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 랜덤 계단 스프라이트 겟 
+    /// </summary>
+    /// <returns></returns>
     public static Sprite GetRandomStairSprite() {
         return main.ListStairs[Random.Range(0, main.ListStairs.Count)];
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static Weapon GetWeaponByID(string id) {
+
+        for (int i = 0; i < main.ListWeapons.Count; i++) {
+
+
+            if (main.ListWeapons[i].WeaponID == id) {
+                return main.ListWeapons[i];
+            }
+        
+        }
+
+        return null;
+
+    }
 }

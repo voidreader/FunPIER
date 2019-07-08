@@ -18,5 +18,6 @@ public class TitleManager : MonoBehaviour
     private void Start() {
 
         _loader.LoadSceneAsync();
+        
     }
 }
