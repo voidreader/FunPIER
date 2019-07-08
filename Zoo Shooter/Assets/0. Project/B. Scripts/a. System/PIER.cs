@@ -40,6 +40,23 @@ public class PIER : MonoBehaviour {
     #region Level, List 처리
 
     /// <summary>
+    /// 베스트 스코어 처리 
+    /// </summary>
+    /// <param name="score"></param>
+    public void SaveBestScore(int score) {
+
+        Debug.Log("Save Best Score :: " + score + "/" + BestScore);
+
+        if(score <= BestScore) 
+            return;
+      
+
+        PlayerPrefs.SetInt(ConstBox.keyBestScore, score);
+        PlayerPrefs.Save();
+        BestScore = score;
+    }
+
+    /// <summary>
     /// 레벨 클리어. 
     /// </summary>
     public void ClearLevel() {
@@ -133,7 +150,9 @@ public class PIER : MonoBehaviour {
         if (PlayerPrefs.HasKey(ConstBox.keyGunList))
             GunListNode = JSON.Parse(PlayerPrefs.GetString(ConstBox.keyGunList)); // 건리스트 
         else {
-            GunListNode[ColumnGun][-1]["name"] = "pistol";
+            GunListNode[ColumnGun][-1]["name"] = "pistol"; // 테스트 버전에서 3개를 추가해 놓는다.
+            GunListNode[ColumnGun][-1]["name"] = "autorifle";
+            GunListNode[ColumnGun][-1]["name"] = "kitchenknife";
         }
 
         DebugGunList = GunListNode.ToString();

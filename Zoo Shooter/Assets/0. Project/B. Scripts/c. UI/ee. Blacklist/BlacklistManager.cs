@@ -11,16 +11,16 @@ public class BlacklistManager : MonoBehaviour {
 
     List<BossDataRow> list;
 
-    public bool isRewardable = false;
-    public Image btnReward;
+    
+    
 
-    public Sprite _rewardableSprite;
-    public Sprite _unrewardableSprite;
+    public Text _lblList;
+    
 
 
     public void OnView() {
 
-        isRewardable = false;
+        
 
         _currentLevel = PIER.CurrentLevel;
         _currentList = PIER.CurrentList;
@@ -34,7 +34,8 @@ public class BlacklistManager : MonoBehaviour {
     /// </summary>
     void InitList() {
 
-        isRewardable = true;
+        _lblList.text = "LIST NO." + (PIER.CurrentList + 1).ToString();
+        
 
         for (int i=0; i<_listBoss.Count; i++) {
             _listBoss[i].OffPortrait();
@@ -45,17 +46,7 @@ public class BlacklistManager : MonoBehaviour {
         for(int i=0; i<list.Count;i++) {
             _listBoss[i].OnPortrait(list[i]);
 
-            if (list[i]._level <= PIER.CurrentLevel)
-                isRewardable = false;
         }
-
-        // 보상받을 수 있는지 체크
-        if (isRewardable)
-            btnReward.sprite = _rewardableSprite;
-        else
-            btnReward.sprite = _unrewardableSprite;
-        
-
     }
 
 }

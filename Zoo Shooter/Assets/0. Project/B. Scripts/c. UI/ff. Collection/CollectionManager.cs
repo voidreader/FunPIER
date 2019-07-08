@@ -37,7 +37,7 @@ public class CollectionManager : MonoBehaviour
 
         SetRecordInfo();
         SetButtonSide();
-
+        
 
         Debug.Log("List & Level & index :: " + PIER.CurrentList + "/" + PIER.CurrentLevel +"/" + index);
     }
@@ -95,6 +95,9 @@ public class CollectionManager : MonoBehaviour
     }
 
     public void OnClickLeft() {
+
+        Debug.Log("OnClickLeft index/CurrentList:: " + index + "/" + PIER.CurrentList);
+
         if (index <= 0)
             return;
 

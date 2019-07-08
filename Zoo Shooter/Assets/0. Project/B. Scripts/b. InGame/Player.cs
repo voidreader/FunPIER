@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
 
     IEnumerator Moving() {
         // anim.SetBool("isJump", true);
-        this.transform.DOJump(targetPos, 1.5f, 1, 0.8f).OnComplete(OnCompleteMove);
+        this.transform.DOJump(targetPos, 1.8f, 1, 0.8f).OnComplete(OnCompleteMove);
         this.transform.DORotate(new Vector3(0, 0, 360), 0.6f, RotateMode.WorldAxisAdd);
             
 
@@ -122,6 +122,10 @@ public class Player : MonoBehaviour
         weapon.Init();
     }
 
+    public void InitWeaponOnly() {
+        weapon.Init(true);
+    }
+
     /// <summary>
     /// 총 겨누기 시작 
     /// </summary>
@@ -145,7 +149,7 @@ public class Player : MonoBehaviour
 
     public void SetRegularCollider() {
         collider.offset = new Vector2(-0.1229745f, -0.1582869f);
-        collider.size = new Vector2(0.5971596f, 0.8408363f);
+        collider.size = new Vector2(0.5971596f, 1f);
         
     }
     

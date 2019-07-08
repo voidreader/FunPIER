@@ -74,11 +74,15 @@ public class Enemy : MonoBehaviour {
         headCol.size = new Vector2(data._hsizeX, data._hsizeY);
         HP = data._hp; // HP
 
+
+
         // sp.sprite = GameManager.GetEnemySprite(id);
-        if(type == EnemyType.Normal)
+        if (type == EnemyType.Normal)
             sp.sprite = Stocks.GetEnemySprite(id);
-        else
+        else {
             sp.sprite = Stocks.GetBossSprite(data._sprite);
+            Debug.Log("Enemy.cs Boss HP :: " + HP);
+        }
 
         rigid.bodyType = RigidbodyType2D.Dynamic;
 

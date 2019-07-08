@@ -474,7 +474,10 @@ MonoBehaviour:
   - Category: General
     InstantAction: 0
     Name: Game
-  m_onEnterHideViews: []
+  m_onEnterHideViews:
+  - Category: General
+    InstantAction: 0
+    Name: Main
   m_onExitShowViews: []
   m_onExitHideViews: []
 --- !u!114 &114106800375298004
@@ -821,7 +824,7 @@ MonoBehaviour:
   m_inputSockets:
   - m_connectionMode: 1
     m_connections:
-    - m_inputConnectionPoint: {x: 202, y: 4}
+    - m_inputConnectionPoint: {x: -2, y: 4}
       m_outputConnectionPoint: {x: 202, y: 4}
       m_id: 109bdbfb-a638-4368-b61c-df9c0ef89f39
       m_inputNodeId: 90a8f9bb-24f5-480f-ad1f-42c30a59400b
@@ -829,7 +832,7 @@ MonoBehaviour:
       m_outputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
       m_outputSocketId: bdd2f1e6-d85c-47d7-afbc-d62d837cb944
     - m_inputConnectionPoint: {x: 202, y: 4}
-      m_outputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
       m_id: 6722c012-ffe4-4348-ae50-fcc11eeecf06
       m_inputNodeId: 90a8f9bb-24f5-480f-ad1f-42c30a59400b
       m_inputSocketId: 1003d276-e453-403a-8618-b59b0fccd89e
@@ -856,7 +859,7 @@ MonoBehaviour:
   - m_connectionMode: 0
     m_connections:
     - m_inputConnectionPoint: {x: 202, y: 4}
-      m_outputConnectionPoint: {x: 202, y: 4}
+      m_outputConnectionPoint: {x: -2, y: 4}
       m_id: 1d5f4b26-a0fa-4421-bf5a-af93e45ad87b
       m_inputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
       m_inputSocketId: 024030ce-0d1e-4a59-95ea-9d1dba6ad364
@@ -908,8 +911,8 @@ MonoBehaviour:
   m_useUpdate: 0
   m_height: 152
   m_width: 216
-  m_x: -780
-  m_y: -408
+  m_x: -144
+  m_y: -684
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
@@ -1003,8 +1006,8 @@ MonoBehaviour:
   m_useUpdate: 0
   m_height: 128
   m_width: 216
-  m_x: -420
-  m_y: -276
+  m_x: -144
+  m_y: -396
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
@@ -1066,7 +1069,7 @@ MonoBehaviour:
       m_outputNodeId: bdbd7157-edfa-4784-b871-4173849cf325
       m_outputSocketId: e36de647-0897-4545-8e9e-bfb455e5f8fa
     - m_inputConnectionPoint: {x: 202, y: 4}
-      m_outputConnectionPoint: {x: 202, y: 4}
+      m_outputConnectionPoint: {x: -2, y: 4}
       m_id: 1d5f4b26-a0fa-4421-bf5a-af93e45ad87b
       m_inputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
       m_inputSocketId: 024030ce-0d1e-4a59-95ea-9d1dba6ad364
@@ -1167,7 +1170,7 @@ MonoBehaviour:
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - m_connectionMode: 0
     m_connections:
-    - m_inputConnectionPoint: {x: 202, y: 4}
+    - m_inputConnectionPoint: {x: -2, y: 4}
       m_outputConnectionPoint: {x: 202, y: 4}
       m_id: 109bdbfb-a638-4368-b61c-df9c0ef89f39
       m_inputNodeId: 90a8f9bb-24f5-480f-ad1f-42c30a59400b
@@ -1343,10 +1346,7 @@ MonoBehaviour:
     InstantAction: 0
     Name: Game
   m_onExitShowViews: []
-  m_onExitHideViews:
-  - Category: General
-    InstantAction: 0
-    Name: Main
+  m_onExitHideViews: []
 --- !u!114 &114515005805424906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1546,7 +1546,7 @@ MonoBehaviour:
   - m_connectionMode: 0
     m_connections:
     - m_inputConnectionPoint: {x: 202, y: 4}
-      m_outputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
       m_id: 6722c012-ffe4-4348-ae50-fcc11eeecf06
       m_inputNodeId: 90a8f9bb-24f5-480f-ad1f-42c30a59400b
       m_inputSocketId: 1003d276-e453-403a-8618-b59b0fccd89e
@@ -1579,8 +1579,8 @@ MonoBehaviour:
   m_useUpdate: 0
   m_height: 152
   m_width: 216
-  m_x: -240
-  m_y: -504
+  m_x: -144
+  m_y: -540
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
@@ -1907,20 +1907,17 @@ MonoBehaviour:
   m_useUpdate: 0
   m_height: 128
   m_width: 216
-  m_x: -420
-  m_y: -144
+  m_x: -144
+  m_y: -132
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
   m_id: 7b7e671a-8db3-4c5f-a814-615524b43409
-  m_name: Collection
+  m_name: "Collection(\uD3EC\uC2A4\uD130)"
   m_onEnterShowViews:
   - Category: General
     InstantAction: 0
     Name: Collection
-  - Category: General
-    InstantAction: 0
-    Name: Top
   m_onEnterHideViews: []
   m_onExitShowViews: []
   m_onExitHideViews:
@@ -2298,12 +2295,12 @@ MonoBehaviour:
   m_height: 128
   m_width: 216
   m_x: -144
-  m_y: -144
+  m_y: -264
   m_minimumInputSocketsCount: 1
   m_minimumOutputSocketsCount: 1
   m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
   m_id: f3e1c5a3-c02c-4fd8-9789-f62284c432f1
-  m_name: Blacklist
+  m_name: Blacklist(Wanted)
   m_onEnterShowViews:
   - Category: General
     InstantAction: 0

@@ -444,6 +444,8 @@ public class GameManager : MonoBehaviour {
     /// 게임 오버 처리 
     /// </summary>
     public void GameOver() {
+
+        
         // 이벤트 발생시키고 모든 적 제거한다. 
         GameEventMessage.SendEvent("GameOverEvent");
         CleanGameObjects();
@@ -451,7 +453,7 @@ public class GameManager : MonoBehaviour {
 
     public void GameClear() {
         // GameEventMessage.SendEvent("GameClearEvent");
-
+        PIER.main.SaveBestScore(GameViewManager.main._currentScore);
         CleanGameObjects(); // 클리어 오브젝트 
 
         PIER.main.ClearLevel(); // 클리어 레벨 처리 
@@ -563,7 +565,7 @@ public class GameManager : MonoBehaviour {
         if(indexLastStair == 0) {
             // 무조건 오른쪽 
             // stair.SetStairPosition(new Vector2(Random.Range(2.9f, 3.5f), posFirstStairY), false);
-            posX = Random.Range(3.2f, 4.5f);
+            posX = Random.Range(3.4f, 4.5f);
             stair.SetStairPosition(new Vector2(posX, posFirstStairY), false);
 
             return stair;
@@ -572,13 +574,13 @@ public class GameManager : MonoBehaviour {
 
         // 좌우 체크
         if (indexLastStair % 2 == 0) { // 오른쪽 
-            posX = Random.Range(3.2f, 4.9f);
-            posY = topStairY + Random.Range(0.4f, 2.2f);
+            posX = Random.Range(3.4f, 4.5f);
+            posY = topStairY + Random.Range(0.4f, 3f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽
-            posX = Random.Range(-4.9f, -3.2f);
-            posY = topStairY + Random.Range(0.8f, 2.2f);
+            posX = Random.Range(-4.5f, -3.4f);
+            posY = topStairY + Random.Range(0.8f, 3f);
             stair.SetStairPosition(new Vector2(posX, posY), true);
         }
 
@@ -586,6 +588,19 @@ public class GameManager : MonoBehaviour {
         return stair;
     }
 
+
+    /// <summary>
+    /// 건스토어에서 무기를 바뀌었을때 인게임도 바로 반영하기 위함
+    /// InitGame에서 이미 Player를 생성시켜 놓은 상태. 
+    /// </summary>
+    public void RefreshPlayerWeapon() {
+        if (!player)
+            return;
+
+        Debug.Log("RefreshPlayerWeapon");
+        player.InitWeaponOnly();
+
+    }
 
     #region White Splash
 

@@ -88,5 +88,33 @@ public class GunColumn : MonoBehaviour
         }
     }
 
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void OnClickProduct() {
+
+        // 락일때는.. 메세지 처리 예정
+        if (_lockCover.activeSelf)
+            return;
+
+
+        // 무기 변경 처리 
+        PIER.main.ChangeEquipWeapon(_weapon);
+        GunStoreView.main.SetEquipWeapon(); // 건스토어에서도 이미지 바꿔준다. 
+        GunStoreView.main.UnselectAll();
+
+        // 선택 무기 변경 처리
+        SelectWeapon();
+    }
+
+    public void SelectWeapon() {
+        _activeBG.SetActive(true);
+    }
+
+    public void UnselectWeapon() {
+        _activeBG.SetActive(false);
+    }
    
 }

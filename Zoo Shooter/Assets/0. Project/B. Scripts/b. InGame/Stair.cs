@@ -21,6 +21,8 @@ public class Stair : MonoBehaviour
 
     [SerializeField] Vector3 bossJumpPos;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -183,6 +185,9 @@ public class Stair : MonoBehaviour
         isLeftStair = true;
         spriteGround.flipX = false;
         isInPosition = false;
+
+
+        spriteGround.sprite = Stocks.GetRandomStairSprite();
     }
 
     void OnDespawned() {
@@ -199,9 +204,9 @@ public class Stair : MonoBehaviour
         
 
         if (isLeftStair)
-            pos = new Vector3(pos.x + Random.Range(1.4f, 1.9f), enemy.transform.position.y, 0);
+            pos = new Vector3(pos.x + Random.Range(1.8f, 1.9f), enemy.transform.position.y, 0);
         else
-            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.4f), enemy.transform.position.y, 0);
+            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.8f), enemy.transform.position.y, 0);
 
         return pos;
     }
@@ -226,9 +231,9 @@ public class Stair : MonoBehaviour
         bossJumpPos = pos;
 
         if (isLeftStair)
-            pos = new Vector3(pos.x + Random.Range(1.4f, 1.9f), pos.y + 1.6f, 0);
+            pos = new Vector3(pos.x + Random.Range(1.8f, 1.9f), pos.y + 1.6f, 0);
         else
-            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.4f), pos.y + 1.6f, 0);
+            pos = new Vector3(pos.x + Random.Range(-1.9f, -1.8f), pos.y + 1.6f, 0);
 
         return pos;
     }

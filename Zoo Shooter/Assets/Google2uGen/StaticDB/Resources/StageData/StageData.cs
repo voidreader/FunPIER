@@ -153,7 +153,7 @@ namespace Google2u
 			Rows.Add( new StageDataRow("level10", "10", "9", "24", "0"));
 			Rows.Add( new StageDataRow("level11", "11", "10", "26", "0"));
 			Rows.Add( new StageDataRow("level12", "12", "10", "28", "0"));
-			Rows.Add( new StageDataRow("level13", "13", "9", "320", "0"));
+			Rows.Add( new StageDataRow("level13", "13", "9", "32", "0"));
 			Rows.Add( new StageDataRow("level14", "14", "10", "30", "0"));
 			Rows.Add( new StageDataRow("level15", "15", "11", "32", "0"));
 			Rows.Add( new StageDataRow("level16", "16", "8", "25", "0"));
@@ -174,16 +174,16 @@ namespace Google2u
 			Rows.Add( new StageDataRow("level31", "31", "11", "80", "0"));
 			Rows.Add( new StageDataRow("level32", "32", "13", "80", "0"));
 			Rows.Add( new StageDataRow("level33", "33", "13", "85", "0"));
-			Rows.Add( new StageDataRow("level34", "34", "5", "68", "0"));
-			Rows.Add( new StageDataRow("level35", "35", "5", "70", "0"));
-			Rows.Add( new StageDataRow("level36", "36", "5", "15", "0"));
-			Rows.Add( new StageDataRow("level37", "37", "5", "15", "0"));
-			Rows.Add( new StageDataRow("level38", "38", "5", "15", "0"));
-			Rows.Add( new StageDataRow("level39", "39", "5", "15", "0"));
-			Rows.Add( new StageDataRow("level40", "40", "5", "15", "0"));
-			Rows.Add( new StageDataRow("level41", "41", "5", "15", "0"));
-			Rows.Add( new StageDataRow("level42", "42", "5", "15", "0"));
-			Rows.Add( new StageDataRow("level43", "43", "5", "15", "0"));
+			Rows.Add( new StageDataRow("level34", "34", "12", "68", "0"));
+			Rows.Add( new StageDataRow("level35", "35", "13", "70", "0"));
+			Rows.Add( new StageDataRow("level36", "36", "11", "80", "0"));
+			Rows.Add( new StageDataRow("level37", "37", "14", "88", "0"));
+			Rows.Add( new StageDataRow("level38", "38", "15", "65", "0"));
+			Rows.Add( new StageDataRow("level39", "39", "14", "70", "0"));
+			Rows.Add( new StageDataRow("level40", "40", "12", "80", "0"));
+			Rows.Add( new StageDataRow("level41", "41", "11", "90", "0"));
+			Rows.Add( new StageDataRow("level42", "42", "9", "80", "0"));
+			Rows.Add( new StageDataRow("level43", "43", "14", "90", "0"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

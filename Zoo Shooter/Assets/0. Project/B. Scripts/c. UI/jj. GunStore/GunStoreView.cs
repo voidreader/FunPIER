@@ -61,4 +61,16 @@ public class GunStoreView : MonoBehaviour
         _EquipWeaponSprite.sprite = Stocks.GetWeaponStoreSprite(PIER.main.CurrentWeapon);
     }
 
+    /// <summary>
+    /// 전체 비활성화 처리 
+    /// </summary>
+    public void UnselectAll() {
+        for (int i = 0; i < _listGroups.Count; i++) {
+
+            for (int j = 0; j < _listGroups[i]._listCols.Count; j++) {
+                _listGroups[i]._listCols[j].UnselectWeapon();
+            }
+        }
+    }
+
 }

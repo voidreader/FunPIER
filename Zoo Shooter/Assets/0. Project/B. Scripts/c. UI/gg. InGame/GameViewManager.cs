@@ -42,6 +42,9 @@ public class GameViewManager : MonoBehaviour {
         // 보스 데이터 처리 
         _bossData = BossData.Instance.Rows[PIER.CurrentLevel];
         _currentBossHP = _bossData._hp;
+
+        Debug.Log(">> GameViewManager BossHP :: " + _currentBossHP);
+
         _bossGroup.SetActive(false);
         _lblBossName1.text = _bossData._name;
         _lblBossName2.text = _bossData._name;

@@ -26,14 +26,19 @@ public class WeaponManager : MonoBehaviour {
     /// <summary>
     /// 무기 초기화 
     /// </summary>
-    public void Init() {
+    public void Init(bool force = false) {
+
+        if (force)
+            isInit = false;
 
         if (isInit)
             return;
 
         isInit = true;
 
-        EquipWeapon = Stocks.main.ListWeapons[0]; // 임시 
+        // EquipWeapon = Stocks.main.ListWeapons[0]; // 임시 
+        EquipWeapon = PIER.main.CurrentWeapon;
+
         GameManager.main.currentWeapon = EquipWeapon;
         CurentWeaponRenderer.sprite = EquipWeapon.WeaponSprite;
 

@@ -16,6 +16,7 @@ public class Stocks : MonoBehaviour
     public List<Sprite> ListBossSprite; // 보스 스프라이트 
 
     public List<Sprite> ListPosters;
+    public List<Sprite> ListStairs; // 계단..
 
 
     public GameObject prefabPlayer;
@@ -110,6 +111,11 @@ public class Stocks : MonoBehaviour
 
         return null;
 
+    }
+
+
+    public static Sprite GetRandomStairSprite() {
+        return main.ListStairs[Random.Range(0, main.ListStairs.Count)];
     }
 
 }
