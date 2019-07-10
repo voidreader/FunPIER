@@ -156,7 +156,7 @@ namespace Google2u
 			Rows.Add( new BossDataRow("boss1", "0", "1", "Clown", "Clown", "12", "clown"));
 			Rows.Add( new BossDataRow("boss2", "0", "2", "S.Witch", "S.Witch", "15", "S.witch"));
 			Rows.Add( new BossDataRow("boss3", "1", "3", "Surprise", "Surprise Man", "15", "Surprise"));
-			Rows.Add( new BossDataRow("boss4", "1", "4", "Freddy", "Freddie, Not Mercury", "18", "Freddy"));
+			Rows.Add( new BossDataRow("boss4", "1", "4", "Freddy", "Cute Freddy", "18", "Freddy"));
 			Rows.Add( new BossDataRow("boss5", "1", "5", "Hotkey", "Hotkey", "12", "hotkey"));
 			Rows.Add( new BossDataRow("boss6", "1", "6", "Texas", "Texas Man", "20", "Texas"));
 			Rows.Add( new BossDataRow("boss7", "1", "7", "Trick", "Trick", "21", "Trick"));

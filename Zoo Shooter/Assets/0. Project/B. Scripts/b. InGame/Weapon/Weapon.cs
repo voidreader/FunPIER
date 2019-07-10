@@ -24,6 +24,8 @@ public class Weapon : ScriptableObject {
     public WeaponGetType HowToGet;
 
     public string WeaponID;
+
+    [TextArea]
     public string DisplayName;
 
 

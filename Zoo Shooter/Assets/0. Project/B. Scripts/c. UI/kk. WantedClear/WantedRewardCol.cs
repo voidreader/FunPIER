@@ -8,7 +8,8 @@ public class WantedRewardCol : MonoBehaviour
 
     public Image coinImage, gunImage;
     public GameObject specialBG, selector;
-    public Text coinValue;
+    public Text coinValue, gunName;
+
 
     public Weapon weapon;
     public int coinReward;
@@ -20,6 +21,7 @@ public class WantedRewardCol : MonoBehaviour
     /// <param name="w"></param>
     public void SetSpecialReward(Weapon w) {
 
+        selector.SetActive(false);
         specialBG.SetActive(true);
         weapon = w;
 
@@ -39,7 +41,23 @@ public class WantedRewardCol : MonoBehaviour
         coinImage.gameObject.SetActive(false);
         coinValue.gameObject.SetActive(false);
         gunImage.gameObject.SetActive(true);
-        gunImage.sprite = null; // 
+        gunImage.sprite = Stocks.GetWeaponStoreSprite(weapon);
+        gunName.text = weapon.DisplayName;
+    }
+
+
+    /// <summary>
+    /// 일반 보상 
+    /// </summary>
+    /// <param name="v"></param>
+    public void SetCommonReward(int v) {
+
+        selector.SetActive(false);
+
+        SetCoinReward(v);
+        specialBG.SetActive(false);
+        weapon = null;
+
     }
 
     /// <summary>
@@ -53,6 +71,14 @@ public class WantedRewardCol : MonoBehaviour
 
         coinValue.text = "+" + v.ToString();
         coinReward = v;
+    }
+
+    public void SetSelect() {
+        selector.SetActive(true);
+    }
+
+    public void SetUnselect() {
+        selector.SetActive(false);
     }
     
 

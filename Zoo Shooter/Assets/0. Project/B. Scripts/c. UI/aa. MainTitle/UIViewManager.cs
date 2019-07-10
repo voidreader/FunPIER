@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Doozy.Engine.Progress;
 
+using Doozy.Engine;
+
 public class UIViewManager : MonoBehaviour
 {
 
@@ -29,10 +31,17 @@ public class UIViewManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+    void Update() {
+
+        if(Input.GetKeyDown(KeyCode.F)) {
+            GameEventMessage.SendEvent("FakeWantedReward");
+        }
         
     }
 
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -64,4 +73,6 @@ public class UIViewManager : MonoBehaviour
         _subAura2.transform.DOLocalRotate(new Vector3(0, 0, -720), 3, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
 
     }
+
+
 }
