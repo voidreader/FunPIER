@@ -40,4 +40,12 @@ public class BossPortrait : MonoBehaviour {
             _spLabel.sprite = _captureSprite;
         }
     }
+
+    /// <summary>
+    /// 잡혔는지 안잡혔는지 체크 
+    /// </summary>
+    /// <returns></returns>
+    public bool IsCaptured() {
+        return _jail.activeSelf;
+    }
 }

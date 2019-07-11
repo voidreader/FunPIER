@@ -67,7 +67,8 @@ public class PIER : MonoBehaviour {
         // 현재 리스트에 제일 높은 레벨을 찾는다. 
         maxListLevel = GetMaxLevelFromList(CurrentList);
         if(maxListLevel < CurrentLevel) { // 현 원티드 리스트의 최고 레벨보다 현재 레벨이 더 높아졌다면..! 
-            CurrentList++; // 리스트도 증가. 
+            // CurrentList++; // 리스트도 증가. 
+            // 리스트 증가는 나중에!(보상받을때)
 
             // 새로운 리스트가 있다! -- UI 호출해야함. 
             Debug.Log(">> New List!");
@@ -160,8 +161,8 @@ public class PIER : MonoBehaviour {
         // 장착한 무기 
         LoadEquipWeapon();
 
-        //CurrentList = 0;
-        //CurrentLevel = 2;
+        CurrentList = 0;
+        CurrentLevel = 2;
 
     }
 

@@ -9,9 +9,8 @@ public class WantedClear : MonoBehaviour
     public Text _lblName;
 
     public void OnStartView() {
-        // 이미 +1된 상태기 때문에 그냥 쓴다. 
-       
-        _lblName.text = "RECORD " + (PIER.CurrentList).ToString();
+       // 아직 +1 안되어있기 때문에 +1 해준다. 
+        _lblName.text = "RECORD " + (PIER.CurrentList+1).ToString();
     }
 
     public void OnView() {
