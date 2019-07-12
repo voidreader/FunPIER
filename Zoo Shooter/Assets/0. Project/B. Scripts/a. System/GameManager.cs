@@ -77,9 +77,11 @@ public class GameManager : MonoBehaviour {
         if (!AutoInit)
             return;
 
-
+        // Kill 테스트용
         if (Input.GetKeyDown(KeyCode.K)) {
-            enemy.KillEnemy();
+            PlayerBullet.isHitEnemy = true;
+            enemy.HitEnemy(100);
+            GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
         }
 
         if (Input.GetKeyDown(KeyCode.B)) {

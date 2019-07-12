@@ -19,6 +19,9 @@ public class WantedReward : MonoBehaviour
     WantedRewardCol selectedCol;
     public bool isGetFirstReward = false;
 
+    [SerializeField] Sprite _inactiveButtonSprtie;
+    [SerializeField] Sprite _activeButtonSprtie;
+
 
     /// <summary>
     /// 첫 시작
@@ -29,6 +32,7 @@ public class WantedReward : MonoBehaviour
 
         btnNoThanks.SetActive(false);
         btnAgain.SetActive(false);
+        btnAgain.GetComponent<Image>().sprite = _activeButtonSprtie;
 
         listRewardData = WantedRewardData.Instance.Rows;
         listSelect = new List<WantedRewardCol>();
@@ -113,7 +117,14 @@ public class WantedReward : MonoBehaviour
         }
 
         selectedCol.SetSelectEffect();
+        
         // 재화 획득처리 
+        if(selectedCol.IsSpecialReward() && selectedCol.GetRewardWeapon() != null) { // 스페셜 보상, 무기 획득보상일 경우 
+            PIER.main.AddGun(selectedCol.GetRewardWeapon()); // 건 추가 
+        }
+        else {
+            PIER.main.AddCoin(selectedCol.GetCoinReward()); // 코인 추가 
+        }
         
 
         if(isGetFirstReward) { // 두번째 돌림 
@@ -141,6 +152,11 @@ public class WantedReward : MonoBehaviour
     /// 다시 돌리기 
     /// </summary>
     public void OnClickAgain() {
+
+        // 한번 봤으면 두번 눌리면 안됨. 
+        if (btnAgain.GetComponent<Image>().sprite == _inactiveButtonSprtie)
+            return;
+
         // 
         listSelect.Remove(selectedCol); // 이미 받은건 제거
 
@@ -150,6 +166,11 @@ public class WantedReward : MonoBehaviour
 
 
     void OnCompleteWatch() {
+
+        // 한번 봤으면 동작 하지 않음 
+        btnAgain.GetComponent<Image>().sprite = _inactiveButtonSprtie;
+
+
         StartCoroutine(Selecting());
     }
 

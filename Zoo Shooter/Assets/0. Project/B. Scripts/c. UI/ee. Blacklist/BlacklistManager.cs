@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Google2u;
+using Doozy.Engine;
+
 
 public class BlacklistManager : MonoBehaviour {
 
@@ -14,12 +16,14 @@ public class BlacklistManager : MonoBehaviour {
     List<BossDataRow> list; // 기준정보 
     public GameObject _btnClaim, _btnBack; // 보상받기 버튼 
     public Text _lblList; // 타이틀 텍스트 
-    
 
+    [SerializeField] Sprite _inactiveButtonSprtie;
+    [SerializeField] Sprite _activeButtonSprtie;
 
     public void OnView() {
 
-        _btnClaim.SetActive(false);
+        _btnClaim.SetActive(true);
+        _btnClaim.GetComponent<Image>().sprite = _inactiveButtonSprtie;
         _btnBack.SetActive(true);
 
         _currentLevel = PIER.CurrentLevel;
@@ -64,6 +68,8 @@ public class BlacklistManager : MonoBehaviour {
         if(isClaimAvailable) {
             _btnBack.SetActive(false);
             _btnClaim.SetActive(true);
+            _btnClaim.GetComponent<Image>().sprite = _activeButtonSprtie;
+
             _lblList.text = "List is completed!";
         }
     }
@@ -73,7 +79,12 @@ public class BlacklistManager : MonoBehaviour {
     /// 보상 받기 누르기 
     /// </summary>
     public void OnClickClaim() {
-        
+
+        if (_btnClaim.GetComponent<Image>().sprite == _inactiveButtonSprtie)
+            return;
+
+        //CallWantedClearFromWanted
+        GameEventMessage.SendEvent("CallWantedClearFromWanted");
     }
 
     public void OnClickBack() {

@@ -23,9 +23,14 @@ public class GameViewManager : MonoBehaviour {
     public Image _portrait; // 보스 초상화 
 
     public BossDataRow _bossData; // 보스데이터
-    public PlusScore _plusScore; // 스코어처리
+    
     public int _currentScore = 0;
     public int _currentBossHP = 0;
+
+    public int _getScoreIndex = 0;
+    public List<PlusScore> ListGetScores; // 스코어 획득 표시 Pooling 용도 
+    public List<PlusScore> ListActiveScores; // 액티브된 스코어 획득 표시들.. (여러개 표시될 수 있다)
+
 
     private void Awake() {
         main = this;
@@ -134,8 +139,15 @@ public class GameViewManager : MonoBehaviour {
         _currentScore += s;
         _lblScore.text = _currentScore.ToString();
 
+
+        ListGetScores[_getScoreIndex++].GetScore(s, ListActiveScores.Count, isDouble);
+
+        if (_getScoreIndex >= ListGetScores.Count)
+            _getScoreIndex = 0;
+
+
         // _lblScore.text =
-        _plusScore.GetScore(s, isDouble);
+        //_plusScore.GetScore(s, isDouble);
     }
 
 

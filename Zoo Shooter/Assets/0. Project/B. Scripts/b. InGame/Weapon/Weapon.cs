@@ -35,6 +35,7 @@ public class Weapon : ScriptableObject {
     public PlayerBullet bullet;
     public int BulletsCount; // 총알 수
     public int Damage; // 데미지
+    public float FireRate = 0.1f;
     
 
     public float AimSpeed; // Aim Speed

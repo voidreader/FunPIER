@@ -121,7 +121,7 @@ public class PIER : MonoBehaviour {
     #endregion
 
 
-    #region 저장된 데이터 로드 
+    #region 저장된 데이터 로드 , 재화처리
     /// <summary>
     /// 데이터 로드 
     /// </summary>
@@ -179,6 +179,20 @@ public class PIER : MonoBehaviour {
 
         SaveGun();
     }
+
+    /// <summary>
+    /// 코인 획득 
+    /// </summary>
+    /// <param name="c"></param>
+    public void AddCoin(int c) {
+        Coin += c;
+        CoinRefresh();
+
+
+        PlayerPrefs.SetInt(ConstBox.keyCurrentCoin, Coin); // 코인
+        PlayerPrefs.Save();
+    }
+
 
     /// <summary>
     /// 보유중인 총 체크 

@@ -10,12 +10,15 @@ public class PlusScore : MonoBehaviour
     public Text _text;
     public Animator _anim;
 
-    public void GetScore(int s, bool isDouble = false) {
+    public void GetScore(int s, int index = 0, bool isDouble = false) {
 
         this.gameObject.SetActive(true);
         this.transform.DOKill();
-        this.transform.localPosition = new Vector3(-271, 500, 0);
-        
+        this.transform.localPosition = new Vector3(-271, 500 - (index * 50) , 0); 
+
+
+        GameViewManager.main.ListActiveScores.Add(this); // 활성화된건 액티브 리스트에 추가 
+
 
         _text.text = "+" + s.ToString();
         if(isDouble) {
@@ -23,18 +26,19 @@ public class PlusScore : MonoBehaviour
             _text.color = Stocks.main.ColorHeadshotFont;
         }
         else {
-            _text.fontSize = 35;
+            _text.fontSize = 40;
             _text.color = Color.white;
 
         }
 
         _anim.Play("Score");
 
-        this.transform.DOLocalMoveY(550, 0.25f);
+        this.transform.DOLocalMoveY(this.transform.localPosition.y + 50, 0.25f);
 
     }
 
     void OnCompleteAnim() {
+        GameViewManager.main.ListActiveScores.Remove(this); // 연출끝났으면 액티브 리스트에서 제거 
         this.gameObject.SetActive(false);
     }
 }

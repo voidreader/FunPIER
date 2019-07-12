@@ -12,6 +12,17 @@ public class BossEnemy : Enemy {
     }
 
     public override void HitEnemy(int d) {
+
+        this.transform.DOKill();
+
+        // 보스의 경우 맞고 죽지 않는 경우 뒤로 살짝 밀리게 
+        if(HP > d) {
+            if(isLeft)
+                this.transform.DOLocalMoveX(this.transform.localPosition.x - 0.1f, 0.05f).SetLoops(2, LoopType.Yoyo);
+            else
+                this.transform.DOLocalMoveX(this.transform.localPosition.x + 0.1f, 0.05f).SetLoops(2, LoopType.Yoyo);
+        }
+
         base.HitEnemy(d);
 
         GameViewManager.main.CalcBossHP(d); // HP 게이지 연동 추가 

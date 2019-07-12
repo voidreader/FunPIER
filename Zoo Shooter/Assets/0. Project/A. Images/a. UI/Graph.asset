@@ -296,7 +296,7 @@ MonoBehaviour:
   m_version: 1
   m_description: 
   m_id: 627b7fb3-de48-4823-8c4e-5de939b09928
-  m_lastModified: 132073271516416153
+  m_lastModified: 132073809024139155
 --- !u!114 &114016810714697590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2414,7 +2414,14 @@ MonoBehaviour:
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - m_connectionMode: 0
-    m_connections: []
+    m_connections:
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: ea308b39-db62-4574-93b1-bffa965a19b4
+      m_inputNodeId: 1a7b47c4-9d98-4ad7-a3e5-e1fbb117b6f2
+      m_inputSocketId: c5e73efc-ed65-402f-8556-d95e6349f553
+      m_outputNodeId: f3e1c5a3-c02c-4fd8-9789-f62284c432f1
+      m_outputSocketId: 5b619f7f-c2ce-4a76-8ef8-62aa6070e469
     m_connectionPoints:
     - {x: -2, y: 4}
     - {x: 202, y: 4}
@@ -2429,18 +2436,11 @@ MonoBehaviour:
     m_id: 5b619f7f-c2ce-4a76-8ef8-62aa6070e469
     m_nodeId: f3e1c5a3-c02c-4fd8-9789-f62284c432f1
     m_socketName: OutputSocket_1
-    m_value: '{"ButtonCategory":"General","ButtonName":"ClaimWantedReward","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
+    m_value: '{"ButtonCategory":"General","ButtonName":"ClaimWantedReward","GameEvent":"CallWantedClearFromWanted","TimeDelay":3.0,"Trigger":3}'
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - m_connectionMode: 0
-    m_connections:
-    - m_inputConnectionPoint: {x: -2, y: 4}
-      m_outputConnectionPoint: {x: 202, y: 4}
-      m_id: 9375f52f-e6a7-4f67-bf11-8e8ae40c05e8
-      m_inputNodeId: 1a7b47c4-9d98-4ad7-a3e5-e1fbb117b6f2
-      m_inputSocketId: c5e73efc-ed65-402f-8556-d95e6349f553
-      m_outputNodeId: f3e1c5a3-c02c-4fd8-9789-f62284c432f1
-      m_outputSocketId: 3917ee1f-acca-472f-b5c7-2c3309b10e12
+    m_connections: []
     m_connectionPoints:
     - {x: -2, y: 4}
     - {x: 202, y: 4}
@@ -2757,11 +2757,11 @@ MonoBehaviour:
     m_connections:
     - m_inputConnectionPoint: {x: -2, y: 4}
       m_outputConnectionPoint: {x: 202, y: 4}
-      m_id: 9375f52f-e6a7-4f67-bf11-8e8ae40c05e8
+      m_id: ea308b39-db62-4574-93b1-bffa965a19b4
       m_inputNodeId: 1a7b47c4-9d98-4ad7-a3e5-e1fbb117b6f2
       m_inputSocketId: c5e73efc-ed65-402f-8556-d95e6349f553
       m_outputNodeId: f3e1c5a3-c02c-4fd8-9789-f62284c432f1
-      m_outputSocketId: 3917ee1f-acca-472f-b5c7-2c3309b10e12
+      m_outputSocketId: 5b619f7f-c2ce-4a76-8ef8-62aa6070e469
     m_connectionPoints:
     - {x: -2, y: 4}
     - {x: 202, y: 4}

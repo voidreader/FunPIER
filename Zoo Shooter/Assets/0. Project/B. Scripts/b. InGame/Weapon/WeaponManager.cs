@@ -151,7 +151,7 @@ public class WeaponManager : MonoBehaviour {
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
 
             ShotBullet();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(EquipWeapon.FireRate);
         }
 
         AimController.Wait = true;
