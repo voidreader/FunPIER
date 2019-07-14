@@ -28212,7 +28212,7 @@ MonoBehaviour:
   automaticallyLayout: 1
   sizeControl: 1
   size: {x: 400, y: 250}
-  automaticLayoutSpacing: 0
+  automaticLayoutSpacing: 0.361
   leftMargin: 0
   rightMargin: 0
   topMargin: 0
@@ -28221,13 +28221,13 @@ MonoBehaviour:
   infiniteScrollingEndSpacing: 0
   startingPanel: 1
   swipeGestures: 1
-  minimumSwipeSpeed: 100
+  minimumSwipeSpeed: 40
   previousButton: {fileID: 0}
   nextButton: {fileID: 0}
   pagination: {fileID: 269344953}
   toggleNavigation: 1
   snapTarget: 2
-  snappingSpeed: 15
+  snappingSpeed: 10
   thresholdSnappingSpeed: -1
   hardSnap: 1
   onPanelChanged:
@@ -28437,6 +28437,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583479764}
   m_CullTransparentMesh: 0
+--- !u!1 &591069710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 591069711}
+  m_Layer: 0
+  m_Name: Rot-90
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &591069711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591069710}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &594639604
 GameObject:
   m_ObjectHideFlags: 0
@@ -91789,7 +91819,7 @@ PrefabInstance:
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
@@ -91799,7 +91829,7 @@ PrefabInstance:
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[2].preloadAmount
-      value: 30
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
@@ -91821,6 +91851,48 @@ PrefabInstance:
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[0].preloadTime
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[2].prefab
+      value: 
+      objectReference: {fileID: 5220661238895312708, guid: 64218201297a61e49a52f6fc661f9d7d,
+        type: 3}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[3].prefab
+      value: 
+      objectReference: {fileID: 6348630021127876273, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8,
+        type: 3}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[3].preloadAmount
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[3].preloadFrames
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[3].limitAmount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[3].cullAbove
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[3].cullDelay
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[3].cullMaxPerPass
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 587d6fad731e978409b8fa3048e5f93d, type: 3}
@@ -92309,6 +92381,23 @@ PrefabInstance:
       propertyPath: helicopter
       value: 
       objectReference: {fileID: 561793439}
+    - target: {fileID: 5069371769890641983, guid: d1b0d67ccee425e49aec15e1a6b31f73,
+        type: 3}
+      propertyPath: rotMinus90
+      value: 
+      objectReference: {fileID: 591069711}
+    - target: {fileID: 5069371769890641983, guid: d1b0d67ccee425e49aec15e1a6b31f73,
+        type: 3}
+      propertyPath: particleSlam
+      value: 
+      objectReference: {fileID: 5220661238881158316, guid: 64218201297a61e49a52f6fc661f9d7d,
+        type: 3}
+    - target: {fileID: 5069371769890641983, guid: d1b0d67ccee425e49aec15e1a6b31f73,
+        type: 3}
+      propertyPath: particleFlashBomb
+      value: 
+      objectReference: {fileID: 1555371172940714849, guid: 28a67512585c83949bdec421cd47e95b,
+        type: 3}
     - target: {fileID: 5069371769890641982, guid: d1b0d67ccee425e49aec15e1a6b31f73,
         type: 3}
       propertyPath: m_LocalPosition.x

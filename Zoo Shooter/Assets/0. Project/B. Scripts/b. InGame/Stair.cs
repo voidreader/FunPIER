@@ -97,11 +97,15 @@ public class Stair : MonoBehaviour
         else
             move = NormalEnmeyMove.Walk;
 
+        // 보스면 무조건 점프.
+        if (enemy.type == EnemyType.Boss)
+            move = NormalEnmeyMove.Jump;
+
 
         if (move == NormalEnmeyMove.Jump) {
             enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.4f).OnComplete(OnCompleteEnemyAppear);
             enemy.Jump();
-            // enemy.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.FastBeyond360).SetDelay(0.1f);
+            
         }
         else { // 걷기 
             enemy.Walk(); //(애니메이션)
@@ -112,6 +116,13 @@ public class Stair : MonoBehaviour
 
     void OnCompleteEnemyAppear() {
         enemy.OnGround();
+
+        if (enemy.type == EnemyType.Boss) { // 보스 첫 등장에서는 슬램 파티클 
+            Vector3 p = new Vector3(enemy.transform.position.x, this.transform.position.y + 0.65f, 0);
+            GameManager.main.ShowParticleSlam(p); // 파티클 처리
+
+            CameraShake.main.ShakeOnce(0.25f, 0.2f); // 카메라 흔들림
+        }
     }
 
     
@@ -226,6 +237,10 @@ public class Stair : MonoBehaviour
         return pos;
     }
 
+    /// <summary>
+    /// 보스가 플레이어 총에 맞고 다음 발판으로 점프
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetBossJumpPosition() {
         Vector3 pos = this.spriteGround.transform.position;
         bossJumpPos = pos;

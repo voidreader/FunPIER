@@ -57,6 +57,13 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    #region 파티클
+
+    public ParticleSystem particleSlam;
+    public ParticleSystem particleFlashBomb;
+    public Transform rotMinus90;
+
+    #endregion
 
     private void Awake() {
         main = this;
@@ -64,10 +71,6 @@ public class GameManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
-
-
-
 
     }
 
@@ -189,7 +192,6 @@ public class GameManager : MonoBehaviour {
         player.Aim(); // 조준 다시 시작.
     }
     #endregion
-
 
     #region Routine 
 
@@ -530,7 +532,7 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-
+    #region 발판 처리 
     /// <summary>
     /// 가장 상단에 새로운 계단 생성하고, Enemy 설정 
     /// indexLastStair 증가 처리
@@ -590,6 +592,20 @@ public class GameManager : MonoBehaviour {
         return stair;
     }
 
+    #endregion
+
+    #region 연출 처리 
+
+
+    /// <summary>
+    ///  슬램 파티클 
+    /// </summary>
+    /// <param name="pos"></param>
+    public void ShowParticleSlam(Vector3 pos) {
+        PoolManager.Pools[ConstBox.poolGame].Spawn(particleSlam, pos, rotMinus90.rotation);
+    }
+
+    #endregion
 
     /// <summary>
     /// 건스토어에서 무기를 바뀌었을때 인게임도 바로 반영하기 위함

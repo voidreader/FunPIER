@@ -43,7 +43,7 @@ public class CameraShake : MonoBehaviour
                 y = Random.Range(-1f, 1f) * magnitude;
                 transform.localPosition = new Vector3(x, y, originalPos.z);
             }
-            else {
+            else { // 수평이동
                 transform.localPosition = new Vector3(x, originalPos.y, originalPos.z);
             }
 

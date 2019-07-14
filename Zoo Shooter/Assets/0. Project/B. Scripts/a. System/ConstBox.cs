@@ -10,6 +10,8 @@ public static class ConstBox {
     public static string prefabEnemy = "Enemy";
     public static string prefabPlayer = "Player";
     public static string prefabHeadshot = "HeadShot";
+    //public static string prefabParticleSlam = "CartoonyBodySlam";
+    //public static string prefabP
 
     // 저장용 key 
     public static string keyCurrentList = "keyCurrentList"; // 현재 진행중인 포스터 리스트 순번 
