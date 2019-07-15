@@ -35,7 +35,9 @@ public class BossEnemy : Enemy {
 
         Debug.Log("BossEnemy Killed");
 
-        this.rigid.AddForce(new Vector2(Random.Range(-100f, 0f), 450));
+        this.rigid.AddForce(new Vector2(Random.Range(-100f, 0f), Random.Range(400f, 600f)));
+        GameManager.main.ShowGetCoinTriple(); 
+
         // this.transform.DOLocalRotate(new Vector3(0, 0, 720), 2, RotateMode.FastBeyond360).SetEase(Ease.Linear);
         // this.rigid.isKinematic = true;
         

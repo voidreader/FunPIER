@@ -62,7 +62,8 @@ public class UIViewManager : MonoBehaviour
         _wantedProgressor.InstantSetValue(0);
         _wantedProgressor.SetValue(PIER.main.GetWantedListProgressValue());
 
-        
+
+        AudioAssistant.main.PlayMusic("Main");
     }
 
     public void OnViewSubscribe() {

@@ -91,9 +91,17 @@ public class Player : MonoBehaviour
 
     IEnumerator Moving() {
         // anim.SetBool("isJump", true);
-        this.transform.DOJump(targetPos, 1.8f, 1, 0.8f).OnComplete(OnCompleteMove);
-        this.transform.DORotate(new Vector3(0, 0, 360), 0.6f, RotateMode.WorldAxisAdd);
-            
+        //this.transform.DOJump(targetPos, 1.8f, 1, 0.8f).OnComplete(OnCompleteMove);
+        //this.transform.DORotate(new Vector3(0, 0, 360), 0.6f, RotateMode.WorldAxisAdd);
+
+        AudioAssistant.Shot("MovingJump");
+
+        this.transform.DOJump(targetPos, 3f, 1, 0.8f).OnComplete(OnCompleteMove).SetEase(Ease.InQuint);
+
+        if(isLeft)
+            this.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.WorldAxisAdd).SetDelay(0.5f);
+        else
+            this.transform.DORotate(new Vector3(0, 0, 360), 0.3f, RotateMode.WorldAxisAdd).SetDelay(0.5f);
 
         yield return null;
         //yield return new WaitForSeconds(0.4f);
@@ -102,7 +110,7 @@ public class Player : MonoBehaviour
 
     void OnCompleteMove() {
         isMoving = false;
-        
+        CameraShake.main.ShakeByPlayerJump();
     }
 
 

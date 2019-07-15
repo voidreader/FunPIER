@@ -25,9 +25,11 @@ public class GameManager : MonoBehaviour {
     public bool AutoInit;
     public int SpawnEnemyCount = 0;
     public bool isRevived = false; // 광고보고 부활 여부. (Continue)
-    
 
-
+    public List<BossDamageText> ListBossDamageTexts;
+    int BossDamageIndex = 0;
+    public List<GetCoin> ListGetCoins;
+    int GetCoinIndex = 0;
 
 
     /// <summary>
@@ -440,7 +442,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void MoveMainCamera(float dis) {
-        mainCamera.transform.DOMoveY(mainCamera.transform.position.y + dis, 1);
+        mainCamera.transform.DOMoveY(mainCamera.transform.position.y + dis, 0.2f);
     }
 
 
@@ -598,11 +600,56 @@ public class GameManager : MonoBehaviour {
 
 
     /// <summary>
-    ///  슬램 파티클 
+    ///  슬램(바닥) 파티클 
     /// </summary>
     /// <param name="pos"></param>
     public void ShowParticleSlam(Vector3 pos) {
         PoolManager.Pools[ConstBox.poolGame].Spawn(particleSlam, pos, rotMinus90.rotation);
+    }
+
+
+    /// <summary>
+    /// 보스 총알 맞을때 데미지 표시
+    /// </summary>
+    public void ShowDamage(int damage, bool isDouble = false) {
+        // ListBossDamageTexts
+        ListBossDamageTexts[BossDamageIndex++].SetDamage(enemy.transform, damage, isDouble);
+
+
+        if (BossDamageIndex >= ListBossDamageTexts.Count)
+            BossDamageIndex = 0;
+    }
+
+    /// <summary>
+    /// 헤드샷 발생시, 코인획득 
+    /// </summary>
+    public void ShowGetCoin() {
+        // 보스는 헤드샷 맞아도 코인 안줌.
+        if (enemy.type == EnemyType.Boss)
+            return;
+
+        ListGetCoins[GetCoinIndex++].SetCoin(enemy.transform);
+        if (GetCoinIndex >= ListGetCoins.Count)
+            GetCoinIndex = 0;
+    }
+
+    /// <summary>
+    /// 보스 죽였을때 3개정도 떨구게.
+    /// </summary>
+    public void ShowGetCoinTriple() {
+        StartCoroutine(TripleGetCoinRoutine());
+    }
+    IEnumerator TripleGetCoinRoutine() {
+
+        Transform tr = enemy.transform;
+
+        for (int i = 0; i < 3; i++) {
+            ListGetCoins[GetCoinIndex++].SetCoin(tr);
+            if (GetCoinIndex >= ListGetCoins.Count)
+                GetCoinIndex = 0;
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     #endregion

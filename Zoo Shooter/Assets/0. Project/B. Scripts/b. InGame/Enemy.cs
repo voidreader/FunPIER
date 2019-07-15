@@ -159,8 +159,18 @@ public class Enemy : MonoBehaviour {
         JumpCallback = callback;
 
         jumpPos = target;
-        this.transform.DOJump(jumpPos, 1.5f, 1, 0.4f).OnComplete(OnCompleteJump);
-   }
+        // this.transform.DOJump(jumpPos, 1.5f, 1, 0.5f).OnComplete(OnCompleteJump);
+        this.transform.DOJump(jumpPos, 2f, 1, 0.6f).OnComplete(OnCompleteJump).SetEase(Ease.InQuint);
+
+        /*
+        if (isLeft)
+            this.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.WorldAxisAdd).SetDelay(0.5f);
+        else
+            this.transform.DORotate(new Vector3(0, 0, 360), 0.3f, RotateMode.WorldAxisAdd).SetDelay(0.5f);
+
+        this.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd);
+        */
+    }
 
     void OnCompleteJump() {
         isMoving = false;

@@ -49,9 +49,23 @@ MonoBehaviour:
     _bosshp: 0
     _range: 0
   mainCamera: {fileID: 0}
+  helicopter: {fileID: 0}
   AutoInit: 1
   SpawnEnemyCount: 0
   isRevived: 0
+  ListBossDamageTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   currentStair: {fileID: 0}
   listStairs: []
   currentWeapon: {fileID: 0}
@@ -75,3 +89,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _nightTile: {fileID: 0}
+  particleSlam: {fileID: 5220661238881158316, guid: 64218201297a61e49a52f6fc661f9d7d,
+    type: 3}
+  particleFlashBomb: {fileID: 1555371172940714849, guid: 28a67512585c83949bdec421cd47e95b,
+    type: 3}
+  rotMinus90: {fileID: 0}

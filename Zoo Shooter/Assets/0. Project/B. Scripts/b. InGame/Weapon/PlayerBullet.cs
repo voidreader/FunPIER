@@ -121,6 +121,13 @@ public class PlayerBullet : MonoBehaviour
         Destroy(gameObject);
     }
 
+
+
+    /// <summary>
+    /// 중요한 부분. 
+    /// 총알 히트 처리 
+    /// </summary>
+    /// <param name="co"></param>
     private void OnTriggerEnter2D(Collider2D co) {
 
         Debug.Log("OnTriggerEnter2D");
@@ -181,7 +188,7 @@ public class PlayerBullet : MonoBehaviour
         }
 
 
-        // 적 죽이기
+        // 적 죽이기 바디샷
         if(co.tag == "Body") {
             Debug.Log("Body Shot!!");
             hitEnemy = co.GetComponent<Enemy>();
@@ -193,11 +200,16 @@ public class PlayerBullet : MonoBehaviour
             // 스코어는 레벨에 영향을 받는다.
             GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
 
+            // 보스일때는 데미지 표시
+            if (hitEnemy.type == EnemyType.Boss)
+                GameManager.main.ShowDamage(GameManager.main.currentWeapon.Damage, false);
 
-            
+
         }
-        else if(co.tag == "Head") {
+        else if(co.tag == "Head") { // 헤드샷
             Debug.Log("Head Shot!!");
+
+            GameManager.main.ShowGetCoin(); // 코인 획득 
 
             hitEnemy = co.GetComponentInParent<Enemy>();
             hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage * 2); // 두배 
@@ -212,6 +224,12 @@ public class PlayerBullet : MonoBehaviour
             // 헤드샷은 두배
             GameViewManager.main.AddScore((GameManager.main.CurrentLevelData._level + 1) * 2, true);
             GameManager.main.Splash();
+
+            // 보스일때는 데미지 표시
+            if(hitEnemy.type == EnemyType.Boss)
+                GameManager.main.ShowDamage(GameManager.main.currentWeapon.Damage * 2, true);
+
+
 
         }
         else  {

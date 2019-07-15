@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: nofire
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 1
   HowToGet: 0
   WeaponID: nofire
   DisplayName: No Fire
@@ -20,10 +20,12 @@ MonoBehaviour:
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 1
+  BulletsCount: 3
   Damage: 3
-  AimSpeed: 35
-  AimRange: 1
+  FireRate: 0.1
+  Accuracy: 5
+  AimSpeed: 50
+  AimRange: 0.6
   posEquip: {x: -0.082, y: -0.041, z: 0}
   posGunPoint: {x: -1.297, y: 0, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

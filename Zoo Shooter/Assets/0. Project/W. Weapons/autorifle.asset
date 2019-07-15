@@ -17,14 +17,15 @@ MonoBehaviour:
   WeaponID: autorifle
   DisplayName: Auto Rifle
   WeaponSprite: {fileID: 21300000, guid: 360a059bda5dfc841b02bbcbe8dff88b, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: c1bcd64de4c10364db36209dc8e3a969, type: 3}
+  ReloadSound: {fileID: 8300000, guid: c85065ecd49305a41b588735851967fd, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 6
-  Damage: 1
-  FireRate: 0.05
-  AimSpeed: 40
-  AimRange: 1.3
+  BulletsCount: 3
+  Damage: 3
+  FireRate: 0.1
+  Accuracy: 20
+  AimSpeed: 80
+  AimRange: 0.8
   posEquip: {x: -0.004, y: -0.021, z: 0}
   posGunPoint: {x: -1.16, y: 0.01, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 0.8}

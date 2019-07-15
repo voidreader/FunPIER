@@ -26,6 +26,36 @@ public class CameraShake : MonoBehaviour
         StartCoroutine(Shake(duration, magnitude, true));
     }
 
+    public void ShakeByPlayerJump() {
+        if (isShaking)
+            return;
+
+        StartCoroutine(ByPlayerShake(0.1f, 0.1f));
+    }
+
+    IEnumerator ByPlayerShake(float duration, float magnitude) {
+        Vector3 originalPos = transform.localPosition;
+        isShaking = true;
+
+        float elapsed = 0.0f;
+        float y;
+        while (elapsed < duration) {
+            // x = Random.Range(-1f, 1f) * magnitude;
+            y = Random.Range(-1f, 1f) * magnitude;
+            y += this.transform.localPosition.y;
+            transform.localPosition = new Vector3(originalPos.x, y, originalPos.z);
+
+
+            // transform.localPosition = new Vector3(x, y, originalPos.z);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localPosition = originalPos;
+        isShaking = false;
+    }
+
 
     IEnumerator Shake(float duration, float magnitude, bool isVertical = false) {
 
@@ -41,6 +71,7 @@ public class CameraShake : MonoBehaviour
 
             if(isVertical) {
                 y = Random.Range(-1f, 1f) * magnitude;
+                y += this.transform.localPosition.y;
                 transform.localPosition = new Vector3(x, y, originalPos.z);
             }
             else { // 수평이동

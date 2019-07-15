@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: banana
   m_EditorClassIdentifier: 
-  CurrentType: 2
+  CurrentType: 0
   HowToGet: 0
   WeaponID: banana
   DisplayName: Banana
@@ -20,9 +20,11 @@ MonoBehaviour:
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 3
-  Damage: 2
-  AimSpeed: 45
+  BulletsCount: 1
+  Damage: 8
+  FireRate: 0.1
+  Accuracy: 100
+  AimSpeed: 85
   AimRange: 0.6
   posEquip: {x: -0.079, y: 0.069, z: 0}
   posGunPoint: {x: -1.053, y: -0.018, z: 0}

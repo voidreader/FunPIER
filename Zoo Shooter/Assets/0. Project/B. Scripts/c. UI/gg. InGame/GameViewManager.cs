@@ -64,6 +64,8 @@ public class GameViewManager : MonoBehaviour {
         _currentScore = 0;
 
 
+        AudioAssistant.main.PlayMusic("Battle");
+
     }
 
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: fowerstrip
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 2
   HowToGet: 0
   WeaponID: fowerstrip
   DisplayName: Power Strip
@@ -20,9 +20,11 @@ MonoBehaviour:
   ShootSound: {fileID: 0}
   ReloadSound: {fileID: 0}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 1
-  Damage: 3
-  AimSpeed: 35
+  BulletsCount: 2
+  Damage: 4
+  FireRate: 0.1
+  Accuracy: 35
+  AimSpeed: 66
   AimRange: 1
   posEquip: {x: 0.037, y: -0.062, z: 0}
   posGunPoint: {x: -1.373, y: 0.002, z: 0}

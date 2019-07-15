@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class WeaponManager : MonoBehaviour {
 
@@ -92,6 +93,7 @@ public class WeaponManager : MonoBehaviour {
         }
 
         
+
     }
 
     void ShotBullet() {
@@ -102,6 +104,13 @@ public class WeaponManager : MonoBehaviour {
         
 
         b.AddBulletForce(transform, _direction);
+
+        // Shoot 재생 
+        if(EquipWeapon.ShootSound) {
+            AudioAssistant.Shot(EquipWeapon.ShootSound);
+        }
+
+        
         
     }
 
@@ -113,6 +122,7 @@ public class WeaponManager : MonoBehaviour {
 
         Debug.Log("Shoot With Gun");
         ShotBullet();
+        this.transform.DOLocalMove(Vector3.forward * 8, 0.15f).SetLoops(2, LoopType.Yoyo);
 
         // wait
         AimController.Wait = true; // 한방 쏘고 더이상 조준하지 않음.. 
@@ -136,8 +146,24 @@ public class WeaponManager : MonoBehaviour {
             b.AddBulletForce(transform, _direction);
         }
 
+        this.transform.DOLocalMove(Vector3.forward * 10, 0.15f).SetLoops(2, LoopType.Yoyo);
+
         AimController.Wait = true;
         isShooting = false;
+    }
+
+    /// <summary>
+    /// 총기 흔들림효과 
+    /// </summary>
+    void ShakreAimRotation() {
+        float acc = 1 - (EquipWeapon.Accuracy / 100);
+        // Vector3 localAng = this.transform.localEulerAngles;
+        // this.transform.localEulerAngles = new Vector3(localAng.x, localAng.y, localAng.z + UnityEngine.Random.Range(-acc, acc));
+
+        Debug.Log("ShakeAimRotate :: " + acc);
+
+        transform.Rotate(0, 0, 1 * UnityEngine.Random.Range(-acc, acc) * 10);
+
     }
 
     /// <summary>
@@ -147,14 +173,18 @@ public class WeaponManager : MonoBehaviour {
     private IEnumerator ShootWithMachineGun() {
 
         Debug.Log("ShootWithMachineGun :: " + EquipWeapon.BulletsCount);
+        AimController.Wait = true;
 
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
 
+
             ShotBullet();
+            // 쏘고 나서 정확도 만큼 틀어지게 만든다. 
+            ShakreAimRotation();
+
             yield return new WaitForSeconds(EquipWeapon.FireRate);
         }
-
-        AimController.Wait = true;
+       
 
         yield return new WaitForSeconds(0.4f);
         isShooting = false;
@@ -167,6 +197,12 @@ public class WeaponManager : MonoBehaviour {
     private void Reload() {
 
         Debug.Log("Reload Check! : " + PlayerBullet.isHitEnemy);
+
+        // Shoot 재생 
+        if (EquipWeapon.ReloadSound) {
+            AudioAssistant.Shot(EquipWeapon.ReloadSound);
+        }
+
 
         // AudioManager.Instance.PlayAudio(_currenWeapon.ReloadSound);
         if (!PlayerBullet.isHitEnemy) {
