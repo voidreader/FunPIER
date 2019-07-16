@@ -17,13 +17,15 @@ MonoBehaviour:
   WeaponID: watermelon
   DisplayName: Watermelon
   WeaponSprite: {fileID: 21300000, guid: 9f97f72dd9432b642bbfe8e417303b7a, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: cfd8fc9f2f44f4142900e3aa6227169a, type: 3}
+  ReloadSound: {fileID: 8300000, guid: f4f2a5e7d39adf84bbf677f5bb0d7011, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 3
-  Damage: 3
-  AimSpeed: 0
-  AimRange: 1
+  Damage: 5
+  FireRate: 0.1
+  Accuracy: 20
+  AimSpeed: 70
+  AimRange: 1.2
   posEquip: {x: -0.059, y: -0.014, z: 0}
   posGunPoint: {x: -1.362, y: -0.006, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

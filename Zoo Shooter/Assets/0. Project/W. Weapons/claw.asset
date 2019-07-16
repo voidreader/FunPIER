@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: claw
   m_EditorClassIdentifier: 
   CurrentType: 0
-  HowToGet: 0
+  HowToGet: 4
   WeaponID: claw
   DisplayName: Claw
   WeaponSprite: {fileID: 21300000, guid: 4c9942b50cf491a4ab24c767938a3f19, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: b2c0b7ed38f3d494089b15f5283e2231, type: 3}
+  ReloadSound: {fileID: 8300000, guid: d8636f82e4e39304a9b16a3e6b8c3a88, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 1
-  Damage: 6
+  Damage: 8
   FireRate: 0.1
   Accuracy: 100
-  AimSpeed: 75
-  AimRange: 0.5
+  AimSpeed: 45
+  AimRange: 0.4
   posEquip: {x: -0.021, y: 0.028, z: 0}
   posGunPoint: {x: -0.89, y: 0.007, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: uzi
   m_EditorClassIdentifier: 
-  CurrentType: 0
-  HowToGet: 0
+  CurrentType: 2
+  HowToGet: 4
   WeaponID: uzi
   DisplayName: Uzi
   WeaponSprite: {fileID: 21300000, guid: 513eeb6eb3a9d03479681271bf676e15, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 7323366eae00b0e469eab6317b718446, type: 3}
+  ReloadSound: {fileID: 8300000, guid: ccdb849e34bafdf429920105088c7100, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 3
+  BulletsCount: 4
   Damage: 2
-  FireRate: 0.1
-  Accuracy: 25
+  FireRate: 0.08
+  Accuracy: 20
   AimSpeed: 85
   AimRange: 0.6
   posEquip: {x: -0.31, y: -0.014, z: 0}

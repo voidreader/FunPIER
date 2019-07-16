@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Doozy.Engine;
 public class GunColumn : MonoBehaviour
 {
 
@@ -12,7 +12,7 @@ public class GunColumn : MonoBehaviour
     public GameObject _activeBG;
     public GameObject _lockCover;
     public Weapon _weapon;
-    
+    public GameObject _unlockSelect;
 
     public void SetGunProduct(Weapon data) {
         this.gameObject.SetActive(true);
@@ -100,6 +100,13 @@ public class GunColumn : MonoBehaviour
             return;
 
 
+        if(PIER.main.CurrentWeapon == _weapon) {
+            //
+            GameEventMessage.SendEvent("CallGunDetail");
+            return;
+        }
+
+
         // 무기 변경 처리 
         PIER.main.ChangeEquipWeapon(_weapon);
         GunStoreView.main.SetEquipWeapon(); // 건스토어에서도 이미지 바꿔준다. 
@@ -115,6 +122,16 @@ public class GunColumn : MonoBehaviour
 
     public void UnselectWeapon() {
         _activeBG.SetActive(false);
+    }
+
+
+    public bool HasThisGun() {
+        return _activeBG.activeSelf;
+    }
+
+
+    public void SetUnlockSelect(bool f) {
+        _unlockSelect.SetActive(f);
     }
    
 }

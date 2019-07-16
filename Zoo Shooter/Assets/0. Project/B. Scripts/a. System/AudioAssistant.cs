@@ -205,7 +205,9 @@ public class AudioAssistant : MonoBehaviour {
     }
 
     public static void Shot(AudioClip clip) {
-        main.sfx.PlayOneShot(clip);
+
+        if(clip)
+            main.sfx.PlayOneShot(clip);
     }
 
     public static void LowShot(string clip) {

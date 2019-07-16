@@ -21,4 +21,37 @@ public class GunGroup : MonoBehaviour
         }
     }
 
+
+
+    /// <summary>
+    /// 언락 셀렉터 해제 
+    /// </summary>
+    public void SetInactiveUnlockSelect() {
+        for (int i = 0; i < _listCols.Count; i++) {
+            _listCols[i].SetUnlockSelect(false);
+        }
+    }
+
+    /// <summary>
+    /// 그룹의 모든 무기를 가졌는지 체크 
+    /// </summary>
+    /// <returns></returns>
+    public bool HasThisGroup() {
+
+        bool flag = true;
+        for(int i=0; i<_listCols.Count; i++) {
+
+            if (!_listCols[i].gameObject.activeSelf)
+                continue;
+
+            //하나라도 소유하지 못한 무기가 있으면 false.
+            if (!_listCols[i].HasThisGun()) {
+                flag = false;
+                break;
+            }
+        }
+
+        return flag;
+    }
+
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+
 
 using DanielLochner.Assets.SimpleScrollSnap;
 
@@ -11,9 +13,22 @@ public class GunStoreView : MonoBehaviour
 
     
     public List<GunGroup> _listGroups;
+    public GunGroup _currentGroup;
+    public int CurrentGroupIndex = 0;
+    public int PreviousGroupIndex = -1;
+
+    [SerializeField] List<GunColumn> _listUnlock; // 언락용도 
+
     public SimpleScrollSnap _sc;
     public Image _EquipWeaponSprite;
-    
+
+
+    public GameObject _bottoms;
+
+    public Text _lblUnlock; // 가격표
+    public Button _btnAds;
+
+    public Vector2 debugVector2;
 
     private void Awake() {
         main = this;
@@ -24,6 +39,8 @@ public class GunStoreView : MonoBehaviour
     public void OnView() {
 
         int startPanel = 0;
+        CurrentGroupIndex = -1;
+        PreviousGroupIndex = -1;
 
         for(int i =0; i<_listGroups.Count;i++) {
             _listGroups[i].OnInit();
@@ -44,21 +61,60 @@ public class GunStoreView : MonoBehaviour
             } 
         }
 
+
         _sc.GoToPanel(startPanel);
-        
+                
     }
 
-    public void OnChangedFocusItem() {
-        // Debug.Log("GunStore OnChangedFocusItem :: " + _sc.CurrentPanel + "/" +_sc.NearestPanel);
-    }
 
     public void OnSelectedFocusItem() {
-        Debug.Log("GunStore OnSelectedFocusItem :: " + _sc.TargetPanel);
+        Debug.Log("GunStore OnSelectedFocusItem :: " + _sc.TargetPanel + "/" + _sc.CurrentPanel);
+        
         
     }
 
+    public void OnPanelVectorChanged(Vector2 v) {
+        debugVector2 = v;
+
+        if(CurrentGroupIndex != _sc.CurrentPanel) {
+
+            PreviousGroupIndex = CurrentGroupIndex;
+            CurrentGroupIndex = _sc.CurrentPanel;
+
+            _currentGroup = _listGroups[CurrentGroupIndex];
+
+            // 다른 경우에만 동작 
+            BottomRoutine();
+        }
+
+        
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     public void SetEquipWeapon() {
         _EquipWeaponSprite.sprite = Stocks.GetWeaponStoreSprite(PIER.main.CurrentWeapon);
+
+        // 재장전 사운드 
+        AudioAssistant.Shot(PIER.main.CurrentWeapon.ReloadSound);
+    }
+
+
+    void BottomRoutine() {
+        if(CurrentGroupIndex == 0) {
+            _bottoms.transform.DOScale(1, 0.2f);
+            _lblUnlock.text = "250";
+        }
+        else if(CurrentGroupIndex == 1 || CurrentGroupIndex == 2) {
+            _bottoms.transform.DOScale(0, 0.2f);
+        }
+        else {
+            _bottoms.transform.DOScale(1, 0.2f);
+            _lblUnlock.text = "500";
+        }
+
     }
 
     /// <summary>
@@ -71,6 +127,59 @@ public class GunStoreView : MonoBehaviour
                 _listGroups[i]._listCols[j].UnselectWeapon();
             }
         }
+    }
+
+
+    /// <summary>
+    /// 잠금해제 처리 
+    /// </summary>
+    public void UnlockRandom() {
+        _listUnlock = new List<GunColumn>();
+        
+
+        for(int i=0; i<_currentGroup._listCols.Count;i++) {
+            // 보유하지 않은 것만. 
+            if (_currentGroup._listCols[i].gameObject.activeSelf && !_currentGroup._listCols[i].HasThisGun())
+                _listUnlock.Add(_currentGroup._listCols[i]); // Add.
+
+
+        }
+
+        if (_listUnlock.Count == 0)
+            return;
+
+        // 돌린다!
+        StartCoroutine(UnlockRoutine());
+
+    }
+
+    IEnumerator UnlockRoutine() {
+
+        float interval = 0.1f;
+        GunColumn gc = null;
+
+        for(int i=0; i<18; i++) {
+
+            _currentGroup.SetInactiveUnlockSelect(); // 모두 해제하고.. 
+            gc = _listUnlock[Random.Range(0, _listUnlock.Count)];
+            gc.SetUnlockSelect(true);
+
+
+            if (i > 6)
+                interval *= 1.1f;
+
+            yield return new WaitForSeconds(interval);
+        }
+
+        // 연출 
+        if(gc)
+            gc.transform.DOScale(1.1f, 0.2f).SetLoops(4, LoopType.Yoyo);
+
+        // 획득처리 
+       
+
+
+
     }
 
 }

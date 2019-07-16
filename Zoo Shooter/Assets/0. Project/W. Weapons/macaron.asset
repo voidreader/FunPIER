@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: macaron
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 2
   HowToGet: 4
   WeaponID: macaron
   DisplayName: Macaron
   WeaponSprite: {fileID: 21300000, guid: a501afd4beb75f2488214f5bd0ee6201, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: c94e655ce99564e1da823d40e6bbbb82, type: 3}
+  ReloadSound: {fileID: 8300000, guid: ccdb849e34bafdf429920105088c7100, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 1
+  BulletsCount: 5
   Damage: 3
-  AimSpeed: 35
-  AimRange: 1
+  FireRate: 0.15
+  Accuracy: 90
+  AimSpeed: 60
+  AimRange: 1.2
   posEquip: {x: -0.028, y: -0.032, z: 0}
   posGunPoint: {x: -1.185, y: 0.013, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

@@ -13,17 +13,19 @@ MonoBehaviour:
   m_Name: recorder
   m_EditorClassIdentifier: 
   CurrentType: 0
-  HowToGet: 0
+  HowToGet: 4
   WeaponID: recorder
   DisplayName: Recorder
   WeaponSprite: {fileID: 21300000, guid: cb6f915a101891b4691daa5a55a75216, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: ade91243afda34501ae0da9b50b65dee, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 605bcc0c2490acb449ca165412f1b662, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 1
-  Damage: 6
-  AimSpeed: 42
-  AimRange: 2
+  Damage: 9
+  FireRate: 0.1
+  Accuracy: 100
+  AimSpeed: 55
+  AimRange: 1.2
   posEquip: {x: -0.156, y: 0.044, z: 0}
   posGunPoint: {x: -1.641, y: -0.024, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

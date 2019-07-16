@@ -17,13 +17,15 @@ MonoBehaviour:
   WeaponID: repeller
   DisplayName: Repeller
   WeaponSprite: {fileID: 21300000, guid: 7336024fbaadfbe469f0c2ce4e9ad383, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 1208924bf003a4042a389006762e30ed, type: 3}
+  ReloadSound: {fileID: 8300000, guid: ccdb849e34bafdf429920105088c7100, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 4
-  Damage: 2
-  AimSpeed: 50
-  AimRange: 1
+  BulletsCount: 6
+  Damage: 3
+  FireRate: 0.05
+  Accuracy: 30
+  AimSpeed: 55
+  AimRange: 0.5
   posEquip: {x: -0.114, y: 0.019, z: 0}
   posGunPoint: {x: -0.758, y: 0.084, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

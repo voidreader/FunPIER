@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: saber
   m_EditorClassIdentifier: 
-  CurrentType: 0
-  HowToGet: 0
+  CurrentType: 2
+  HowToGet: 4
   WeaponID: saber
   DisplayName: Light Saber
   WeaponSprite: {fileID: 21300000, guid: aac921062ea98394bb82bb70433c84dc, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 151fe6f718ee04b81ab1f824596204c0, type: 3}
+  ReloadSound: {fileID: 8300000, guid: ccdb849e34bafdf429920105088c7100, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 1
-  Damage: 3
-  AimSpeed: 35
-  AimRange: 1
+  BulletsCount: 2
+  Damage: 8
+  FireRate: 0.08
+  Accuracy: 80
+  AimSpeed: 80
+  AimRange: 2
   posEquip: {x: -0.172, y: -0.014, z: 0}
   posGunPoint: {x: -1.336, y: -0.001, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}
