@@ -29,6 +29,8 @@ public class GunStoreView : MonoBehaviour
     public Button _btnAds;
 
     public Vector2 debugVector2;
+    public bool isUnlocking = false; // 언락 연출중.
+    public GameObject lockCover;
 
     private void Awake() {
         main = this;
@@ -63,6 +65,7 @@ public class GunStoreView : MonoBehaviour
 
 
         _sc.GoToPanel(startPanel);
+        lockCover.SetActive(false);
                 
     }
 
@@ -96,6 +99,7 @@ public class GunStoreView : MonoBehaviour
     /// </summary>
     public void SetEquipWeapon() {
         _EquipWeaponSprite.sprite = Stocks.GetWeaponStoreSprite(PIER.main.CurrentWeapon);
+        _EquipWeaponSprite.SetNativeSize();
 
         // 재장전 사운드 
         AudioAssistant.Shot(PIER.main.CurrentWeapon.ReloadSound);
@@ -134,6 +138,8 @@ public class GunStoreView : MonoBehaviour
     /// 잠금해제 처리 
     /// </summary>
     public void UnlockRandom() {
+
+
         _listUnlock = new List<GunColumn>();
         
 
@@ -158,6 +164,9 @@ public class GunStoreView : MonoBehaviour
         float interval = 0.1f;
         GunColumn gc = null;
 
+        isUnlocking = true;
+        lockCover.SetActive(true);
+
         for(int i=0; i<18; i++) {
 
             _currentGroup.SetInactiveUnlockSelect(); // 모두 해제하고.. 
@@ -171,15 +180,17 @@ public class GunStoreView : MonoBehaviour
             yield return new WaitForSeconds(interval);
         }
 
-        // 연출 
-        if(gc)
+        // 연출 및 획득처리
+        if (gc) {
             gc.transform.DOScale(1.1f, 0.2f).SetLoops(4, LoopType.Yoyo);
+            PIER.main.AddGun(gc._weapon);
+            gc.SetGunProduct(gc._weapon);
+            gc.OnClickProduct();
+        }
 
-        // 획득처리 
-       
 
-
-
+        isUnlocking = false;
+        lockCover.SetActive(false);
     }
 
 }
