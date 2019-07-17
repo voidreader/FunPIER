@@ -93,7 +93,7 @@ public class AimController : MonoBehaviour
     /// 오른쪽에서 조준..
     /// </summary>
     private void RotateAimRight() {
-        if (transform.localRotation.z < -0.4f) {
+        if (transform.localRotation.z < -0.45f) {
             _UpAiming = false;
             _DownAiming = true;
         }
@@ -107,7 +107,7 @@ public class AimController : MonoBehaviour
     /// 왼쪽에서 조준
     /// </summary>
     private void RotateAimLeft() {
-        if (transform.localRotation.z > 1.6f) {
+        if (transform.localRotation.z > 1.65f) {
             _UpAiming = false;
             _DownAiming = true;
         }

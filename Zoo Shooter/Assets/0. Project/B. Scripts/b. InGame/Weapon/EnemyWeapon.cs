@@ -63,7 +63,7 @@ public class EnemyWeapon : MonoBehaviour
 
             ray = Physics2D.Linecast(_gunPoint.position, _aimPoint.position);
             if(!ray || ray.collider.tag != "Player")
-                this.transform.Rotate(-Vector3.back * Time.deltaTime * 30);
+                this.transform.Rotate(-Vector3.back * Time.deltaTime * 45);
             else {
 
                 this.transform.Rotate(-Vector3.back * Time.deltaTime * 30); // 몸통쪽을 조준하게끔 조금더 회전해준다. 
@@ -87,6 +87,8 @@ public class EnemyWeapon : MonoBehaviour
 
 
         b.AddBulletForce(transform, -1);
+
+        AudioAssistant.Shot(_weaponData.ShootSound);
     }
 
     public void SetDrop(bool isLeft) {

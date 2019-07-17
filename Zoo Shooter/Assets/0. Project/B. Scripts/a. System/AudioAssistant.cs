@@ -14,10 +14,12 @@ public class AudioAssistant : MonoBehaviour {
     AudioSource loopingSFX;
     AudioSource lowSFX;
 
+    const float maxMusicVolume = 0.6f;
+
 	public float musicVolume {
         get {
             if (!PlayerPrefs.HasKey("Music Volume"))
-                return 1f;
+                return maxMusicVolume;
             return PlayerPrefs.GetFloat("Music Volume");
         }
         set {
@@ -29,7 +31,7 @@ public class AudioAssistant : MonoBehaviour {
                 if (musicVolume <= 0)
                     music.volume = 0;
                 else
-                    music.volume = 1;
+                    music.volume = maxMusicVolume;
             }
         }
     }
@@ -63,6 +65,8 @@ public class AudioAssistant : MonoBehaviour {
     public List<Sound> tracks = new List<Sound>();
     public List<Sound> sounds = new List<Sound>();
     Sound GetSoundByName(string name) {
+
+
         return sounds.Find(x => x.name == name);
     }
 
@@ -200,7 +204,7 @@ public class AudioAssistant : MonoBehaviour {
                 return;
 
             // mixBuffer.Add(clip);
-            main.sfx.PlayOneShot(sound.clips[0]);
+            main.sfx.PlayOneShot(sound.clips[Random.Range(0, sound.clips.Count)]);
         }
     }
 

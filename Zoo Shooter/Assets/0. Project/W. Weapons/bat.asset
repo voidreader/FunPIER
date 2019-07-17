@@ -17,13 +17,15 @@ MonoBehaviour:
   WeaponID: bat
   DisplayName: Bat
   WeaponSprite: {fileID: 21300000, guid: 5dbe2f4c6e3dd004f8721312d35d468a, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 9af9aefac19a41648a26a1737c34e608, type: 3}
+  ReloadSound: {fileID: 8300000, guid: c5be76f2cc34ea041a7ac31b41fd36dc, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 2
-  Damage: 3
-  AimSpeed: 38
-  AimRange: 1.2
+  Damage: 4
+  FireRate: 0.1
+  Accuracy: 60
+  AimSpeed: 60
+  AimRange: 0.8
   posEquip: {x: 0.054, y: -0.033, z: 0}
   posGunPoint: {x: -1.838, y: -0.018, z: 0}
   posScale: {x: 0.6, y: 0.6, z: 1}

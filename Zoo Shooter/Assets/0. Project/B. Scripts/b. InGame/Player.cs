@@ -94,7 +94,7 @@ public class Player : MonoBehaviour
         //this.transform.DOJump(targetPos, 1.8f, 1, 0.8f).OnComplete(OnCompleteMove);
         //this.transform.DORotate(new Vector3(0, 0, 360), 0.6f, RotateMode.WorldAxisAdd);
 
-        AudioAssistant.Shot("MovingJump");
+        AudioAssistant.Shot("Jump");
 
         this.transform.DOJump(targetPos, 3f, 1, 0.8f).OnComplete(OnCompleteMove).SetEase(Ease.InQuint);
 
@@ -109,7 +109,9 @@ public class Player : MonoBehaviour
     }
 
     void OnCompleteMove() {
+
         isMoving = false;
+        AudioAssistant.Shot("Land");
         CameraShake.main.ShakeByPlayerJump();
     }
 

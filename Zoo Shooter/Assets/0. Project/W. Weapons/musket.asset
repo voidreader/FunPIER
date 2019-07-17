@@ -15,15 +15,17 @@ MonoBehaviour:
   CurrentType: 1
   HowToGet: 1
   WeaponID: musket
-  DisplayName: Mini Shotgun
+  DisplayName: Mini Shot
   WeaponSprite: {fileID: 21300000, guid: 84b7379c22cf16344adc92bfd5739fbd, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 0e4641ef84e7e2f4bb75686c39df21a8, type: 3}
+  ReloadSound: {fileID: 8300000, guid: acde2cdebf711fb479be076a7f1b4c91, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 3
-  Damage: 2
-  AimSpeed: 45
-  AimRange: 1
+  Damage: 5
+  FireRate: 0.1
+  Accuracy: 10
+  AimSpeed: 55
+  AimRange: 0.5
   posEquip: {x: 0.019, y: -0.041, z: 0}
   posGunPoint: {x: -1.408, y: 0.033, z: 0}
   posScale: {x: 0.9, y: 0.9, z: 1}

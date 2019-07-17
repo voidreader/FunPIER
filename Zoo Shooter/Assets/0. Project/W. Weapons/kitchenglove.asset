@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: kitchenglove
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 2
   HowToGet: 2
   WeaponID: kitchenglove
-  DisplayName: Kitchen Glove
+  DisplayName: 'Five
+
+    Fingers'
   WeaponSprite: {fileID: 21300000, guid: f416b706f8549f84183de4a06e5a1ebe, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: b0589e9366df000439e94a48552b1430, type: 3}
+  ReloadSound: {fileID: 8300000, guid: a091a8dc3102dce4599e7238d0dc6f1c, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 1
-  Damage: 3
-  AimSpeed: 35
-  AimRange: 1
+  BulletsCount: 5
+  Damage: 2
+  FireRate: 0.08
+  Accuracy: 50
+  AimSpeed: 60
+  AimRange: 0.6
   posEquip: {x: -0.168, y: -0.062, z: 0}
   posGunPoint: {x: -1.373, y: 0.002, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

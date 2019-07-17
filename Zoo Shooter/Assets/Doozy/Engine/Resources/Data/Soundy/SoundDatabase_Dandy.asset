@@ -1,5 +1,34 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5722073060981356286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6c631d933489d4ca7328a2a5983e10, type: 3}
+  m_Name: WhooshUI1
+  m_EditorClassIdentifier: 
+  DatabaseName: Dandy
+  SoundName: WhooshUI1
+  IgnoreListenerPause: 1
+  Volume:
+    MinValue: 0
+    MaxValue: 0
+  Pitch:
+    MinValue: 0
+    MaxValue: 0
+  SpatialBlend: 0
+  Loop: 0
+  Mode: 0
+  ResetSequenceAfterInactiveTime: 0
+  SequenceResetTime: 5
+  Sounds:
+  - AudioClip: {fileID: 8300000, guid: 783722806b224114baa0b7ceaece4942, type: 3}
+    Weight: 1
 --- !u!114 &-1909551430796404189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,11 +74,46 @@ MonoBehaviour:
   OutputAudioMixerGroup: {fileID: 0}
   SoundNames:
   - No Sound
+  - CameraShot
+  - ContinueOpen
   - MainBGM
   - No Sound
+  - WhooshUI1
   Database:
   - {fileID: 5242907753842708647}
+  - {fileID: 8156985625277188530}
+  - {fileID: 1238832455085483147}
   - {fileID: -1909551430796404189}
+  - {fileID: -5722073060981356286}
+--- !u!114 &1238832455085483147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6c631d933489d4ca7328a2a5983e10, type: 3}
+  m_Name: ContinueOpen
+  m_EditorClassIdentifier: 
+  DatabaseName: Dandy
+  SoundName: ContinueOpen
+  IgnoreListenerPause: 1
+  Volume:
+    MinValue: -7.3
+    MaxValue: 0
+  Pitch:
+    MinValue: 0
+    MaxValue: 0
+  SpatialBlend: 0
+  Loop: 0
+  Mode: 0
+  ResetSequenceAfterInactiveTime: 0
+  SequenceResetTime: 5
+  Sounds:
+  - AudioClip: {fileID: 8300000, guid: 3c86a304fb7e11f489edc3abe41822e4, type: 3}
+    Weight: 1
 --- !u!114 &5242907753842708647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,3 +141,32 @@ MonoBehaviour:
   ResetSequenceAfterInactiveTime: 0
   SequenceResetTime: 5
   Sounds: []
+--- !u!114 &8156985625277188530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f6c631d933489d4ca7328a2a5983e10, type: 3}
+  m_Name: CameraShot
+  m_EditorClassIdentifier: 
+  DatabaseName: Dandy
+  SoundName: CameraShot
+  IgnoreListenerPause: 1
+  Volume:
+    MinValue: -12.4
+    MaxValue: -12.4
+  Pitch:
+    MinValue: 0
+    MaxValue: 0
+  SpatialBlend: 0
+  Loop: 0
+  Mode: 0
+  ResetSequenceAfterInactiveTime: 0
+  SequenceResetTime: 5
+  Sounds:
+  - AudioClip: {fileID: 8300000, guid: 17e8393714d654743adad3253f9cf1f5, type: 3}
+    Weight: 1

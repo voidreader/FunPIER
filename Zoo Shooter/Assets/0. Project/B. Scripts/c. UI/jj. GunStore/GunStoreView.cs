@@ -79,10 +79,10 @@ public class GunStoreView : MonoBehaviour
     public void OnPanelVectorChanged(Vector2 v) {
         debugVector2 = v;
 
-        if(CurrentGroupIndex != _sc.CurrentPanel) {
+        if(CurrentGroupIndex != _sc.TargetPanel) {
 
             PreviousGroupIndex = CurrentGroupIndex;
-            CurrentGroupIndex = _sc.CurrentPanel;
+            CurrentGroupIndex = _sc.TargetPanel;
 
             _currentGroup = _listGroups[CurrentGroupIndex];
 

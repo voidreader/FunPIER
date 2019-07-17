@@ -33,7 +33,9 @@ public class ContinueView : MonoBehaviour {
 
     IEnumerator TimerRoutine() {
         float elapsed = maxSec;
-        float v; 
+        float v;
+
+        // AudioAssistant.main.PlayLoopingSFX("Tick");
 
         while(elapsed >= 0) {
             elapsed -= Time.deltaTime;

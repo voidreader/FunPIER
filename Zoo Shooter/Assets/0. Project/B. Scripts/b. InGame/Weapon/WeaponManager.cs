@@ -198,15 +198,17 @@ public class WeaponManager : MonoBehaviour {
 
         Debug.Log("Reload Check! : " + PlayerBullet.isHitEnemy);
 
-        // Shoot 재생 
-        if (EquipWeapon.ReloadSound) {
-            AudioAssistant.Shot(EquipWeapon.ReloadSound);
-        }
+        
 
 
         // AudioManager.Instance.PlayAudio(_currenWeapon.ReloadSound);
         if (!PlayerBullet.isHitEnemy) {
             GameManager.isMissed = true;
+        }
+        else { // 맞췄을때만 리로드 사운드 
+            if (EquipWeapon.ReloadSound) {
+                AudioAssistant.Shot(EquipWeapon.ReloadSound);
+            }
         }
 
     }

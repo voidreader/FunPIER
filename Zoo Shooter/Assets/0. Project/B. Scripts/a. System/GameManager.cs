@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour {
 
 
     public StageDataRow CurrentLevelData = null; // 현재 스테이지 정보
-    public Camera mainCamera; // 메인카메라 
+    public Camera mainCamera; // 메인카메라
+    public Camera bgCamera;
     public ClearMobility helicopter;
 
     public bool AutoInit;
@@ -74,7 +75,16 @@ public class GameManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
 
+        mainCamera.aspect = 9f / 16f;
+        bgCamera.aspect = 9f / 16f;
+
     }
+
+
+    void SetCameraAspect() {
+
+    }
+
 
     // Update is called once per frame
     void Update() {
@@ -312,7 +322,7 @@ public class GameManager : MonoBehaviour {
 
                 enemy.Shoot();
 
-                yield return new WaitForSeconds(4.5f);
+                yield return new WaitForSeconds(3f);
 
                 
 
@@ -442,7 +452,7 @@ public class GameManager : MonoBehaviour {
     }
 
     void MoveMainCamera(float dis) {
-        mainCamera.transform.DOMoveY(mainCamera.transform.position.y + dis, 0.2f);
+        mainCamera.transform.DOMoveY(mainCamera.transform.position.y + dis, 0.3f);
     }
 
 
@@ -580,13 +590,13 @@ public class GameManager : MonoBehaviour {
 
         // 좌우 체크
         if (indexLastStair % 2 == 0) { // 오른쪽 
-            posX = Random.Range(3.4f, 4.5f);
-            posY = topStairY + Random.Range(0.4f, 3f);
+            posX = Random.Range(3.2f, 4.6f);
+            posY = topStairY + Random.Range(0.4f, 3.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽
-            posX = Random.Range(-4.5f, -3.4f);
-            posY = topStairY + Random.Range(0.8f, 3f);
+            posX = Random.Range(-4.6f, -3.3f);
+            posY = topStairY + Random.Range(0.4f, 3.2f);
             stair.SetStairPosition(new Vector2(posX, posY), true);
         }
 

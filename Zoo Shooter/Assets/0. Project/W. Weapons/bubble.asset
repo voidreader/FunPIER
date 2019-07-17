@@ -15,15 +15,19 @@ MonoBehaviour:
   CurrentType: 2
   HowToGet: 2
   WeaponID: bubble
-  DisplayName: Bubble Gun
+  DisplayName: 'Bubble
+
+    Bubble'
   WeaponSprite: {fileID: 21300000, guid: 6f6f4c6a44712e441b44b4c3e4417b54, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 3c812df6bd8610849a01c9021b5e0385, type: 3}
+  ReloadSound: {fileID: 8300000, guid: a091a8dc3102dce4599e7238d0dc6f1c, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 4
   Damage: 2
-  AimSpeed: 50
-  AimRange: 0.6
+  FireRate: 0.08
+  Accuracy: 20
+  AimSpeed: 55
+  AimRange: 0.5
   posEquip: {x: -0.054, y: 0.028, z: 0}
   posGunPoint: {x: -1.002, y: 0.007, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}

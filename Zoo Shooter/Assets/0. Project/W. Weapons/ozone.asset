@@ -15,15 +15,19 @@ MonoBehaviour:
   CurrentType: 0
   HowToGet: 2
   WeaponID: ozone
-  DisplayName: Ozone
+  DisplayName: 'Protect
+
+    Ozone'
   WeaponSprite: {fileID: 21300000, guid: a048ceac7103ee642805400678fa6e7f, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 77bbe09ec4d74a945bc01e327d1232f1, type: 3}
+  ReloadSound: {fileID: 8300000, guid: fa37421981d9bab43ba9bc4d838b6ca4, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 1
-  Damage: 3
-  AimSpeed: 35
-  AimRange: 1
+  Damage: 8
+  FireRate: 0.1
+  Accuracy: 100
+  AimSpeed: 77
+  AimRange: 1.4
   posEquip: {x: -0.196, y: 0.003, z: 0}
   posGunPoint: {x: -0.953, y: 0, z: 0}
   posScale: {x: 0.7, y: 0.7, z: 1}

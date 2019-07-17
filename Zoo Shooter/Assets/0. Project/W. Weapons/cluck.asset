@@ -17,12 +17,14 @@ MonoBehaviour:
   WeaponID: cluck
   DisplayName: Cluck
   WeaponSprite: {fileID: 21300000, guid: 417ec1b43b0a3dd4282af6a40fda1562, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 53d7dbc073001584c97bf5a5a233f838, type: 3}
+  ReloadSound: {fileID: 8300000, guid: a091a8dc3102dce4599e7238d0dc6f1c, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 3
-  Damage: 3
-  AimSpeed: 52
+  BulletsCount: 5
+  Damage: 2
+  FireRate: 0.06
+  Accuracy: 80
+  AimSpeed: 62
   AimRange: 1
   posEquip: {x: 0.061, y: 0.075, z: 0}
   posGunPoint: {x: -1.248, y: 0.007, z: 0}

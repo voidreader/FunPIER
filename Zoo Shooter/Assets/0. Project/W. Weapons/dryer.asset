@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
   m_Name: dryer
   m_EditorClassIdentifier: 
-  CurrentType: 0
+  CurrentType: 2
   HowToGet: 2
   WeaponID: dryer
-  DisplayName: Dryer
+  DisplayName: 'Hair
+
+    Dryer'
   WeaponSprite: {fileID: 21300000, guid: 3a19cf4de43a5a043b8a00579518e076, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 0cf9a8b94f744254aa5e0feadea06aaa, type: 3}
+  ReloadSound: {fileID: 8300000, guid: a091a8dc3102dce4599e7238d0dc6f1c, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
-  BulletsCount: 1
+  BulletsCount: 3
   Damage: 3
-  AimSpeed: 35
-  AimRange: 1
+  FireRate: 0.1
+  Accuracy: 80
+  AimSpeed: 70
+  AimRange: 1.2
   posEquip: {x: -0.12, y: -0.04, z: 0}
   posGunPoint: {x: -0.739, y: -0.002, z: 0}
   posScale: {x: 0.9, y: 0.9, z: 1}

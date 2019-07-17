@@ -15,15 +15,19 @@ MonoBehaviour:
   CurrentType: 0
   HowToGet: 2
   WeaponID: bluedragon
-  DisplayName: Blue\nDragon
+  DisplayName: 'Fake
+
+    Sword'
   WeaponSprite: {fileID: 21300000, guid: 184c368ddc77ed540803a4438d89a77c, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: 644e10ccef623e144acbc486912a60e1, type: 3}
+  ReloadSound: {fileID: 8300000, guid: fa37421981d9bab43ba9bc4d838b6ca4, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 1
-  Damage: 6
-  AimSpeed: 44
-  AimRange: 1
+  Damage: 7
+  FireRate: 0.1
+  Accuracy: 100
+  AimSpeed: 52
+  AimRange: 0.6
   posEquip: {x: -0.02, y: 0.03, z: 0}
   posGunPoint: {x: -1.452, y: -0.018, z: 0}
   posScale: {x: 0.6, y: 0.6, z: 1}

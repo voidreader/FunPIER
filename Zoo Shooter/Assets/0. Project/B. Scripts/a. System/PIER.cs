@@ -151,9 +151,12 @@ public class PIER : MonoBehaviour {
         if (PlayerPrefs.HasKey(ConstBox.keyGunList))
             GunListNode = JSON.Parse(PlayerPrefs.GetString(ConstBox.keyGunList)); // 건리스트 
         else {
-            GunListNode[ColumnGun][-1]["name"] = "pistol"; // 테스트 버전에서 3개를 추가해 놓는다.
-            GunListNode[ColumnGun][-1]["name"] = "autorifle";
-            GunListNode[ColumnGun][-1]["name"] = "kitchenknife";
+
+
+            GunListNode[ColumnGun][-1]["name"] = "pistol";
+            SaveGun();
+            // GunListNode[ColumnGun][-1]["name"] = "autorifle";
+            // GunListNode[ColumnGun][-1]["name"] = "kitchenknife";
         }
 
         DebugGunList = GunListNode.ToString();
@@ -161,8 +164,8 @@ public class PIER : MonoBehaviour {
         // 장착한 무기 
         LoadEquipWeapon();
 
-        CurrentList = 0;
-        CurrentLevel = 2;
+        // CurrentList = 0;
+        // CurrentLevel = 2;
 
     }
 

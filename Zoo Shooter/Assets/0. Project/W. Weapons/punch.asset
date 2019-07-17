@@ -15,15 +15,19 @@ MonoBehaviour:
   CurrentType: 0
   HowToGet: 2
   WeaponID: punch
-  DisplayName: Punch
+  DisplayName: 'Pink
+
+    Punch'
   WeaponSprite: {fileID: 21300000, guid: 35a6852b013a4ec449b6617f74f52600, type: 3}
-  ShootSound: {fileID: 0}
-  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 8300000, guid: b259cbf196f0b644984e69b5d75d8787, type: 3}
+  ReloadSound: {fileID: 8300000, guid: fa37421981d9bab43ba9bc4d838b6ca4, type: 3}
   bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
   BulletsCount: 1
-  Damage: 3
-  AimSpeed: 35
-  AimRange: 1
+  Damage: 10
+  FireRate: 0.1
+  Accuracy: 100
+  AimSpeed: 66
+  AimRange: 1.8
   posEquip: {x: -0.152, y: 0.019, z: 0}
   posGunPoint: {x: -1.031, y: 0.009, z: 0}
   posScale: {x: 0.7, y: 0.7, z: 1}

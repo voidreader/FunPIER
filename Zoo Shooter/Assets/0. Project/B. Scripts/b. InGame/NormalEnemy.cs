@@ -18,7 +18,11 @@ public class NormalEnemy : Enemy {
 
         Debug.Log("NormalEnemy Killed");
 
-        this.rigid.AddForce(new Vector2(Random.Range(-150f, 0f), 600));
+        if(isLeft)
+            this.rigid.AddForce(new Vector2(Random.Range(-250f, -80f), 700));
+        else
+            this.rigid.AddForce(new Vector2(Random.Range(80f, 250f), 700));
+
         this.isKilling = true;
         // this.transform.DOLocalRotate(new Vector3(0, 0, 720), 2, RotateMode.FastBeyond360).SetEase(Ease.Linear);
         // this.rigid.isKinematic = true;

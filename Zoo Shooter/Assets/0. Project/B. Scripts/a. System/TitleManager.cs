@@ -12,7 +12,8 @@ public class TitleManager : MonoBehaviour
     public SceneLoader _loader;
 
     private void Awake() {
-        Screen.SetResolution(720, 1280, true);
+        Application.targetFrameRate = 60;
+        // Screen.SetResolution(720, 1280, true);
     }
 
     private void Start() {

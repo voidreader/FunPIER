@@ -30,7 +30,7 @@ public class CameraShake : MonoBehaviour
         if (isShaking)
             return;
 
-        StartCoroutine(ByPlayerShake(0.1f, 0.1f));
+        StartCoroutine(ByPlayerShake(0.1f, 0.06f));
     }
 
     IEnumerator ByPlayerShake(float duration, float magnitude) {
