@@ -25,6 +25,9 @@ public class Stocks : MonoBehaviour
     public GameObject prefabEnemyWeapon; // 적 무기 
     public GameObject prefabEnemyBullet; // 적 총알 
 
+
+    public AudioClip clipEnemyShotSound; // 적 총 소리 (일괄)
+    
     #region Colors 
     public Color ColorHeadshotFont;
     public Color ColorUnlock250, ColorUnlock500, ColorSpecialist, ColorDailyReward, ColorWantedReward;

@@ -113,6 +113,9 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     /// <param name="d"></param>
     public virtual void HitEnemy(int d) {
+        if (isKilled)
+            return;
+
         HP -= d;
 
         GameManager.isEnemyHit = true; // 명중했음!
@@ -136,7 +139,9 @@ public class Enemy : MonoBehaviour {
 
         isKilled = true;
         this.transform.DOKill();
-        anim.SetBool("isKill", true);
+        this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+
+        // anim.SetBool("isKill", true); // 애니메이션으로 회전 주지 않음. 
 
         head.layer = 15;
         this.gameObject.layer = 15; // 레이어 수정해서 충돌 처리 되지 않도록 수정 

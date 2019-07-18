@@ -49,7 +49,11 @@ public class Player : MonoBehaviour
 
     public void KillPlayer() {
         rigid.bodyType = RigidbodyType2D.Dynamic;
-        rigid.AddForce(new Vector2(Random.Range(-100f, 0f), 450));
+
+        if(isLeft)
+            rigid.AddForce(new Vector2(Random.Range(-250f, -100f), 600));
+        else
+            rigid.AddForce(new Vector2(Random.Range(100f, 250f), 600));
 
         this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         // rigid.AddTorque(360, ForceMode2D.Impulse);

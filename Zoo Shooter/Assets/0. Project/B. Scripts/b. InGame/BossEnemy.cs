@@ -24,7 +24,6 @@ public class BossEnemy : Enemy {
         }
 
         base.HitEnemy(d);
-
         GameViewManager.main.CalcBossHP(d); // HP 게이지 연동 추가 
     }
 

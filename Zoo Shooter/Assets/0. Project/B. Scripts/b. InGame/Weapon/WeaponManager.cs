@@ -17,6 +17,8 @@ public class WeaponManager : MonoBehaviour {
     public Transform GunpointTransform;
     public GameObject BulletPrefab;
 
+    RaycastHit2D hit;
+    [SerializeField] Transform hitObject = null;
     
     private int _direction;
 
@@ -53,6 +55,12 @@ public class WeaponManager : MonoBehaviour {
         _direction = -1; // 방향은 -1로 고정이다. 
     }
 
+
+    void Update() {
+        RayGunPoint();    
+    }
+
+
     public void SetDrop(bool isLeft) {
         this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         this.GetComponent<Rigidbody2D>().isKinematic = false;
@@ -69,6 +77,9 @@ public class WeaponManager : MonoBehaviour {
         Destroy(this.gameObject, 4);
     }
 
+
+
+
     public void AfterShoot() {
         CurrentAim.ResetAim();
     }
@@ -84,7 +95,7 @@ public class WeaponManager : MonoBehaviour {
                 Invoke("Reload", 1f);
                 break;
             case WeaponType.Shotgun:
-                ShootWithShotgun();
+                StartCoroutine(ShootWithShotgun());
                 Invoke("Reload", 1f);
                 break;
             case WeaponType.MachineGun:
@@ -96,7 +107,21 @@ public class WeaponManager : MonoBehaviour {
 
     }
 
-    void ShotBullet() {
+    /// <summary>
+    /// 
+    /// </summary>
+    public void RayGunPoint() {
+        hit = Physics2D.Raycast(GunpointTransform.position, GunpointTransform.right * -1);
+
+        if (hit.collider != null) {
+            hitObject = hit.collider.transform;
+            Debug.DrawLine(GunpointTransform.position, hit.collider.transform.position, Color.red);
+        }
+
+
+    }
+
+    void ShotBullet(bool isMute = false) {
         // PlayerBullet b = GameObject.Instantiate(BulletPrefab, null, false).GetComponent<PlayerBullet>();
         PlayerBullet b = GameObject.Instantiate(EquipWeapon.bullet.gameObject, null, false).GetComponent<PlayerBullet>();
         b.transform.position = GunpointTransform.position;
@@ -106,12 +131,26 @@ public class WeaponManager : MonoBehaviour {
         b.AddBulletForce(transform, _direction);
 
         // Shoot 재생 
-        if(EquipWeapon.ShootSound) {
+        if (isMute)
+            return;
+
+        PlayShootSound();
+    }
+
+    void PlayShootSound() {
+        if (EquipWeapon.ShootSound) {
             AudioAssistant.Shot(EquipWeapon.ShootSound);
         }
+    }
 
-        
-        
+    /// <summary>
+    /// 총기 흔들림효과 
+    /// </summary>
+    void ShakeAimRotation() {
+        float acc = 1 - (EquipWeapon.Accuracy / 100);
+        // Debug.Log("ShakeAimRotate :: " + acc);
+        transform.Rotate(0, 0, 1 * UnityEngine.Random.Range(-acc, acc) * 10);
+
     }
 
 
@@ -133,38 +172,30 @@ public class WeaponManager : MonoBehaviour {
     /// 샷건 발사 
     /// </summary>
     /// <returns></returns>
-    private void ShootWithShotgun() {
+    IEnumerator ShootWithShotgun() {
 
-        float randPos;
+        Quaternion originalRot = this.transform.rotation; // 이전 총구 회전값을 가지고 있는다.
+        AimController.Wait = true;
 
         // Audio
-        for(int i =0; i< EquipWeapon.BulletsCount; i++) {
-            randPos = UnityEngine.Random.Range(-0.1f, 0.1f);
-            PlayerBullet b = GameObject.Instantiate(EquipWeapon.bullet.gameObject, null, false).GetComponent<PlayerBullet>();
-            b.transform.position = new Vector2(GunpointTransform.position.x, GunpointTransform.position.y + randPos);
-            b.transform.rotation = Quaternion.identity;
-            b.AddBulletForce(transform, _direction);
+        for (int i =0; i< EquipWeapon.BulletsCount; i++) {
+            // 가장 첫번째 총알은 조준한대로 발사된다. 
+            if (i == 0)
+                ShotBullet();
+            else {
+                this.transform.rotation = originalRot; 
+                ShakeAimRotation(); // 2번째 총알부터는 정확성에 따라 발사. 
+                ShotBullet(true);
+            }
+
+            yield return new WaitForSeconds(0.01f);
         }
 
         this.transform.DOLocalMove(Vector3.forward * 10, 0.15f).SetLoops(2, LoopType.Yoyo);
-
-        AimController.Wait = true;
         isShooting = false;
     }
 
-    /// <summary>
-    /// 총기 흔들림효과 
-    /// </summary>
-    void ShakreAimRotation() {
-        float acc = 1 - (EquipWeapon.Accuracy / 100);
-        // Vector3 localAng = this.transform.localEulerAngles;
-        // this.transform.localEulerAngles = new Vector3(localAng.x, localAng.y, localAng.z + UnityEngine.Random.Range(-acc, acc));
 
-        Debug.Log("ShakeAimRotate :: " + acc);
-
-        transform.Rotate(0, 0, 1 * UnityEngine.Random.Range(-acc, acc) * 10);
-
-    }
 
     /// <summary>
     /// 머신건 발사 
@@ -177,14 +208,12 @@ public class WeaponManager : MonoBehaviour {
 
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
 
-
             ShotBullet();
             // 쏘고 나서 정확도 만큼 틀어지게 만든다. 
-            ShakreAimRotation();
+            ShakeAimRotation();
 
             yield return new WaitForSeconds(EquipWeapon.FireRate);
         }
-       
 
         yield return new WaitForSeconds(0.4f);
         isShooting = false;

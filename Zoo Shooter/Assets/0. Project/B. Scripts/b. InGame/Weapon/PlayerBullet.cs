@@ -36,30 +36,7 @@ public class PlayerBullet : MonoBehaviour
         startPos = transform.position;
         rb = GetComponent<Rigidbody2D>();
 
-        //used to create a radius for the accuracy and have a very unique randomness
-        /*
-        if (accuracy != 100) {
-            accuracy = 1 - (accuracy / 100);
-
-            for (int i = 0; i < 2; i++) {
-                var val = 1 * Random.Range(-accuracy, accuracy);
-                var index = Random.Range(0, 2);
-                if (i == 0) {
-                    if (index == 0)
-                        offset = new Vector3(0, -val, 0);
-                    else
-                        offset = new Vector3(0, val, 0);
-                }
-                else {
-                    if (index == 0)
-                        offset = new Vector3(0, offset.y, -val);
-                    else
-                        offset = new Vector3(0, offset.y, val);
-                }
-            }
-        }
-        */
-
+        // 포구
         if (muzzlePrefab != null) {
             var muzzleVFX = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
             muzzleVFX.transform.forward = gameObject.transform.forward;
@@ -86,16 +63,7 @@ public class PlayerBullet : MonoBehaviour
         Destroy(gameObject, 1.5f);
     }
 
-    /*
-    void FixedUpdate() {
-        if (speed != 0 && rb != null) {
-            // rb.position += new Vector2(transform.forward.x, transform.forward.y) * (speed * Time.deltaTime);
 
-            this.transform.Translate(transform.right * speed * Time.deltaTime);
-
-        }
-    }
-    */
 
 
     // vodi OnColl
@@ -185,13 +153,17 @@ public class PlayerBullet : MonoBehaviour
 
             GameManager.main.player.KillPlayer();
             return;
-        }
+        } // 플레이어 처리 종료
 
 
         // 적 죽이기 바디샷
         if(co.tag == "Body") {
             Debug.Log("Body Shot!!");
             hitEnemy = co.GetComponent<Enemy>();
+
+            if (hitEnemy.isKilled)
+                return;
+
             hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage);
             isHitEnemy = true;
 
