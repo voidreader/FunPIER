@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Google2u;
 using DG.Tweening;
+using PathologicalGames;
 
 /// <summary>
 /// 적 등장 스타일 
@@ -22,9 +23,10 @@ public class Enemy : MonoBehaviour {
     public EnemyType type = EnemyType.Normal; // Enemy 타입
     public string spriteName = string.Empty;
     public string id = string.Empty;
+    public GameObject head;
     public BoxCollider2D headCol;
     public BoxCollider2D bodyCol;
-    public GameObject head;
+    
     public bool isLeft = false;
     public EnemyWeapon weapon; // 들고있는 무기 
     
@@ -88,7 +90,6 @@ public class Enemy : MonoBehaviour {
 
         EquipWeapon(); // 무기 장착
 
-
         // 크기 조정
         this.transform.localScale = new Vector3(data._scale, data._scale, 1);
         this.gameObject.SetActive(true);
@@ -112,19 +113,43 @@ public class Enemy : MonoBehaviour {
     /// Hit 처리 
     /// </summary>
     /// <param name="d"></param>
-    public virtual void HitEnemy(int d) {
+    public virtual void HitEnemy(int d, bool isHeadShot) {
+
         if (isKilled)
             return;
 
-        HP -= d;
-
+        WeaponManager.isHit = true;
         GameManager.isEnemyHit = true; // 명중했음!
-        Debug.Log("HP after hit :: " + HP);
+        // 비슷한 변수인데..?
+
+        if (isHeadShot)
+            HP -= d*2;
+        else
+            HP -= d;
+
+
+        
+        // Debug.Log("HP after hit :: " + HP);
+        // 헤드샷 연출
+        if(isHeadShot) {
+            GameManager.main.Splash(); // 스플래시 효과
+            PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabHeadshot, new Vector3(0, 5f, 0), Quaternion.identity);
+            GameManager.main.ShowGetCoin(); // 코인 획득 
+        }
+
+
+        // 스코어 및 데미지 처리 
+        // 데미지는 보스일때만 표시 
+        if (type == EnemyType.Boss) {
+            GameViewManager.main.AddScore((GameManager.main.CurrentLevelData._level + 1) * 2, isHeadShot);
+            GameManager.main.ShowDamage(GameManager.main.currentWeapon.Damage, isHeadShot);
+        }
+        else {
+            GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
+        }
 
 
         // 보스의 경우 HP 게이지와 연동되어야 한다. 
-
-
         if (HP > 0)
             return;
 
@@ -132,18 +157,26 @@ public class Enemy : MonoBehaviour {
     }
     
 
+    public void DisableColliders() {
+
+        headCol.enabled = false;
+        bodyCol.enabled = false;
+
+    }
+
     /// <summary>
     /// Kill 처리 
     /// </summary>
     public virtual void KillEnemy() {
 
         isKilled = true;
+
         this.transform.DOKill();
         this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
 
         // anim.SetBool("isKill", true); // 애니메이션으로 회전 주지 않음. 
 
-        head.layer = 15;
+        head.gameObject.layer = 15;
         this.gameObject.layer = 15; // 레이어 수정해서 충돌 처리 되지 않도록 수정 
 
         //Invoke("WeaponDrop", 0.25f);
@@ -192,6 +225,10 @@ public class Enemy : MonoBehaviour {
         weapon.SetDrop(isLeft);
     }
 
+    void ResetWeaponRotation() {
+        weapon.transform.rotation = Quaternion.identity;
+    }
+
 
     /// <summary>
     /// 스프라이트 방향 설정 
@@ -236,10 +273,19 @@ public class Enemy : MonoBehaviour {
 
 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.collider.tag == "Stair") {
-            isOnGroud = true;
-        }
 
+        switch(collision.collider.tag) {
+            case "Stair":
+                isOnGroud = true;
+                break;
+
+                /*
+            case "Bullet":
+                HitEnemy(GameManager.main.currentWeapon.Damage, false);
+                break;
+                */
+
+        }
     }
 
 

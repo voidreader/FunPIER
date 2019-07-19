@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour {
     public int indexPlayerStair = 0; // 플레이어 캐릭터가 서있는 발판 index 
 
     Stair stair;
-    Enemy enemy;
+    public Enemy enemy;
     public Player player;
 
     #region InGame Environment Vars
@@ -94,14 +94,28 @@ public class GameManager : MonoBehaviour {
 
         // Kill 테스트용
         if (Input.GetKeyDown(KeyCode.K)) {
-            PlayerBullet.isHitEnemy = true;
-            enemy.HitEnemy(100);
+            // PlayerBullet.isHitEnemy = true;
+            enemy.HitEnemy(100, false);
             GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
         }
 
         if (Input.GetKeyDown(KeyCode.B)) {
             GameViewManager.main.AppearBoss();
         }
+
+
+        if (Player.isMoving)
+            return;
+
+        if (!isPlaying)
+            return;
+
+        if (AimController.Wait)
+            return;
+
+        if (Input.GetMouseButtonDown(0))
+            player.Shoot();
+
     }
 
 
@@ -163,12 +177,19 @@ public class GameManager : MonoBehaviour {
 
     } // end of InitGame
 
-    void GetNewPlayer() {
+    void GetNewPlayer(bool isStart = true) {
         // 플레이어 생성
         player = GameObject.Instantiate(Stocks.main.prefabPlayer, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Player>();
 
-        // 플레이어를 첫번째 계단에 위치시킨다. 
-        listStairs[indexPlayerStair].SetPlayer(player);
+        // 플레이어를 계단에 위치시킨다. 
+        if (isStart) // 시작시점의 생성 
+            listStairs[indexPlayerStair].SetPlayer(player);
+        else { // 부활한 경우 다르게 생성 
+            
+            listStairs[indexPlayerStair].SetRevivedPlayer(player);
+        }
+
+
     }
 
     /// <summary>
@@ -196,13 +217,28 @@ public class GameManager : MonoBehaviour {
             return;
 
         isRevived = true;
+        enemy.weapon.ResetStatus();
+
         // 플레이어 생성
-        GetNewPlayer();
+        GetNewPlayer(false);
+
+        StartCoroutine(WaitingRevive());
+
+    }
+
+    IEnumerator WaitingRevive() {
+        yield return null;
+
+        while(Player.isMoving) {
+            yield return null;
+        }
 
         isPlaying = true;
         isMissed = false;
         player.Aim(); // 조준 다시 시작.
+
     }
+
     #endregion
 
     #region Routine 

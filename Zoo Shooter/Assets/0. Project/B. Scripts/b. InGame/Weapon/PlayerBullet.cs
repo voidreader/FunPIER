@@ -6,7 +6,7 @@ using PathologicalGames;
 public class PlayerBullet : MonoBehaviour
 {
 
-    public static bool isHitEnemy = false;
+    // public static bool isHitEnemy = false;
 
     public bool bounce = false;
     public float bounceForce = 10;
@@ -164,8 +164,8 @@ public class PlayerBullet : MonoBehaviour
             if (hitEnemy.isKilled)
                 return;
 
-            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage);
-            isHitEnemy = true;
+            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage, false);
+            // isHitEnemy = true;
 
 
             // Score 처리
@@ -184,9 +184,9 @@ public class PlayerBullet : MonoBehaviour
             GameManager.main.ShowGetCoin(); // 코인 획득 
 
             hitEnemy = co.GetComponentInParent<Enemy>();
-            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage * 2); // 두배 
+            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage * 2, true); // 두배 
 
-            isHitEnemy = true;
+            //isHitEnemy = true;
 
             // Vector3 headshotPos = new Vector3(co.transform.parent.position.x, co.transform.parent.position.y + 2.7f, 0);
 

@@ -46,6 +46,12 @@ public class EnemyWeapon : MonoBehaviour
         this.transform.localScale = _weaponData.posScale; // 크기 
     } 
 
+
+    public void ResetStatus() {
+        _canShoot = false; 
+        _aiming = false; 
+    }
+
     public void Shoot() {
         _canShoot = true;
     }
@@ -80,15 +86,18 @@ public class EnemyWeapon : MonoBehaviour
 
 
     void ShotBullet() {
-        // PlayerBullet b = GameObject.Instantiate(BulletPrefab, null, false).GetComponent<PlayerBullet>();
-        PlayerBullet b = GameObject.Instantiate(Stocks.main.prefabEnemyBullet, null, false).GetComponent<PlayerBullet>();
+        Bullet b = GameObject.Instantiate(Stocks.main.prefabEnemyBullet, null, false).GetComponent<Bullet>();
         b.transform.position = _gunPoint.position;
-        b.transform.rotation = Quaternion.identity;
+        b.isEnemy = true;
 
+        if (GameManager.main.enemy.isLeft)
+            b.transform.eulerAngles = new Vector3(this.transform.eulerAngles.z, 90, 0);
+        else
+            b.transform.eulerAngles = new Vector3(this.transform.eulerAngles.z, -90, 0);
 
-        b.AddBulletForce(transform, -1);
+        b.SetBulletOn(GameManager.main.enemy.isLeft);
 
-        AudioAssistant.Shot(_weaponData.ShootSound);
+        AudioAssistant.Shot(Stocks.main.clipEnemyShotSound);
     }
 
     public void SetDrop(bool isLeft) {
@@ -100,7 +109,7 @@ public class EnemyWeapon : MonoBehaviour
         else
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(20f, 150f), Random.Range(100f, 250f)));
 
-        this.GetComponent<Rigidbody2D>().AddTorque(360, ForceMode2D.Impulse);
+        // this.GetComponent<Rigidbody2D>().AddTorque(360, ForceMode2D.Impulse);
         this.gameObject.layer = 15;
 
 

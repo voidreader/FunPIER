@@ -7,6 +7,7 @@ using DG.Tweening;
 public class WeaponManager : MonoBehaviour {
 
     public static bool isShooting = false;
+    public static bool isHit = false; // 명중 여부 체크 
 
     public bool isInit = false;
     public Weapon EquipWeapon; // 장착한 무기 
@@ -57,7 +58,7 @@ public class WeaponManager : MonoBehaviour {
 
 
     void Update() {
-        RayGunPoint();    
+        // RayGunPoint();    
     }
 
 
@@ -86,8 +87,8 @@ public class WeaponManager : MonoBehaviour {
 
     public void Shoot() {
 
-        PlayerBullet.isHitEnemy = false;
-        isShooting = true;
+        isHit = false; // 초기화 
+        isShooting = true; // 슈팅 시작 
 
         switch (EquipWeapon.CurrentType) {
             case WeaponType.Gun:
@@ -108,19 +109,32 @@ public class WeaponManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 
+    /// 명중여부 체크 
     /// </summary>
-    public void RayGunPoint() {
+    public bool RayGunPoint() {
+
+        // 사용 이유. 
+        // 쏘기전에 미리 명중 여부를 판단하기 위함. 
+        // 총알마다 모두 속도가 다르기 때문에 
+        // 빗나감 여부를 판단하기가 어렵다. 
+
+        // → 총알자체에서 Ray를 해야할것같다. 여기서 하면 총알은 맞아도 빗나가는 경우가 발생. 
+
         hit = Physics2D.Raycast(GunpointTransform.position, GunpointTransform.right * -1);
 
-        if (hit.collider != null) {
-            hitObject = hit.collider.transform;
-            Debug.DrawLine(GunpointTransform.position, hit.collider.transform.position, Color.red);
+        
+
+        if (hit.collider != null && (hit.collider.tag == "Body" || hit.collider.tag == "Head")) {
+            // hitObject = hit.collider.transform;
+            // Debug.DrawLine(GunpointTransform.position, hit.collider.transform.position, Color.red);
+            return true;
         }
-
-
+        else {
+            return false;
+        }
     }
 
+    /*
     void ShotBullet(bool isMute = false) {
         // PlayerBullet b = GameObject.Instantiate(BulletPrefab, null, false).GetComponent<PlayerBullet>();
         PlayerBullet b = GameObject.Instantiate(EquipWeapon.bullet.gameObject, null, false).GetComponent<PlayerBullet>();
@@ -136,6 +150,30 @@ public class WeaponManager : MonoBehaviour {
 
         PlayShootSound();
     }
+    */
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void ShotBulletNoForce(bool isMute = false) {
+        Bullet b = GameObject.Instantiate(EquipWeapon.bulletPrefab, null, false).GetComponent<Bullet>();
+        b.transform.position = GunpointTransform.position;
+
+        if (GameManager.main.player.isLeft)
+            b.transform.eulerAngles = new Vector3(this.transform.eulerAngles.z, 90, 0);
+        else
+            b.transform.eulerAngles = new Vector3(this.transform.eulerAngles.z, -90, 0);
+
+        b.SetBulletOn(GameManager.main.player.isLeft);
+
+        // Shoot 재생 
+        if (isMute)
+            return;
+
+        PlayShootSound();
+
+    }
+
 
     void PlayShootSound() {
         if (EquipWeapon.ShootSound) {
@@ -160,7 +198,7 @@ public class WeaponManager : MonoBehaviour {
     private void ShootWithGun() {
 
         Debug.Log("Shoot With Gun");
-        ShotBullet();
+        ShotBulletNoForce();
         this.transform.DOLocalMove(Vector3.forward * 8, 0.15f).SetLoops(2, LoopType.Yoyo);
 
         // wait
@@ -180,12 +218,15 @@ public class WeaponManager : MonoBehaviour {
         // Audio
         for (int i =0; i< EquipWeapon.BulletsCount; i++) {
             // 가장 첫번째 총알은 조준한대로 발사된다. 
-            if (i == 0)
-                ShotBullet();
+            if (i == 0) {
+                // ShotBullet();
+                ShotBulletNoForce();
+            }
             else {
-                this.transform.rotation = originalRot; 
+                this.transform.rotation = originalRot;
                 ShakeAimRotation(); // 2번째 총알부터는 정확성에 따라 발사. 
-                ShotBullet(true);
+                //ShotBullet(true);
+                ShotBulletNoForce(true);
             }
 
             yield return new WaitForSeconds(0.01f);
@@ -204,18 +245,22 @@ public class WeaponManager : MonoBehaviour {
     private IEnumerator ShootWithMachineGun() {
 
         Debug.Log("ShootWithMachineGun :: " + EquipWeapon.BulletsCount);
-        AimController.Wait = true;
+
+        AimController.Wait = true; // 더이상 조준하지 않음. 
 
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
 
-            ShotBullet();
+            //ShotBullet();
+            ShotBulletNoForce();
+
+
             // 쏘고 나서 정확도 만큼 틀어지게 만든다. 
             ShakeAimRotation();
 
             yield return new WaitForSeconds(EquipWeapon.FireRate);
         }
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.1f);
         isShooting = false;
         Reload();
     }
@@ -225,13 +270,10 @@ public class WeaponManager : MonoBehaviour {
     /// </summary>
     private void Reload() {
 
-        Debug.Log("Reload Check! : " + PlayerBullet.isHitEnemy);
+        Debug.Log("Reload Check! : " + isHit);
 
-        
-
-
-        // AudioManager.Instance.PlayAudio(_currenWeapon.ReloadSound);
-        if (!PlayerBullet.isHitEnemy) {
+        // 게임 매니저에게 빗나갔음을 알린다. 
+        if (!isHit) {
             GameManager.isMissed = true;
         }
         else { // 맞췄을때만 리로드 사운드 

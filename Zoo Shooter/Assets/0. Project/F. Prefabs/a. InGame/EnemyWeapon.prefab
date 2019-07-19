@@ -42,14 +42,13 @@ GameObject:
   - component: {fileID: 5450834303301529270}
   - component: {fileID: 5450834303301529271}
   - component: {fileID: 1249456241}
-  - component: {fileID: 4486273085579155311}
   m_Layer: 12
   m_Name: EnemyWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5450834303301529269
 Transform:
   m_ObjectHideFlags: 0
@@ -154,22 +153,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &4486273085579155311
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5450834303301529264}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 1994d0ec5392e524cbfb0d469fb9c704, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.1, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.25
 --- !u!1 &5450834303690181714
 GameObject:
   m_ObjectHideFlags: 0

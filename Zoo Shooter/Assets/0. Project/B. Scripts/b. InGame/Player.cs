@@ -26,27 +26,6 @@ public class Player : MonoBehaviour
         SetRegularCollider();
     }
 
-    // Update is called once per frame
-    void Update() { // Player 입력
-
-        // 이동 중일때 쏘지 못함 
-        if (isMoving)
-            return;
-
-        // 플레이 중이 아닐 경우 체크 
-        if (!GameManager.isPlaying)
-            return;
-
-
-        // Aim 중이지 않을때 대기 
-        if (AimController.Wait)
-            return;
-
-        if (Input.GetMouseButtonDown(0))
-            StartCoroutine(ShootRoutine());
-
-    }
-
     public void KillPlayer() {
         rigid.bodyType = RigidbodyType2D.Dynamic;
 
@@ -67,20 +46,8 @@ public class Player : MonoBehaviour
         weapon.SetDrop(isLeft);
     }
 
-    /// <summary>
-    /// 탕탕!
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator ShootRoutine() {
-        Debug.Log("Monkey Shoot..!!");
-
-        weapon.Shoot();
-        yield return new WaitForSeconds(1f); // 1초 대기
-
-        // 적 사살 체크
 
 
-    }
 
 
     /// <summary>
@@ -152,7 +119,7 @@ public class Player : MonoBehaviour
     }
 
     public void Shoot() {
-        // weapon.Shoot();
+        weapon.Shoot();
     }
 
     public void SetLargeCollider() {

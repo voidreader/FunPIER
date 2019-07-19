@@ -157,9 +157,12 @@ public class GameViewManager : MonoBehaviour {
     /// 보스 체력 게이지 처리 
     /// </summary>
     /// <param name="damage"></param>
-    public void CalcBossHP(int damage) {
+    public void CalcBossHP(int damage, bool isHeadShot = false) {
         float v;
+
         _currentBossHP -= damage;
+        if(isHeadShot)
+            _currentBossHP -= damage;
 
         if (_currentBossHP <= 0) {
             _bossHP.SetValue(0);

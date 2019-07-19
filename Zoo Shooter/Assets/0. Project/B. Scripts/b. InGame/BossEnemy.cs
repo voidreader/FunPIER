@@ -11,7 +11,7 @@ public class BossEnemy : Enemy {
         base.SetEnemy(t, pID);
     }
 
-    public override void HitEnemy(int d) {
+    public override void HitEnemy(int d, bool isHeadShot) {
 
         this.transform.DOKill();
 
@@ -23,8 +23,9 @@ public class BossEnemy : Enemy {
                 this.transform.DOLocalMoveX(this.transform.localPosition.x + 0.1f, 0.05f).SetLoops(2, LoopType.Yoyo);
         }
 
-        base.HitEnemy(d);
-        GameViewManager.main.CalcBossHP(d); // HP 게이지 연동 추가 
+        base.HitEnemy(d, isHeadShot);
+        GameViewManager.main.CalcBossHP(d, isHeadShot); // HP 게이지 연동 추가 
+
     }
 
     public override void KillEnemy() {

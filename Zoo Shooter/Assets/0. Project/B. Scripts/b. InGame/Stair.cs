@@ -149,6 +149,26 @@ public class Stair : MonoBehaviour
         player.SetSpriteDirection(isLeftStair);
     }
 
+    /// <summary>
+    /// 부활 플레이어 위치 세팅
+    /// </summary>
+    /// <param name="p"></param>
+    public void SetRevivedPlayer(Player p) {
+        player = p;
+        Vector3 pos = GetPlayerPosition();
+
+        // 화면 바깥에서 안쪽으로 뛰어오는 연출 
+        if (isLeftStair)
+            player.transform.position = new Vector3(pos.x - 3, pos.y, 0);
+        else
+            player.transform.position = new Vector3(pos.x + 3, pos.y, 0);
+
+        player.SetSpriteDirection(isLeftStair);
+        player.MoveNextStair(pos);
+        // player.transform.DOJump(pos, 3f, 1, 0.6f);
+
+    }
+
 
 
     /// <summary>

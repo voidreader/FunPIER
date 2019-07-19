@@ -32,9 +32,12 @@ public class Weapon : ScriptableObject {
     public Sprite WeaponSprite;
     public AudioClip ShootSound = null; // 발사 사운드 
     public AudioClip ReloadSound = null; // 재장전 사운드
-    public PlayerBullet bullet;
+    public GameObject bulletPrefab = null; // 총알 개체 
+
+
     public int BulletsCount; // 총알 수
     public int Damage; // 데미지
+    public int BulletSpeed;
     public float FireRate = 0.1f;
     public float Accuracy = 100f;
     

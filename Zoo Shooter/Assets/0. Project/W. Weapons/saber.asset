@@ -19,9 +19,11 @@ MonoBehaviour:
   WeaponSprite: {fileID: 21300000, guid: aac921062ea98394bb82bb70433c84dc, type: 3}
   ShootSound: {fileID: 8300000, guid: 151fe6f718ee04b81ab1f824596204c0, type: 3}
   ReloadSound: {fileID: 8300000, guid: ccdb849e34bafdf429920105088c7100, type: 3}
-  bullet: {fileID: 2873556048788710489, guid: d9e2edcaf7a247b438e582701586cd85, type: 3}
+  bulletPrefab: {fileID: 8880578451486617697, guid: a1491d4f5ff0c81458044a119fb6b8b0,
+    type: 3}
   BulletsCount: 2
   Damage: 8
+  BulletSpeed: 45
   FireRate: 0.08
   Accuracy: 80
   AimSpeed: 80
