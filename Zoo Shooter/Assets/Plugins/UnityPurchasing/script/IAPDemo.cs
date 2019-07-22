@@ -9,7 +9,7 @@
 //#define DELAY_CONFIRMATION // Returns PurchaseProcessingResult.Pending from ProcessPurchase, then calls ConfirmPendingPurchase after a delay
 //#define USE_PAYOUTS // Enables use of PayoutDefinitions to specify what the player should receive when a product is purchased
 //#define INTERCEPT_PROMOTIONAL_PURCHASES // Enables intercepting promotional purchases that come directly from the Apple App Store
-//#define SUBSCRIPTION_MANAGER //Enables subscription product manager for AppleStore and GooglePlay store
+#define SUBSCRIPTION_MANAGER //Enables subscription product manager for AppleStore and GooglePlay store
 
 using System;
 using System.Collections;

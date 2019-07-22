@@ -125,8 +125,14 @@ namespace Doozy.Editor.Nody.Windows
                                                     m_connectionColor.g * 0.2f,
                                                     m_connectionColor.b * 0.2f,
                                                     m_connectionAlpha - 0.2f);
+
+
+
             HandleMaterial.SetPass(0);
             HandleUtility.handleMaterial.SetPass(0);
+
+
+
 
             Handles.DrawBezier(vc.OutputVirtualPoint.Rect.position,
                                vc.InputVirtualPoint.Rect.position,

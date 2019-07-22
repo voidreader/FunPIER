@@ -13,6 +13,7 @@ public class PIER : MonoBehaviour {
     public static int CurrentLevel = 0;
 
     public static Action CoinRefresh;
+    public static bool IsSpecialist = false;
 
     public int Coin = 0; // 보유 코인 
     public int NoAds = 0; // false. 광고 

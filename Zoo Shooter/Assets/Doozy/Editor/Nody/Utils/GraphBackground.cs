@@ -78,7 +78,13 @@ namespace Doozy.Editor.Nody.Utils
             {
                 Material handleWireMaterial = HandleWireMaterial;
                 handleWireMaterial.SetInt("_HandleZTest", (int) zTest);
+
+                
+
                 handleWireMaterial.SetPass(0);
+
+                
+
             }
 
             private static Material HandleWireMaterial
