@@ -14,6 +14,8 @@ public class AudioAssistant : MonoBehaviour {
     AudioSource loopingSFX;
     AudioSource lowSFX;
 
+    
+
     const float maxMusicVolume = 0.6f;
 
 	public float musicVolume {

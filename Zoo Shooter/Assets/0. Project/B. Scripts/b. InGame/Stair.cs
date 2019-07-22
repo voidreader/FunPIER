@@ -84,7 +84,7 @@ public class Stair : MonoBehaviour
         while (!isInPosition)
             yield return null;
 
-        while (!enemy.isOnGroud)
+        while (!enemy.isOnGroud) // 첫 생성되고, 땅에 닿을때까지 대기 
             yield return null;
 
 
@@ -103,13 +103,23 @@ public class Stair : MonoBehaviour
 
 
         if (move == NormalEnmeyMove.Jump) {
-            enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.4f).OnComplete(OnCompleteEnemyAppear);
-            enemy.Jump();
+
+            // 보스 첫 등장은 고정 
+            if (enemy.type == EnemyType.Boss) {
+                enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
+                enemy.Jump();
+            }
+            else {
+
+                enemy.transform.DOJump(GetEnemyPosition(), Random.Range(0.8f, enemy.jumpPower), 1, Random.Range(0.3f, 0.8f)).OnComplete(OnCompleteEnemyAppear);
+                enemy.Jump();
+
+            }
             
         }
         else { // 걷기 
             enemy.Walk(); //(애니메이션)
-            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 1.2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
+            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
 
         }
     }
@@ -122,6 +132,9 @@ public class Stair : MonoBehaviour
             GameManager.main.ShowParticleSlam(p); // 파티클 처리
 
             CameraShake.main.ShakeOnce(0.25f, 0.2f); // 카메라 흔들림
+
+            // 사운드
+            AudioAssistant.Shot("BossFirstLand");
         }
     }
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyWeapon : MonoBehaviour
 {
@@ -110,6 +111,7 @@ public class EnemyWeapon : MonoBehaviour
             this.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(20f, 150f), Random.Range(100f, 250f)));
 
         // this.GetComponent<Rigidbody2D>().AddTorque(360, ForceMode2D.Impulse);
+        this.transform.DORotate(new Vector3(0, 0, 360), Random.Range(0.5f, 2), RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         this.gameObject.layer = 15;
 
 

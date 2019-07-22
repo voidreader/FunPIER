@@ -126,7 +126,7 @@ public class GunColumn : MonoBehaviour
 
 
     public bool HasThisGun() {
-        return _activeBG.activeSelf;
+        return PIER.main.HasGun(_weapon);
     }
 
 

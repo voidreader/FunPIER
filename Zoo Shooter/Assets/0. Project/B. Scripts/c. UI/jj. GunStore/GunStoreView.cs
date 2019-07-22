@@ -107,6 +107,27 @@ public class GunStoreView : MonoBehaviour
 
 
     void BottomRoutine() {
+
+        // 현재 뷰의 모든 무기를 수집했으면 _bottoms 뜨지 않음
+        List<GunColumn> lll = _currentGroup._listCols;
+        bool hasAllGroupWeapon = true;
+        for(int i=0;i< lll.Count;i++) {
+            if (!lll[i].gameObject.activeSelf)
+                continue;
+
+            if (!lll[i].HasThisGun()) {
+                hasAllGroupWeapon = false;
+                break;
+            }
+        }
+
+        // 다 가졌네. return
+        if(hasAllGroupWeapon) {
+            _bottoms.transform.DOScale(0, 0.2f);
+            return;
+        }
+
+
         if(CurrentGroupIndex == 0) {
             _bottoms.transform.DOScale(1, 0.2f);
             _lblUnlock.text = "250";
@@ -167,17 +188,26 @@ public class GunStoreView : MonoBehaviour
         isUnlocking = true;
         lockCover.SetActive(true);
 
-        for(int i=0; i<18; i++) {
-
-            _currentGroup.SetInactiveUnlockSelect(); // 모두 해제하고.. 
-            gc = _listUnlock[Random.Range(0, _listUnlock.Count)];
+        if (_listUnlock.Count == 1) { // 남은 개수가 1개인 경우. 
+            gc = _listUnlock[0];
             gc.SetUnlockSelect(true);
 
+            yield return new WaitForSeconds(1);
+        }
+        else {
 
-            if (i > 6)
-                interval *= 1.1f;
+            for (int i = 0; i < 18; i++) {
 
-            yield return new WaitForSeconds(interval);
+                _currentGroup.SetInactiveUnlockSelect(); // 모두 해제하고.. 
+                gc = _listUnlock[Random.Range(0, _listUnlock.Count)];
+                gc.SetUnlockSelect(true);
+
+
+                if (i > 6)
+                    interval *= 1.1f;
+
+                yield return new WaitForSeconds(interval);
+            }
         }
 
         // 연출 및 획득처리

@@ -128,13 +128,17 @@ public class Enemy : MonoBehaviour {
             HP -= d;
 
 
-        
+
         // Debug.Log("HP after hit :: " + HP);
         // 헤드샷 연출
-        if(isHeadShot) {
+        if (isHeadShot) {
             GameManager.main.Splash(); // 스플래시 효과
             PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabHeadshot, new Vector3(0, 5f, 0), Quaternion.identity);
             GameManager.main.ShowGetCoin(); // 코인 획득 
+
+            // 헤드샷에 소리 추가
+            AudioAssistant.Shot("Headshot");
+        
         }
 
 
@@ -192,6 +196,12 @@ public class Enemy : MonoBehaviour {
         weapon.Shoot();
     }
 
+
+    /// <summary>
+    /// 점프 무브 
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="callback"></param>
     public virtual void Move(Vector3 target, System.Action callback) {
         isMoving = false;
         JumpCallback = callback;
@@ -199,6 +209,10 @@ public class Enemy : MonoBehaviour {
         jumpPos = target;
         // this.transform.DOJump(jumpPos, 1.5f, 1, 0.5f).OnComplete(OnCompleteJump);
         this.transform.DOJump(jumpPos, 2f, 1, 0.6f).OnComplete(OnCompleteJump).SetEase(Ease.InQuint);
+
+        AudioAssistant.Shot("BossJump");
+
+
 
         /*
         if (isLeft)
