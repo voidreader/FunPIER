@@ -119,6 +119,8 @@ public class GameManager : MonoSingleton<GameManager>
 
             MonoSingleton<GameDataManager>.Instance.GAOpen();
         }
+
+        // Camera.main.aspect = 9f / 18.5f;
  
     }
 
