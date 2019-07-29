@@ -30,7 +30,7 @@ namespace BallBlaster
         [SerializeField] private int _shootPower = 1;
         [SerializeField] private bool _useInspectorValues;
 
-        private Queue<Transform> _bullets = new Queue<Transform>();
+        [SerializeField] private Queue<Transform> _bullets = new Queue<Transform>();
 
         // used for not going out of camera bounds
         private Vector2 _cameraBounds;
@@ -79,6 +79,10 @@ namespace BallBlaster
             _gameManager.GameStartedEvent += OnGameStarted;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void Update()
         {
             if (_gameManager.IsGameStarted && !_gameManager.IsGameFinished)
@@ -151,14 +155,23 @@ namespace BallBlaster
 
         private bool _canShoot = true;
 
+
+        /// <summary>
+        /// 발사 처리 
+        /// </summary>
         private void Shoot()
         {
             if (_canShoot)
             {
                 _canShoot = false;
+
+                // 쿨타임 처리 
                 StartCoroutine(CanShoot(_shootSpeed));
 
+                // 사운드 처리 
                 PlaySound(_shotClip);
+
+
 
                 if (_bullets.Count >= _bulletPositions.Length)
                 {

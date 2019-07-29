@@ -53,12 +53,20 @@ namespace BallBlaster
 
         private void OnGameStarted()
         {
+
+            Debug.Log("StoneGenerator OnGameStarted");
+
             _startGeneratedStoneHP += (int)(_player.ShootPower * _brokenStonesCount + (0.1f - _player.ShootSpeed) * _brokenStonesCount);
 
             SpawnStone(_smallStonePrefab[Random.Range(0, _smallStonePrefab.Length)]);
             _smallStoneSpawnedCount++;
         }
 
+
+        /// <summary>
+        /// 스톤 생성 시작
+        /// </summary>
+        /// <param name="stonePrefab"></param>
         private void SpawnStone(GameObject stonePrefab)
         {
             GameObject stoneObject = Instantiate(stonePrefab);
@@ -70,6 +78,7 @@ namespace BallBlaster
 
             stone.DisableMovement();
 
+            // 스타팅 포인트 정하고
             int randomPosition = Random.Range(0, _startPoints.Length);
             stoneObject.transform.position = _startPoints[randomPosition].position;
 

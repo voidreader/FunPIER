@@ -35,9 +35,9 @@ namespace BallBlaster
         [SerializeField]
         private AudioSource _crashAudioSource;
 
-        private Rigidbody2D _rb2D;
-        private Collider2D _collider2D;
-        private Animator _animator;
+        private Rigidbody2D _rb2D; // Rigidbody, 
+        private Collider2D _collider2D; // collider
+        private Animator _animator; // 애니메이터
 
         private GameManager _gameManager;
 
@@ -74,7 +74,9 @@ namespace BallBlaster
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag(Tags.Bullet) && !_gameManager.IsGameFinished)
+
+
+            if (collision.CompareTag(Tags.Bullet) && !_gameManager.IsGameFinished) // 총알과 히트.
             {
                 int newHp = _hp - collision.GetComponent<Bullet>().ShootPower;
                 if (OnBulletHitEvent != null)
