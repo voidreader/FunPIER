@@ -17,10 +17,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
     public class SimpleScrollSnap : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
     {
         #region Fields
-        [SerializeField]
-        private int nearestPanel, targetPanel, currentPanel;
-        private int numberOfToggles;
-
+        private int nearestPanel, targetPanel, currentPanel, numberOfToggles;
         private bool dragging, pressing, selected;
         private float releaseSpeed, planeDistance;
         private Vector2 contentSize, previousPosition;
@@ -32,7 +29,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private Canvas canvas;
         private CanvasScaler canvasScaler;
 
-        public int currentPage = 0;
         public MovementType movementType = MovementType.Fixed;
         public MovementAxis movementAxis = MovementAxis.Horizontal;
         public bool automaticallyLayout = true;
@@ -128,7 +124,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         #endregion
 
         #region Methods
-        private void Awake()
+        private void Start()
         {
             if (Validate())
             {
@@ -689,9 +685,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
         public void GoToPanel(int panelNumber)
         {
-
-            
-
             targetPanel = panelNumber;
             selected = true;
             onPanelSelected.Invoke();

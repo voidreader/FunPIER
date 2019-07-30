@@ -11,22 +11,11 @@ public class NormalEnemy : Enemy {
         base.SetEnemy(t, pID);
     }
 
-    public override void KillEnemy() {
-
-        
-        base.KillEnemy();
+    public override void KillEnemy(bool isHeadShot = false) {
 
         Debug.Log("NormalEnemy Killed");
+        base.KillEnemy(isHeadShot);
 
-        if(isLeft)
-            this.rigid.AddForce(new Vector2(Random.Range(-250f, -80f), 700));
-        else
-            this.rigid.AddForce(new Vector2(Random.Range(80f, 250f), 700));
-
-        this.isKilling = true;
-        // this.transform.DOLocalRotate(new Vector3(0, 0, 720), 2, RotateMode.FastBeyond360).SetEase(Ease.Linear);
-        // this.rigid.isKinematic = true;
-        StartCoroutine(Destroying());
 
     }
 

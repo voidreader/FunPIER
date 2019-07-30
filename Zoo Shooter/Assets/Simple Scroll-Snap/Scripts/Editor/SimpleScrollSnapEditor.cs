@@ -73,9 +73,6 @@ namespace DanielLochner.Assets.SimpleScrollSnap
 
         private void HeaderInformation()
         {
-            GUILayout.Label("current panel : " + simpleScrollSnap.CurrentPanel);
-            GUILayout.Label("target panel : " + simpleScrollSnap.TargetPanel);
-
             GUILayout.BeginVertical("HelpBox");
             GUILayout.Label("Simple Scroll-Snap", new GUIStyle() { fontSize = 30, alignment = TextAnchor.MiddleCenter });
             GUILayout.Label("Version: 1.1.3", new GUIStyle() { fontSize = 14, alignment = TextAnchor.MiddleCenter });

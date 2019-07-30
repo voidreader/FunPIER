@@ -68,11 +68,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: a1166304671095e47b87fd92d504f2a8, type: 3}
-    m_FontSize: 20
+    m_FontSize: 45
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 45
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -92,5 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a10f32bcd335f4caa4124c0b5de2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
   target: {fileID: 0}
   lblDamage: {fileID: 6971436736697471227}

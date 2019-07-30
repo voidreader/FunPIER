@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+public enum WeaponDropType {
+    NoDrop,
+    Normal,
+    BigHit,
+    HighJump
+}
+
 public class EnemyWeapon : MonoBehaviour
 {
     public string _spriteName = string.Empty;
@@ -101,20 +108,48 @@ public class EnemyWeapon : MonoBehaviour
         AudioAssistant.Shot(Stocks.main.clipEnemyShotSound);
     }
 
-    public void SetDrop(bool isLeft) {
+    public void SetDrop(bool isLeft, WeaponDropType drop) {
         this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         this.GetComponent<Rigidbody2D>().isKinematic = false;
 
+        float rotateAngle = 360;
         if(isLeft)
-            this.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-150f, -20f), Random.Range(100f, 250f)));
+            rotateAngle = 360;
         else
-            this.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(20f, 150f), Random.Range(100f, 250f)));
+            rotateAngle = -360;
 
-        // this.GetComponent<Rigidbody2D>().AddTorque(360, ForceMode2D.Impulse);
-        this.transform.DORotate(new Vector3(0, 0, 360), Random.Range(0.5f, 2), RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        switch (drop) {
+            case WeaponDropType.NoDrop: // 아무런 힘을 가하지 않는다. 
+                this.transform.DORotate(new Vector3(0, 0, rotateAngle), Random.Range(1.2f, 2.4f), RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+                break;
+
+            case WeaponDropType.Normal:
+                if (isLeft)
+                    this.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-150f, -20f), Random.Range(100f, 250f)));
+                else
+                    this.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(20f, 150f), Random.Range(100f, 250f)));
+
+                this.transform.DORotate(new Vector3(0, 0, rotateAngle), Random.Range(0.8f, 2), RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+
+                break;
+
+            case WeaponDropType.BigHit:
+                if (isLeft) 
+                    this.GetComponent<Rigidbody2D>().AddForce(new Vector2(-250, 800));
+                else 
+                    this.GetComponent<Rigidbody2D>().AddForce(new Vector2(250, 800));
+                
+                this.transform.DORotate(new Vector3(0, 0, rotateAngle), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+
+                break;
+
+            case WeaponDropType.HighJump:
+                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 700));
+                this.transform.DORotate(new Vector3(0, 0, rotateAngle), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+                break;
+        }
+
         this.gameObject.layer = 15;
-
-
         Destroy(this.gameObject, 4);
     }
 }

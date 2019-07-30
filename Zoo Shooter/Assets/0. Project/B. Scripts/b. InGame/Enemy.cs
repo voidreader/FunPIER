@@ -46,6 +46,7 @@ public class Enemy : MonoBehaviour {
     public bool isKilled = false;
     public bool isKilling = false;
     public bool isOnGroud = false;
+    public bool isHeadShotKill = false;
 
     Vector3 jumpPos;
     public bool isMoving = false;
@@ -157,7 +158,7 @@ public class Enemy : MonoBehaviour {
         if (HP > 0)
             return;
 
-        KillEnemy();
+        KillEnemy(isHeadShot);
     }
     
 
@@ -168,25 +169,125 @@ public class Enemy : MonoBehaviour {
 
     }
 
+    #region Kill 포즈 여러가지 
+
+    /// <summary>
+    /// 헤드샷 킬 with 회전 
+    /// </summary>
+    void PoseHeadKillRotate() {
+        if (isLeft) {
+            this.rigid.AddForce(new Vector2(-250, 800));
+            this.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart); 
+        }
+        else {
+            this.rigid.AddForce(new Vector2(250, 800));
+            this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+
+        PostKillProcess();
+
+        if (Random.Range(0, 3) < 2)
+            WeaponDrop(WeaponDropType.BigHit);
+        else
+            WeaponDrop(WeaponDropType.HighJump);
+
+    }
+
+    /// <summary>
+    /// 일반 킬 with 회전 
+    /// </summary>
+    void PoseGeneralKillRotate() {
+        if (isLeft) {
+            this.rigid.AddForce(new Vector2(Random.Range(-150f, -80f), Random.Range(300f, 500f)));
+            this.transform.DORotate(new Vector3(0, 0, 360), Random.Range(0.8f, 1.2f), RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+        else {
+            this.rigid.AddForce(new Vector2(Random.Range(80f, 150f), Random.Range(300f, 500f)));
+            this.transform.DORotate(new Vector3(0, 0, -360), Random.Range(0.8f, 1.2f), RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+
+        PostKillProcess();
+        WeaponDrop(WeaponDropType.Normal);
+    }
+
+    void PoseKillDrop() {
+        //this.rigid.isKinematic = true; // 일단 물리를 끄고.
+
+        this.transform.DOPunchPosition(new Vector3(0.2f, 0, 0), 0.25f, 15, 1);
+
+
+        if (isLeft)
+            this.transform.DORotate(new Vector3(0, 0, -230), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.InQuad).SetDelay(0.2f);
+        else
+            this.transform.DORotate(new Vector3(0, 0, 230), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.InQuad).SetDelay(0.2f);
+
+
+        Invoke("PostKillProcess", 0.2f);
+
+        WeaponDrop(WeaponDropType.NoDrop);
+
+        // StartCoroutine(InvokedWeaponDrop());
+
+    }
+
+    IEnumerator InvokedWeaponDrop() {
+        yield return new WaitForSeconds(0.1f);
+        WeaponDrop(WeaponDropType.NoDrop);
+    }
+
+
+    #endregion
+
+
     /// <summary>
     /// Kill 처리 
     /// </summary>
-    public virtual void KillEnemy() {
+    public virtual void KillEnemy(bool pHeadShotKill = false) {
 
-        isKilled = true;
-
+        isHeadShotKill = pHeadShotKill;
+        isKilled = true; // 얘는 죽었음!
         this.transform.DOKill();
-        this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
 
-        // anim.SetBool("isKill", true); // 애니메이션으로 회전 주지 않음. 
+        int killRand = Random.Range(0, 3);
+        
+        // 헤드샷때는 더 강렬하게 kill
+        if(isHeadShotKill) {
 
+            PoseHeadKillRotate();
+            
+        } // 헤드샷 킬 종료
+        else { // 일반 킬 
+
+            if (killRand < 2) {
+                PoseGeneralKillRotate();
+            }
+            else if(killRand == 2) { // 탕 맞고 억하고 쓰러지기 
+                PoseKillDrop();
+            }
+            
+
+
+
+        } // 일반 킬 종료 
+
+    }
+
+    /// <summary>
+    /// Kill 후 처리. 
+    /// </summary>
+    void PostKillProcess() {
         head.gameObject.layer = 15;
         this.gameObject.layer = 15; // 레이어 수정해서 충돌 처리 되지 않도록 수정 
+        this.isKilling = true;
+        StartCoroutine(Destroying());
+    }
 
-        //Invoke("WeaponDrop", 0.25f);
-        WeaponDrop();
 
+    IEnumerator Destroying() {
+        isKilling = false;
 
+        yield return new WaitForSeconds(5f);
+        Destroy(this.gameObject);
     }
 
     /// <summary>
@@ -234,9 +335,9 @@ public class Enemy : MonoBehaviour {
     /// <summary>
     /// 무기 떨어뜨리기 
     /// </summary>
-    void WeaponDrop() {
+    void WeaponDrop(WeaponDropType t) {
         weapon.transform.SetParent(null);
-        weapon.SetDrop(isLeft);
+        weapon.SetDrop(isLeft, t);
     }
 
     void ResetWeaponRotation() {

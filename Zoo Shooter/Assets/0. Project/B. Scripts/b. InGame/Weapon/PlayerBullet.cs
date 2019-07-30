@@ -173,8 +173,10 @@ public class PlayerBullet : MonoBehaviour
             GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
 
             // 보스일때는 데미지 표시
+            /*
             if (hitEnemy.type == EnemyType.Boss)
                 GameManager.main.ShowDamage(GameManager.main.currentWeapon.Damage, false);
+            */
 
 
         }
@@ -198,8 +200,10 @@ public class PlayerBullet : MonoBehaviour
             GameManager.main.Splash();
 
             // 보스일때는 데미지 표시
+            /*
             if(hitEnemy.type == EnemyType.Boss)
                 GameManager.main.ShowDamage(GameManager.main.currentWeapon.Damage * 2, true);
+            */
 
 
 
