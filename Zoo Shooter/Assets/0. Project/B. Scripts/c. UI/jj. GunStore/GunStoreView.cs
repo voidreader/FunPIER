@@ -64,9 +64,16 @@ public class GunStoreView : MonoBehaviour
         }
 
 
-        _sc.GoToPanel(startPanel);
+        // _sc.GoToPanel(startPanel);
+        StartCoroutine(GoRightPanel(startPanel));
         lockCover.SetActive(false);
                 
+    }
+
+    IEnumerator GoRightPanel(int p) {
+        // yield return new WaitForSeconds(0.1f);
+        yield return null;
+        _sc.GoToPanel(p);
     }
 
 

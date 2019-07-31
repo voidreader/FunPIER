@@ -107,6 +107,14 @@ public class Stair : MonoBehaviour
             // 보스 첫 등장은 고정 
             if (enemy.type == EnemyType.Boss) {
                 enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
+                AudioAssistant.Shot("BossFirstJump");
+                // 회전 추가 
+                if (isLeftStair)
+                    enemy.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear);
+                else
+                    enemy.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear);
+
+                
                 enemy.Jump();
             }
             else {
@@ -135,6 +143,8 @@ public class Stair : MonoBehaviour
 
             // 사운드
             AudioAssistant.Shot("BossFirstLand");
+
+            AimController.Wait = false;
         }
     }
 

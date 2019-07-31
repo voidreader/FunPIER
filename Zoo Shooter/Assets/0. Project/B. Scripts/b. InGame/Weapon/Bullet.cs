@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using PathologicalGames;
 
+
+/// <summary>
+/// GabrielAguiarProductions 발사체만 사용할것. 
+/// </summary>
 public class Bullet : MonoBehaviour
 {
 
@@ -10,6 +14,7 @@ public class Bullet : MonoBehaviour
 
     public Rigidbody2D rb;
     public float speed = 5; // 발사속도
+    
 
 
     public GameObject BulletPrefab;

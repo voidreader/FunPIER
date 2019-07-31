@@ -99,9 +99,6 @@ public class GameManager : MonoBehaviour {
             GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.B)) {
-            GameViewManager.main.AppearBoss();
-        }
 
 
         if (Player.isMoving)
@@ -396,7 +393,7 @@ public class GameManager : MonoBehaviour {
                         GameClear();
 
                     }
-                    else { // 안죽은 경우
+                    else { // 보스 죽지 않은 경우.
                            // 보스 한칸 이동 
                         InsertNewStair();
 
@@ -434,10 +431,14 @@ public class GameManager : MonoBehaviour {
                     }
                     else { // 보스일때는 연출을 기다린다.
                         GameViewManager.main.AppearBoss();
+                        AimController.Wait = true;
 
                         while (isWait)
                             yield return null;
 
+                        
+
+                        // 보스 UI 연출 종료
                         currentStair.SetReadyEnemy(); // 적 등장 처리 
                     }
                 }

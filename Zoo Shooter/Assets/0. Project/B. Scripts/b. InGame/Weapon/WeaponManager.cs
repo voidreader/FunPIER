@@ -16,10 +16,13 @@ public class WeaponManager : MonoBehaviour {
 
 
     public Transform GunpointTransform;
-    public GameObject BulletPrefab;
+    
+    public Transform AimMask;
 
     RaycastHit2D hit;
     [SerializeField] Transform hitObject = null;
+
+
     
     private int _direction;
 
@@ -49,6 +52,8 @@ public class WeaponManager : MonoBehaviour {
         this.transform.localPosition = EquipWeapon.posEquip; // 위치 설정 
         this.transform.localScale = EquipWeapon.posScale;
         GunpointTransform.transform.localPosition = EquipWeapon.posGunPoint; // 건포인트 설정
+
+        AimMask.localPosition = new Vector3(-1, this.transform.localPosition.y, 0);
 
         // Aim 설정
         CurrentAim.Init(EquipWeapon);

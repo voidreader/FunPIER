@@ -309,7 +309,12 @@ public class Enemy : MonoBehaviour {
 
         jumpPos = target;
         // this.transform.DOJump(jumpPos, 1.5f, 1, 0.5f).OnComplete(OnCompleteJump);
-        this.transform.DOJump(jumpPos, 2f, 1, 0.6f).OnComplete(OnCompleteJump).SetEase(Ease.InQuint);
+        this.transform.DOJump(jumpPos, 2f, 1, 0.8f).OnComplete(OnCompleteJump).SetEase(Ease.InQuad);
+
+        if (isLeft)
+            this.transform.DORotate(new Vector3(0, 0, -360), 0.3f, RotateMode.WorldAxisAdd).SetDelay(0.4f);
+        else
+            this.transform.DORotate(new Vector3(0, 0, 360), 0.3f, RotateMode.WorldAxisAdd).SetDelay(0.4f);
 
         AudioAssistant.Shot("BossJump");
 

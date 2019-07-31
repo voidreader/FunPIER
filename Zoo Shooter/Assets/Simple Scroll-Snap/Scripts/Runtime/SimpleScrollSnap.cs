@@ -342,6 +342,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             // Pagination
             if (pagination != null)
             {
+                Debug.Log("Snap.. toggles Init");
                 toggles = new Toggle[numberOfToggles];
                 for (int i = 0; i < numberOfToggles; i++)
                 {
