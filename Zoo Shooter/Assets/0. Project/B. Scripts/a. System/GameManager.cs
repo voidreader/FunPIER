@@ -343,8 +343,14 @@ public class GameManager : MonoBehaviour {
         while (isPlaying) {
 
             // 쏘고 있을때(특히 머신건) 대기 
-            while (WeaponManager.isShooting)
-                yield return null;
+            // 보스 일때만 대기하도록 처리 해야 한다. 
+            // 일반 몹일때는 휙휙 지나가게.. 
+
+            if (enemy.type == EnemyType.Boss) {
+
+                while (WeaponManager.isShooting)
+                    yield return null;
+            }
                      
 
             #region 빗나갔을때 Gameover, Enemy Shoot 처리 
@@ -373,12 +379,14 @@ public class GameManager : MonoBehaviour {
                 }
                 isMissed = false;
             }
-            #endregion 
+            #endregion
 
 
+            #region 몹을 맞췄을 경우 
             // 적 죽었을때.. 
             if (isEnemyHit) {
 
+                #region 보스 처리 
                 if (enemy.type == EnemyType.Boss) { // 보스 Hit. 
 
                     // 죽은 경우
@@ -412,11 +420,9 @@ public class GameManager : MonoBehaviour {
                         currentStair = listStairs[indexLastStair - 1];
                     }
                 }
+                #endregion
+                #region 일반몹 처리 
                 else {
-                    // Kill 연출 종료 체크 
-                    while (enemy.isKilling) {
-                        yield return null;
-                    }
 
                     // 다음 칸으로 이동 
                     MovePlayer();
@@ -429,7 +435,7 @@ public class GameManager : MonoBehaviour {
                         currentStair.SetReadyEnemy(); // 적 등장 처리 
                         SetLevelProgressor();
                     }
-                    else { // 보스일때는 연출을 기다린다.
+                    else { //  다음 몹이 보스일때는 연출을 기다린다.
                         GameViewManager.main.AppearBoss();
                         AimController.Wait = true;
 
@@ -442,8 +448,9 @@ public class GameManager : MonoBehaviour {
                         currentStair.SetReadyEnemy(); // 적 등장 처리 
                     }
                 }
-            }
-
+                #endregion
+            } // end of isEnemyHit
+            #endregion
 
             yield return null;
         }

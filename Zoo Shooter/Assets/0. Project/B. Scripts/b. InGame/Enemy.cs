@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour {
 
     EnemyDataRow data;
     public bool isKilled = false;
-    public bool isKilling = false;
+    
     public bool isOnGroud = false;
     public bool isHeadShotKill = false;
 
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour {
     public System.Action JumpCallback;
 
     void InitEnemy() {
-        isKilling = false;
+        
     }
 
 
@@ -278,13 +278,13 @@ public class Enemy : MonoBehaviour {
     void PostKillProcess() {
         head.gameObject.layer = 15;
         this.gameObject.layer = 15; // 레이어 수정해서 충돌 처리 되지 않도록 수정 
-        this.isKilling = true;
+        
         StartCoroutine(Destroying());
     }
 
 
     IEnumerator Destroying() {
-        isKilling = false;
+        
 
         yield return new WaitForSeconds(5f);
         Destroy(this.gameObject);

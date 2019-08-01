@@ -8,6 +8,7 @@ public class CoinBar : MonoBehaviour
 {
     public Text lblCoin;
     public int coinValue = 0;
+    public Transform coinIcon;
 
     private void Awake() {
         PIER.CoinRefresh += UpdateCoin;
@@ -27,7 +28,8 @@ public class CoinBar : MonoBehaviour
         InitScale();
 
         if(coinValue != PIER.main.Coin) { // 코인값이 다르면 연출 
-            this.transform.DOScale(1.1f, 0.2f).SetLoops(4, LoopType.Yoyo).OnComplete(InitScale);
+            coinIcon.DOScale(1.1f, 0.2f).SetLoops(4, LoopType.Yoyo).OnComplete(InitScale);
+            AudioAssistant.Shot("Coin");
         }
 
 
@@ -36,8 +38,8 @@ public class CoinBar : MonoBehaviour
     }
 
     void InitScale() {
-        this.transform.DOKill();
-        this.transform.localScale = Vector3.one;
+        coinIcon.DOKill();
+        coinIcon.localScale = Vector3.one;
     }
 }
 
