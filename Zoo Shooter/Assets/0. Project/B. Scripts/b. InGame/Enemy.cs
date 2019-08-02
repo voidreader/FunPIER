@@ -119,6 +119,9 @@ public class Enemy : MonoBehaviour {
         if (isKilled)
             return;
 
+
+        // Debug.Log("HitEnemy : " + d);
+
         WeaponManager.isHit = true;
         GameManager.isEnemyHit = true; // 명중했음!
         // 비슷한 변수인데..?
@@ -244,11 +247,18 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     public virtual void KillEnemy(bool pHeadShotKill = false) {
 
+
+        if (isKilled)
+            return;
+
         isHeadShotKill = pHeadShotKill;
         isKilled = true; // 얘는 죽었음!
         this.transform.DOKill();
 
         int killRand = Random.Range(0, 3);
+
+        // 연출 
+        PoolManager.Pools[ConstBox.poolGame].Spawn(Stocks.main.particleSkullExplosion, this.transform.position, Quaternion.identity);
         
         // 헤드샷때는 더 강렬하게 kill
         if(isHeadShotKill) {

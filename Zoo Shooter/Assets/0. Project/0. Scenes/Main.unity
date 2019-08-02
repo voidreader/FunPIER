@@ -29024,6 +29024,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4050823949382013761, guid: 19b8887ec3b56de419eb5abb50a79e4b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050823949382013761, guid: 19b8887ec3b56de419eb5abb50a79e4b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3095966625402803420, guid: 19b8887ec3b56de419eb5abb50a79e4b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
 --- !u!1 &572656055
@@ -99166,34 +99181,34 @@ PrefabInstance:
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[1].prefab
       value: 
-      objectReference: {fileID: 5220661238895312708, guid: 64218201297a61e49a52f6fc661f9d7d,
+      objectReference: {fileID: 7877736671212041692, guid: 6caf2e3106e8fe040b5ff9ab20505801,
         type: 3}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[2].preloadAmount
-      value: 30
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[0].preloadAmount
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[0].prefab
       value: 
-      objectReference: {fileID: 1594016792016244039, guid: 88178103d80a4d646b38f37c592f7790,
+      objectReference: {fileID: 4504143030110730952, guid: 4e890fc714cbe7d43b23d4d90457ac42,
         type: 3}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[1].preloadAmount
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
@@ -99204,18 +99219,18 @@ PrefabInstance:
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[2].prefab
       value: 
-      objectReference: {fileID: 6348630021127876273, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8,
+      objectReference: {fileID: 1594016792016244039, guid: 88178103d80a4d646b38f37c592f7790,
         type: 3}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[3].prefab
       value: 
-      objectReference: {fileID: 6348630021127876273, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8,
+      objectReference: {fileID: 5220661238895312708, guid: 64218201297a61e49a52f6fc661f9d7d,
         type: 3}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[3].preloadAmount
-      value: 30
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
@@ -99240,6 +99255,42 @@ PrefabInstance:
     - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
         type: 3}
       propertyPath: _perPrefabPoolOptions.Array.data[3].cullMaxPerPass
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[4].prefab
+      value: 
+      objectReference: {fileID: 6348630021127876273, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8,
+        type: 3}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[4].preloadAmount
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[4].preloadFrames
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[4].limitAmount
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[4].cullAbove
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[4].cullDelay
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 242930140849956230, guid: 587d6fad731e978409b8fa3048e5f93d,
+        type: 3}
+      propertyPath: _perPrefabPoolOptions.Array.data[4].cullMaxPerPass
       value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []

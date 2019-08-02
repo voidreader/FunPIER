@@ -124,13 +124,13 @@ public class Player : MonoBehaviour
 
     public void SetLargeCollider() {
         collider.offset = new Vector2(-0.1229745f, 0.06598422f);
-        collider.size = new Vector2(0.5971596f, 1.648212f);
+        collider.size = new Vector2(1, 1.648212f);
         
     }
 
     public void SetRegularCollider() {
         collider.offset = new Vector2(-0.1229745f, -0.1582869f);
-        collider.size = new Vector2(0.5971596f, 1f);
+        collider.size = new Vector2(1, 1f);
         
     }
     

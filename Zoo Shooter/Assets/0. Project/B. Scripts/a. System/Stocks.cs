@@ -27,7 +27,11 @@ public class Stocks : MonoBehaviour
 
 
     public AudioClip clipEnemyShotSound; // 적 총 소리 (일괄)
-    
+
+    #region 파티클 시스템
+    public ParticleSystem particleSkullExplosion;
+    #endregion
+
     #region Colors 
     public Color ColorHeadshotFont;
     public Color ColorUnlock250, ColorUnlock500, ColorSpecialist, ColorDailyReward, ColorWantedReward;

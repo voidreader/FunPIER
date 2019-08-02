@@ -30,6 +30,9 @@ public class BossEnemy : Enemy {
 
     public override void KillEnemy(bool isHeadShot = false) {
 
+        if (isKilled)
+            return;
+
         Debug.Log("BossEnemy Killed");
         base.KillEnemy(isHeadShot);
         GameManager.main.ShowGetCoinTriple();  // 보스는 죽을때 코인 3개 떨군다. 

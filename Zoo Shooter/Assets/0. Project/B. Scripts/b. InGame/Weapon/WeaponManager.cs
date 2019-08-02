@@ -101,7 +101,7 @@ public class WeaponManager : MonoBehaviour {
                 Invoke("Reload", 1f);
                 break;
             case WeaponType.Shotgun:
-                StartCoroutine(ShootWithShotgun());
+                ShootWithShotgun();
                 Invoke("Reload", 1f);
                 break;
             case WeaponType.MachineGun:
@@ -192,7 +192,7 @@ public class WeaponManager : MonoBehaviour {
     void ShakeAimRotation() {
         float acc = 1 - (EquipWeapon.Accuracy / 100);
         // Debug.Log("ShakeAimRotate :: " + acc);
-        transform.Rotate(0, 0, 1 * UnityEngine.Random.Range(-acc, acc) * 10);
+        transform.Rotate(0, 0, 1 * UnityEngine.Random.Range(-acc, acc) * 20);
 
     }
 
@@ -215,7 +215,7 @@ public class WeaponManager : MonoBehaviour {
     /// 샷건 발사 
     /// </summary>
     /// <returns></returns>
-    IEnumerator ShootWithShotgun() {
+    void ShootWithShotgun() {
 
         Quaternion originalRot = this.transform.rotation; // 이전 총구 회전값을 가지고 있는다.
         AimController.Wait = true;
@@ -234,7 +234,7 @@ public class WeaponManager : MonoBehaviour {
                 ShotBulletNoForce(true);
             }
 
-            yield return new WaitForSeconds(0.01f);
+            // yield return new WaitForSeconds(0.01f);
         }
 
         this.transform.DOLocalMove(Vector3.forward * 10, 0.15f).SetLoops(2, LoopType.Yoyo);
