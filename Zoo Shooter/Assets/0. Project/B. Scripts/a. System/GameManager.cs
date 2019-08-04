@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager main = null;
 
+    public static bool isCameraMoving = false; // 메인카메라 무빙 여부 
     public static bool isGameStarted = true; // 초기화 하고 게임 한번이라도 시작 했는지 
     public static bool isPlaying = false; // 게임 플레이 중
 
@@ -501,7 +502,25 @@ public class GameManager : MonoBehaviour {
     }
 
     void MoveMainCamera(float dis) {
-        mainCamera.transform.DOMoveY(mainCamera.transform.position.y + dis, 0.3f);
+        StartCoroutine(MovingMainCamera(dis));
+    }
+
+    IEnumerator MovingMainCamera(float dis) {
+
+        yield return new WaitForSeconds(0.1f);
+
+        // 카메라 흔들림 효과 중에 이동 대기 
+        while(CameraShake.isShaking) {
+            yield return null;
+        }
+
+        isCameraMoving = true;
+
+        mainCamera.transform.DOMoveY(mainCamera.transform.position.y + dis, 0.3f).OnComplete(OnCompleteCameraMove);
+    }
+
+    void OnCompleteCameraMove() {
+        isCameraMoving = false;
     }
 
 

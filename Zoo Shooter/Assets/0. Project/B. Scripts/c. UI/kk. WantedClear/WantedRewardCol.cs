@@ -78,6 +78,7 @@ public class WantedRewardCol : MonoBehaviour
 
     public void SetSelect() {
         selector.SetActive(true);
+        AudioAssistant.Shot("WantedRewardPing");
     }
 
     public void SetUnselect() {
@@ -90,6 +91,7 @@ public class WantedRewardCol : MonoBehaviour
 
     public void SetSelectEffect() {
         this.transform.DOScale(1.1f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+        AudioAssistant.Shot("WantedSelected");
     }
 
     void KillSelectEffect() {

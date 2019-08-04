@@ -15,6 +15,7 @@ public class PIER : MonoBehaviour {
     public static Action CoinRefresh;
     public static bool IsSpecialist = false;
 
+    [SerializeField] int debugCurrentList, debugCurrentLevel;
     public int Coin = 0; // 보유 코인 
     public int NoAds = 0; // false. 광고 
     public int BestScore = 0;
@@ -165,6 +166,9 @@ public class PIER : MonoBehaviour {
         // 장착한 무기 
         LoadEquipWeapon();
 
+        debugCurrentLevel = CurrentLevel;
+        debugCurrentList = CurrentList;
+
         // CurrentList = 0;
         // CurrentLevel = 2;
 
@@ -182,6 +186,9 @@ public class PIER : MonoBehaviour {
         PlayerPrefs.Save();
 
         SaveGun();
+
+        debugCurrentLevel = CurrentLevel;
+        debugCurrentList = CurrentList;
     }
 
     /// <summary>

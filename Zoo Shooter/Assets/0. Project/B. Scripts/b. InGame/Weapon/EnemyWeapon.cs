@@ -77,7 +77,7 @@ public class EnemyWeapon : MonoBehaviour
 
             ray = Physics2D.Linecast(_gunPoint.position, _aimPoint.position);
             if(!ray || ray.collider.tag != "Player")
-                this.transform.Rotate(-Vector3.back * Time.deltaTime * 45);
+                this.transform.Rotate(-Vector3.back * Time.deltaTime * 60);
             else {
 
                 this.transform.Rotate(-Vector3.back * Time.deltaTime * 30); // 몸통쪽을 조준하게끔 조금더 회전해준다. 
@@ -86,7 +86,7 @@ public class EnemyWeapon : MonoBehaviour
                 _canShoot = false; // 발사 처리 
 
                 GameManager.main.player.SetLargeCollider();
-                Invoke("ShotBullet", 0.5f);
+                Invoke("ShotBullet", 0.25f);
 
             }
         }

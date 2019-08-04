@@ -13,6 +13,12 @@ public class CameraShake : MonoBehaviour
     }
 
     public void ShakeOnce(float duration, float magnitude) {
+
+        
+        if (GameManager.isCameraMoving)
+            return;
+        
+
         if (isShaking)
             return;
 
@@ -20,6 +26,9 @@ public class CameraShake : MonoBehaviour
     }
 
     public void ShakeOnceWithVertical(float duration, float magnitude) {
+        if (GameManager.isCameraMoving)
+            return;
+
         if (isShaking)
             return;
 
@@ -27,6 +36,10 @@ public class CameraShake : MonoBehaviour
     }
 
     public void ShakeByPlayerJump() {
+
+        if (GameManager.isCameraMoving)
+            return;
+
         if (isShaking)
             return;
 
@@ -58,7 +71,6 @@ public class CameraShake : MonoBehaviour
 
 
     IEnumerator Shake(float duration, float magnitude, bool isVertical = false) {
-
 
         Vector3 originalPos = transform.localPosition;
         isShaking = true;

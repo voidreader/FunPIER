@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Google2u;
 using Doozy.Engine;
+using DG.Tweening;
 
 public class WantedReward : MonoBehaviour
 {
@@ -28,7 +29,8 @@ public class WantedReward : MonoBehaviour
     /// </summary>
     public void OnView() {
 
-        isGetFirstReward = false; 
+        isGetFirstReward = false;
+        bool existsNewWeapon = false;
 
         btnNoThanks.SetActive(false);
         btnAgain.SetActive(false);
@@ -50,12 +52,19 @@ public class WantedReward : MonoBehaviour
 
             _weapon = Stocks.GetWeaponByID(listRewardData[i]._weaponid);
             if (!PIER.main.HasGun(_weapon)) {
+                existsNewWeapon = true; 
                 break;// 보유하고 있지 않은 무기로 설정 
             }
         }
 
+
+        // 스페셜 리워드 설정
+        // 새로 받을 무기가 있을때와 아닐때로 구분된다 .
         WantedRewardCol col = list[Random.Range(0, list.Count)];
-        col.SetSpecialReward(_weapon); // 스페셜 리워드 설정
+        if(existsNewWeapon)
+            col.SetSpecialReward(_weapon); 
+        else
+            col.SetSpecialReward(null);
         list.Remove(col);
         
         
@@ -73,6 +82,11 @@ public class WantedReward : MonoBehaviour
         col.SetCommonReward(75);
         list.Remove(col);
 
+        // 연출을 위해 크기를 모두 0으로 수정 
+        for(int i=0; i< listRewards.Count; i++) {
+            listRewards[i].transform.localScale = Vector3.zero;
+        }
+
         // 선택 연출 시작
         StartCoroutine(Selecting());
         
@@ -80,7 +94,19 @@ public class WantedReward : MonoBehaviour
 
     IEnumerator Selecting() {
 
-        yield return new WaitForSeconds(1);
+        // 등장 연출은 첫 보상 때만 하면 된다. 
+        if (!isGetFirstReward) {
+            yield return new WaitForSeconds(0.5f);
+            for (int i = 0; i < listRewards.Count; i++) {
+                listRewards[i].transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
+                AudioAssistant.Shot("WantedRewardAppear");
+
+                yield return new WaitForSeconds(0.2f);
+            }
+        }
+
+
+        yield return new WaitForSeconds(0.8f);
 
         int max = Random.Range(18, 32);
         
@@ -169,8 +195,6 @@ public class WantedReward : MonoBehaviour
 
         // 한번 봤으면 동작 하지 않음 
         btnAgain.GetComponent<Image>().sprite = _inactiveButtonSprtie;
-
-
         StartCoroutine(Selecting());
     }
 
