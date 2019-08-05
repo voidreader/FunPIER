@@ -76,4 +76,15 @@ public class UIViewManager : MonoBehaviour
     }
 
 
+    public void OnClickGamePlay() {
+        // 보상 받다가, 게임 꺼진 경우를 대비한다. 
+        if(PIER.main.HasWantedReward()) {
+            GameEventMessage.SendEvent("GameClearEvent");
+        }
+        else {
+            GameEventMessage.SendEvent("GamePlayEvent"); // 받을 보상 없으면 고고 
+            GameManager.main.OnClickPlay(); // 게임플레이 시작.
+        }
+    }
+
 }

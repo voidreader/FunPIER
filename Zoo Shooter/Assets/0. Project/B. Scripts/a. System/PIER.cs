@@ -58,6 +58,21 @@ public class PIER : MonoBehaviour {
         BestScore = score;
     }
 
+
+    /// <summary>
+    /// 아직 못받은 보상이 있는지 체크 
+    /// </summary>
+    /// <returns></returns>
+    public bool HasWantedReward() {
+        int maxListLevel = GetMaxLevelFromList(CurrentList);
+
+        if (maxListLevel < CurrentLevel)
+            return true;
+
+        return false;
+
+    }
+
     /// <summary>
     /// 레벨 클리어. 
     /// </summary>

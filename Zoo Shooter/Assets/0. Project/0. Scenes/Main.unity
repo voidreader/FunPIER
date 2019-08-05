@@ -29027,21 +29027,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4050823949382013761, guid: 19b8887ec3b56de419eb5abb50a79e4b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4050823949382013761, guid: 19b8887ec3b56de419eb5abb50a79e4b,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3095966625402803420, guid: 19b8887ec3b56de419eb5abb50a79e4b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19b8887ec3b56de419eb5abb50a79e4b, type: 3}
 --- !u!1 &572656055
@@ -95799,8 +95784,8 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 2129935696}
-            m_MethodName: OnClickPlay
+          - m_Target: {fileID: 1990213094}
+            m_MethodName: OnClickGamePlay
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}

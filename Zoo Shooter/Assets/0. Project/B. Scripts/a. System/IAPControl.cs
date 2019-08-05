@@ -44,6 +44,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
         Debug.Log(">>> Unity IAP OnInitialized <<< ");
 
+        PIER.IsSpecialist = false;
+
         this.Controller = controller;
         this.extensions = extensions;
 

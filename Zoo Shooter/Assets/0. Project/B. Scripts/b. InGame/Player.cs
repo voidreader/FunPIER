@@ -9,6 +9,13 @@ public class Player : MonoBehaviour
     
 
     public SpriteRenderer sp;
+
+    public Sprite SpriteSpecialist; // 스페셜리스트 
+    public Sprite SpriteNormal; // 노멀 
+
+    public GameObject Helmet; // 헬멧(광고용)
+    
+
     public static bool isMoving = false;
     Vector3 targetPos;
     public bool isLeft = false;
@@ -24,6 +31,14 @@ public class Player : MonoBehaviour
     void Start()
     {
         SetRegularCollider();
+        Helmet.SetActive(false);
+
+        // 외향 설정
+        if (PIER.IsSpecialist)
+            sp.sprite = SpriteSpecialist;
+        else
+            sp.sprite = SpriteNormal;
+
     }
 
     public void KillPlayer() {
