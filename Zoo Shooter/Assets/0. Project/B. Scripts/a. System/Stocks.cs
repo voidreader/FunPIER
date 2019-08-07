@@ -6,6 +6,7 @@ using Google2u;
 public class Stocks : MonoBehaviour
 {
     public static Stocks main = null;
+    public Weapon WeaponSpecialist;
 
     public List<Weapon> ListWeapons; // 무기 데이터 
     public List<Sprite> ListWeaponSprites; // 무기 스프라이트
@@ -40,6 +41,17 @@ public class Stocks : MonoBehaviour
 
     private void Awake() {
         main = this;
+    }
+
+
+    public static Sprite GetWeaponInGameSprite(Weapon data) {
+        for (int i = 0; i < main.ListWeaponSprites.Count; i++) {
+            if (main.ListWeaponSprites[i].name == data.WeaponID) {
+                return main.ListWeaponSprites[i];
+            }
+        }
+
+        return null;
     }
 
     public static Sprite GetWeaponStoreSprite(Weapon data) {

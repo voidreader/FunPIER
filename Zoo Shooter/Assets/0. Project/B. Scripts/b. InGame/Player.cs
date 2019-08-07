@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public Sprite SpriteNormal; // 노멀 
 
     public GameObject Helmet; // 헬멧(광고용)
+    public bool ExtraLife = false;
     
 
     public static bool isMoving = false;
@@ -32,13 +33,32 @@ public class Player : MonoBehaviour
     {
         SetRegularCollider();
         Helmet.SetActive(false);
+        SetSpecialist();
+    }
 
+    /// <summary>
+    ///  감추기 처리 
+    /// </summary>
+    /// <param name="flag"></param>
+    public void SetHide(bool flag) {
+        this.gameObject.SetActive(!flag);
+
+        SetSpecialist();
+    }
+
+    /// <summary>
+    /// 스페셜 리스트 처리 
+    /// </summary>
+    public void SetSpecialist() {
         // 외향 설정
-        if (PIER.IsSpecialist)
+        if (PIER.IsSpecialist) {
             sp.sprite = SpriteSpecialist;
-        else
+            ExtraLife = true;
+        }
+        else {
             sp.sprite = SpriteNormal;
-
+            ExtraLife = false;
+        }
     }
 
     public void KillPlayer() {

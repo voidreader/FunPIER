@@ -119,7 +119,7 @@ public class Stair : MonoBehaviour
             }
             else {
 
-                enemy.transform.DOJump(GetEnemyPosition(), Random.Range(0.8f, enemy.jumpPower), 1, Random.Range(0.3f, 0.8f)).OnComplete(OnCompleteEnemyAppear);
+                enemy.transform.DOJump(GetEnemyPosition(), Random.Range(0.8f, enemy.jumpPower), 1, Random.Range(0.3f, 0.5f)).OnComplete(OnCompleteEnemyAppear);
                 enemy.Jump();
 
             }
@@ -127,7 +127,7 @@ public class Stair : MonoBehaviour
         }
         else { // 걷기 
             enemy.Walk(); //(애니메이션)
-            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.5f, 2f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
+            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.4f, 0.8f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
 
         }
     }

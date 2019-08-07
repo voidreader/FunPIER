@@ -39,6 +39,19 @@ public class PIER : MonoBehaviour {
         LoadData();
     }
 
+    #region 스페셜 리스트 
+
+    public void SetSpecialist() {
+        if(IsSpecialist) {
+            AddGun(Stocks.main.WeaponSpecialist);   
+        }
+        else {
+            RemoveGun(Stocks.main.WeaponSpecialist);
+        }
+    }
+
+    #endregion
+
     #region Level, List 처리
 
     /// <summary>
@@ -136,7 +149,6 @@ public class PIER : MonoBehaviour {
     }
 
     #endregion
-
 
     #region 저장된 데이터 로드 , 재화처리
     /// <summary>
@@ -243,7 +255,21 @@ public class PIER : MonoBehaviour {
     /// </summary>
     /// <param name="w"></param>
     public void AddGun(Weapon w) {
+
+        if (HasGun(w))
+            return;
+
         GunListNode[ColumnGun][-1]["name"] = w.name;
+        SaveGun();
+    }
+
+    public void RemoveGun(Weapon w) {
+        for(int i=0; i< GunListNode[ColumnGun].Count;i++) {
+
+            if (GunListNode[ColumnGun][i]["name"] == w.name)
+                GunListNode[ColumnGun].Remove(i);
+        }
+
         SaveGun();
     }
 

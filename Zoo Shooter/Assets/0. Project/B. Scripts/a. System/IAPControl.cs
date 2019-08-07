@@ -15,6 +15,10 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
     public IStoreController Controller { get => controller; set => controller = value; }
 
+    void Awake() {
+        main = this;
+        InitBilling();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -29,9 +33,9 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
 
-        builder.AddProduct("hm_specialist", ProductType.Subscription, new IDs {
-            { "hm_specialist", GooglePlay.Name },
-            { "hm_specialist", AppleAppStore.Name }
+        builder.AddProduct("hm_weekly_subs", ProductType.Subscription, new IDs {
+            { "hm_weekly_subs", GooglePlay.Name },
+            { "hm_weekly_subs", AppleAppStore.Name }
         });
 
 
@@ -93,6 +97,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
                     if(info.isSubscribed() == Result.True ) {
                         PIER.IsSpecialist = true;
+                        PIER.main.SetSpecialist();
                         Debug.Log("Is Specialist!!!!!!");
                     }
 
@@ -118,6 +123,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
         IsInitialized = true;
         Debug.Log("IAP init completed");
+
+        PIER.main.SetSpecialist();
 
         // SubscriptionManager.UpdateSubscription
     }
@@ -148,6 +155,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
         if(e.purchasedProduct.definition.type == ProductType.Subscription) {
             PIER.IsSpecialist = true;
+            PIER.main.SetSpecialist();
             Debug.Log("Is Specialist!!!!!! #1");
         }
             
@@ -161,6 +169,10 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     #region 구독 관련
 
     private bool checkIfProductIsAvailableForSubscriptionManager(string receipt) {
+
+        if (Application.isEditor)
+            return true;
+
         var receipt_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(receipt);
         if (!receipt_wrapper.ContainsKey("Store") || !receipt_wrapper.ContainsKey("Payload")) {
             Debug.Log("The product receipt does not contain enough information");

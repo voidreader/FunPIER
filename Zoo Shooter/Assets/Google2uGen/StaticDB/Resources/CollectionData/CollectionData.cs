@@ -80,10 +80,12 @@ namespace Google2u
 	public sealed class CollectionData : IGoogle2uDB
 	{
 		public enum rowIds {
-			collection0, collection1, collection2, collection3, collection4, collection5, collection6, collection7, collection8, collection9
+			collection0, collection1, collection2, collection3, collection4, collection5, collection6, collection7, collection8, collection9, collection10, collection11, collection12, collection13, collection14, collection15, collection16, collection17
+			, collection18, collection19
 		};
 		public string [] rowNames = {
-			"collection0", "collection1", "collection2", "collection3", "collection4", "collection5", "collection6", "collection7", "collection8", "collection9"
+			"collection0", "collection1", "collection2", "collection3", "collection4", "collection5", "collection6", "collection7", "collection8", "collection9", "collection10", "collection11", "collection12", "collection13", "collection14", "collection15", "collection16", "collection17"
+			, "collection18", "collection19"
 		};
 		public System.Collections.Generic.List<CollectionDataRow> Rows = new System.Collections.Generic.List<CollectionDataRow>();
 
@@ -110,6 +112,16 @@ namespace Google2u
 			Rows.Add( new CollectionDataRow("collection7", "7", "SUICIDEANIMAL"));
 			Rows.Add( new CollectionDataRow("collection8", "8", "PIRATESOFSEA"));
 			Rows.Add( new CollectionDataRow("collection9", "9", "TOILETFIGHTER2"));
+			Rows.Add( new CollectionDataRow("collection10", "10", "THEM2"));
+			Rows.Add( new CollectionDataRow("collection11", "11", "HALLOWEEN2"));
+			Rows.Add( new CollectionDataRow("collection12", "12", "BADMEN2"));
+			Rows.Add( new CollectionDataRow("collection13", "13", "STARFAMILY2"));
+			Rows.Add( new CollectionDataRow("collection14", "14", "HOMETOGETHER2"));
+			Rows.Add( new CollectionDataRow("collection15", "15", "SILENTMTN2"));
+			Rows.Add( new CollectionDataRow("collection16", "16", "neighborhood2"));
+			Rows.Add( new CollectionDataRow("collection17", "17", "SUICIDEANIMAL2"));
+			Rows.Add( new CollectionDataRow("collection18", "18", "PIRATESOFSEA2"));
+			Rows.Add( new CollectionDataRow("collection19", "19", "TOILETFIGHTER3"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

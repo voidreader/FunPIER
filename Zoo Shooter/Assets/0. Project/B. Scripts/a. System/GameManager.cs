@@ -41,7 +41,10 @@ public class GameManager : MonoBehaviour {
     public List<Stair> listStairs;
     public Weapon currentWeapon; // 현재 플레이어가 장착한 무기.
 
-    public float posFirstStairY = -2.5f;
+    public DancingPlayer Dancer;
+    public FakeEquipGun FakeEquipGun;
+
+    public float posFirstStairY = -1.5f;
     public int indexLastStair = 0;
     public float topStairY; // 꼭대기 계단 Y 좌표
     public int indexPlayerStair = 0; // 플레이어 캐릭터가 서있는 발판 index 
@@ -138,6 +141,8 @@ public class GameManager : MonoBehaviour {
 
         PoolManager.Pools[ConstBox.poolGame].DespawnAll();
         Debug.Log("Init InGame Starts.... :: " + CurrentLevelData);
+
+        // 환경 처리 
         InitEnvironments();
 
 
@@ -170,11 +175,27 @@ public class GameManager : MonoBehaviour {
         currentStair = listStairs[indexPlayerStair + 1];
 
 
+        // 주인공 설정 
         GetNewPlayer();
+        player.SetHide(true);
 
-
+        StartCoroutine(PositioningDancer());
     } // end of InitGame
 
+    IEnumerator PositioningDancer() {
+        while (!listStairs[indexPlayerStair].isInPosition)
+            yield return null;
+
+        yield return null;
+        Dancer.SetPosition(player.transform.position);
+        FakeEquipGun.SetFakeEquipWeapon(player.transform.position, PIER.main.CurrentWeapon);
+    }
+
+
+    /// <summary>
+    /// 신규 플레이어 생성 
+    /// </summary>
+    /// <param name="isStart"></param>
     void GetNewPlayer(bool isStart = true) {
         // 플레이어 생성
         player = GameObject.Instantiate(Stocks.main.prefabPlayer, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Player>();
@@ -183,12 +204,10 @@ public class GameManager : MonoBehaviour {
         if (isStart) // 시작시점의 생성 
             listStairs[indexPlayerStair].SetPlayer(player);
         else { // 부활한 경우 다르게 생성 
-            
             listStairs[indexPlayerStair].SetRevivedPlayer(player);
         }
-
-
     }
+
 
     /// <summary>
     /// 게임 시작 클릭!
@@ -204,6 +223,9 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(PlayRoutine());
 
         Debug.Log("OnClickPlay is clicked");
+        Dancer.gameObject.SetActive(false);
+        FakeEquipGun.SetHide();
+        player.SetHide(false);    
 
         
     }
@@ -743,7 +765,7 @@ public class GameManager : MonoBehaviour {
 
         Debug.Log("RefreshPlayerWeapon");
         player.InitWeaponOnly();
-
+        FakeEquipGun.SetWeapon(PIER.main.CurrentWeapon);
     }
 
     #region White Splash

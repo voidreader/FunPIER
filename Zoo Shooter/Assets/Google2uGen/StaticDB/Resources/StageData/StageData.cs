@@ -118,12 +118,16 @@ namespace Google2u
 		public enum rowIds {
 			level0, level1, level2, level3, level4, level5, level6, level7, level8, level9, level10, level11, level12, level13, level14, level15, level16, level17
 			, level18, level19, level20, level21, level22, level23, level24, level25, level26, level27, level28, level29, level30, level31, level32, level33, level34, level35, level36, level37
-			, level38, level39, level40, level41, level42, level43
+			, level38, level39, level40, level41, level42, level43, level44, level45, level46, level47, level48, level49, level50, level51, level52, level53, level54, level55, level56, level57
+			, level58, level59, level60, level61, level62, level63, level64, level65, level66, level67, level68, level69, level70, level71, level72, level73, level74, level75, level76, level77
+			, level78, level79, level80, level81, level82, level83, level84, level85
 		};
 		public string [] rowNames = {
 			"level0", "level1", "level2", "level3", "level4", "level5", "level6", "level7", "level8", "level9", "level10", "level11", "level12", "level13", "level14", "level15", "level16", "level17"
 			, "level18", "level19", "level20", "level21", "level22", "level23", "level24", "level25", "level26", "level27", "level28", "level29", "level30", "level31", "level32", "level33", "level34", "level35", "level36", "level37"
-			, "level38", "level39", "level40", "level41", "level42", "level43"
+			, "level38", "level39", "level40", "level41", "level42", "level43", "level44", "level45", "level46", "level47", "level48", "level49", "level50", "level51", "level52", "level53", "level54", "level55", "level56", "level57"
+			, "level58", "level59", "level60", "level61", "level62", "level63", "level64", "level65", "level66", "level67", "level68", "level69", "level70", "level71", "level72", "level73", "level74", "level75", "level76", "level77"
+			, "level78", "level79", "level80", "level81", "level82", "level83", "level84", "level85"
 		};
 		public System.Collections.Generic.List<StageDataRow> Rows = new System.Collections.Generic.List<StageDataRow>();
 
@@ -183,7 +187,49 @@ namespace Google2u
 			Rows.Add( new StageDataRow("level40", "40", "12", "80", "0"));
 			Rows.Add( new StageDataRow("level41", "41", "11", "90", "0"));
 			Rows.Add( new StageDataRow("level42", "42", "9", "80", "0"));
-			Rows.Add( new StageDataRow("level43", "43", "14", "90", "0"));
+			Rows.Add( new StageDataRow("level43", "43", "10", "80", "0"));
+			Rows.Add( new StageDataRow("level44", "44", "12", "90", "0"));
+			Rows.Add( new StageDataRow("level45", "45", "13", "95", "0"));
+			Rows.Add( new StageDataRow("level46", "46", "9", "80", "0"));
+			Rows.Add( new StageDataRow("level47", "47", "11", "90", "0"));
+			Rows.Add( new StageDataRow("level48", "48", "14", "100", "0"));
+			Rows.Add( new StageDataRow("level49", "49", "14", "90", "0"));
+			Rows.Add( new StageDataRow("level50", "50", "12", "100", "0"));
+			Rows.Add( new StageDataRow("level51", "51", "13", "90", "0"));
+			Rows.Add( new StageDataRow("level52", "52", "14", "105", "0"));
+			Rows.Add( new StageDataRow("level53", "53", "14", "102", "0"));
+			Rows.Add( new StageDataRow("level54", "54", "15", "110", "0"));
+			Rows.Add( new StageDataRow("level55", "55", "10", "70", "0"));
+			Rows.Add( new StageDataRow("level56", "56", "12", "80", "0"));
+			Rows.Add( new StageDataRow("level57", "57", "13", "90", "0"));
+			Rows.Add( new StageDataRow("level58", "58", "13", "110", "0"));
+			Rows.Add( new StageDataRow("level59", "59", "9", "88", "0"));
+			Rows.Add( new StageDataRow("level60", "60", "11", "92", "0"));
+			Rows.Add( new StageDataRow("level61", "61", "12", "100", "0"));
+			Rows.Add( new StageDataRow("level62", "62", "12", "80", "0"));
+			Rows.Add( new StageDataRow("level63", "63", "13", "99", "0"));
+			Rows.Add( new StageDataRow("level64", "64", "13", "104", "0"));
+			Rows.Add( new StageDataRow("level65", "65", "10", "88", "0"));
+			Rows.Add( new StageDataRow("level66", "66", "12", "96", "0"));
+			Rows.Add( new StageDataRow("level67", "67", "13", "99", "0"));
+			Rows.Add( new StageDataRow("level68", "68", "13", "108", "0"));
+			Rows.Add( new StageDataRow("level69", "69", "15", "115", "0"));
+			Rows.Add( new StageDataRow("level70", "70", "10", "92", "0"));
+			Rows.Add( new StageDataRow("level71", "71", "11", "96", "0"));
+			Rows.Add( new StageDataRow("level72", "72", "13", "100", "0"));
+			Rows.Add( new StageDataRow("level73", "73", "13", "110", "0"));
+			Rows.Add( new StageDataRow("level74", "74", "14", "106", "0"));
+			Rows.Add( new StageDataRow("level75", "75", "15", "114", "0"));
+			Rows.Add( new StageDataRow("level76", "76", "12", "82", "0"));
+			Rows.Add( new StageDataRow("level77", "77", "12", "88", "0"));
+			Rows.Add( new StageDataRow("level78", "78", "13", "94", "0"));
+			Rows.Add( new StageDataRow("level79", "79", "14", "100", "0"));
+			Rows.Add( new StageDataRow("level80", "80", "9", "88", "0"));
+			Rows.Add( new StageDataRow("level81", "81", "11", "92", "0"));
+			Rows.Add( new StageDataRow("level82", "82", "13", "96", "0"));
+			Rows.Add( new StageDataRow("level83", "83", "15", "100", "0"));
+			Rows.Add( new StageDataRow("level84", "84", "16", "110", "0"));
+			Rows.Add( new StageDataRow("level85", "85", "16", "120", "0"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
