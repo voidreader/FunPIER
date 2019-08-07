@@ -18,6 +18,7 @@ public class Stocks : MonoBehaviour
 
     public List<Sprite> ListPosters;
     public List<Sprite> ListStairs; // 계단..
+    public Sprite SpriteComingSoon;
 
 
     public GameObject prefabPlayer;
@@ -119,9 +120,9 @@ public class Stocks : MonoBehaviour
     /// </summary>
     /// <param name="i"></param>
     /// <returns></returns>
-    public static Sprite GetPosterSprite(int pLevel) {
+    public static Sprite GetPosterSprite(int pList) {
 
-        string name = CollectionData.Instance.Rows[pLevel]._sprite;
+        string name = CollectionData.Instance.Rows[pList]._sprite;
 
         for(int i=0; i<main.ListPosters.Count;i++) {
             if (main.ListPosters[i].name == name)

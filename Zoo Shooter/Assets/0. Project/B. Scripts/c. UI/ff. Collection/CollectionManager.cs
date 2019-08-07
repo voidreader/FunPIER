@@ -8,6 +8,7 @@ public class CollectionManager : MonoBehaviour
 {
     public List<CollectionDataRow> ListCollection = null; // 기준정보 
     public List<Sprite> ListImages; // 이미지들. 
+    public List<PrisonCinema> ListCinemas;
 
 
     public Image recordImage;
@@ -35,11 +36,15 @@ public class CollectionManager : MonoBehaviour
         // PIER.CurrentList
 
 
-        SetRecordInfo();
-        SetButtonSide();
+        //SetRecordInfo();
+        //SetButtonSide();
         
 
         Debug.Log("List & Level & index :: " + PIER.CurrentList + "/" + PIER.CurrentLevel +"/" + index);
+
+        for(int i=0; i<ListCinemas.Count;i++) {
+            ListCinemas[i].SetCinema();
+        }
     }
 
 

@@ -205,6 +205,8 @@ public class PierSystem : MonoBehaviour {
             MoveCount = node["movecount"].AsLong;
 
         }
+
+        NoAds = 1; // 주석 풀면 광고없음 
     }
 
 

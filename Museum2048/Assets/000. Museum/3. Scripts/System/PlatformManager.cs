@@ -399,6 +399,8 @@ public class PlatformManager : MonoBehaviour
     public void InitGooglePlay() {
 
         Debug.Log(">>InitGooglePlay << ");
+        if (Application.isEditor)
+            return;
 
         int responce = AN_GoogleApiAvailability.IsGooglePlayServicesAvailable();
         if (responce == AN_ConnectionResult.SUCCESS) {
