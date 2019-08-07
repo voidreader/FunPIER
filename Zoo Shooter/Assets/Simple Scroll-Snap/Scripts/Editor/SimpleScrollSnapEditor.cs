@@ -20,6 +20,7 @@ namespace DanielLochner.Assets.SimpleScrollSnap
         private SerializedProperty movementType, movementAxis, automaticallyLayout, sizeControl, size, automaticLayoutSpacing, leftMargin, rightMargin, topMargin, bottomMargin, infinitelyScroll, infiniteScrollingEndSpacing, startingPanel, swipeGestures, minimumSwipeSpeed, previousButton, nextButton, pagination, toggleNavigation, snapTarget, snappingSpeed, thresholdSnappingSpeed, hardSnap, onPanelSelecting, onPanelSelected, onPanelChanging, onPanelChanged;
         private SimpleScrollSnap simpleScrollSnap;
         private AnimationCurve selectedFunction = AnimationCurve.Constant(0, 1, 1);
+        private int currentPanel, targetPanel;
         #endregion
 
         #region Methods
@@ -67,8 +68,20 @@ namespace DanielLochner.Assets.SimpleScrollSnap
             TransitionEffects();
             EventHandlers();
 
+            GUILayout.BeginVertical();
+            currentPanel = simpleScrollSnap.CurrentPanel;
+            targetPanel = simpleScrollSnap.TargetPanel;
+
+            GUILayout.Label("CurrentPanel : " + currentPanel.ToString(), new GUIStyle() { fontSize = 30, alignment = TextAnchor.MiddleCenter });
+            GUILayout.Label("TargetPanel : " + targetPanel.ToString(), new GUIStyle() { fontSize = 30, alignment = TextAnchor.MiddleCenter });
+
+
+            GUILayout.EndVertical();
+
             serializedObject.ApplyModifiedProperties();
             PrefabUtility.RecordPrefabInstancePropertyModifications(simpleScrollSnap);
+
+
         }
 
         private void HeaderInformation()

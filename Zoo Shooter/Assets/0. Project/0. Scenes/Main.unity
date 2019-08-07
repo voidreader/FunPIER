@@ -34292,6 +34292,7 @@ MonoBehaviour:
   - {fileID: 103600895}
   - {fileID: 1606856022}
   - {fileID: 2111486300}
+  _sc: {fileID: 885616852}
   recordImage: {fileID: 858240778}
   btnLeft: {fileID: 1335054079}
   btnRight: {fileID: 1800178216}
@@ -47165,8 +47166,8 @@ MonoBehaviour:
   startingPanel: 0
   swipeGestures: 1
   minimumSwipeSpeed: 30
-  previousButton: {fileID: 0}
-  nextButton: {fileID: 0}
+  previousButton: {fileID: 1335054081}
+  nextButton: {fileID: 1800178221}
   pagination: {fileID: 1066182569}
   toggleNavigation: 1
   snapTarget: 2
@@ -47185,7 +47186,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   onPanelSelected:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 707086969}
+        m_MethodName: PanelChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onPanelChanging:
@@ -69668,18 +69680,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1335054082}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 707086969}
-        m_MethodName: OnClickLeft
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1335054082
@@ -87073,18 +87074,7 @@ MonoBehaviour:
         CustomSortingLayer: Default
       Event:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 707086969}
-            m_MethodName: OnClickRight
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       GameEvents: []
@@ -88202,8 +88192,8 @@ MonoBehaviour:
     IsPlaying: 0
     LoopAnimationType: 0
     LoadSelectedPresetAtRuntime: 0
-    PresetCategory: 
-    PresetName: 
+    PresetCategory: Uncategorized
+    PresetName: Default
   SelectedLoopAnimation:
     Animation:
       AnimationType: 3

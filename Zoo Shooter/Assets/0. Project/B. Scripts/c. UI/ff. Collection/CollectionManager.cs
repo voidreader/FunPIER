@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Google2u;
+using DanielLochner.Assets.SimpleScrollSnap;
 
 public class CollectionManager : MonoBehaviour
 {
     public List<CollectionDataRow> ListCollection = null; // 기준정보 
     public List<Sprite> ListImages; // 이미지들. 
     public List<PrisonCinema> ListCinemas;
+    public SimpleScrollSnap _sc;
 
 
     public Image recordImage;
@@ -118,6 +120,24 @@ public class CollectionManager : MonoBehaviour
         PlayerPrefs.SetInt(ConstBox.keyCurrentCollectionIndex, index);
     }
 
+    public void PanelChanged() {
+
+        Debug.Log("PanelChanged :: " + _sc.TargetPanel);
+        
+
+        if(_sc.TargetPanel == 0) {
+            btnLeft.SetActive(false);
+            btnRight.SetActive(true);
+        }
+        else if(_sc.TargetPanel == 3) {
+            btnLeft.SetActive(true);
+            btnRight.SetActive(false);
+        }
+        else {
+            btnLeft.SetActive(true);
+            btnRight.SetActive(true);
+        }
+    }
     
 
     
