@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using PathologicalGames;
 
 public enum WeaponDropType {
     NoDrop,
@@ -94,8 +95,11 @@ public class EnemyWeapon : MonoBehaviour
 
 
     void ShotBullet() {
-        Bullet b = GameObject.Instantiate(Stocks.main.prefabEnemyBullet, null, false).GetComponent<Bullet>();
-        b.transform.position = _gunPoint.position;
+
+
+        // Bullet b = GameObject.Instantiate(Stocks.main.prefabEnemyBullet, null, false).GetComponent<Bullet>();
+        //b.transform.position = _gunPoint.position;
+        Bullet b = PoolManager.Pools[ConstBox.poolGame].Spawn(Stocks.main.prefabEnemyBullet, _gunPoint.position, Quaternion.identity).GetComponent<Bullet>();
         b.isEnemy = true;
 
         if (GameManager.main.enemy.isLeft)

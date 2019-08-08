@@ -10,6 +10,7 @@ public class AimController : MonoBehaviour
 
     public Weapon EquipWeapon;
     public GameObject AimLine;
+    public Transform AimTrail;
 
     public float AimSpeed;
     public float AimRange;
@@ -48,7 +49,7 @@ public class AimController : MonoBehaviour
 
         AimLine.transform.localScale = new Vector3(AimRange, 1.5f, 1); // Line 길이 설정 
         AimLine.transform.localPosition = EquipWeapon.posGunPoint; // Line 위치 설정
-     
+        AimTrail.transform.localScale = new Vector3(1.2f, GetTrailHeight(AimRange), 1);
             
 
         // AimImage.rectTransform.sizeDelta = new Vector2(AimRange * 100f, AimRange * 100f);
@@ -56,6 +57,23 @@ public class AimController : MonoBehaviour
 
         
     }
+
+    #region Trail Y 구하기
+
+    float GetTrailHeight(float width) {
+        float step = (width - 0.1f) / 0.1f;
+        int div = (int)step;
+        Debug.Log("GetTrailHeight step :: " + step);
+        Debug.Log("GetTrailHeight  width / div :: " + width.ToString() + "/" + div);
+        Debug.Log("GetTrailHeight  :: " + 0.1f + 0.05f * div);
+            
+
+        return 0.1f + 0.05f * div;
+
+    }
+
+    #endregion
+
 
     void Update() {
 

@@ -60,6 +60,7 @@ public class GameViewManager : MonoBehaviour {
         // 스코어 및 ... 등등 
         _lblScore.text = "0";
         _lblLevel.text = "Level " + (PIER.CurrentLevel + 1).ToString();
+        _levelProgressor.gameObject.SetActive(true);
         _levelProgressor.InstantSetValue(0);
         _currentScore = 0;
 

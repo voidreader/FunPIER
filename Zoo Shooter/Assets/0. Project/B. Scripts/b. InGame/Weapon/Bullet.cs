@@ -31,39 +31,81 @@ public class Bullet : MonoBehaviour
     public bool isLeft = false;
     int direction = 1;
 
-    int BodyMask;
-    int HeadMask;
-    int BulletMask;
 
-    private void Awake() {
-        BodyMask = LayerMask.GetMask("Body");
-        HeadMask = LayerMask.GetMask("Head");
-        BulletMask = ~(LayerMask.GetMask("Bullet"));
+    Transform bulletSpawned;
 
+    // Muzzle 효과
+    Transform spawned;
+    ParticleSystem spawnedVFX;
 
-    }
+    // Hit 효과 
+    Transform hitSpawned;
+    ParticleSystem hitSpawnedVFX;
+
 
     void Start() {
 
+    }
+
+    void OnSpawned() {
+
+        collided = false;
+
         // Bullet Prefab
-        GameObject b = Instantiate(BulletPrefab, this.transform, true);
-        b.transform.localPosition = new Vector3(0, 0, -1.2f);
-        b.transform.localEulerAngles = new Vector3(90, 0, 0);
-        
+        // 총알 생성 
+        bulletSpawned = Instantiate(BulletPrefab, this.transform, true).transform;
+        bulletSpawned.localPosition = new Vector3(0, 0, -1.2f);
+        bulletSpawned.localEulerAngles = new Vector3(90, 0, 0);
+
+        // 총구 효과 
+        SetMuzzle();
+    }
+
+    void SetBullet() {
+        bulletSpawned = PoolManager.Pools[ConstBox.poolGame].Spawn(BulletPrefab, this.transform);
+        bulletSpawned.localPosition = new Vector3(0, 0, -1.2f);
+        bulletSpawned.localEulerAngles = new Vector3(90, 0, 0);
+    }
+
+    /// <summary>
+    /// 총구 효과 
+    /// </summary>
+    void SetMuzzle() {
         // Muzzle 총구 효과
-        if(MuzzlePrefab) {
-            GameObject m = Instantiate(MuzzlePrefab, transform.position, Quaternion.identity);
-            m.transform.forward = this.transform.forward;
+        if (MuzzlePrefab) {
+            spawned = PoolManager.Pools[ConstBox.poolGame].Spawn(MuzzlePrefab, transform.position, Quaternion.identity);
+            spawned.forward = this.transform.forward;
+            spawnedVFX = spawned.GetComponent<ParticleSystem>();
 
-            ParticleSystem vfx = m.GetComponent<ParticleSystem>();
-
-            if(vfx != null)
-                Destroy(m.gameObject, vfx.main.duration);
+            if (spawnedVFX != null)
+                PoolManager.Pools[ConstBox.poolGame].Despawn(spawned, spawnedVFX.main.duration);
             else {
-                vfx = m.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(m.gameObject, vfx.main.duration);
+                spawnedVFX = spawned.GetChild(0).GetComponent<ParticleSystem>();
+                PoolManager.Pools[ConstBox.poolGame].Despawn(spawned, spawnedVFX.main.duration);
             }
         }
+    }
+
+
+    /// <summary>
+    /// 히트 효과 
+    /// </summary>
+    void SetHit() {
+
+        if (HitPrefab == null)
+            return;
+
+        hitSpawned = PoolManager.Pools[ConstBox.poolGame].Spawn(HitPrefab, this.transform.position, Quaternion.identity);
+        hitSpawnedVFX = hitSpawned.GetComponent<ParticleSystem>();
+
+        if(hitSpawnedVFX == null) {
+            hitSpawnedVFX = hitSpawned.GetChild(0).GetComponent<ParticleSystem>();
+            PoolManager.Pools[ConstBox.poolGame].Despawn(hitSpawned, hitSpawnedVFX.main.duration);
+        }
+        else {
+            PoolManager.Pools[ConstBox.poolGame].Despawn(hitSpawned, hitSpawnedVFX.main.duration);
+        }
+
     }
 
 
@@ -76,78 +118,10 @@ public class Bullet : MonoBehaviour
         else
             direction = 1;
 
-
-
-        /*
-        if (RayGunPoint())
-            WeaponManager.isHit = true;
-        */
-
-        Destroy(gameObject, 1.5f);
+        // Destroy(gameObject, 1.5f);
     }
 
-
-    /// <summary>
-    /// 명중여부 체크 
-    /// </summary>
-    public bool RayGunPoint() {
-
-        // 사용 이유. 
-        // 쏘기전에 미리 명중 여부를 판단하기 위함. 
-        // 총알마다 모두 속도가 다르기 때문에 
-        // 빗나감 여부를 판단하기가 어렵다. 
-
-        // Raycast 전에 본인 collider를 감춘다
-        // RaycastHit2D[] hit = Physics2D.RaycastAll(this.transform.position, this.transform.right * direction);
-        RaycastHit2D hitBody = Physics2D.Raycast(this.transform.position, this.transform.right * direction, float.MaxValue, 1<<LayerMask.NameToLayer("Body"));
-        RaycastHit2D hitHead = Physics2D.Raycast(this.transform.position, this.transform.right * direction, float.MaxValue, 1 << LayerMask.NameToLayer("Head"));
-        // RaycastHit2D hitHead = Physics2D.Raycast(this.transform.position, this.transform.right * direction, 100, HeadMask);
-
-
-        if (hitBody.collider != null) {
-
-            Debug.Log("RayGunPoint Body :: " + hitBody.collider.tag);
-            return true;
-        }
-
-        if(hitHead.collider != null) {
-            Debug.Log("RayGunPoint Head :: " + hitHead.collider.tag);
-            return true;
-        }
-
-        RaycastHit2D hitBody2 = Physics2D.Raycast(this.transform.position, this.transform.right * -direction, 100, BodyMask);
-        RaycastHit2D hitHead2 = Physics2D.Raycast(this.transform.position, this.transform.right * -direction, 100, HeadMask);
-
-
-        return false;
-
-
-        /*
-        if (hit.Length == 0)
-            return false;
-
-        for (int i = 0; i < hit.Length; i++) {
-            if (hit[i].collider.gameObject == this.gameObject)
-                continue;
-
-            // Body와 Head만 인정 
-            if (hit[i].collider.tag == "Body" || hit[i].collider.tag == "Head")
-                return true;
-
-        }
-
-        return false;
-        */
-        
-
-        /*
-        if(hit.collider != null) {
-            Debug.Log("RayGunPoint :: " + hit.collider.tag);
-        }
-        */
-
-
-    }
+    
 
 
 
@@ -177,26 +151,8 @@ public class Bullet : MonoBehaviour
 
         collided = true;
 
-
-
-
-        // 히트 효과 처리
-        if (HitPrefab != null) {
-            GameObject hitVFX = Instantiate(HitPrefab, this.transform.position, Quaternion.identity);
-
-            ParticleSystem ps = hitVFX.GetComponent<ParticleSystem>();
-            if (ps == null) {
-                var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(hitVFX, psChild.main.duration);
-            }
-            else
-                Destroy(hitVFX, ps.main.duration);
-        } // 히트 효과 처리 종료
-
-        
-
-        
-
+        // 파티클 히트 효과 
+        SetHit();
 
 
         // 플레이어 처리 
@@ -226,45 +182,6 @@ public class Bullet : MonoBehaviour
         StartCoroutine(DestroyParticle(0f));
     }
 
-    /*
-    private void OnCollisionEnter2D(Collision2D collision) {
-
-        if (collided)
-            return;
-
-        collided = true;
-
-
-        // 히트 효과 처리
-        if (HitPrefab != null) {
-            GameObject hitVFX = Instantiate(HitPrefab, this.transform.position, Quaternion.identity);
-
-            ParticleSystem ps = hitVFX.GetComponent<ParticleSystem>();
-            if (ps == null) {
-                var psChild = hitVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
-                Destroy(hitVFX, psChild.main.duration);
-            }
-            else
-                Destroy(hitVFX, ps.main.duration);
-        } // 히트 효과 처리 종료
-
-        StartCoroutine(DestroyParticle(0f));
-
-        if(collision.collider.tag == "Stair") {
-            CameraShake.main.ShakeOnce(0.15f, 0.1f);
-        }
-        else if(collision.collider.tag == "Head") {
-            hitEnemy = collision.gameObject.GetComponentInParent<Enemy>();
-            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage, true);
-        }
-        else if(collision.collider.tag == "Body") {
-            hitEnemy = collision.gameObject.GetComponentInParent<Enemy>();
-            hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage, false);
-        }
-
-
-    }
-    */
 
 
     /// <summary>
@@ -290,8 +207,14 @@ public class Bullet : MonoBehaviour
             }
         }
 
+        Destroy(bulletSpawned.gameObject);
         yield return new WaitForSeconds(waitTime);
-        Destroy(gameObject);
+        // Destroy(gameObject);
+
+        if (PoolManager.Pools[ConstBox.poolGame].IsSpawned(this.transform))
+            PoolManager.Pools[ConstBox.poolGame].Despawn(this.transform);
+        else
+            Destroy(gameObject);
     }
 
 }

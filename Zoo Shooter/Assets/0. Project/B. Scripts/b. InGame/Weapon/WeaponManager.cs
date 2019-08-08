@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using PathologicalGames;
 
 public class WeaponManager : MonoBehaviour {
 
@@ -23,9 +24,8 @@ public class WeaponManager : MonoBehaviour {
     [SerializeField] Transform hitObject = null;
 
 
-    
+    Transform spawnedBullet;
     private int _direction;
-
     public static float StartAimDistance;
 
 
@@ -139,37 +139,25 @@ public class WeaponManager : MonoBehaviour {
         }
     }
 
-    /*
-    void ShotBullet(bool isMute = false) {
-        // PlayerBullet b = GameObject.Instantiate(BulletPrefab, null, false).GetComponent<PlayerBullet>();
-        PlayerBullet b = GameObject.Instantiate(EquipWeapon.bullet.gameObject, null, false).GetComponent<PlayerBullet>();
-        b.transform.position = GunpointTransform.position;
-        b.transform.rotation = Quaternion.identity;
-        
 
-        b.AddBulletForce(transform, _direction);
-
-        // Shoot 재생 
-        if (isMute)
-            return;
-
-        PlayShootSound();
-    }
-    */
 
     /// <summary>
-    /// 
+    /// 총알 발사!
     /// </summary>
     void ShotBulletNoForce(bool isMute = false) {
-        Bullet b = GameObject.Instantiate(EquipWeapon.bulletPrefab, null, false).GetComponent<Bullet>();
-        b.transform.position = GunpointTransform.position;
+        // Bullet b = GameObject.Instantiate(EquipWeapon.bulletPrefab, null, false).GetComponent<Bullet>();
+        // b.transform.position = GunpointTransform.position;
+        spawnedBullet = PoolManager.Pools[ConstBox.poolGame].Spawn(EquipWeapon.bulletPrefab, GunpointTransform.position, Quaternion.identity);
+        // spawnedBullet.position = GunpointTransform.position;
+
 
         if (GameManager.main.player.isLeft)
-            b.transform.eulerAngles = new Vector3(this.transform.eulerAngles.z, 90, 0);
+            spawnedBullet.eulerAngles = new Vector3(this.transform.eulerAngles.z, 90, 0);
         else
-            b.transform.eulerAngles = new Vector3(this.transform.eulerAngles.z, -90, 0);
+            spawnedBullet.eulerAngles = new Vector3(this.transform.eulerAngles.z, -90, 0);
 
-        b.SetBulletOn(GameManager.main.player.isLeft);
+        spawnedBullet.GetComponent<Bullet>().isEnemy = false;
+        spawnedBullet.GetComponent<Bullet>().SetBulletOn(GameManager.main.player.isLeft);
 
         // Shoot 재생 
         if (isMute)
