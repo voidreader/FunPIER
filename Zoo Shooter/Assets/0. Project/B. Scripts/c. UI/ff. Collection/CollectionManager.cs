@@ -2,28 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using Google2u;
 using DanielLochner.Assets.SimpleScrollSnap;
+using Doozy.Engine;
 
 public class CollectionManager : MonoBehaviour
 {
+
+    public static CollectionManager main = null;
+    public static int TargetPanel = -1;
+
     public List<CollectionDataRow> ListCollection = null; // 기준정보 
     public List<Sprite> ListImages; // 이미지들. 
     public List<PrisonCinema> ListCinemas;
     public SimpleScrollSnap _sc;
 
 
-    public Image recordImage;
+    public Image NewPoster;
 
     public GameObject btnLeft, btnRight;
+    public GameObject InvisibleCover;
     public Text lblRecord;
 
     public int index = 0;
 
+    private void Awake() {
+        main = this;
+    }
 
+
+    #region OnStart
+    /// <summary>
+    /// 
+    /// </summary>
     public void OnViewCollection() {
 
-        
+        InvisibleCover.SetActive(false);
 
         if (ListCollection == null)
             ListCollection = CollectionData.Instance.Rows;
@@ -34,37 +49,22 @@ public class CollectionManager : MonoBehaviour
         else
             index = 0;
 
-
-        // PIER.CurrentList
-
-
-        //SetRecordInfo();
-        //SetButtonSide();
-        
-
         Debug.Log("List & Level & index :: " + PIER.CurrentList + "/" + PIER.CurrentLevel +"/" + index);
 
         for(int i=0; i<ListCinemas.Count;i++) {
             ListCinemas[i].SetCinema();
         }
-    }
 
-
-    /// <summary>
-    /// 레코드 이미지와 레이블 처리 
-    /// </summary>
-    void SetRecordInfo() {
-        // recordImage.sprite = ListImages[index];
-        recordImage.sprite = Stocks.GetPosterSprite(index);
-        lblRecord.text = "RECORD." + string.Format("{0:00}", (index + 1).ToString());
-
-        if(index == PIER.CurrentList) { // 현재 상태는. 검은색
-            recordImage.color = Color.black;
+        // 타겟 패널은 신규 포스터 발생시, 값이 입력된다 .
+        if(TargetPanel >= 0) {
+            StartCoroutine(NewPosterRoutine());
         }
-        else {
-            recordImage.color = Color.white;
-        }
+
     }
+    #endregion
+
+
+
 
     /// <summary>
     /// 사이드 버튼 체크 
@@ -85,36 +85,7 @@ public class CollectionManager : MonoBehaviour
     }
 
 
-    public void OnClickRight() {
 
-        Debug.Log("OnClickRight index/CurrentList:: " + index + "/" + PIER.CurrentList);
-
-        if (index + 1 >= PIER.CurrentList)
-            return;
-
-
-        index++;
-
-        SetRecordInfo();
-        SetButtonSide();
-
-        SaveCollectionIndex();
-    }
-
-    public void OnClickLeft() {
-
-        Debug.Log("OnClickLeft index/CurrentList:: " + index + "/" + PIER.CurrentList);
-
-        if (index <= 0)
-            return;
-
-        index--;
-
-        SetRecordInfo();
-        SetButtonSide();
-
-        SaveCollectionIndex();
-    }
 
     void SaveCollectionIndex() {
         PlayerPrefs.SetInt(ConstBox.keyCurrentCollectionIndex, index);
@@ -122,6 +93,7 @@ public class CollectionManager : MonoBehaviour
 
     public void PanelChanged() {
 
+        /*
         Debug.Log("PanelChanged :: " + _sc.TargetPanel);
         
 
@@ -137,8 +109,68 @@ public class CollectionManager : MonoBehaviour
             btnLeft.SetActive(true);
             btnRight.SetActive(true);
         }
+        */
     }
     
+
+    IEnumerator NewPosterRoutine() {
+
+        Debug.Log("New Poster Routine go!");
+
+        // 입력막기용 오브젝트 활성화
+        InvisibleCover.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        // 목표 패널로 이동 
+        _sc.GoToPanel(TargetPanel);
+        yield return new WaitForSeconds(0.5f);
+
+        // 신규 포스터 오픈
+        // !! 아직 CurrentList를 + 하기 전이다. 
+        // CurrentList는 실제 보상을 받고 나서 증가한다.
+        // CurrentList는 현재 진행중인 현상금 수배 리스트다. 
+        NewPoster.sprite = Stocks.GetPosterSprite(PIER.CurrentList);
+
+        NewPoster.transform.localEulerAngles = new Vector3(0, 0, 719);
+        NewPoster.transform.localScale = new Vector3(0, 0, 1);
+        NewPoster.color = new Color(1, 1, 1, 0);
+        NewPoster.gameObject.SetActive(true);
+
+        NewPoster.transform.DORotate(new Vector3(0, 0, 0), 0.4f, RotateMode.FastBeyond360).SetEase(Ease.InSine);
+        NewPoster.transform.DOScale(1.2f, 0.4f).SetEase(Ease.InOutExpo);
+        NewPoster.DOFade(1, 0.4f).SetEase(Ease.Linear);
+        // NewPoster.transform.doc
+
+        yield return new WaitForSeconds(1);
+
+        // 지금 리스트가 몇번째 인덱스인지 찾는다.
+        Transform target = null;
+
+        for(int i=0; i<5;i++) {
+            if(ListCinemas[TargetPanel].ListPosters[i].GetComponent<CinemaPoster>()._posterID == PIER.CurrentList) {
+                target = ListCinemas[TargetPanel].ListPosters[i].transform;
+            }
+        }
+        
+        if(target) {
+            NewPoster.transform.DOMove(target.position, 1f).OnComplete(() => OnCompleteNewPosterArrive(target));
+            NewPoster.transform.DOScale(0.4f, 1f);
+        }
+
+        yield return new WaitForSeconds(1.2f);
+        InvisibleCover.SetActive(false);
+
+        // 보상화면 오픈 
+        GameEventMessage.SendEvent("CallWantedReward");
+    }
+
+    void OnCompleteNewPosterArrive(Transform target) {
+        NewPoster.gameObject.SetActive(false);
+        target.GetComponent<CinemaPoster>().SetPoster(PIER.CurrentList);
+        TargetPanel = -1;
+
+        ListCinemas[TargetPanel].SetOpen();
+        
+    }
 
     
 }

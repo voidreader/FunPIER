@@ -84,7 +84,11 @@ public class BlacklistManager : MonoBehaviour {
             return;
 
         //CallWantedClearFromWanted
-        GameEventMessage.SendEvent("CallWantedClearFromWanted");
+        CollectionManager.TargetPanel = PIER.GetListTargetCollectionPanel(); // 타겟 패널 미리 지정
+        GameEventMessage.SendEvent("CallClearListEvent");
+        Debug.Log(" >> OnClickClaim Target collection panel :: " + PIER.GetListTargetCollectionPanel());
+
+        
     }
 
     public void OnClickBack() {

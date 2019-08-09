@@ -53,6 +53,10 @@ public class PIER : MonoBehaviour {
     #endregion
 
     #region Level, List 처리
+    public static int GetListTargetCollectionPanel() {
+
+        return PIER.CurrentList / 5;
+    }
 
     /// <summary>
     /// 베스트 스코어 처리 
@@ -112,7 +116,7 @@ public class PIER : MonoBehaviour {
         SaveData();
     }
 
-    int GetMaxLevelFromList(int l) {
+    public int GetMaxLevelFromList(int l) {
         int max = 0;
         for(int i=0; i<ListBossData.Count;i++) {
             if(ListBossData[i]._list == l) {
