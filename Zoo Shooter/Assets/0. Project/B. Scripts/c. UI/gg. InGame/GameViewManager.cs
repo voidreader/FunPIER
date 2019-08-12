@@ -89,6 +89,7 @@ public class GameViewManager : MonoBehaviour {
         _lblBossName1.transform.localPosition = new Vector3(-609, 380, 0);
 
         _bossGroup.SetActive(true);
+        _bossHP.gameObject.SetActive(false);
 
         // 무브무브!
         _redBox1.DOLocalMoveX(0, 0.8f);

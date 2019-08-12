@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
 {
 
     public bool isOn = false;
+    public bool isBulletInstantiate = false;
 
     public Rigidbody2D rb;
     public float speed = 5; // 발사속도
@@ -51,20 +52,30 @@ public class Bullet : MonoBehaviour
 
         collided = false;
 
-        // Bullet Prefab
-        // 총알 생성 
-        bulletSpawned = Instantiate(BulletPrefab, this.transform, true).transform;
-        bulletSpawned.localPosition = new Vector3(0, 0, -1.2f);
-        bulletSpawned.localEulerAngles = new Vector3(90, 0, 0);
+        // 총알 처리 
+        SetBullet(); 
 
         // 총구 효과 
         SetMuzzle();
     }
 
     void SetBullet() {
-        bulletSpawned = PoolManager.Pools[ConstBox.poolGame].Spawn(BulletPrefab, this.transform);
-        bulletSpawned.localPosition = new Vector3(0, 0, -1.2f);
-        bulletSpawned.localEulerAngles = new Vector3(90, 0, 0);
+
+        // 총알을 추가로 생성하는 경우 
+        if (BulletPrefab != this.gameObject) {
+
+            Debug.Log("Instantiate.. Bullet");
+            isBulletInstantiate = true;
+
+            // Bullet Prefab
+            // 총알 생성 
+            bulletSpawned = Instantiate(BulletPrefab, this.transform, true).transform;
+            bulletSpawned.localPosition = new Vector3(0, 0, -1.2f);
+            bulletSpawned.localEulerAngles = new Vector3(90, 0, 0);
+        }
+        else
+            isBulletInstantiate = false;
+
     }
 
     /// <summary>
@@ -191,6 +202,7 @@ public class Bullet : MonoBehaviour
     /// <returns></returns>
     public IEnumerator DestroyParticle(float waitTime) {
 
+        /*
         if (transform.childCount > 0 && waitTime != 0) {
             List<Transform> tList = new List<Transform>();
 
@@ -206,10 +218,14 @@ public class Bullet : MonoBehaviour
                 }
             }
         }
+        */
+        if(isBulletInstantiate) {
+            Destroy(bulletSpawned.gameObject);
+        }
 
-        Destroy(bulletSpawned.gameObject);
+
         yield return new WaitForSeconds(waitTime);
-        // Destroy(gameObject);
+
 
         if (PoolManager.Pools[ConstBox.poolGame].IsSpawned(this.transform))
             PoolManager.Pools[ConstBox.poolGame].Despawn(this.transform);

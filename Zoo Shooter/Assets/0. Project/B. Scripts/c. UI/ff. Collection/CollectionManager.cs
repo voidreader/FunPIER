@@ -25,6 +25,8 @@ public class CollectionManager : MonoBehaviour
     public GameObject InvisibleCover;
     public Text lblRecord;
 
+    public Transform debugPosterTarget;
+
     public int index = 0;
 
     private void Awake() {
@@ -129,15 +131,15 @@ public class CollectionManager : MonoBehaviour
         // CurrentList는 실제 보상을 받고 나서 증가한다.
         // CurrentList는 현재 진행중인 현상금 수배 리스트다. 
         NewPoster.sprite = Stocks.GetPosterSprite(PIER.CurrentList);
-
+        NewPoster.transform.localScale = Vector3.zero;
         NewPoster.transform.localEulerAngles = new Vector3(0, 0, 719);
         NewPoster.transform.localScale = new Vector3(0, 0, 1);
         NewPoster.color = new Color(1, 1, 1, 0);
         NewPoster.gameObject.SetActive(true);
 
-        NewPoster.transform.DORotate(new Vector3(0, 0, 0), 0.4f, RotateMode.FastBeyond360).SetEase(Ease.InSine);
-        NewPoster.transform.DOScale(1.2f, 0.4f).SetEase(Ease.InOutExpo);
-        NewPoster.DOFade(1, 0.4f).SetEase(Ease.Linear);
+        NewPoster.transform.DORotate(new Vector3(0, 0, 0), 0.3f, RotateMode.FastBeyond360).SetEase(Ease.InSine);
+        NewPoster.transform.DOScale(1.3f, 0.3f).SetEase(Ease.InOutExpo);
+        NewPoster.DOFade(1, 0.3f).SetEase(Ease.Linear);
         // NewPoster.transform.doc
 
         yield return new WaitForSeconds(1);
@@ -152,11 +154,11 @@ public class CollectionManager : MonoBehaviour
         }
         
         if(target) {
-            NewPoster.transform.DOMove(target.position, 1f).OnComplete(() => OnCompleteNewPosterArrive(target));
-            NewPoster.transform.DOScale(0.4f, 1f);
+            NewPoster.transform.DOMove(target.position, 0.5f).OnComplete(() => OnCompleteNewPosterArrive(target));
+            NewPoster.transform.DOScale(0.4f, 0.5f);
         }
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(2f);
         InvisibleCover.SetActive(false);
 
         // 보상화면 오픈 
@@ -164,12 +166,36 @@ public class CollectionManager : MonoBehaviour
     }
 
     void OnCompleteNewPosterArrive(Transform target) {
+        Debug.Log(">> OnCompleteNewPosterArrive <<");
+        debugPosterTarget = target;
+
+
         NewPoster.gameObject.SetActive(false);
         target.GetComponent<CinemaPoster>().SetPoster(PIER.CurrentList);
+        target.GetComponent<CinemaPoster>().FocusPoster();
         TargetPanel = -1;
 
         ListCinemas[TargetPanel].SetOpen();
+        // debugPosterTarget.DOScale(new Vector3(0.7f, 0.7f, 1), 0.3f).SetLoops(4, LoopType.Yoyo);
+
         
+    }
+
+    public void OnClickBigPoster() {
+        NewPoster.gameObject.SetActive(false);
+    }
+
+    public void OpenBigPoster(int id) {
+        NewPoster.sprite = Stocks.GetPosterSprite(id);
+        NewPoster.transform.localScale = Vector3.zero;
+        NewPoster.transform.localEulerAngles = new Vector3(0, 0, 719);
+        NewPoster.transform.localScale = new Vector3(0, 0, 1);
+        NewPoster.color = new Color(1, 1, 1, 0);
+        NewPoster.gameObject.SetActive(true);
+
+        NewPoster.transform.DORotate(new Vector3(0, 0, 0), 0.3f, RotateMode.FastBeyond360).SetEase(Ease.InSine);
+        NewPoster.transform.DOScale(1.3f, 0.3f).SetEase(Ease.InOutExpo);
+        NewPoster.DOFade(1, 0.3f).SetEase(Ease.Linear);
     }
 
     

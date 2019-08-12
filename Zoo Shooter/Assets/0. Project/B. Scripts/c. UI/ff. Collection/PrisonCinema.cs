@@ -7,6 +7,7 @@ public class PrisonCinema : MonoBehaviour
 {
 
     public List<Button> ListPosters;
+    public List<Prisoner> ListPrisoners;
     public Text TextGate;
 
     public int MinList, MaxList;
@@ -20,12 +21,15 @@ public class PrisonCinema : MonoBehaviour
     /// </summary>
     public void SetCinema() {
 
+        this.gameObject.SetActive(true);
+
         CurrentList = PIER.CurrentList;
         MaxListLevel = PIER.main.GetMaxLevelFromList(CurrentList);
+        TextGate.text = string.Empty;
 
 
         int posterIndex = MinList;
-        bool isOpen = false; 
+        IsOpen = false;
 
         // 초기 세팅을 진행한다. 
         // 
@@ -36,20 +40,24 @@ public class PrisonCinema : MonoBehaviour
             if (posterIndex < PIER.CurrentList) {
                 // ListPosters[i].GetComponent<Image>().sprite = Stocks.GetPosterSprite(posterIndex);
                 ListPosters[i].GetComponent<CinemaPoster>().SetPoster(posterIndex);
-                isOpen = true;
+                IsOpen = true;
        
             }
             else {
                 //ListPosters[i].GetComponent<Image>().sprite = Stocks.main.SpriteComingSoon;
-                ListPosters[i].GetComponent<CinemaPoster>().SetComingSoon();
+                ListPosters[i].GetComponent<CinemaPoster>().SetComingSoon(posterIndex);
             }
 
             posterIndex++;
+        }
 
+        // 죄수들 초기화
+        for(int i=0;i<ListPrisoners.Count;i++) {
+            ListPrisoners[i].SetHide();
         }
 
         // 하나라도 오픈되어 있다면, 
-        if(isOpen) {
+        if(IsOpen) {
             SetOpen();
         }
         else {
@@ -58,11 +66,18 @@ public class PrisonCinema : MonoBehaviour
     }
 
     public void SetOpen() {
-        if (IsOpen)
+        if (TextGate.text == "NOW SHOWING")
             return;
 
+        int prisonerCount = Random.Range(2, 8);
         TextGate.text = "NOW SHOWING";
         IsOpen = true;
+
+
+        for(int i = 0; i < prisonerCount; i++) {
+            ListPrisoners[i].SetPrisoner();
+        }
+        
         
     }
 

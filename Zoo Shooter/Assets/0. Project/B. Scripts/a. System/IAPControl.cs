@@ -49,6 +49,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         Debug.Log(">>> Unity IAP OnInitialized <<< ");
 
         PIER.IsSpecialist = false;
+        // PIER.IsSpecialist = true;
 
         this.Controller = controller;
         this.extensions = extensions;
@@ -172,6 +173,11 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
         if (Application.isEditor)
             return true;
+
+        if (string.IsNullOrEmpty(receipt)) {
+            Debug.Log(">> Check if product..... receipt is null or empty");
+            return false;
+        }
 
         var receipt_wrapper = (Dictionary<string, object>)MiniJson.JsonDecode(receipt);
         if (!receipt_wrapper.ContainsKey("Store") || !receipt_wrapper.ContainsKey("Payload")) {

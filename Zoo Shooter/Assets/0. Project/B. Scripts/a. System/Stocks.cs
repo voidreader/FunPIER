@@ -18,6 +18,9 @@ public class Stocks : MonoBehaviour
 
     public List<Sprite> ListPosters;
     public List<Sprite> ListStairs; // 계단..
+    public List<Sprite> ListPrisoners;
+
+
     public Sprite SpriteComingSoon;
 
 
@@ -26,12 +29,13 @@ public class Stocks : MonoBehaviour
     public GameObject prefabBossEnemy; // 보스
     public GameObject prefabEnemyWeapon; // 적 무기 
     public GameObject prefabEnemyBullet; // 적 총알 
+    public GameObject prefabKillEffect;
 
 
     public AudioClip clipEnemyShotSound; // 적 총 소리 (일괄)
 
     #region 파티클 시스템
-    public ParticleSystem particleSkullExplosion;
+    
     #endregion
 
     #region Colors 
@@ -161,5 +165,14 @@ public class Stocks : MonoBehaviour
 
         return null;
 
+    }
+
+
+    /// <summary>
+    /// 죄수.. 랜덤 얻어오기 
+    /// </summary>
+    /// <returns></returns>
+    public static Sprite GetRandomPrisoner() {
+        return main.ListPrisoners[Random.Range(0, main.ListPrisoners.Count)];
     }
 }

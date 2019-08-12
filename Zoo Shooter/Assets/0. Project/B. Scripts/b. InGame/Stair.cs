@@ -188,6 +188,7 @@ public class Stair : MonoBehaviour
 
         player.SetSpriteDirection(isLeftStair);
         player.MoveNextStair(pos);
+        player.isRevived = true;
         // player.transform.DOJump(pos, 3f, 1, 0.6f);
 
     }

@@ -258,7 +258,10 @@ public class Enemy : MonoBehaviour {
         int killRand = Random.Range(0, 3);
 
         // 연출 
-        PoolManager.Pools[ConstBox.poolGame].Spawn(Stocks.main.particleSkullExplosion, this.transform.position, Quaternion.identity);
+        PoolManager.Pools[ConstBox.poolGame].Spawn(Stocks.main.prefabKillEffect, this.transform.position, Quaternion.identity)
+            .GetComponent<KillEffect>().SetKillEffect(this.transform.position);
+
+
         
         // 헤드샷때는 더 강렬하게 kill
         if(isHeadShotKill) {
@@ -305,6 +308,10 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     public virtual void Shoot() {
         weapon.Shoot();
+    }
+
+    public void InitWeaponRotation() {
+        weapon.InitRotation(isLeft);
     }
 
 

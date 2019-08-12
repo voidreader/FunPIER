@@ -21,9 +21,18 @@ public class EnemyWeapon : MonoBehaviour
 
     public bool _canShoot = false; // 쏠 수 있음 
     public bool _aiming = false; // 조준 중 
+
+    
     
     
     RaycastHit2D ray;
+
+    public void InitRotation(bool isLeft) {
+
+        ResetStatus();
+        this.transform.localEulerAngles = new Vector3(0, this.transform.localEulerAngles.y, 0);
+
+    }
 
     /// <summary>
     /// 
@@ -53,6 +62,9 @@ public class EnemyWeapon : MonoBehaviour
 
         _gunPoint.transform.localPosition = _weaponData.posGunPoint; // 건포인트
         this.transform.localScale = _weaponData.posScale; // 크기 
+
+        
+            
     } 
 
 
@@ -62,6 +74,10 @@ public class EnemyWeapon : MonoBehaviour
     }
 
     public void Shoot() {
+
+        Debug.Log("Enemy Shoot Called");
+
+
         _canShoot = true;
     }
 
@@ -81,7 +97,7 @@ public class EnemyWeapon : MonoBehaviour
                 this.transform.Rotate(-Vector3.back * Time.deltaTime * 60);
             else {
 
-                this.transform.Rotate(-Vector3.back * Time.deltaTime * 30); // 몸통쪽을 조준하게끔 조금더 회전해준다. 
+                this.transform.Rotate(-Vector3.back * Time.deltaTime * 60); // 몸통쪽을 조준하게끔 조금더 회전해준다. 
                 _aiming = true;
                 Debug.Log("Enemy Aim Completed ");
                 _canShoot = false; // 발사 처리 

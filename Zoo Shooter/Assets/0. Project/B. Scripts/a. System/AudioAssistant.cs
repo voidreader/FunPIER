@@ -206,7 +206,7 @@ public class AudioAssistant : MonoBehaviour {
                 return;
 
             // mixBuffer.Add(clip);
-            Debug.Log("Shot Audio ::" + clip);
+            // Debug.Log("Shot Audio ::" + clip);
             main.sfx.PlayOneShot(sound.clips[Random.Range(0, sound.clips.Count)]);
         }
     }

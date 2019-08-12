@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 
     public SpriteRenderer sp;
 
+    public bool isRevived = false;
     public Sprite SpriteSpecialist; // 스페셜리스트 
     public Sprite SpriteNormal; // 노멀 
 
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
     public BoxCollider2D collider;
     public Rigidbody2D rigid;
 
+    public BreakingArmor _breakingArmor;
 
     // Start is called before the first frame update
     void Start()
@@ -46,10 +48,23 @@ public class Player : MonoBehaviour
         SetSpecialist();
     }
 
+
+    /// <summary>
+    /// 부활했을때는 일반상태로 살아난다. 
+    /// </summary>
+    void SetNormalAgentForce() {
+
+        Debug.Log(">> SetNormalAgentForce <<");
+
+        sp.sprite = SpriteNormal;
+        ExtraLife = false;
+    }
+
     /// <summary>
     /// 스페셜 리스트 처리 
     /// </summary>
     public void SetSpecialist() {
+        Debug.Log(">> Player Check Specialist <<");
         // 외향 설정
         if (PIER.IsSpecialist) {
             sp.sprite = SpriteSpecialist;
@@ -59,9 +74,23 @@ public class Player : MonoBehaviour
             sp.sprite = SpriteNormal;
             ExtraLife = false;
         }
+
+        if (isRevived)
+            SetNormalAgentForce();
+
     }
 
     public void KillPlayer() {
+
+        // 엑스트라 라이프.
+        if(ExtraLife && PIER.IsSpecialist) {
+            _breakingArmor.PlayBreakingArmor();
+            sp.sprite = SpriteNormal;
+            ExtraLife = false;
+            return;
+        }
+
+
         rigid.bodyType = RigidbodyType2D.Dynamic;
 
         if(isLeft)
@@ -149,7 +178,9 @@ public class Player : MonoBehaviour
         // weapon.StartAim(isLeft);
 
         weapon.CurrentAim.ResetAim();
-        AimController.Wait = false;
+
+        if(!GameManager.isWait)
+            AimController.Wait = false;
         
     }
 
@@ -159,7 +190,7 @@ public class Player : MonoBehaviour
 
     public void SetLargeCollider() {
         collider.offset = new Vector2(-0.1229745f, 0.06598422f);
-        collider.size = new Vector2(1, 1.648212f);
+        collider.size = new Vector2(1, 2);
         
     }
 

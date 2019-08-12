@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1037652911934484846}
   - component: {fileID: 1098210778411271128}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,9 +149,9 @@ GameObject:
   - component: {fileID: 4969221822723628544}
   - component: {fileID: 4035213159551535168}
   - component: {fileID: 2355900715468390899}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PinkGumBullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4927,11 +4927,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOn: 0
+  isBulletInstantiate: 0
   rb: {fileID: 4035213159551535168}
-  speed: 5
+  speed: 40
   BulletPrefab: {fileID: 1039748797692505762}
-  MuzzlePrefab: {fileID: 0}
-  HitPrefab: {fileID: 0}
+  MuzzlePrefab: {fileID: 1997343281232380, guid: 526f57301ad22224c91d43846969b4a5,
+    type: 3}
+  HitPrefab: {fileID: 1862546671279240, guid: dc00761abaf0651439c75bb49ce7dbed, type: 3}
   trails: []
   isEnemy: 0
   isLeft: 0
@@ -4950,7 +4952,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -4966,7 +4968,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -4983,7 +4985,7 @@ GameObject:
   - component: {fileID: 1037857340436410006}
   - component: {fileID: 912271711975126926}
   - component: {fileID: 913088540938981322}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}

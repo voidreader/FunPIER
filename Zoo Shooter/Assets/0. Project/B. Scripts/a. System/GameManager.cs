@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.K)) {
             // PlayerBullet.isHitEnemy = true;
             enemy.HitEnemy(100, false);
-            GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
+            // GameViewManager.main.AddScore(GameManager.main.CurrentLevelData._level + 1);
         }
 
 
@@ -205,6 +205,7 @@ public class GameManager : MonoBehaviour {
             listStairs[indexPlayerStair].SetPlayer(player);
         else { // 부활한 경우 다르게 생성 
             listStairs[indexPlayerStair].SetRevivedPlayer(player);
+            enemy.InitWeaponRotation();
         }
     }
 
@@ -237,7 +238,7 @@ public class GameManager : MonoBehaviour {
             return;
 
         isRevived = true;
-        enemy.weapon.ResetStatus();
+        
 
         // 플레이어 생성
         GetNewPlayer(false);
@@ -389,17 +390,25 @@ public class GameManager : MonoBehaviour {
 
                 enemy.Shoot();
 
-                yield return new WaitForSeconds(3f);
+                if (player.ExtraLife) { // 여벌목숨이 있는 경우 
 
-                
+                    yield return new WaitForSeconds(1.5f); // 잠깐 기다렸다가 
+                    player.Aim();
 
-                if (isRevived) {
-                    GameOver();
                 }
-                else {
-                    // 한번도 부활하지 않은 경우는 Continue 화면을 호출. 
-                    GameEventMessage.SendEvent("ContinueEvent");
+                else { // 게임 오버 처리 
+
+                    yield return new WaitForSeconds(3f);
+                    if (isRevived) {
+                        GameOver();
+                    }
+                    else {
+                        // 한번도 부활하지 않은 경우는 Continue 화면을 호출. 
+                        GameEventMessage.SendEvent("ContinueEvent");
+                    }
+                    
                 }
+
                 isMissed = false;
             }
             #endregion
@@ -459,6 +468,7 @@ public class GameManager : MonoBehaviour {
                         SetLevelProgressor();
                     }
                     else { //  다음 몹이 보스일때는 연출을 기다린다.
+                        SetLevelProgressor();
                         GameViewManager.main.AppearBoss();
                         AimController.Wait = true;
 
