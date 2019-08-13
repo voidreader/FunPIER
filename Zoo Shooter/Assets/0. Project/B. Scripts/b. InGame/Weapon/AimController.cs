@@ -49,11 +49,10 @@ public class AimController : MonoBehaviour
 
         AimLine.transform.localScale = new Vector3(AimRange, 1.5f, 1); // Line 길이 설정 
         AimLine.transform.localPosition = EquipWeapon.posGunPoint; // Line 위치 설정
-        AimTrail.transform.localScale = new Vector3(1.2f, GetTrailHeight(AimRange), 1);
+        // AimTrail.transform.localScale = new Vector3(1.2f, GetTrailHeight(AimRange), 1);
+        AimTrail.transform.localScale = EquipWeapon.AimTrailScale;
             
 
-        // AimImage.rectTransform.sizeDelta = new Vector2(AimRange * 100f, AimRange * 100f);
-        // AimLine.rectTransform.sizeDelta = new Vector2(-WeaponManager.StartAimDistance, 2f);
 
         
     }
@@ -78,6 +77,7 @@ public class AimController : MonoBehaviour
     void Update() {
 
         AimLine.gameObject.SetActive(false);
+        AimTrail.gameObject.SetActive(false);
 
         if (AimController.Wait)
             return;
@@ -91,6 +91,7 @@ public class AimController : MonoBehaviour
         ////// 체크 끝 ////
 
         AimLine.gameObject.SetActive(true);
+        AimTrail.gameObject.SetActive(true);
         RotateAimRight();
 
 

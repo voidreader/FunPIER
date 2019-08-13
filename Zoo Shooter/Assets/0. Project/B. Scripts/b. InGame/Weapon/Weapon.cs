@@ -48,4 +48,6 @@ public class Weapon : ScriptableObject {
     public Vector3 posEquip; // 장착 위치 
     public Vector3 posGunPoint; // 발사위치
     public Vector3 posScale; // 장착 크기 
+
+    public Vector3 AimTrailScale;
 }

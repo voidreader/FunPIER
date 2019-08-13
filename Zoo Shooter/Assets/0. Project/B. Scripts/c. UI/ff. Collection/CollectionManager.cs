@@ -198,5 +198,40 @@ public class CollectionManager : MonoBehaviour
         NewPoster.DOFade(1, 0.3f).SetEase(Ease.Linear);
     }
 
-    
+    #region Prisoner Moving
+
+    public static int GetPrisonerMoveYcoord() {
+        int r = Random.Range(0, 5);
+        switch(r) {
+            case 4:
+                return 140;
+            case 3:
+                return 110;
+            case 2:
+                return 80;
+            case 1:
+                return 50;
+            default:
+                return 20;
+
+        }
+    }
+
+    public static int GetPrisonerYcoordTier(int c) {
+        switch(c) {
+            case 140:
+                return 4;
+            case 110:
+                return 3;
+            case 80:
+                return 2;
+            case 50:
+                return 1;
+            default:
+                return 0;
+        }
+    }
+    #endregion
+
+
 }

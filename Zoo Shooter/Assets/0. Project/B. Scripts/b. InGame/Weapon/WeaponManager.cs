@@ -45,7 +45,24 @@ public class WeaponManager : MonoBehaviour {
 
         // EquipWeapon = Stocks.main.ListWeapons[0]; // 임시 
         EquipWeapon = PIER.main.CurrentWeapon;
+        InitWeaponSystem();
+    }
 
+
+    public void SetWeaponByEquipManager(Weapon w) {
+        CurentWeaponRenderer.sprite = w.WeaponSprite;
+        this.transform.localPosition = w.posEquip; // 위치 설정 
+        this.transform.localScale = w.posScale;
+        GunpointTransform.transform.localPosition = w.posGunPoint; // 건포인트 설정
+
+        AimMask.localPosition = new Vector3(-1, this.transform.localPosition.y, 0);
+
+        // Aim 설정
+        CurrentAim.Init(w);
+
+    }
+
+    void InitWeaponSystem() {
         GameManager.main.currentWeapon = EquipWeapon;
         CurentWeaponRenderer.sprite = EquipWeapon.WeaponSprite;
 
@@ -60,6 +77,7 @@ public class WeaponManager : MonoBehaviour {
 
         _direction = -1; // 방향은 -1로 고정이다. 
     }
+
 
 
     void Update() {

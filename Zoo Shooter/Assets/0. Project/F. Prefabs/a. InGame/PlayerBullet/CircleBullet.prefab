@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOn: 0
+  isBulletInstantiate: 0
   rb: {fileID: 8880578451486617702}
   speed: 30
   BulletPrefab: {fileID: 7538471189515374908, guid: 46f87b6cd093c4440a520952e3a530f8,
@@ -71,7 +72,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.04
+  m_Radius: 0.02
 --- !u!50 &8880578451486617702
 Rigidbody2D:
   serializedVersion: 4

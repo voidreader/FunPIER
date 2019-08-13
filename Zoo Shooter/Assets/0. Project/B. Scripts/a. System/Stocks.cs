@@ -173,6 +173,7 @@ public class Stocks : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public static Sprite GetRandomPrisoner() {
-        return main.ListPrisoners[Random.Range(0, main.ListPrisoners.Count)];
+        // return main.ListPrisoners[Random.Range(0, main.ListPrisoners.Count)];
+        return main.ListBossSprite[Random.Range(0, main.ListBossSprite.Count)];
     }
 }

@@ -690,12 +690,14 @@ public class GameManager : MonoBehaviour {
 
         // 좌우 체크
         if (indexLastStair % 2 == 0) { // 오른쪽 
-            posX = Random.Range(3.2f, 4.6f);
+            // posX = Random.Range(3.2f, 4.6f);
+            posX = Random.Range(3.5f, 5f);
             posY = topStairY + Random.Range(0.4f, 3.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽
-            posX = Random.Range(-4.6f, -3.3f);
+            // posX = Random.Range(-4.6f, -3.3f);
+            posX = Random.Range(-5f, -3.5f);
             posY = topStairY + Random.Range(0.4f, 3.2f);
             stair.SetStairPosition(new Vector2(posX, posY), true);
         }
