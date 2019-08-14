@@ -110,7 +110,18 @@ public class UIViewManager : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// Tap to start 터치 시작. 
+    /// </summary>
     public void OnClickGamePlay() {
+
+        if(PIER.main.InfiniteMode) {
+            GameManager.main.OnClickPlay(); // 게임플레이 시작.
+            GameEventMessage.SendEvent("GamePlayEvent"); // 받을 보상 없으면 고고 
+            return;
+        }
+
         // 보상 받다가, 게임 꺼진 경우를 대비한다. 
         if(PIER.main.HasWantedReward()) {
             GameEventMessage.SendEvent("GameClearEvent");

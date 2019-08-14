@@ -133,8 +133,10 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(EnteringMission());
 
         // 무제한모드와 일반모드 분기.
-        if(PIER.main.InfiniteMode)
-            StartCoroutine(PlayRoutine());
+        if (PIER.main.InfiniteMode) {
+            GameViewManager.main.ShowInfiniteStart();
+            StartCoroutine(InfiniteRoutine());
+        }
         else
             StartCoroutine(PlayRoutine());
 

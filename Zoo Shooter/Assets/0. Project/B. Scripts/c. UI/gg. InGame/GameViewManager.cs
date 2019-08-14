@@ -32,6 +32,12 @@ public class GameViewManager : MonoBehaviour {
     public List<PlusScore> ListActiveScores; // 액티브된 스코어 획득 표시들.. (여러개 표시될 수 있다)
 
 
+    /* 인피니트 모드 */
+    public GameObject _infiniteGroup;
+    public Text _textKillCount, _textInfiniteBossName; // 킬카운트, 보스 이름 
+    public Transform _infiniteBox1, _infiniteBox2, _infiniteBox3, _infiniteText;
+    public Progressor _InfiniteHP; // 인피니트 모드 보스 HP 
+
     private void Awake() {
         main = this;
     }
@@ -51,6 +57,7 @@ public class GameViewManager : MonoBehaviour {
         Debug.Log(">> GameViewManager BossHP :: " + _currentBossHP);
 
         _bossGroup.SetActive(false);
+        _infiniteGroup.SetActive(false);
         _lblBossName1.text = _bossData._name;
         _lblBossName2.text = _bossData._name;
         
@@ -69,6 +76,76 @@ public class GameViewManager : MonoBehaviour {
 
     }
 
+    #region 인피니트 모드 
+
+
+    /// <summary>
+    /// 인피니트 모드 보스 정보 세팅 
+    /// </summary>
+    /// <param name="bossIndex"></param>
+    public void SetInfiniteBossInfo(int bossIndex) {
+
+
+        // 보스 HP 등장 
+        _InfiniteHP.gameObject.SetActive(true);
+        _InfiniteHP.InstantSetValue(1);
+
+        _bossData = BossData.Instance.Rows[bossIndex];
+        _currentBossHP = _bossData._hp;
+
+        _textInfiniteBossName.text = _bossData._name;
+        
+
+    }
+
+    /// <summary>
+    /// 인피니트 모드 시작 
+    /// </summary>
+    public void ShowInfiniteStart() {
+        Debug.Log("ShowInfiniteStart..!!");
+        GameManager.isWait = true;
+
+        _infiniteBox1.localPosition = new Vector3(-750, 490, 0);
+        _infiniteBox2.localPosition = new Vector3(-750, 416, 0);
+        _infiniteBox3.localPosition = new Vector3(-750, 342, 0);
+        _infiniteText.localPosition = new Vector3(-608, 447, 0);
+
+        _infiniteGroup.SetActive(true); // 인피니티 그룹만 사용한다.
+        _InfiniteHP.gameObject.SetActive(false);
+        _bossHP.gameObject.SetActive(false);
+        _levelProgressor.gameObject.SetActive(false);
+
+        // 무브무브!
+        _infiniteBox1.DOLocalMoveX(0, 0.8f);
+        _infiniteBox2.DOLocalMoveX(0, 0.7f).SetDelay(0.1f);
+        _infiniteBox3.DOLocalMoveX(0, 0.6f).SetDelay(0.2f);
+
+        _infiniteText.DOLocalMoveX(142, 0.7f).SetDelay(0.2f).OnComplete(OnCompleteInfiniteFirstMove);
+    }
+
+    void OnCompleteInfiniteFirstMove() {
+        Debug.Log("OnCompleteInfiniteFirstMove..!!");
+
+        // 박스들이 중앙에 도착하면 인피니트 보스 HP 세팅
+        SetInfiniteBossInfo(0); // 첫번째 보스. 
+
+
+        Invoke("SetInfiniteBoxOut", 1);
+    }
+
+    void SetInfiniteBoxOut() {
+        // 박스 빠지고 
+        _infiniteBox1.DOLocalMoveX(750, 0.6f);
+        _infiniteBox2.DOLocalMoveX(750, 0.6f).SetDelay(0.1f);
+        _infiniteBox3.DOLocalMoveX(750, 0.6f).SetDelay(0.2f);
+
+        // 텍스트 빠지고 
+        _infiniteText.DOLocalMoveX(_warning.localPosition.x + 750, 0.6f).OnComplete(OnCompleteAppear);
+        // _lblBossName1.transform.DOLocalMoveX(_lblBossName1.transform.localPosition.x + 750, 0.6f).OnComplete(OnCompleteAppear);
+    }
+
+
+    #endregion
 
     /// <summary>
     /// 보스 등장 처리 
@@ -119,6 +196,8 @@ public class GameViewManager : MonoBehaviour {
     }
 
     void OnCompleteAppear() {
+
+        // 이거 인피니트랑 공유중이니까 주의할것. 
         GameManager.isWait = false;
     }
 

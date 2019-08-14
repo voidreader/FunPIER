@@ -218,8 +218,8 @@ public class PIER : MonoBehaviour {
         LoadEquipWeapon();
 
         // 테스트 용도 
-        CurrentList = 19;
-        CurrentLevel = 85;
+        // CurrentList = 19;
+        // CurrentLevel = 85;
 
         debugCurrentLevel = CurrentLevel;
         debugCurrentList = CurrentList;
