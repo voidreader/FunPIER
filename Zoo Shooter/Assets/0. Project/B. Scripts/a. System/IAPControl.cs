@@ -10,10 +10,11 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     public static bool IsInitialized = false;
 
     IStoreController controller = null;
-    IExtensionProvider extensions = null;
-    private IAppleExtensions m_AppleExtensions;
+    IExtensionProvider extensions = null; // 여러 플랫폼을 위한 확장 처리를 제공
+    private IAppleExtensions m_AppleExtensions; 
 
-    public IStoreController Controller { get => controller; set => controller = value; }
+    public IStoreController Controller { get => controller; set => controller = value; } // 구매 과정을 제어하는 함수 제공 
+    
 
     void Awake() {
         main = this;
@@ -33,6 +34,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
 
+        // 상품 등록
         builder.AddProduct("hm_weekly_subs", ProductType.Subscription, new IDs {
             { "hm_weekly_subs", GooglePlay.Name },
             { "hm_weekly_subs", AppleAppStore.Name }
@@ -75,8 +77,10 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                         item.transactionID,
                         item.receipt}));
 
+                
 
-                if (item.receipt != null && item.definition.type == ProductType.Subscription && checkIfProductIsAvailableForSubscriptionManager(item.receipt)) {
+
+                if (item.hasReceipt && item.definition.type == ProductType.Subscription && checkIfProductIsAvailableForSubscriptionManager(item.receipt)) {
                     // 구독 처리
                     string intro_json = (introductory_info_dict == null || !introductory_info_dict.ContainsKey(item.definition.storeSpecificId)) ? null : introductory_info_dict[item.definition.storeSpecificId];
                     SubscriptionManager p = new SubscriptionManager(item, intro_json);
@@ -137,7 +141,17 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
 
     public void Purchase(string productID) {
-        controller.InitiatePurchase(productID);
+        
+        Product p = Controller.products.WithID(productID);
+
+        if(p != null && p.availableToPurchase) {
+            Debug.Log(">> Purchase Start...!!");
+            controller.InitiatePurchase(p); 
+        }
+        else {
+            Debug.Log(">> Purchase Start... Failed!!");
+        }
+
     }
 
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {
@@ -222,5 +236,30 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     }
 
     #endregion
+
+    public void RestorePurchase() {
+        if (!IsInitialized)
+            return;
+
+        if(Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer) {
+            Debug.Log("Purchase Restore Start...");
+            m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
+            m_AppleExtensions.RestoreTransactions(
+                callback: result => Debug.Log(message: $"Restore result - {result}"));
+                
+        }
+    }
+
+    public bool HadPurchased(string productID) {
+        if (!IsInitialized)
+            return false;
+
+        Product p = Controller.products.WithID(productID);
+        if (p != null)
+            return p.hasReceipt;
+
+        return false;
+
+    }
 
 }

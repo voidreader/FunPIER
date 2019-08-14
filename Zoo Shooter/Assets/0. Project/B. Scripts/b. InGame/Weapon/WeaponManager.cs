@@ -28,6 +28,8 @@ public class WeaponManager : MonoBehaviour {
     private int _direction;
     public static float StartAimDistance;
 
+    Quaternion weaponFirstRotation;
+
 
 
     /// <summary>
@@ -112,6 +114,7 @@ public class WeaponManager : MonoBehaviour {
 
         isHit = false; // 초기화 
         isShooting = true; // 슈팅 시작 
+        weaponFirstRotation = this.transform.rotation; // 첫 슛에서 회전값 저장
 
         switch (EquipWeapon.CurrentType) {
             case WeaponType.Gun:
@@ -198,6 +201,7 @@ public class WeaponManager : MonoBehaviour {
     void ShakeAimRotation() {
         float acc = 1 - (EquipWeapon.Accuracy / 100);
         // Debug.Log("ShakeAimRotate :: " + acc);
+        transform.rotation = weaponFirstRotation; // 기본값으로 돌리고 시작한다.
         transform.Rotate(0, 0, 1 * UnityEngine.Random.Range(-acc, acc) * 20);
 
     }
@@ -258,6 +262,8 @@ public class WeaponManager : MonoBehaviour {
         Debug.Log("ShootWithMachineGun :: " + EquipWeapon.BulletsCount);
 
         AimController.Wait = true; // 더이상 조준하지 않음. 
+        
+
 
         for (int i = 0; i < EquipWeapon.BulletsCount; i++) {
 

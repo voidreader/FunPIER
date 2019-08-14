@@ -7,6 +7,9 @@ using Doozy.Engine.Progress;
 
 using Doozy.Engine;
 
+/// <summary>
+/// View - Main 만을 담당. 
+/// </summary>
 public class UIViewManager : MonoBehaviour
 {
 
@@ -23,6 +26,9 @@ public class UIViewManager : MonoBehaviour
     public Progressor _wantedProgressor;
 
 
+    public GameObject _infiniteSign;
+    public Transform _btnSubscribe, _btnWanted, _btnCinema, _btnGunshop;
+
 
     private void Awake() {
         main = this;
@@ -35,9 +41,11 @@ public class UIViewManager : MonoBehaviour
 
     void Update() {
 
+        /*
         if(Input.GetKeyDown(KeyCode.F)) {
             GameEventMessage.SendEvent("FakeWantedReward");
         }
+        */
         
     }
 
@@ -61,6 +69,32 @@ public class UIViewManager : MonoBehaviour
         // Wanted 게이지 처리 
         _wantedProgressor.InstantSetValue(0);
         _wantedProgressor.SetValue(PIER.main.GetWantedListProgressValue());
+
+
+        // 인피니트 모드 여부 , 버튼 배열 처리 
+        if (PIER.main.InfiniteMode) {
+            _infiniteSign.SetActive(true);
+            _btnWanted.gameObject.SetActive(false);
+
+            // 3버튼(wanted 없음)
+            _btnSubscribe.localPosition = new Vector3(-160f, -405f, 0);
+            _btnCinema.localPosition = new Vector3(0f, -405f, 0);
+            _btnGunshop.localPosition = new Vector3(160f, -405f, 0);
+
+
+        }
+        else {
+            _infiniteSign.SetActive(false);
+            _btnWanted.gameObject.SetActive(true);
+
+            // 4버튼
+            _btnSubscribe.localPosition = new Vector3(-240f, -405f, 0);
+            _btnWanted.localPosition = new Vector3(-80f, -405f, 0);
+            _btnCinema.localPosition = new Vector3(80f, -405f, 0);
+            _btnGunshop.localPosition = new Vector3(240f, -405f, 0);
+        }
+
+        
 
 
         AudioAssistant.main.PlayMusic("Main");

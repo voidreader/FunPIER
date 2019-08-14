@@ -6,6 +6,7 @@ using Google2u;
 using DG.Tweening;
 using Doozy.Engine;
 
+
 public class GameManager : MonoBehaviour {
 
     public static GameManager main = null;
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour {
     public static bool isEnemyHit = false; // Enemy가 플레이어 총알에 맞았는지 체크 
     public static bool isMissed = false; // 플레이어 총알 빗나갔는지? 
     public static bool isWait = false;
-
+    readonly float minStairHeightDifference = 1f;
 
     public StageDataRow CurrentLevelData = null; // 현재 스테이지 정보
     public Camera mainCamera; // 메인카메라
@@ -119,6 +120,36 @@ public class GameManager : MonoBehaviour {
 
     }
 
+    /// <summary>
+    /// 게임 시작 클릭!
+    /// </summary>
+    public void OnClickPlay() {
+
+        GameViewManager.isContinueWatchAD = false;
+
+
+        isPlaying = true;
+        isGameStarted = true;
+        StartCoroutine(EnteringMission());
+
+        // 무제한모드와 일반모드 분기.
+        if(PIER.main.InfiniteMode)
+            StartCoroutine(PlayRoutine());
+        else
+            StartCoroutine(PlayRoutine());
+
+
+        Debug.Log("OnClickPlay is clicked");
+        Dancer.gameObject.SetActive(false);
+        FakeEquipGun.SetHide();
+        player.SetHide(false);
+
+
+    }
+
+
+
+    #region 시스템 초기화 
 
     /// <summary>
     /// 카메라 초기화
@@ -137,18 +168,41 @@ public class GameManager : MonoBehaviour {
 
         isGameStarted = false; // 한번 초기화 했으면 플레이할 때까지 또 초기화 시키지 않음. 
 
+        // 무제한 모드 초기화.
+        if(PIER.main.InfiniteMode) {
+            InitInfiniteMode();
+            return;
+        }
+
+        // 일반게임 초기화 
+        CurrentLevelData = StageData.Instance.Rows[PIER.CurrentLevel];
+        Debug.Log("Init Game.. Level ::" + CurrentLevelData._level);
+
+        InitInGameSystem();
 
 
+    } // end of InitGame
+
+    /// <summary>
+    /// 인피니트 모드 초기화 
+    /// </summary>
+    void InitInfiniteMode() {
+        InitInGameSystem();
+
+
+
+    }
+
+
+    /// <summary>
+    /// 인게임 시스템 초기화 공통
+    /// </summary>
+    void InitInGameSystem() {
         PoolManager.Pools[ConstBox.poolGame].DespawnAll();
         Debug.Log("Init InGame Starts.... :: " + CurrentLevelData);
 
         // 환경 처리 
         InitEnvironments();
-
-
-
-        CurrentLevelData = StageData.Instance.Rows[PIER.CurrentLevel];
-        Debug.Log("Init Game.. Level ::" + CurrentLevelData._level);
 
         isRevived = false;
         isMissed = false;
@@ -180,7 +234,8 @@ public class GameManager : MonoBehaviour {
         player.SetHide(true);
 
         StartCoroutine(PositioningDancer());
-    } // end of InitGame
+    }
+
 
     IEnumerator PositioningDancer() {
         while (!listStairs[indexPlayerStair].isInPosition)
@@ -190,6 +245,10 @@ public class GameManager : MonoBehaviour {
         Dancer.SetPosition(player.transform.position);
         FakeEquipGun.SetFakeEquipWeapon(player.transform.position, PIER.main.CurrentWeapon);
     }
+
+    #endregion
+
+    #region GetNewPlayer 신규 플레이어 캐릭터 생성 
 
 
     /// <summary>
@@ -209,29 +268,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    #endregion
 
-    /// <summary>
-    /// 게임 시작 클릭!
-    /// </summary>
-    public void OnClickPlay() {
-
-        GameViewManager.isContinueWatchAD = false;
-
-
-        isPlaying = true;
-        isGameStarted = true;
-        StartCoroutine(EnteringMission());
-        StartCoroutine(PlayRoutine());
-
-        Debug.Log("OnClickPlay is clicked");
-        Dancer.gameObject.SetActive(false);
-        FakeEquipGun.SetHide();
-        player.SetHide(false);    
-
-        
-    }
-
-    #region 부활 처리
+    #region 부활 처리 Revive
     public void Revive() {
 
         if (isRevived)
@@ -262,7 +301,8 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Routine 
+
+    #region 인게임 시작 연출 Enter Mission
 
     /// <summary>
     /// 
@@ -341,6 +381,25 @@ public class GameManager : MonoBehaviour {
 
 
     }
+
+    #endregion
+
+
+    #region 플레이 루틴 
+
+
+    IEnumerator InfiniteRoutine() {
+        // 게임 시작 연출 끝날때까지 기다린다. 
+        while (isEntering) {
+            yield return null;
+        }
+
+        // 연출 끝나면 플레이어가 한칸을 뛰어 올라간다. 
+        MovePlayer();
+        while (Player.isMoving)
+            yield return null;
+    }
+
 
     /// <summary>
     /// 한번의 플레이 세션 
@@ -687,18 +746,17 @@ public class GameManager : MonoBehaviour {
             return stair;
         }
 
-
         // 좌우 체크
         if (indexLastStair % 2 == 0) { // 오른쪽 
             // posX = Random.Range(3.2f, 4.6f);
             posX = Random.Range(3.5f, 5f);
-            posY = topStairY + Random.Range(0.4f, 3.2f);
+            posY = topStairY + Random.Range(minStairHeightDifference, 3.2f);
             stair.SetStairPosition(new Vector2(posX, posY), false);
         }
         else { // 왼쪽
             // posX = Random.Range(-4.6f, -3.3f);
             posX = Random.Range(-5f, -3.5f);
-            posY = topStairY + Random.Range(0.4f, 3.2f);
+            posY = topStairY + Random.Range(minStairHeightDifference, 3.2f);
             stair.SetStairPosition(new Vector2(posX, posY), true);
         }
 

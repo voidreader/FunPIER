@@ -16,6 +16,7 @@ public class PIER : MonoBehaviour {
     public static bool IsSpecialist = false;
 
     [SerializeField] int debugCurrentList, debugCurrentLevel;
+    public bool InfiniteMode = false;
     public int Coin = 0; // 보유 코인 
     public int NoAds = 0; // false. 광고 
     public int BestScore = 0;
@@ -53,6 +54,23 @@ public class PIER : MonoBehaviour {
     #endregion
 
     #region Level, List 처리
+
+
+    /// <summary>
+    /// 스테이지 모두 클리어 후 무한 모드 진입여부 체크 
+    /// </summary>
+    void CheckInfiniteMode() {
+
+        // 스테이지 더이상 없으면 인피니트 모드 
+        if( ListBossData.Count <= CurrentLevel) {
+            Debug.Log(">> Into Infinite Mode <<");
+            InfiniteMode = true;
+        }
+        else {
+            InfiniteMode = false;
+        }
+    }
+
     public static int GetListTargetCollectionPanel() {
 
         return PIER.CurrentList / 5;
@@ -112,6 +130,8 @@ public class PIER : MonoBehaviour {
             Debug.Log(">> There is no new list!");
             GameEventMessage.SendEvent("CallMain"); // 바로 메인으로 진입한다. 
         }
+
+        CheckInfiniteMode(); // 모두 클리어 체크 .
 
         SaveData();
     }
@@ -197,11 +217,15 @@ public class PIER : MonoBehaviour {
         // 장착한 무기 
         LoadEquipWeapon();
 
+        // 테스트 용도 
+        CurrentList = 19;
+        CurrentLevel = 85;
+
         debugCurrentLevel = CurrentLevel;
         debugCurrentList = CurrentList;
 
-        // CurrentList = 0;
-        // CurrentLevel = 2;
+
+        CheckInfiniteMode();
 
     }
 

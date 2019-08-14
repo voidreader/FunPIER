@@ -79,7 +79,7 @@ Rigidbody2D:
   m_GravityScale: 2
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 0
 --- !u!114 &2858430632227841785
@@ -109,7 +109,6 @@ MonoBehaviour:
   walkSpeed: 0
   anim: {fileID: 678754503526706205}
   isKilled: 0
-  isKilling: 0
   isOnGroud: 0
   isHeadShotKill: 0
   isMoving: 0

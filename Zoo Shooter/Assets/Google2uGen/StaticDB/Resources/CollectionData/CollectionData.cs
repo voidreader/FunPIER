@@ -116,10 +116,10 @@ namespace Google2u
 			Rows.Add( new CollectionDataRow("collection11", "11", "HALLOWEEN2"));
 			Rows.Add( new CollectionDataRow("collection12", "12", "BADMEN2"));
 			Rows.Add( new CollectionDataRow("collection13", "13", "STARFAMILY2"));
-			Rows.Add( new CollectionDataRow("collection14", "14", "HOMETOGETHER2"));
-			Rows.Add( new CollectionDataRow("collection15", "15", "SILENTMTN2"));
-			Rows.Add( new CollectionDataRow("collection16", "16", "neighborhood2"));
-			Rows.Add( new CollectionDataRow("collection17", "17", "SUICIDEANIMAL2"));
+			Rows.Add( new CollectionDataRow("collection14", "14", "HOMEALONE2"));
+			Rows.Add( new CollectionDataRow("collection15", "15", "SILENT2"));
+			Rows.Add( new CollectionDataRow("collection16", "16", "NEIGHBORHOOD2"));
+			Rows.Add( new CollectionDataRow("collection17", "17", "SUICIDEANIMALS2"));
 			Rows.Add( new CollectionDataRow("collection18", "18", "PIRATESOFSEA2"));
 			Rows.Add( new CollectionDataRow("collection19", "19", "TOILETFIGHTER3"));
 		}
