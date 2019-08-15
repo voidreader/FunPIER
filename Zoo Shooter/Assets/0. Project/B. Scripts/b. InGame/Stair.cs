@@ -80,6 +80,9 @@ public class Stair : MonoBehaviour
         StartCoroutine(EnemyPositionRoutine());
     }
 
+
+
+
     IEnumerator EnemyPositionRoutine() {
         while (!isInPosition)
             yield return null;
@@ -87,15 +90,34 @@ public class Stair : MonoBehaviour
         while (!enemy.isOnGroud) // 첫 생성되고, 땅에 닿을때까지 대기 
             yield return null;
 
+        NormalModeEnemyPositioning();
 
+    }
+
+    NormalEnmeyMove GetEnemyAppearMovement() {
         int r = Random.Range(0, 2); // 랜덤 변수
-        NormalEnmeyMove move = NormalEnmeyMove.Jump; // 무빙 타입 
-
-
+        
         if (r % 2 == 0)
-            move = NormalEnmeyMove.Jump;
+            return NormalEnmeyMove.Jump;
         else
-            move = NormalEnmeyMove.Walk;
+            return NormalEnmeyMove.Walk;
+    }
+
+
+    /// <summary>
+    /// 보스몹만 등장하기 때문에 일반몹의 등장방식으로 모두 통일시킨다. 
+    /// </summary>
+    void InfiniteModeEnemyPositioning() {
+        NormalEnmeyMove move = GetEnemyAppearMovement();
+    }
+
+    /// <summary>
+    /// 일반모드 몹 포지셔닝 처리
+    /// 보스과 일반몹의 구분이 크다. 
+    /// </summary>
+    void NormalModeEnemyPositioning() {
+        
+        NormalEnmeyMove move = GetEnemyAppearMovement();
 
         // 보스면 무조건 점프.
         if (enemy.type == EnemyType.Boss)
@@ -114,7 +136,7 @@ public class Stair : MonoBehaviour
                 else
                     enemy.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear);
 
-                
+
                 enemy.Jump();
             }
             else {
@@ -123,7 +145,7 @@ public class Stair : MonoBehaviour
                 enemy.Jump();
 
             }
-            
+
         }
         else { // 걷기 
             enemy.Walk(); //(애니메이션)
@@ -131,6 +153,7 @@ public class Stair : MonoBehaviour
 
         }
     }
+
 
     void OnCompleteEnemyAppear() {
         enemy.OnGround();

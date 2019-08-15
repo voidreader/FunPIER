@@ -117,8 +117,8 @@ public class UIViewManager : MonoBehaviour
     public void OnClickGamePlay() {
 
         if(PIER.main.InfiniteMode) {
-            GameManager.main.OnClickPlay(); // 게임플레이 시작.
             GameEventMessage.SendEvent("GamePlayEvent"); // 받을 보상 없으면 고고 
+            GameManager.main.OnClickPlay(); // 게임플레이 시작.
             return;
         }
 

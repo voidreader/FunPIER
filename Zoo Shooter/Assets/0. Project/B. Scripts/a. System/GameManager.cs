@@ -34,6 +34,12 @@ public class GameManager : MonoBehaviour {
     public List<GetCoin> ListGetCoins;
     int GetCoinIndex = 0;
 
+    #region 인피니트 모드 변수들
+    public int InfiniteIndex = 0; // 보스 인덱스 Loop 
+    public int InfiniteKillCount = 0; // 킬 카운트 
+
+    #endregion
+
 
     /// <summary>
     /// 플레이어가 다음으로 이동'할' 발판
@@ -134,6 +140,8 @@ public class GameManager : MonoBehaviour {
 
         // 무제한모드와 일반모드 분기.
         if (PIER.main.InfiniteMode) {
+
+            // 인피니트 모드 시작 UI
             GameViewManager.main.ShowInfiniteStart();
             StartCoroutine(InfiniteRoutine());
         }
@@ -151,7 +159,7 @@ public class GameManager : MonoBehaviour {
 
 
 
-    #region 시스템 초기화 
+    #region 인게임 시스템 초기화 
 
     /// <summary>
     /// 카메라 초기화
@@ -391,15 +399,29 @@ public class GameManager : MonoBehaviour {
 
 
     IEnumerator InfiniteRoutine() {
+
+        InfiniteIndex = 0;
+        InfiniteKillCount = 0;
+
+
         // 게임 시작 연출 끝날때까지 기다린다. 
         while (isEntering) {
             yield return null;
         }
 
+        while (isWait)
+            yield return null;
+            
         // 연출 끝나면 플레이어가 한칸을 뛰어 올라간다. 
         MovePlayer();
         while (Player.isMoving)
             yield return null;
+
+        // 무빙 끝나고 적 캐릭터 등장. 
+        currentStair = listStairs[indexLastStair - 1];
+        currentStair.SetReadyEnemy();
+        enemy = currentStair.enemy;
+
     }
 
 
@@ -661,7 +683,23 @@ public class GameManager : MonoBehaviour {
     #region Enemy 처리 
 
     /// <summary>
+    /// 인피니트 모드 몹 생성 
+    /// </summary>
+    /// <returns></returns>
+    Enemy GetInfiniteEnemy() {
+        Enemy e = null;
+        e = GameObject.Instantiate(Stocks.main.prefabBossEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
+        e.SetEnemy(EnemyType.Boss, Stocks.GetBossDataRow(InfiniteIndex)._identifier);
+
+        InfiniteIndex = 0;
+
+        return e;
+
+    }
+
+    /// <summary>
     /// 새로운 적 생성
+    /// 일반 모드 
     /// </summary>
     /// <returns></returns>
     Enemy GetNewEnemy() {
@@ -683,11 +721,6 @@ public class GameManager : MonoBehaviour {
         }
 
         SpawnEnemyCount++;
-
-        
-        
-
-
         return e;
     }
 
@@ -707,7 +740,7 @@ public class GameManager : MonoBehaviour {
 
     #region 발판 처리 
     /// <summary>
-    /// 가장 상단에 새로운 계단 생성하고, Enemy 설정 
+    /// 가장 상단에 새로운 계단 생성하고, 'Enemy' 생성 및 포지션 위치 
     /// indexLastStair 증가 처리
     /// listStairs에 추가 
     /// 가장 첫번째와 두번째 계단은 적을 생성하지 않는다. 
@@ -717,8 +750,15 @@ public class GameManager : MonoBehaviour {
         topStairY = stair.transform.localPosition.y; // 높이 처리
 
         // Enemy 설정 
-        if (indexLastStair > 1) // 가장 첫번째와 두번째 계단은 적을 생성하지 않는다. 
-            stair.SetEnemey(GetNewEnemy());
+        // 가장 첫번째와 두번째 계단은 적을 생성하지 않는다. 
+        if (indexLastStair > 1) {
+
+            // 몹 생성 처리 
+            if(PIER.main.InfiniteMode) 
+                stair.SetEnemey(GetInfiniteEnemy());
+            else
+                stair.SetEnemey(GetNewEnemy());
+        }
 
         // 인덱스 증가 처리 
         

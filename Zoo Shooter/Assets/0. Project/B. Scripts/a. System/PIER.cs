@@ -220,6 +220,8 @@ public class PIER : MonoBehaviour {
         // 테스트 용도 
         // CurrentList = 19;
         // CurrentLevel = 85;
+        CurrentList = 20;
+        CurrentLevel = 86;
 
         debugCurrentLevel = CurrentLevel;
         debugCurrentList = CurrentList;

@@ -47,29 +47,39 @@ public class GameViewManager : MonoBehaviour {
 
         // 광고를 보고 돌아온 경우는 초기화 하지 않는다. 
         if (isContinueWatchAD) 
-            return; 
+            return;
 
-
-        // 보스 데이터 처리 
-        _bossData = BossData.Instance.Rows[PIER.CurrentLevel];
-        _currentBossHP = _bossData._hp;
-
-        Debug.Log(">> GameViewManager BossHP :: " + _currentBossHP);
 
         _bossGroup.SetActive(false);
         _infiniteGroup.SetActive(false);
-        _lblBossName1.text = _bossData._name;
-        _lblBossName2.text = _bossData._name;
-        
-        _portrait.sprite = PIER.main.GetBossPortraitSprite(_bossData._portrait);
+
+        if (PIER.main.InfiniteMode) {
+            // 아무것도 하지 않음.
+        }
+        else {
+            // 보스 데이터 처리 
+            _bossData = BossData.Instance.Rows[PIER.CurrentLevel];
+            _currentBossHP = _bossData._hp;
+
+            Debug.Log(">> GameViewManager BossHP :: " + _currentBossHP);
 
 
-        // 스코어 및 ... 등등 
-        _lblScore.text = "0";
-        _lblLevel.text = "Level " + (PIER.CurrentLevel + 1).ToString();
-        _levelProgressor.gameObject.SetActive(true);
-        _levelProgressor.InstantSetValue(0);
-        _currentScore = 0;
+            _lblBossName1.text = _bossData._name;
+            _lblBossName2.text = _bossData._name;
+
+            _portrait.sprite = PIER.main.GetBossPortraitSprite(_bossData._portrait);
+
+
+            // 스코어 및 ... 등등 
+            _lblScore.text = "0";
+            _lblLevel.text = "Level " + (PIER.CurrentLevel + 1).ToString();
+            _levelProgressor.gameObject.SetActive(true);
+            _levelProgressor.InstantSetValue(0);
+            _currentScore = 0;
+        }
+
+
+
 
 
         AudioAssistant.main.PlayMusic("Battle");
@@ -88,7 +98,7 @@ public class GameViewManager : MonoBehaviour {
 
         // 보스 HP 등장 
         _InfiniteHP.gameObject.SetActive(true);
-        _InfiniteHP.InstantSetValue(1);
+        _InfiniteHP.InstantSetValue(1); // HP 만피로 설정 
 
         _bossData = BossData.Instance.Rows[bossIndex];
         _currentBossHP = _bossData._hp;
@@ -108,7 +118,7 @@ public class GameViewManager : MonoBehaviour {
         _infiniteBox1.localPosition = new Vector3(-750, 490, 0);
         _infiniteBox2.localPosition = new Vector3(-750, 416, 0);
         _infiniteBox3.localPosition = new Vector3(-750, 342, 0);
-        _infiniteText.localPosition = new Vector3(-608, 447, 0);
+        _infiniteText.localPosition = new Vector3(-750, 415, 0);
 
         _infiniteGroup.SetActive(true); // 인피니티 그룹만 사용한다.
         _InfiniteHP.gameObject.SetActive(false);
@@ -120,7 +130,7 @@ public class GameViewManager : MonoBehaviour {
         _infiniteBox2.DOLocalMoveX(0, 0.7f).SetDelay(0.1f);
         _infiniteBox3.DOLocalMoveX(0, 0.6f).SetDelay(0.2f);
 
-        _infiniteText.DOLocalMoveX(142, 0.7f).SetDelay(0.2f).OnComplete(OnCompleteInfiniteFirstMove);
+        _infiniteText.DOLocalMoveX(0, 0.7f).SetDelay(0.2f).OnComplete(OnCompleteInfiniteFirstMove);
     }
 
     void OnCompleteInfiniteFirstMove() {
@@ -140,7 +150,7 @@ public class GameViewManager : MonoBehaviour {
         _infiniteBox3.DOLocalMoveX(750, 0.6f).SetDelay(0.2f);
 
         // 텍스트 빠지고 
-        _infiniteText.DOLocalMoveX(_warning.localPosition.x + 750, 0.6f).OnComplete(OnCompleteAppear);
+        _infiniteText.DOLocalMoveX(750, 0.6f).OnComplete(OnCompleteAppear);
         // _lblBossName1.transform.DOLocalMoveX(_lblBossName1.transform.localPosition.x + 750, 0.6f).OnComplete(OnCompleteAppear);
     }
 
