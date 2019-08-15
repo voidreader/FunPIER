@@ -36,6 +36,11 @@ public class BossEnemy : Enemy {
         Debug.Log("BossEnemy Killed");
         base.KillEnemy(isHeadShot);
         GameManager.main.ShowGetCoinTriple();  // 보스는 죽을때 코인 3개 떨군다. 
+
+        // 인피니트 모드 로직 추가 
+        if(PIER.main.InfiniteMode) {
+            GameManager.main.SetNextInfiniteModeIndex();
+        }
     }
 
 }

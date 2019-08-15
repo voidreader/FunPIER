@@ -104,6 +104,8 @@ public class GameViewManager : MonoBehaviour {
         _currentBossHP = _bossData._hp;
 
         _textInfiniteBossName.text = _bossData._name;
+
+        Debug.Log(">> SetInfiniteBossInfo :: " + _bossData._name + "/" + _bossData._hp);
         
 
     }
@@ -219,14 +221,6 @@ public class GameViewManager : MonoBehaviour {
         _levelProgressor.SetValue(v);
     }
 
-    /// <summary>
-    /// 보스 HP
-    /// </summary>
-    /// <param name="v"></param>
-    public void SetBossHP(float v) {
-        _bossHP.SetValue(v);
-    }
-
     public void AddScore(int s, bool isDouble = false) {
 
         _currentScore += s;
@@ -257,12 +251,14 @@ public class GameViewManager : MonoBehaviour {
 
         if (_currentBossHP <= 0) {
             _bossHP.SetValue(0);
+            _InfiniteHP.SetValue(0);
             return;
         }
 
         v = (float)_currentBossHP / (float)_bossData._hp;
 
         _bossHP.SetValue(v);
+        _InfiniteHP.SetValue(v);
 
 
     }

@@ -90,7 +90,10 @@ public class Stair : MonoBehaviour
         while (!enemy.isOnGroud) // 첫 생성되고, 땅에 닿을때까지 대기 
             yield return null;
 
-        NormalModeEnemyPositioning();
+        if (PIER.main.InfiniteMode)
+            InfiniteModeEnemyPositioning();
+        else
+            NormalModeEnemyPositioning();
 
     }
 
@@ -103,12 +106,27 @@ public class Stair : MonoBehaviour
             return NormalEnmeyMove.Walk;
     }
 
+    /// <summary>
+    /// 일반몹 무브먼트 처리 
+    /// </summary>
+    void SetNormalEnemyMovement(NormalEnmeyMove move) {
+        if (move == NormalEnmeyMove.Jump) {
+            enemy.transform.DOJump(GetEnemyPosition(), Random.Range(0.8f, enemy.jumpPower), 1, Random.Range(0.3f, 0.5f)).OnComplete(OnCompleteEnemyAppear);
+            enemy.Jump();
+        }
+        else { // 걷기 
+            enemy.Walk(); //(애니메이션)
+            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.3f, 0.5f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
+        }
+    }
+
 
     /// <summary>
     /// 보스몹만 등장하기 때문에 일반몹의 등장방식으로 모두 통일시킨다. 
     /// </summary>
     void InfiniteModeEnemyPositioning() {
         NormalEnmeyMove move = GetEnemyAppearMovement();
+        SetNormalEnemyMovement(move);
     }
 
     /// <summary>
@@ -123,40 +141,35 @@ public class Stair : MonoBehaviour
         if (enemy.type == EnemyType.Boss)
             move = NormalEnmeyMove.Jump;
 
-
-        if (move == NormalEnmeyMove.Jump) {
-
-            // 보스 첫 등장은 고정 
-            if (enemy.type == EnemyType.Boss) {
-                enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
-                AudioAssistant.Shot("BossFirstJump");
-                // 회전 추가 
-                if (isLeftStair)
-                    enemy.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear);
-                else
-                    enemy.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear);
+        // 보스 첫 등장 점프는 다르게 처리한다.    
+        if(move == NormalEnmeyMove.Jump && enemy.type == EnemyType.Boss) {
+            enemy.transform.DOJump(GetEnemyPosition(), enemy.jumpPower, 1, 0.5f).OnComplete(OnCompleteEnemyAppear);
+            AudioAssistant.Shot("BossFirstJump");
+            // 회전 추가 
+            if (isLeftStair)
+                enemy.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear);
+            else
+                enemy.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear);
 
 
-                enemy.Jump();
-            }
-            else {
-
-                enemy.transform.DOJump(GetEnemyPosition(), Random.Range(0.8f, enemy.jumpPower), 1, Random.Range(0.3f, 0.5f)).OnComplete(OnCompleteEnemyAppear);
-                enemy.Jump();
-
-            }
-
+            enemy.Jump();
+            return;
         }
-        else { // 걷기 
-            enemy.Walk(); //(애니메이션)
-            enemy.transform.DOMove(GetEnemyPosition(), Random.Range(0.3f, 0.5f)).SetEase(Ease.Linear).OnComplete(OnCompleteEnemyAppear);
 
-        }
+        // 그 외 일반몹은 일반 무브먼트 로직 사용
+        SetNormalEnemyMovement(move);
     }
 
 
+    /// <summary>
+    /// 몹 등장 완료 후 콜백 
+    /// </summary>
     void OnCompleteEnemyAppear() {
         enemy.OnGround();
+
+        // 아래 로직은 무한모드에서는 사용하지 않음.
+        if (PIER.main.InfiniteMode)
+            return;
 
         if (enemy.type == EnemyType.Boss) { // 보스 첫 등장에서는 슬램 파티클 
             Vector3 p = new Vector3(enemy.transform.position.x, this.transform.position.y + 0.65f, 0);

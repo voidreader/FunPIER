@@ -398,10 +398,20 @@ public class GameManager : MonoBehaviour {
     #region 플레이 루틴 
 
 
+    /// <summary>
+    /// 무한모드 플레이 루틴 
+    /// </summary>
+    /// <returns></returns>
     IEnumerator InfiniteRoutine() {
+
+        Debug.Log("### Infinite Routine Go...!! ###");
+
 
         InfiniteIndex = 0;
         InfiniteKillCount = 0;
+
+
+        bool isEnemyKillCheck = false; // 미리 변수 갖기 용도 
 
 
         // 게임 시작 연출 끝날때까지 기다린다. 
@@ -422,13 +432,81 @@ public class GameManager : MonoBehaviour {
         currentStair.SetReadyEnemy();
         enemy = currentStair.enemy;
 
+        // 본격 게임 투틴 시작 지점 
+        while(isPlaying) {
+
+            while (WeaponManager.isShooting)
+                yield return null;
+
+            #region Miss 처리 
+            if (isMissed) {
+
+                while (!enemy.isOnGroud)
+                    yield return null;
+
+                enemy.Shoot(); // 몹 발사!
+
+                // 여벌 목숨과 부활 여부 체크 후 처리 
+                yield return StartCoroutine(RoutinePlayerLifeAfterMiss());
+
+                isMissed = false;
+            }
+            #endregion
+
+            // 명중 처리 
+            if(isEnemyHit) {
+
+                isEnemyKillCheck = enemy.isKilled;
+
+                InsertNewStair(); // 새 발판 추가
+
+                while (!stair.isInPosition)
+                    yield return null;
+
+                yield return null;
+
+                if (isEnemyKillCheck) { // Kill 된 경우. 
+                    MovePlayer(false); // 다음칸으로 선이동
+                    isEnemyHit = false; // 다시 enemyDead 초기화
+                    currentStair = listStairs[indexLastStair - 1]; // 다음 계단정보 가져오고. 
+                    enemy = currentStair.enemy;
+
+                    currentStair.SetReadyEnemy();
+
+                }
+                else { // 아직 죽지않고 맞기만 한 경우
+                    enemy.Move(stair.GetBossJumpPosition(), SetBossJumpDirection);
+                    yield return new WaitForSeconds(0.1f);
+                    MovePlayer(false); // 캐릭터 이동 처리 
+                    isEnemyHit = false; // 다시 enemyDead 초기화
+                    currentStair = listStairs[indexLastStair - 1];
+                }
+
+
+            } // end of isEnemyHit
+
+            yield return null;
+
+        }
+
+    }
+
+
+    /// <summary>
+    /// 다음 인피니트 모드 보스 처리 
+    /// </summary>
+    public void SetNextInfiniteModeIndex() {
+        InfiniteIndex++;
+        InfiniteKillCount++;
+
+        GameViewManager.main.SetInfiniteBossInfo(InfiniteIndex);
     }
 
 
     /// <summary>
     /// 한번의 플레이 세션 
     /// </summary>
-    /// <returns></returns>
+    /// <returns></returns> 
     IEnumerator PlayRoutine() {
 
 
@@ -572,6 +650,31 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 빗나간 후 플레이어 처리 
+    /// </summary>
+    IEnumerator RoutinePlayerLifeAfterMiss() {
+        if (player.ExtraLife) { // 여벌목숨이 있는 경우 
+
+            yield return new WaitForSeconds(1.5f); // 잠깐 기다렸다가 
+            player.Aim();
+
+        }
+        else { // 게임 오버 처리 
+
+            yield return new WaitForSeconds(3f);
+            if (isRevived) {
+                GameOver();
+            }
+            else {
+                // 한번도 부활하지 않은 경우는 Continue 화면을 호출. 
+                GameEventMessage.SendEvent("ContinueEvent");
+            }
+
+        }
+    }
+
+
     void SetBossJumpDirection() {
         stair.SetJumpingBoss(enemy);
     }
@@ -690,8 +793,6 @@ public class GameManager : MonoBehaviour {
         Enemy e = null;
         e = GameObject.Instantiate(Stocks.main.prefabBossEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
         e.SetEnemy(EnemyType.Boss, Stocks.GetBossDataRow(InfiniteIndex)._identifier);
-
-        InfiniteIndex = 0;
 
         return e;
 
