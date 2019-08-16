@@ -23,7 +23,8 @@ public static class ConstBox {
     public static string keyGunList = "keyGunList"; // 건 리스트 
     public static string keyEquipGun = "keyEquipGun"; // 장착한 총 
     public static string keyBestScore = "keyBestScore"; // 베스트 스코어
-    
+    public static string keyDailyRewardDay = "KeyDailyRewardDay"; // 출석체크 일수.
+    public static string keyDayOfYear = "KeyDayOfYear"; // dayofyear...
     
         
 

@@ -21,6 +21,10 @@ public class PIER : MonoBehaviour {
     public int NoAds = 0; // false. 광고 
     public int BestScore = 0;
 
+    // 일일 보상 
+    public int DailyRewardDay = 0;
+    public int DayOfYear = 0;
+
     public List<BossDataRow> ListBossData;
     public List<Sprite> ListBossPortrait;
 
@@ -183,6 +187,10 @@ public class PIER : MonoBehaviour {
         CurrentList = 0;
         CurrentLevel = 0;
         Coin = 0;
+
+        DailyRewardDay = 0;
+        DayOfYear = -1;
+
         GunListNode = JSON.Parse("{}");
 
         // 현상수배범 리스트 번호 
@@ -199,6 +207,14 @@ public class PIER : MonoBehaviour {
 
         if (PlayerPrefs.HasKey(ConstBox.keyBestScore))
             BestScore = PlayerPrefs.GetInt(ConstBox.keyBestScore); // 베스트 스코어 
+
+        // 출첵일수
+        if (PlayerPrefs.HasKey(ConstBox.keyDailyRewardDay))
+            DailyRewardDay = PlayerPrefs.GetInt(ConstBox.keyDailyRewardDay);
+
+        // day of year 
+        if (PlayerPrefs.HasKey(ConstBox.keyDayOfYear))
+            DayOfYear = PlayerPrefs.GetInt(ConstBox.keyDayOfYear);
 
         // 보유 무기 리스트 
         if (PlayerPrefs.HasKey(ConstBox.keyGunList))
@@ -249,6 +265,23 @@ public class PIER : MonoBehaviour {
     }
 
     /// <summary>
+    /// 일일 보상 관련 저장 
+    /// </summary>
+    /// <param name="d"></param>
+    public void SaveDailyRewardDay(int d) {
+        int day = d;
+        if (day > 4)
+            day = 0; // 5일자 다 받았으면 다시 0으로 돌아간다
+
+        PlayerPrefs.SetInt(ConstBox.keyDailyRewardDay, day);
+        PlayerPrefs.SetInt(ConstBox.keyDayOfYear, DateTime.Now.DayOfYear);
+        PlayerPrefs.Save();
+
+        // 변수 갱신
+        DayOfYear = DateTime.Now.DayOfYear;
+    }
+
+    /// <summary>
     /// 코인 획득 
     /// </summary>
     /// <param name="c"></param>
@@ -285,6 +318,8 @@ public class PIER : MonoBehaviour {
     /// </summary>
     /// <param name="w"></param>
     public void AddGun(Weapon w) {
+
+        Debug.Log(w.WeaponID + "Get!! ");
 
         if (HasGun(w))
             return;

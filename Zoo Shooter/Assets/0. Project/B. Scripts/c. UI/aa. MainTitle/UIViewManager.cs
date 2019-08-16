@@ -41,12 +41,29 @@ public class UIViewManager : MonoBehaviour
 
     void Update() {
 
-        /*
-        if(Input.GetKeyDown(KeyCode.F)) {
-            GameEventMessage.SendEvent("FakeWantedReward");
-        }
-        */
         
+        if(Input.GetKeyDown(KeyCode.F)) {
+            // GameEventMessage.SendEvent("FakeWantedReward");
+            CheckDailyReward();
+        }
+        
+        
+    }
+
+
+    /// <summary>
+    /// 인게임 플레이 후 데일리 리워드 체크.. 여기에 두는게 맞나싶다. 
+    /// </summary>
+    public void CheckDailyReward() {
+        StartCoroutine(DailyRewardCheckRoutine());
+    }
+
+    IEnumerator DailyRewardCheckRoutine() {
+        yield return new WaitForSeconds(0.5f); // 트윈이 있어서 대기한다. 
+
+        if(DailyRewardView.CheckNewDailyRewardWeapon() && DailyRewardView.CheckNewDay()) {
+            GameEventMessage.SendEvent("DailyRewardEvent"); // 무기 보상있고, 새로운 날이면 고고!
+        }
     }
 
 
