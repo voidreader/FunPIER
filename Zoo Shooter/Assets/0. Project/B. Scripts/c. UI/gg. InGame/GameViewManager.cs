@@ -23,7 +23,7 @@ public class GameViewManager : MonoBehaviour {
     public Image _portrait; // 보스 초상화 
 
     public BossDataRow _bossData; // 보스데이터
-    
+
     public int _currentScore = 0;
     public int _currentBossHP = 0;
 
@@ -46,7 +46,7 @@ public class GameViewManager : MonoBehaviour {
     public void OnView() {
 
         // 광고를 보고 돌아온 경우는 초기화 하지 않는다. 
-        if (isContinueWatchAD) 
+        if (isContinueWatchAD)
             return;
 
 
@@ -98,7 +98,7 @@ public class GameViewManager : MonoBehaviour {
 
         // 보스 HP 등장 
         _InfiniteHP.gameObject.SetActive(true);
-        _InfiniteHP.InstantSetValue(1); // HP 만피로 설정 
+
 
         _bossData = BossData.Instance.Rows[bossIndex];
         _currentBossHP = _bossData._hp;
@@ -106,9 +106,29 @@ public class GameViewManager : MonoBehaviour {
         _textInfiniteBossName.text = _bossData._name;
 
         Debug.Log(">> SetInfiniteBossInfo :: " + _bossData._name + "/" + _bossData._hp);
-        
+
+        // _InfiniteHP.InstantSetValue(1); // HP 만피로 설정 
+        Invoke("InvokedSetInfiniteHPFull", 0.4f);
 
     }
+
+    /// <summary>
+    /// 인피니트 킬 카운트 처리 
+    /// </summary>
+    /// <param name="killcount"></param>
+    public void SetInfiniteKillCount(int killcount) {
+        _textKillCount.text = "Kill : " + killcount;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    void InvokedSetInfiniteHPFull() {
+
+        
+        _InfiniteHP.InstantSetValue(1);
+    }
+
 
     /// <summary>
     /// 인피니트 모드 시작 
@@ -223,6 +243,9 @@ public class GameViewManager : MonoBehaviour {
 
     public void AddScore(int s, bool isDouble = false) {
 
+
+
+
         _currentScore += s;
         _lblScore.text = _currentScore.ToString();
 
@@ -248,6 +271,8 @@ public class GameViewManager : MonoBehaviour {
         _currentBossHP -= damage;
         if(isHeadShot)
             _currentBossHP -= damage;
+
+        Debug.Log("CalcBossHP currentHP :: " + _currentBossHP);
 
         if (_currentBossHP <= 0) {
             _bossHP.SetValue(0);

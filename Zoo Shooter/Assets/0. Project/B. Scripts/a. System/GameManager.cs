@@ -199,6 +199,8 @@ public class GameManager : MonoBehaviour {
     void InitInfiniteMode() {
         InitInGameSystem();
 
+        // 마지막 LevelData를 넣어준다
+        CurrentLevelData = StageData.Instance.Rows[StageData.Instance.Rows.Count - 1];
 
 
     }
@@ -435,11 +437,23 @@ public class GameManager : MonoBehaviour {
         // 본격 게임 투틴 시작 지점 
         while(isPlaying) {
 
-            while (WeaponManager.isShooting)
+            
+
+
+            while (WeaponManager.isShooting) {
+                // 보스가 죽은 경우는 바로 kill처리
+                if (enemy.isKilled)
+                    WeaponManager.isShooting = false;
+                    
+
                 yield return null;
+            }
 
             #region Miss 처리 
             if (isMissed) {
+
+                Debug.Log("!! Missed in Infinite Mode");
+                
 
                 while (!enemy.isOnGroud)
                     yield return null;
@@ -457,8 +471,7 @@ public class GameManager : MonoBehaviour {
             if(isEnemyHit) {
 
                 isEnemyKillCheck = enemy.isKilled;
-
-                InsertNewStair(); // 새 발판 추가
+                InsertNewStair(isEnemyKillCheck); // 새 발판 추가
 
                 while (!stair.isInPosition)
                     yield return null;
@@ -500,6 +513,7 @@ public class GameManager : MonoBehaviour {
         InfiniteKillCount++;
 
         GameViewManager.main.SetInfiniteBossInfo(InfiniteIndex);
+        GameViewManager.main.SetInfiniteKillCount(InfiniteKillCount);
     }
 
 
@@ -531,12 +545,14 @@ public class GameManager : MonoBehaviour {
             // 보스 일때만 대기하도록 처리 해야 한다. 
             // 일반 몹일때는 휙휙 지나가게.. 
 
-            if (enemy.type == EnemyType.Boss) {
+            while (WeaponManager.isShooting) {
 
-                while (WeaponManager.isShooting)
-                    yield return null;
+                if (enemy.isKilled)
+                    WeaponManager.isShooting = true;
+
+                yield return null;
             }
-                     
+
 
             #region 빗나갔을때 Gameover, Enemy Shoot 처리 
 
@@ -790,6 +806,9 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     Enemy GetInfiniteEnemy() {
+
+        Debug.Log("GetInfiniteEnemy :: " + InfiniteIndex);
+
         Enemy e = null;
         e = GameObject.Instantiate(Stocks.main.prefabBossEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
         e.SetEnemy(EnemyType.Boss, Stocks.GetBossDataRow(InfiniteIndex)._identifier);
@@ -846,7 +865,7 @@ public class GameManager : MonoBehaviour {
     /// listStairs에 추가 
     /// 가장 첫번째와 두번째 계단은 적을 생성하지 않는다. 
     /// </summary>
-    void InsertNewStair() {
+    void InsertNewStair(bool makeEnemy = true) {
         stair = GetNewStair();
         topStairY = stair.transform.localPosition.y; // 높이 처리
 
@@ -854,11 +873,13 @@ public class GameManager : MonoBehaviour {
         // 가장 첫번째와 두번째 계단은 적을 생성하지 않는다. 
         if (indexLastStair > 1) {
 
-            // 몹 생성 처리 
-            if(PIER.main.InfiniteMode) 
-                stair.SetEnemey(GetInfiniteEnemy());
-            else
-                stair.SetEnemey(GetNewEnemy());
+            if(makeEnemy) {
+                // 몹 생성 처리 
+                if (PIER.main.InfiniteMode)
+                    stair.SetEnemey(GetInfiniteEnemy());
+                else
+                    stair.SetEnemey(GetNewEnemy());
+            }
         }
 
         // 인덱스 증가 처리 

@@ -52,12 +52,28 @@ public class Bullet : MonoBehaviour
 
         collided = false;
 
+        // 웨폰 매니저 리스트에 추가
+        WeaponManager.ListShootingBullets.Add(this);
+
+
+
         // 총알 처리 
         SetBullet(); 
 
         // 총구 효과 
         SetMuzzle();
     }
+
+    void OnDespawned() {
+        if (WeaponManager.ListShootingBullets.Contains(this))
+            WeaponManager.ListShootingBullets.Remove(this);
+    }
+
+    private void OnDestroy() {
+        if (WeaponManager.ListShootingBullets.Contains(this))
+            WeaponManager.ListShootingBullets.Remove(this);
+    }
+
 
     void SetBullet() {
 
@@ -175,7 +191,7 @@ public class Bullet : MonoBehaviour
             return;
         } // 플레이어 처리 종료
 
-        Debug.Log("Bullet Trigger Enter :: " + col.tag + "/" + col.gameObject.name);
+        // Debug.Log("Bullet Trigger Enter :: " + col.tag + "/" + col.gameObject.name);
 
 
         if (col.tag == "Stair") {

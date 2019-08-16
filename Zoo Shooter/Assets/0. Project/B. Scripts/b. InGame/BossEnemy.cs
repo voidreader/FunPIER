@@ -24,7 +24,7 @@ public class BossEnemy : Enemy {
         }
 
         base.HitEnemy(d, isHeadShot);
-        GameViewManager.main.CalcBossHP(d, isHeadShot); // HP 게이지 연동 추가 
+        
 
     }
 
@@ -40,6 +40,7 @@ public class BossEnemy : Enemy {
         // 인피니트 모드 로직 추가 
         if(PIER.main.InfiniteMode) {
             GameManager.main.SetNextInfiniteModeIndex();
+            
         }
     }
 

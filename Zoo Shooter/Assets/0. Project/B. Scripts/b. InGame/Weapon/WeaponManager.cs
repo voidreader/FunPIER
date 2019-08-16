@@ -9,6 +9,7 @@ public class WeaponManager : MonoBehaviour {
 
     public static bool isShooting = false;
     public static bool isHit = false; // 명중 여부 체크 
+    public static List<Bullet> ListShootingBullets = new List<Bullet>(); // 발사된 총알 리스트(비활성화시 제거)
 
     public bool isInit = false;
     public Weapon EquipWeapon; // 장착한 무기 
@@ -110,11 +111,17 @@ public class WeaponManager : MonoBehaviour {
         CurrentAim.ResetAim();
     }
 
+
+    /// <summary>
+    /// 발사 시작!
+    /// </summary>
     public void Shoot() {
 
         isHit = false; // 초기화 
         isShooting = true; // 슈팅 시작 
         weaponFirstRotation = this.transform.rotation; // 첫 슛에서 회전값 저장
+
+        ListShootingBullets.Clear(); // 발사 총알 리스트 초기화
 
         switch (EquipWeapon.CurrentType) {
             case WeaponType.Gun:
@@ -163,7 +170,7 @@ public class WeaponManager : MonoBehaviour {
 
 
     /// <summary>
-    /// 총알 발사!
+    /// 실제 총알 발사!
     /// </summary>
     void ShotBulletNoForce(bool isMute = false) {
         // Bullet b = GameObject.Instantiate(EquipWeapon.bulletPrefab, null, false).GetComponent<Bullet>();
@@ -277,7 +284,13 @@ public class WeaponManager : MonoBehaviour {
             yield return new WaitForSeconds(EquipWeapon.FireRate);
         }
 
-        yield return new WaitForSeconds(0.1f);
+        // yield return new WaitForSeconds(0.1f);
+
+        // 총알 처리 될때까지 대기
+        while (ListShootingBullets.Count > 0)
+            yield return null;
+
+
         isShooting = false;
         Reload();
     }

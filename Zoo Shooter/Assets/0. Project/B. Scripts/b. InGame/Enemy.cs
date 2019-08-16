@@ -124,16 +124,17 @@ public class Enemy : MonoBehaviour {
 
         WeaponManager.isHit = true;
         GameManager.isEnemyHit = true; // 명중했음!
-        // 비슷한 변수인데..?
 
         if (isHeadShot)
-            HP -= d*2;
+            HP = HP - (d * 2);
         else
             HP -= d;
 
+        if(type == EnemyType.Boss)
+            GameViewManager.main.CalcBossHP(d, isHeadShot); // HP 게이지 연동 추가 
 
 
-        // Debug.Log("HP after hit :: " + HP);
+        Debug.Log("HP after hit :: " + HP);
         // 헤드샷 연출
         if (isHeadShot) {
             GameManager.main.Splash(); // 스플래시 효과
