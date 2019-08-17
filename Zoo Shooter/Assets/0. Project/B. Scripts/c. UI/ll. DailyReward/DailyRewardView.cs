@@ -43,7 +43,7 @@ public class DailyRewardView : MonoBehaviour
             ListRows[i].SetTakenRow();
         }
 
-        Invoke("InvokedTakeTodayReward", 2f);
+        Invoke("InvokedTakeTodayReward", 1.5f);
     }
 
     void InvokedTakeTodayReward() {

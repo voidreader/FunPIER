@@ -23,10 +23,10 @@ public class GunStoreView : MonoBehaviour
     public Image _EquipWeaponSprite;
 
 
-    public GameObject _bottoms;
+    public GameObject _bottoms; // unlock과 광고... 
 
     public Text _lblUnlock; // 가격표
-    public Button _btnAds;
+    public Button _btnAds; // 광고보고 코인받기... 
 
     public Vector2 debugVector2;
     public bool isUnlocking = false; // 언락 연출중.
@@ -112,12 +112,22 @@ public class GunStoreView : MonoBehaviour
         AudioAssistant.Shot(PIER.main.CurrentWeapon.ReloadSound);
     }
 
+    /// <summary>
+    /// 광고 버튼 활성화 여부 
+    /// </summary>
+    void SetAdButton() {
+        _btnAds.gameObject.SetActive(AdsManager.main.IsAvailableRewardAD());
+    }
 
     void BottomRoutine() {
 
         // 현재 뷰의 모든 무기를 수집했으면 _bottoms 뜨지 않음
         List<GunColumn> lll = _currentGroup._listCols;
         bool hasAllGroupWeapon = true;
+
+        // 광고버튼 활성화 처리
+        SetAdButton();
+
         for(int i=0;i< lll.Count;i++) {
             if (!lll[i].gameObject.activeSelf)
                 continue;
@@ -230,4 +240,16 @@ public class GunStoreView : MonoBehaviour
         lockCover.SetActive(false);
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void OnClickWatchAD() {
+        AdsManager.main.OpenRewardAd(OnCallbackAD);
+    }
+
+    void OnCallbackAD() {
+        PIER.main.AddCoin(35);
+        SetAdButton(); // 버튼 활성화 처리 
+    }
 }

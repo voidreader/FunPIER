@@ -2,20 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
+
 using System;
 
 public class AdsManager : MonoBehaviour {
 
+    public static AdsManager main = null;
+
+    public Action OnWatchReward;
+
+    #region 애드몹 
+    [Header("- Google Admob -")]
     private BannerView bannerView = null;
     private InterstitialAd interstitial = null;
     private RewardedAd rewardedAd = null;
 
+    public string admob_android_appID, admob_ios_appID;
+    public string admob_android_bannerID, admob_android_interstitialID, admob_android_rewardedID;
+    public string admob_ios_bannerID, admob_ios_interstitialID, admob_ios_rewardedID;
+
+    #endregion
+
+    private void Awake() {
+        main = this;
+    }
+
     // Start is called before the first frame update
     void Start() {
 #if UNITY_ANDROID
-        string appId = "ca-app-pub-8118299571958162~9535004317";
+        string appId = admob_android_appID;
 #elif UNITY_IPHONE
-            string appId = "ca-app-pub-8118299571958162~7461652542";
+            string appId = admob_ios_appID;
 #else
             string appId = "unexpected_platform";
 #endif
@@ -57,7 +74,11 @@ public class AdsManager : MonoBehaviour {
     /// <summary>
     /// 동영상 광고 시청 
     /// </summary>
-    public void OpenRewardAd() {
+    public void OpenRewardAd(Action callback) {
+
+        OnWatchReward = callback;
+
+        // 애드몹 최우선 
         if(this.rewardedAd == null || !this.rewardedAd.IsLoaded()) {
             RequestRewardAd();
             return;
@@ -70,9 +91,9 @@ public class AdsManager : MonoBehaviour {
     private void RequestBanner() {
 
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-3940256099942544/6300978111";
+        string adUnitId = admob_android_bannerID;
 #elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-3940256099942544/2934735716";
+            string adUnitId = admob_ios_bannerID;
 #else
             string adUnitId = "unexpected_platform";
 #endif
@@ -129,9 +150,9 @@ public class AdsManager : MonoBehaviour {
 
 
 #if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-3940256099942544/1033173712";
+        string adUnitId = admob_android_interstitialID;
 #elif UNITY_IPHONE
-        string adUnitId = "ca-app-pub-3940256099942544/4411468910";
+        string adUnitId = admob_ios_interstitialID;
 #else
         string adUnitId = "unexpected_platform";
 #endif
@@ -193,9 +214,9 @@ public class AdsManager : MonoBehaviour {
 
         string adUnitId;
 #if UNITY_ANDROID
-        adUnitId = "ca-app-pub-3940256099942544/5224354917";
+        adUnitId = admob_android_rewardedID;
 #elif UNITY_IPHONE
-            adUnitId = "ca-app-pub-3940256099942544/1712485313";
+            adUnitId = admob_ios_rewardedID;
 #else
             adUnitId = "unexpected_platform";
 #endif
@@ -256,6 +277,8 @@ public class AdsManager : MonoBehaviour {
 
 
         RequestRewardAd();
+
+        OnWatchReward(); // callback 호출 
     }
 
     #endregion
