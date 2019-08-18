@@ -100,7 +100,8 @@ public class Enemy : MonoBehaviour {
     /// 무기 장착
     /// </summary>
     void EquipWeapon() {
-        weapon = GameObject.Instantiate(Stocks.main.prefabEnemyWeapon, Vector3.zero, Quaternion.identity).GetComponent<EnemyWeapon>();
+        if(!weapon)
+            weapon = GameObject.Instantiate(Stocks.main.prefabEnemyWeapon, Vector3.zero, Quaternion.identity).GetComponent<EnemyWeapon>();
         
         weapon.transform.SetParent(this.transform);
         weapon.transform.localPosition = new Vector2(data._gunposX, data._gunposY);

@@ -5,7 +5,7 @@ using Google2u;
 
 public class Stocks : MonoBehaviour
 {
-    public static Stocks main = null;
+    static Stocks _main = null;
     public Weapon WeaponSpecialist;
 
     public List<Weapon> ListWeapons; // 무기 데이터 
@@ -45,7 +45,17 @@ public class Stocks : MonoBehaviour
     #endregion
 
     private void Awake() {
-        main = this;
+        _main = this;
+    }
+
+    public static Stocks main {
+        get {
+            if(_main == null) {
+                _main = Instantiate(Resources.Load<Stocks>("Prefabs/Stocks"));
+            }
+
+            return _main;
+        }
     }
 
 
