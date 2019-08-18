@@ -44,6 +44,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 // Android Resolver Dependencies Start
     implementation 'com.google.android.gms:play-services-ads:18.1.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
+    implementation 'com.google.code.gson:gson:2.8.5' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:3
+    implementation 'me.panpf:androidx:1.0.0-alpha3' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:4
 // Android Resolver Dependencies End
 **DEPS**}
 

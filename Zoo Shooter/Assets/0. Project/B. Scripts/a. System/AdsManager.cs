@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
 
+using AudienceNetwork;
+using AudienceNetwork.Utility;
+
 using System;
 
 public class AdsManager : MonoBehaviour {
@@ -14,7 +17,7 @@ public class AdsManager : MonoBehaviour {
     #region 애드몹 
     [Header("- Google Admob -")]
     private BannerView bannerView = null;
-    private InterstitialAd interstitial = null;
+    private GoogleMobileAds.Api.InterstitialAd interstitial = null;
     private RewardedAd rewardedAd = null;
 
     public string admob_android_appID, admob_ios_appID;
@@ -23,12 +26,22 @@ public class AdsManager : MonoBehaviour {
 
     #endregion
 
+    #region Facebook Audience 
+    [Header("- Facebook Audience -")]
+    public bool isFBLoaded = false;
+    public bool didCloseFB = false;
+    public string fb_android_rewardedID, fb_ios_rewardedID;
+    private RewardedVideoAd rewardedVideoAd; // 보상형 동영상 광고 
+    #endregion
+
     private void Awake() {
         main = this;
     }
 
     // Start is called before the first frame update
     void Start() {
+
+
 #if UNITY_ANDROID
         string appId = admob_android_appID;
 #elif UNITY_IPHONE
@@ -38,12 +51,19 @@ public class AdsManager : MonoBehaviour {
 #endif
 
         // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize(appId);
+        MobileAds.Initialize(appId); 
 
-
+        // 애드몹 초기화 
         RequestBanner();
         RequestInterstitial();
         RequestRewardAd();
+
+        if (!AdUtility.IsInitialized()) {
+            AdUtility.Initialize();
+        }
+
+        // Facebook Audience
+        LoadRewardedVideo();
     }
 
 
@@ -54,9 +74,16 @@ public class AdsManager : MonoBehaviour {
     public bool IsAvailableRewardAD() {
 
         if (!this.rewardedAd.IsLoaded())
-            RequestRewardAd();    
+            RequestRewardAd();
 
-        return this.rewardedAd.IsLoaded();
+        if (!this.isFBLoaded)
+            LoadRewardedVideo();
+
+
+        if (this.rewardedAd.IsLoaded() || isFBLoaded)
+            return true;
+        else return false;
+        
     }
 
 
@@ -83,6 +110,13 @@ public class AdsManager : MonoBehaviour {
             RequestRewardAd();
             return;
         }
+
+        // Facebook Audience
+        if(isFBLoaded) {
+            this.rewardedVideoAd.Show();
+            this.isFBLoaded = false;
+            return;
+        }
     }
 
 
@@ -98,7 +132,7 @@ public class AdsManager : MonoBehaviour {
             string adUnitId = "unexpected_platform";
 #endif
 
-        bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+        bannerView = new BannerView(adUnitId, GoogleMobileAds.Api.AdSize.Banner, GoogleMobileAds.Api.AdPosition.Bottom);
 
         // Called when an ad request has successfully loaded.
         bannerView.OnAdLoaded += HandleOnAdLoaded;
@@ -158,7 +192,7 @@ public class AdsManager : MonoBehaviour {
 #endif
 
         // Initialize an InterstitialAd.
-        this.interstitial = new InterstitialAd(adUnitId);
+        this.interstitial = new GoogleMobileAds.Api.InterstitialAd(adUnitId);
 
         // Called when an ad request has successfully loaded.
         this.interstitial.OnAdLoaded += InterHandleOnAdLoaded;
@@ -205,7 +239,7 @@ public class AdsManager : MonoBehaviour {
     }
     #endregion
 
-    #region 동영상
+    #region 애드몹 동영상
 
     public void RequestRewardAd() {
 
@@ -279,6 +313,93 @@ public class AdsManager : MonoBehaviour {
         RequestRewardAd();
 
         OnWatchReward(); // callback 호출 
+    }
+
+    #endregion
+
+    #region 페이스북 동영상 광고 
+
+    /// <summary>
+    /// 페이스북 보상형 광고 불러오기 
+    /// </summary>
+    public void LoadRewardedVideo() {
+
+        if(Application.isEditor) {
+            isFBLoaded = false;
+            return;
+        }
+
+        string placement_id = string.Empty;
+#if UNITY_ANDROID
+        placement_id = fb_android_rewardedID;
+#elif UNITY_IOS
+        placement_id = fb_ios_rewardedID;
+#endif
+
+        Debug.Log("Loading.. Facebook Audience RewardedVideo :: " + placement_id);
+
+        // Create the rewarded video unit with a placement ID (generate your own on the Facebook app settings).
+        // Use different ID for each ad placement in your app.
+        this.rewardedVideoAd = new RewardedVideoAd(placement_id);
+        this.rewardedVideoAd.Register(this.gameObject);
+        
+
+        // Set delegates to get notified on changes or when the user interacts with the ad.
+        this.rewardedVideoAd.RewardedVideoAdDidLoad = (delegate () {
+
+            Debug.Log("RewardedVideo ad loaded.");
+            isFBLoaded = true;
+            didCloseFB = false;
+            string isAdValid = rewardedVideoAd.IsValid() ? "valid" : "invalid";
+            Debug.Log("Ad loaded and is " + isAdValid + ". Click show to present!");
+
+        });
+        this.rewardedVideoAd.RewardedVideoAdDidFailWithError = (delegate (string error) {
+            Debug.Log("RewardedVideo ad failed to load with error: " + error);
+        });
+        this.rewardedVideoAd.RewardedVideoAdWillLogImpression = (delegate () {
+            Debug.Log("RewardedVideo ad logged impression.");
+        });
+        this.rewardedVideoAd.RewardedVideoAdDidClick = (delegate () {
+            Debug.Log("RewardedVideo ad clicked.");
+        });
+
+        this.rewardedVideoAd.RewardedVideoAdDidClose = (delegate () {
+            Debug.Log("Rewarded video ad did close.");
+            didCloseFB = true;
+            if (this.rewardedVideoAd != null) {
+                this.rewardedVideoAd.Dispose();
+            }
+        });
+
+#if UNITY_ANDROID
+        /*
+         * Only relevant to Android.
+         * This callback will only be triggered if the Rewarded Video activity
+         * has been destroyed without being properly closed. This can happen if
+         * an app with launchMode:singleTask (such as a Unity game) goes to
+         * background and is then relaunched by tapping the icon.
+         */
+        rewardedVideoAd.RewardedVideoAdActivityDestroyed = delegate () {
+            if (!didCloseFB) {
+                Debug.Log("Rewarded video activity destroyed without being closed first.");
+                Debug.Log("Game should resume. User should not get a reward.");
+            }
+        };
+#endif
+
+        // 완료 콜백 추가 
+        this.rewardedVideoAd.RewardedVideoAdComplete = OnCompleteFacebookAD;
+
+        // Initiate the request to load the ad.
+        this.rewardedVideoAd.LoadAd();
+    }
+
+    void OnCompleteFacebookAD() {
+        Debug.Log("Rewarded video ad OnCompleteFacebookAD");
+        OnWatchReward();
+
+        LoadRewardedVideo(); // 주모! 여기 다음광고 추가요 
     }
 
     #endregion

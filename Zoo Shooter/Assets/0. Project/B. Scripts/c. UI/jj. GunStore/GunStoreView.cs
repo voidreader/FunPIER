@@ -245,10 +245,12 @@ public class GunStoreView : MonoBehaviour
     /// 
     /// </summary>
     public void OnClickWatchAD() {
+        Debug.Log("GunStore Watch AD Click");
         AdsManager.main.OpenRewardAd(OnCallbackAD);
     }
 
     void OnCallbackAD() {
+        Debug.Log("GunStore OnCallbackAD");
         PIER.main.AddCoin(35);
         SetAdButton(); // 버튼 활성화 처리 
     }

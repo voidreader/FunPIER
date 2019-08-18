@@ -5823,8 +5823,8 @@ MonoBehaviour:
       GameEvents: []
       SoundData:
         SoundSource: 0
-        DatabaseName: General
-        SoundName: No Sound
+        DatabaseName: Example Slides
+        SoundName: Turn Page
         AudioClip: {fileID: 0}
         OutputAudioMixerGroup: {fileID: 0}
     PresetCategory: Basic
@@ -27491,6 +27491,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7fb7479dd83b14396fa8d177ba5a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  admob_android_appID: ca-app-pub-2800442891988043~3581147088
+  admob_ios_appID: ca-app-pub-2800442891988043~5632595355
+  admob_android_bannerID: ca-app-pub-2800442891988043/1480338177
+  admob_android_interstitialID: ca-app-pub-2800442891988043/7232138556
+  admob_android_rewardedID: ca-app-pub-2800442891988043/5824167048
+  admob_ios_bannerID: ca-app-pub-2800442891988043/9854432467
+  admob_ios_interstitialID: ca-app-pub-2800442891988043/9380268671
+  admob_ios_rewardedID: ca-app-pub-2800442891988043/5441023668
+  isFBLoaded: 0
+  didCloseFB: 0
+  fb_android_rewardedID: 631198080723760_631199067390328
+  fb_ios_rewardedID: 631198080723760_631208114056090
 --- !u!1 &548134832
 GameObject:
   m_ObjectHideFlags: 0
@@ -27644,7 +27656,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  m_UseSpriteMesh: 1
 --- !u!222 &552468041
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -28357,6 +28369,7 @@ MonoBehaviour:
   _lblCurrentScore: {fileID: 1404481864}
   _lblBestScore: {fileID: 957342505}
   _lblLevel: {fileID: 12152594}
+  _btnAds: {fileID: 0}
 --- !u!1 &561793435
 GameObject:
   m_ObjectHideFlags: 0
@@ -51864,7 +51877,18 @@ MonoBehaviour:
         CustomSortingLayer: Default
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1421688358}
+            m_MethodName: OnClickWatchAD
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       GameEvents: []
