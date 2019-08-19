@@ -1573,6 +1573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LB_ID: CgkIrt-r_L4HEAIQAg
+  PlatformAvailable: 0
 --- !u!1 &41573172
 GameObject:
   m_ObjectHideFlags: 0
@@ -28391,10 +28392,9 @@ MonoBehaviour:
   admob_ios_bannerID: ca-app-pub-2800442891988043/9854432467
   admob_ios_interstitialID: ca-app-pub-2800442891988043/9380268671
   admob_ios_rewardedID: ca-app-pub-2800442891988043/5441023668
-  isFBLoaded: 0
-  didCloseFB: 0
-  fb_android_rewardedID: 631198080723760_631199067390328
-  fb_ios_rewardedID: 631198080723760_631208114056090
+  unityads_android: 3240753
+  unityads_ios: 3240752
+  unityads_placement: rewardedVideo
 --- !u!1 &548134832
 GameObject:
   m_ObjectHideFlags: 0
@@ -44802,14 +44802,25 @@ MonoBehaviour:
         CustomSortingLayer: Default
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 40365834}
+            m_MethodName: ShowLeaderBoardUI
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
-        DatabaseName: General
-        SoundName: No Sound
+        DatabaseName: Example Clicks
+        SoundName: Mouse Clicks
         AudioClip: {fileID: 0}
         OutputAudioMixerGroup: {fileID: 0}
     PresetCategory: Uncategorized

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" package="com.stansassets.androidnative">
+  <uses-sdk android:minSdkVersion="4" />
+  <application>
+    <provider android:name="androidx.core.content.FileProvider" android:authorities="com.utplus.hitmonkey.fileprovider" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+    </provider>
+    <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/app_id" />
+    <activity android:name="com.stansassets.core.utility.AN_ProxyActivity" android:launchMode="singleTask" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <activity android:name="com.stansassets.android.app.permissions.AN_PermissionsProxyActivity" android:launchMode="singleTask" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+  </application>
+</manifest>
