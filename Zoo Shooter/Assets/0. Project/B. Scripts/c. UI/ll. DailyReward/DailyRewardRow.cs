@@ -92,6 +92,9 @@ public class DailyRewardRow : MonoBehaviour
     /// 금일 보상 받기 처리 
     /// </summary>
     public void TakeReward() {
+
+        AudioAssistant.Shot("GetDailyReward");
+
         RowImage.sprite = DailyRewardView.main.ListRowSprite[2];
         CheckSign.SetActive(true);
 

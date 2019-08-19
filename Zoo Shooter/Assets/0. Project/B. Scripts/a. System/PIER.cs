@@ -48,7 +48,8 @@ public class PIER : MonoBehaviour {
 
     public void SetSpecialist() {
         if(IsSpecialist) {
-            AddGun(Stocks.main.WeaponSpecialist);   
+            AddGun(Stocks.main.WeaponSpecialist);
+            ChangeEquipWeapon(Stocks.main.WeaponSpecialist);
         }
         else {
             RemoveGun(Stocks.main.WeaponSpecialist);

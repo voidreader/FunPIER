@@ -26,7 +26,9 @@ public class BossDamageText : MonoBehaviour
         // pos = new Vector3(pos.x + Random.Range(-20f, 20f), pos.y + Random.Range(-20f, 20f), 0);
         this.transform.position = pos;
         this.transform.position = new Vector3(this.transform.position.x + Random.Range(-10f, 10f), this.transform.position.y + Random.Range(-10f, 10f), 0);
-        lblDamage.color = Color.white;
+        
+            
+        // lblDamage.color = Color.white;
         
 
 
@@ -46,9 +48,11 @@ public class BossDamageText : MonoBehaviour
 
         this.gameObject.SetActive(true);
         this.transform.DOKill();
-        this.transform.localScale = Vector3.one;
+        this.transform.localScale = new Vector3(0.6f, 0.6f, 1);
+        // this.transform.localScale = Vector3.one;
         // lblDamage.CrossFadeAlpha(0, 1f, true);
-        this.transform.DOScale(1.1f, 0.4f).SetLoops(2, LoopType.Yoyo).OnComplete(OnComplteteScale1);
+        lblDamage.DOColor(Stocks.main.ColorTransparent, 1.5f).SetEase(Ease.InQuad);
+        this.transform.DOScale(1.2f, 0.8f).SetLoops(2, LoopType.Yoyo).OnComplete(OnComplteteScale1);
 
     }
 

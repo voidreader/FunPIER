@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
 
     // 꼬리.
     public List<GameObject> trails;
-    private bool collided = false;
+    public bool collided = false;
 
     public bool isEnemy = false;
     Enemy hitEnemy;
@@ -146,6 +146,8 @@ public class Bullet : MonoBehaviour
             direction = 1;
 
         // Destroy(gameObject, 1.5f);
+        // rb.velocity = transform.right * 2 * direction;
+            
     }
 
     
@@ -154,6 +156,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate() {
 
+        
         if (!isOn)
             return;
 
@@ -162,6 +165,7 @@ public class Bullet : MonoBehaviour
             rb.transform.Translate(transform.right * speed * Time.deltaTime * -1);
         else
             rb.transform.Translate(transform.right * speed * Time.deltaTime * 1);
+        
     }
 
 

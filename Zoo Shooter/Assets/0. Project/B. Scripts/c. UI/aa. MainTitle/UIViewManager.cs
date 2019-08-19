@@ -44,11 +44,13 @@ public class UIViewManager : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.F)) {
             // GameEventMessage.SendEvent("FakeWantedReward");
-            CheckDailyReward();
+            // CheckDailyReward();
+            ConfirmSpecialistMessage();
         }
         
         
     }
+
 
 
     /// <summary>
@@ -147,6 +149,11 @@ public class UIViewManager : MonoBehaviour
             GameEventMessage.SendEvent("GamePlayEvent"); // 받을 보상 없으면 고고 
             GameManager.main.OnClickPlay(); // 게임플레이 시작.
         }
+    }
+
+
+    public void ConfirmSpecialistMessage() {
+        MessageView.SetText("Congratulation!!\nYou are now a Specialist.");
     }
 
 }

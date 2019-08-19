@@ -523,6 +523,7 @@ public class GameManager : MonoBehaviour {
     /// <returns></returns> 
     IEnumerator PlayRoutine() {
 
+        Debug.Log("### Play Routine Go...!! ###");
 
         // 게임 시작 연출 끝날때까지 기다린다. 
         while (isEntering) {
@@ -548,7 +549,7 @@ public class GameManager : MonoBehaviour {
             while (WeaponManager.isShooting) {
 
                 if (enemy.isKilled)
-                    WeaponManager.isShooting = true;
+                    WeaponManager.isShooting = false;
 
                 yield return null;
             }

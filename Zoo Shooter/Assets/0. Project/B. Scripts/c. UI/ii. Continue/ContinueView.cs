@@ -47,6 +47,8 @@ public class ContinueView : MonoBehaviour {
 
         _timer.SetValue(0); // 끝나면 다음 화면 호출
         // Doozy.Engine.GameEventMessage.SendEvent("GameOverEvent");
+
+        Debug.Log("TIME OVER... ");
         GameManager.main.GameOver();
 
     }

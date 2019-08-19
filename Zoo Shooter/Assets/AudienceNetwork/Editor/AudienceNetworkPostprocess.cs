@@ -22,7 +22,6 @@ namespace AudienceNetwork.Editor
     using System.IO;
     using UnityEditor;
     using UnityEditor.Callbacks;
-
 #if UNITY_IOS
     using UnityEditor.iOS.Xcode;
 #endif
@@ -39,7 +38,7 @@ namespace AudienceNetwork.Editor
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
 
-#if UNITY_IOS
+            #if UNITY_IOS
             if (target == BuildTarget.iOS) {
                 string projectPath = PBXProject.GetPBXProjectPath(path);
                 PBXProject project = new PBXProject();
@@ -52,7 +51,7 @@ namespace AudienceNetwork.Editor
 
                 File.WriteAllText(projectPath, project.WriteToString());
             }
-#endif
+#endif  
 
             PluginImporter[] importers = PluginImporter.GetAllImporters();
             PluginImporter iOSPlugin = null;

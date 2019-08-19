@@ -4935,6 +4935,7 @@ MonoBehaviour:
     type: 3}
   HitPrefab: {fileID: 1862546671279240, guid: dc00761abaf0651439c75bb49ce7dbed, type: 3}
   trails: []
+  collided: 0
   isEnemy: 0
   isLeft: 0
 --- !u!50 &4035213159551535168
@@ -4956,7 +4957,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &2355900715468390899
 CircleCollider2D:

@@ -171,7 +171,13 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         if(e.purchasedProduct.definition.type == ProductType.Subscription) {
             PIER.IsSpecialist = true;
             PIER.main.SetSpecialist();
-            Debug.Log("Is Specialist!!!!!! #1");
+            GameManager.main.RefreshPlayerWeapon(); // 구매시에는 무기도 변경해준다. 
+            Debug.Log("Is Specialist!!!!!! by new purchase !!");
+
+            if(SubscribeView.main.gameObject.activeSelf) {
+                SubscribeView.main.CloseView();
+            }
+
         }
             
 

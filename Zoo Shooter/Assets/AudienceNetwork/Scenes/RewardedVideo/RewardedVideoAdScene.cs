@@ -18,9 +18,6 @@ public class RewardedVideoAdScene : MonoBehaviour
 
     private void Awake()
     {
-        if (Application.isEditor)
-            return;
-
         if (!AdUtility.IsInitialized())
         {
             AdUtility.Initialize();

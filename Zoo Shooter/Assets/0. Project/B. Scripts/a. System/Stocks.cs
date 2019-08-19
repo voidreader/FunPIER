@@ -42,6 +42,7 @@ public class Stocks : MonoBehaviour
     public Color ColorHeadshotFont;
     public Color ColorUnlock250, ColorUnlock500, ColorSpecialist, ColorDailyReward, ColorWantedReward;
     public Color ColorActiveGunName, ColorInactiveGunName;
+    public Color ColorTransparent, ColorOrigin;
     #endregion
 
     private void Awake() {
