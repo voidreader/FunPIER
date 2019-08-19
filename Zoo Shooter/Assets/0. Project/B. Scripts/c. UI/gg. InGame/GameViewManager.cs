@@ -24,7 +24,7 @@ public class GameViewManager : MonoBehaviour {
 
     public BossDataRow _bossData; // 보스데이터
 
-    public int _currentScore = 0;
+    
     public int _currentBossHP = 0;
 
     public int _getScoreIndex = 0;
@@ -75,9 +75,10 @@ public class GameViewManager : MonoBehaviour {
             _lblLevel.text = "Level " + (PIER.CurrentLevel + 1).ToString();
             _levelProgressor.gameObject.SetActive(true);
             _levelProgressor.InstantSetValue(0);
-            _currentScore = 0;
+            
         }
 
+        _lblScore.text = PIER.main.CurrentScore.ToString();
 
 
 
@@ -245,9 +246,9 @@ public class GameViewManager : MonoBehaviour {
 
 
 
-
-        _currentScore += s;
-        _lblScore.text = _currentScore.ToString();
+        
+        PIER.main.CurrentScore += s;
+        _lblScore.text = PIER.main.CurrentScore.ToString();
 
 
         ListGetScores[_getScoreIndex++].GetScore(s, ListActiveScores.Count, isDouble);

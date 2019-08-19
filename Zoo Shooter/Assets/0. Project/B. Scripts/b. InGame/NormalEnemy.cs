@@ -17,6 +17,8 @@ public class NormalEnemy : Enemy {
         base.KillEnemy(isHeadShot);
 
 
+
+
     }
 
 

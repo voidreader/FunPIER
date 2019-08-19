@@ -20,6 +20,8 @@ public class PIER : MonoBehaviour {
     public int Coin = 0; // 보유 코인 
     public int NoAds = 0; // false. 광고 
     public int BestScore = 0;
+    public int CurrentScore = 0; // 현 스코어 - 실패의 경우 0으로 초기화
+    public int AdsCounter = 0; //광고 보여주는 타이밍체크 (4의 배수에서 보여준다. )
 
     // 일일 보상 
     public int DailyRewardDay = 0;
@@ -81,6 +83,17 @@ public class PIER : MonoBehaviour {
         return PIER.CurrentList / 5;
     }
 
+
+    /// <summary>
+    /// 현재 스코어 처리 (게임실패시 초기화)
+    /// </summary>
+    /// <param name="score"></param>
+    public void SaveCurrentScore(int score) {
+        PlayerPrefs.SetInt(ConstBox.keyCurrentScore, score);
+        PlayerPrefs.Save();
+        CurrentScore = score;
+    }
+
     /// <summary>
     /// 베스트 스코어 처리 
     /// </summary>
@@ -96,6 +109,9 @@ public class PIER : MonoBehaviour {
         PlayerPrefs.SetInt(ConstBox.keyBestScore, score);
         PlayerPrefs.Save();
         BestScore = score;
+
+        // 게임 플랫폼 연동 
+        PlatformManager.main.ReportScore(BestScore);
     }
 
 
@@ -192,10 +208,16 @@ public class PIER : MonoBehaviour {
         DailyRewardDay = 0;
         DayOfYear = -1;
 
+        BestScore = 0;
+        CurrentScore = 0;
+        AdsCounter = 0;
         GunListNode = JSON.Parse("{}");
 
+        if (PlayerPrefs.HasKey(ConstBox.keyADCount))
+            AdsCounter = PlayerPrefs.GetInt(ConstBox.keyADCount);
+
         // 현상수배범 리스트 번호 
-        if(PlayerPrefs.HasKey(ConstBox.keyCurrentList))
+        if (PlayerPrefs.HasKey(ConstBox.keyCurrentList))
             CurrentList = PlayerPrefs.GetInt(ConstBox.keyCurrentList);
 
         // 현재 스테이지 
@@ -208,6 +230,9 @@ public class PIER : MonoBehaviour {
 
         if (PlayerPrefs.HasKey(ConstBox.keyBestScore))
             BestScore = PlayerPrefs.GetInt(ConstBox.keyBestScore); // 베스트 스코어 
+
+        if (PlayerPrefs.HasKey(ConstBox.keyCurrentScore))
+            CurrentScore = PlayerPrefs.GetInt(ConstBox.keyCurrentScore); // 현재 스코어
 
         // 출첵일수
         if (PlayerPrefs.HasKey(ConstBox.keyDailyRewardDay))
@@ -237,8 +262,8 @@ public class PIER : MonoBehaviour {
         // 테스트 용도 
         // CurrentList = 19;
         // CurrentLevel = 85;
-        CurrentList = 20;
-        CurrentLevel = 86;
+        // CurrentList = 20;
+        // CurrentLevel = 86;
 
         debugCurrentLevel = CurrentLevel;
         debugCurrentList = CurrentList;
@@ -280,6 +305,21 @@ public class PIER : MonoBehaviour {
 
         // 변수 갱신
         DayOfYear = DateTime.Now.DayOfYear;
+    }
+
+
+    /// <summary>
+    /// 게임 오버, 클리어마다 체크해서 광고 오픈 
+    /// </summary>
+    public void AddAdCounter() {
+        AdsCounter++;
+
+        if(AdsCounter % 4 == 0) {
+            AdsManager.main.OpenMidAdvertisement();
+        }
+
+        PlayerPrefs.SetInt(ConstBox.keyADCount, AdsCounter);
+        PlayerPrefs.Save();
     }
 
     /// <summary>

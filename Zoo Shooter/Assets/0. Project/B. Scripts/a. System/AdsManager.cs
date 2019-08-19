@@ -68,6 +68,28 @@ public class AdsManager : MonoBehaviour {
 
 
     /// <summary>
+    /// 중간 광고 넣기 (게임오버, 클리어)
+    /// </summary>
+    public void OpenMidAdvertisement() {
+        int rand = UnityEngine.Random.Range(0, 1000);
+
+
+        if(rand < 600 && IsAvailableInterstitial()) {
+            OpenInterstitial();
+        }
+        else {
+            OpenRewardAd(delegate { });
+        }
+    }
+
+    public bool IsAvailableInterstitial() {
+        if (this.interstitial == null)
+            return false;
+
+        return this.interstitial.IsLoaded();
+    }
+
+    /// <summary>
     /// 동영상광고 시청 가능 여부 
     /// </summary>
     /// <returns></returns>

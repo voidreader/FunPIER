@@ -764,15 +764,21 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void GameOver() {
 
-        
+        PIER.main.AddAdCounter(); // 광고 
+
+
         // 이벤트 발생시키고 모든 적 제거한다. 
         GameEventMessage.SendEvent("GameOverEvent");
         CleanGameObjects();
     }
 
     public void GameClear() {
-        // GameEventMessage.SendEvent("GameClearEvent");
-        PIER.main.SaveBestScore(GameViewManager.main._currentScore);
+
+        PIER.main.AddAdCounter(); // 광고 
+
+        // 스코어 이어하기를 위해 저장 
+        PIER.main.SaveCurrentScore(PIER.main.CurrentScore);
+        PIER.main.SaveBestScore(PIER.main.CurrentScore);
         CleanGameObjects(); // 클리어 오브젝트 
 
         PIER.main.ClearLevel(); // 클리어 레벨 처리 

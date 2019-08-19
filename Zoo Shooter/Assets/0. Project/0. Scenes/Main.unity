@@ -1529,6 +1529,50 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &40365832
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 40365833}
+  - component: {fileID: 40365834}
+  m_Layer: 0
+  m_Name: PlatformManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &40365833
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40365832}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1328375842}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &40365834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40365832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2823627ad06d2d4d8d7cfa650a410b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LB_ID: CgkIrt-r_L4HEAIQAg
 --- !u!1 &41573172
 GameObject:
   m_ObjectHideFlags: 0
@@ -6079,6 +6123,8 @@ MonoBehaviour:
   Coin: 0
   NoAds: 0
   BestScore: 0
+  CurrentScore: 0
+  AdsCounter: 0
   DailyRewardDay: 0
   DayOfYear: 0
   ListBossData: []
@@ -6954,7 +7000,6 @@ MonoBehaviour:
     _name: 
     _hp: 0
     _portrait: 
-  _currentScore: 0
   _currentBossHP: 0
   _getScoreIndex: 0
   ListGetScores:
@@ -10757,7 +10802,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247711640}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.2, y: 0, z: 0}
+  m_LocalPosition: {x: 6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1072479416}
@@ -10787,7 +10832,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 500}
+  m_Size: {x: 2, y: 500}
   m_EdgeRadius: 0
 --- !u!1 &251101604
 GameObject:
@@ -28338,18 +28383,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7fb7479dd83b14396fa8d177ba5a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  admob_android_appID: 
-  admob_ios_appID: 
-  admob_android_bannerID: 
-  admob_android_interstitialID: 
-  admob_android_rewardedID: 
-  admob_ios_bannerID: 
-  admob_ios_interstitialID: 
-  admob_ios_rewardedID: 
+  admob_android_appID: ca-app-pub-2800442891988043~3581147088
+  admob_ios_appID: ca-app-pub-2800442891988043~5632595355
+  admob_android_bannerID: ca-app-pub-2800442891988043/1480338177
+  admob_android_interstitialID: ca-app-pub-2800442891988043/7232138556
+  admob_android_rewardedID: ca-app-pub-2800442891988043/5824167048
+  admob_ios_bannerID: ca-app-pub-2800442891988043/9854432467
+  admob_ios_interstitialID: ca-app-pub-2800442891988043/9380268671
+  admob_ios_rewardedID: ca-app-pub-2800442891988043/5441023668
   isFBLoaded: 0
   didCloseFB: 0
-  fb_android_rewardedID: 
-  fb_ios_rewardedID: 
+  fb_android_rewardedID: 631198080723760_631199067390328
+  fb_ios_rewardedID: 631198080723760_631208114056090
 --- !u!1 &548134832
 GameObject:
   m_ObjectHideFlags: 0
@@ -71624,6 +71669,7 @@ Transform:
   - {fileID: 639219440}
   - {fileID: 539020982}
   - {fileID: 668456286}
+  - {fileID: 40365833}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -78720,8 +78766,8 @@ MonoBehaviour:
       GameEvents: []
       SoundData:
         SoundSource: 0
-        DatabaseName: General
-        SoundName: No Sound
+        DatabaseName: Dandy
+        SoundName: WhooshUI1
         AudioClip: {fileID: 0}
         OutputAudioMixerGroup: {fileID: 0}
     PresetCategory: Organic
@@ -78999,7 +79045,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460501257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.2, y: 0, z: 0}
+  m_LocalPosition: {x: -6, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1072479416}
@@ -79029,7 +79075,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 500}
+  m_Size: {x: 2, y: 500}
   m_EdgeRadius: 0
 --- !u!1001 &1463278043
 PrefabInstance:
@@ -88198,6 +88244,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6348630022410648141, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6348630021127876272, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8,
         type: 3}
       propertyPath: m_Offset.x
@@ -88207,11 +88258,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.x
       value: 6.428232
-      objectReference: {fileID: 0}
-    - target: {fileID: 6348630022410648141, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8,
-        type: 3}
-      propertyPath: m_FlipX
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4293b04de4fd1a5479f4c8f4fb2bd3c8, type: 3}

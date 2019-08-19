@@ -11,14 +11,20 @@ public class GameOverView : MonoBehaviour
 
     public void OnView() {
 
-        Debug.Log(">> OnView in GameOverView ::  " + GameViewManager.main._currentScore);
+        Debug.Log(">> OnView in GameOverView Current Score ::  " + PIER.main.CurrentScore);
 
-        PIER.main.SaveBestScore(GameViewManager.main._currentScore);
-        _lblLevel.text = GameViewManager.main._currentScore.ToString();
-        _lblBestScore.text = PIER.main.BestScore.ToString();
+        PIER.main.SaveBestScore(PIER.main.CurrentScore);
+
+        _lblCurrentScore.text = PIER.main.CurrentScore.ToString(); // 현스코어 
+        _lblBestScore.text = PIER.main.BestScore.ToString(); // 베스트 스코어 
+
         _lblLevel.text = "LEVEL : " + PIER.CurrentLevel.ToString();
 
         SetAdvertiseButton();
+
+        // 게임오버 떴으면 CurrentScore 초기화
+        PIER.main.SaveCurrentScore(0);
+
 
     }
 

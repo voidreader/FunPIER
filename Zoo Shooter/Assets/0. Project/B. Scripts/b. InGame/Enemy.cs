@@ -273,13 +273,19 @@ public class Enemy : MonoBehaviour {
         } // 헤드샷 킬 종료
         else { // 일반 킬 
 
+            PoseGeneralKillRotate();
+
+
+            /*
             if (killRand < 2) {
                 PoseGeneralKillRotate();
             }
             else if(killRand == 2) { // 탕 맞고 억하고 쓰러지기 
                 PoseKillDrop();
             }
-            
+            */
+
+
 
 
 
