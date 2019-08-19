@@ -3,7 +3,10 @@ using GooglePlayGames.BasicApi;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+#if UNITY_IOS
 using UnityEngine.SocialPlatforms.GameCenter;
+#endif
 
 public class PlatformManager : MonoBehaviour {
     public static PlatformManager main = null;
