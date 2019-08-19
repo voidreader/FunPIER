@@ -9,7 +9,7 @@ PlayerSettings:
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
   defaultScreenOrientation: 0
-  targetDevice: 2
+  targetDevice: 0
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: PIER
@@ -166,7 +166,9 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.utplus.hitmonkey
     Standalone: com.Company.ProductName
-  buildNumber: {}
+    iPhone: com.utplus.hitmonkey
+  buildNumber:
+    iPhone: 2
   AndroidBundleVersionCode: 12
   AndroidMinSdkVersion: 21
   AndroidTargetSdkVersion: 0
@@ -245,7 +247,7 @@ PlayerSettings:
   metalEditorSupport: 1
   metalAPIValidation: 1
   iOSRenderExtraFrameOnPause: 0
-  appleDeveloperTeamID: 
+  appleDeveloperTeamID: 783W2W88VY
   iOSManualSigningProvisioningProfileID: 
   tvOSManualSigningProvisioningProfileID: 
   iOSManualSigningProvisioningProfileType: 0
@@ -618,7 +620,8 @@ PlayerSettings:
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    4: NO_GPGS
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
