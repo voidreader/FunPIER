@@ -25,7 +25,7 @@ public class AudioAssistantEditor : Editor {
         main = (AudioAssistant)target;
         Undo.RecordObject(main, "");
 
-        main.musicVolume = EditorGUILayout.Slider("Music Volume", main.musicVolume, 0f, 1f);
+        
 
         if (main.tracks == null) main.tracks = new List<AudioAssistant.Sound>();
         if (main.sounds == null) main.sounds = new List<AudioAssistant.Sound>();

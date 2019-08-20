@@ -18,49 +18,29 @@ public class AudioAssistant : MonoBehaviour {
 
     const float maxMusicVolume = 0.6f;
 
-	public float musicVolume {
-        get {
-            if (!PlayerPrefs.HasKey("Music Volume"))
-                return maxMusicVolume;
-            return PlayerPrefs.GetFloat("Music Volume");
-        }
+    public bool BGM_Available {
+        get => _BGM_Available;
         set {
-            PlayerPrefs.SetFloat("Music Volume", value);
-            PlayerPrefs.Save();
+            _BGM_Available = value;
 
-            if (main != null) {
+            if (_BGM_Available)
+                ChangeMusicVolume(maxMusicVolume);
+            else
+                ChangeMusicVolume(0);
 
-                if (musicVolume <= 0)
-                    music.volume = 0;
-                else
-                    music.volume = maxMusicVolume;
-            }
         }
+
+
     }
-
-    public float sfxVolume {
-        get {
-            if (!PlayerPrefs.HasKey("SFX Volume"))
-                return 1f;
-            return PlayerPrefs.GetFloat("SFX Volume");
-        }
-        set {
-            PlayerPrefs.SetFloat("SFX Volume", value);
-            PlayerPrefs.Save();
-
-            if (main != null) {
-                if (sfxVolume <= 0) {
-                    sfx.volume = 0;
-                    loopingSFX.volume = 0;
-                    lowSFX.volume = 0;
-                }
-                else {
-                    sfx.volume = 1;
-                    loopingSFX.volume = 1;
-                    lowSFX.volume = 0.5f;
-                }
+    public bool SE_Available {
+        get => _SE_Available;
+        set { _SE_Available = value;
+            if(_SE_Available) {
+                ChangeSFXVolume(1);
             }
-
+            else {
+                ChangeSFXVolume(0);
+            }
         }
     }
 
@@ -75,8 +55,8 @@ public class AudioAssistant : MonoBehaviour {
 	static List<string> mixBuffer = new List<string>();
 	static float mixBufferClearDelay = 0.05f;
 
-    public bool mute = false;
-    public bool quiet_mode = false;
+    bool _BGM_Available = true;
+    bool _SE_Available = true;
     
     internal string currentTrack;
 		
@@ -84,26 +64,27 @@ public class AudioAssistant : MonoBehaviour {
     void Awake() {
         main = this;
 
+
+
         AudioSource[] sources = GetComponents<AudioSource>();
         music = sources[0];
         sfx = sources[1];
         loopingSFX = sources[2];
         lowSFX = sources[3];
 
-        // Initialize
-        sfxVolume = sfxVolume;
-        musicVolume = musicVolume;
-
-        ChangeMusicVolume(musicVolume);
-        ChangeSFXVolume(sfxVolume);
 
         StartCoroutine(MixBufferRoutine());
 
-        mute = PlayerPrefs.GetInt("Mute") == 1;
+        
     }
 
-	// Coroutine responsible for limiting the frequency of playing sounds
-	IEnumerator MixBufferRoutine() {
+    private void Start() {
+        SoundControlSystem.LoadData();
+        SoundControlSystem.SetAudioAssistant();
+    }
+
+    // Coroutine responsible for limiting the frequency of playing sounds
+    IEnumerator MixBufferRoutine() {
         float time = 0;
 
 		while (true) {
@@ -151,13 +132,13 @@ public class AudioAssistant : MonoBehaviour {
 		float delay = 0.4f;
 		if (music.clip != null) {
 			while (delay > 0) {
-                music.volume = delay * musicVolume;
+                music.volume = delay * maxMusicVolume;
                 delay -= Time.unscaledDeltaTime;
 				yield return 0;
 			}
 		}
 		music.clip = to;
-        if (to == null || mute) {
+        if (to == null || !BGM_Available) {
             music.Stop();
             yield break;
         }
@@ -165,29 +146,16 @@ public class AudioAssistant : MonoBehaviour {
 		if (!music.isPlaying) music.Play();
 		while (delay < 0.4f) {
 
-            music.volume = delay * musicVolume;
+            music.volume = delay * maxMusicVolume;
             delay += Time.unscaledDeltaTime;
 			yield return 0;
 		}
 
-        music.volume = musicVolume;
+        music.volume = maxMusicVolume;
     }
 
 
-    Sound inGameSound;
-    public void ShotInGame(string clip, bool force = false) {
 
-
-        inGameSound = GetSoundByName(clip);
-
-        if (inGameSound != null && !mixBuffer.Contains(clip)) {
-
-            if (inGameSound.clips.Count == 0)
-                return;
-            mixBuffer.Add(clip);
-            sfx.PlayOneShot(inGameSound.clips[0]);
-        }
-    }
 
 	// A single sound effect
 	public static void Shot(string clip) {
@@ -229,26 +197,21 @@ public class AudioAssistant : MonoBehaviour {
     }
 
 
-    // Turn on/off music
-    public void MuteButton() {
-        mute = !mute;
-        PlayerPrefs.SetInt("Mute", mute ? 1 : 0);
-        PlayerPrefs.Save();
-        PlayMusic(mute ? "" : currentTrack);
-    }
 
     public void ChangeMusicVolume(float v) {
-        musicVolume = v;
-        // music.volume = musicVolume * ProjectParameters.main.music_volume_max;
-        music.volume = musicVolume;
+        music.volume = v;
 
     }
 
     public void ChangeSFXVolume(float v) {
-        sfxVolume = v;
-        sfx.volume = sfxVolume;
-        loopingSFX.volume = sfxVolume;
+        
+        sfx.volume = v;
+        loopingSFX.volume = v;
+        lowSFX.volume = v / 2;
     }
+
+    
+
 
     [System.Serializable]
     public class Sound {

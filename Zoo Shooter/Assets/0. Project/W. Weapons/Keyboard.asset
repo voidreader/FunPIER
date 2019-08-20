@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
+  m_Name: Keyboard
+  m_EditorClassIdentifier: 
+  CurrentType: 1
+  HowToGet: 2
+  WeaponID: Keyboard
+  DisplayName: 'Keyboard
+
+    Warrior'
+  WeaponSprite: {fileID: 21300000, guid: 7f82d63dfd3678f4ba216fa63dff5a14, type: 3}
+  ShootSound: {fileID: 8300000, guid: 98e4320c884984ad08394d77b588282d, type: 3}
+  ReloadSound: {fileID: 8300000, guid: f4f2a5e7d39adf84bbf677f5bb0d7011, type: 3}
+  bulletPrefab: {fileID: 1554587462116411610, guid: 4d5b261174fe9824eb586e98f7f10bc6,
+    type: 3}
+  BulletsCount: 3
+  Damage: 3
+  BulletSpeed: 45
+  FireRate: 0.1
+  Accuracy: 80
+  AimSpeed: 70
+  AimRange: 0.8
+  posEquip: {x: -0.059, y: -0.014, z: 0}
+  posGunPoint: {x: -1.17, y: 0, z: 0}
+  posScale: {x: 0.8, y: 0.8, z: 1}
+  AimTrailScale: {x: -0.863, y: 0.863, z: 1}

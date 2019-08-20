@@ -468,7 +468,7 @@ MonoBehaviour:
   m_version: 1
   m_description: 
   m_id: 627b7fb3-de48-4823-8c4e-5de939b09928
-  m_lastModified: 132106508522305252
+  m_lastModified: 132107552988530326
 --- !u!114 &114083841158680824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1044,6 +1044,13 @@ MonoBehaviour:
       m_inputSocketId: 2352e94d-1b22-48fc-97fb-98b8f2f5862c
       m_outputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
       m_outputSocketId: 4ce2901a-9f51-4609-9770-69d9685ae5bd
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: 404e8325-b7f1-41f2-a132-98272cc57d89
+      m_inputNodeId: 46575179-ed88-4adc-9417-43d43afdd282
+      m_inputSocketId: 2352e94d-1b22-48fc-97fb-98b8f2f5862c
+      m_outputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
+      m_outputSocketId: 581ea218-b44e-4131-a353-99e395f0dbb8
     m_connectionPoints:
     - {x: -2, y: 4}
     - {x: 202, y: 4}
@@ -1113,7 +1120,7 @@ MonoBehaviour:
   m_onExitShowViews: []
   m_onExitHideViews:
   - Category: General
-    InstantAction: 0
+    InstantAction: 1
     Name: Settings
 --- !u!114 &114486692702703638
 MonoBehaviour:
@@ -1358,7 +1365,14 @@ MonoBehaviour:
     m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
       Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   - m_connectionMode: 0
-    m_connections: []
+    m_connections:
+    - m_inputConnectionPoint: {x: -2, y: 4}
+      m_outputConnectionPoint: {x: 202, y: 4}
+      m_id: 404e8325-b7f1-41f2-a132-98272cc57d89
+      m_inputNodeId: 46575179-ed88-4adc-9417-43d43afdd282
+      m_inputSocketId: 2352e94d-1b22-48fc-97fb-98b8f2f5862c
+      m_outputNodeId: 571e74ea-98f6-4506-aeaf-5a74a4d2a442
+      m_outputSocketId: 581ea218-b44e-4131-a353-99e395f0dbb8
     m_connectionPoints:
     - {x: -2, y: 4}
     - {x: 202, y: 4}
@@ -2817,6 +2831,81 @@ MonoBehaviour:
   m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
   m_id: 98eda7b1-937e-45fd-9eae-86ba1e221251
   m_name: UI Node
+  m_onEnterShowViews: []
+  m_onEnterHideViews: []
+  m_onExitShowViews: []
+  m_onExitHideViews: []
+--- !u!114 &8920104778363944014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 840a439e06374673a9115ed02deb5a54, type: 3}
+  m_Name: UINode
+  m_EditorClassIdentifier: 
+  ErrorNodeNameIsEmpty: 0
+  ErrorDuplicateNameFoundInGraph: 1
+  m_inputSockets:
+  - m_connectionMode: 1
+    m_connections: []
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 0
+    m_canBeDeleted: 0
+    m_canBeReordered: 0
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 38
+    m_id: 1bdeb5de-db7f-4dd1-9745-5f8c32c3d769
+    m_nodeId: d69a2a7a-b8af-4654-a131-55fed6a1aa60
+    m_socketName: InputSocket_0
+    m_value: '{"ButtonCategory":"General","ButtonName":"Unnamed","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
+    m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_outputSockets:
+  - m_connectionMode: 0
+    m_connections: []
+    m_connectionPoints:
+    - {x: -2, y: 4}
+    - {x: 202, y: 4}
+    m_direction: 1
+    m_canBeDeleted: 1
+    m_canBeReordered: 1
+    m_curveModifier: 0
+    m_height: 24
+    m_width: 216
+    m_x: 0
+    m_y: 62
+    m_id: fe6585d4-1613-4dbb-b017-aec2ac8e1350
+    m_nodeId: d69a2a7a-b8af-4654-a131-55fed6a1aa60
+    m_socketName: OutputSocket_0
+    m_value: '{"ButtonCategory":"General","ButtonName":"Back","GameEvent":"","TimeDelay":3.0,"Trigger":0}'
+    m_valueTypeQualifiedName: Doozy.Engine.UI.Connections.UIConnection, Assembly-CSharp,
+      Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_nodeType: 4
+  m_allowDuplicateNodeName: 0
+  m_allowEmptyNodeName: 0
+  m_canBeDeleted: 1
+  m_debugMode: 0
+  m_useFixedUpdate: 0
+  m_useLateUpdate: 0
+  m_useUpdate: 0
+  m_height: 128
+  m_width: 216
+  m_x: -1110.2588
+  m_y: -5.87247
+  m_minimumInputSocketsCount: 1
+  m_minimumOutputSocketsCount: 1
+  m_graphId: 627b7fb3-de48-4823-8c4e-5de939b09928
+  m_id: d69a2a7a-b8af-4654-a131-55fed6a1aa60
+  m_name: Settings
   m_onEnterShowViews: []
   m_onEnterHideViews: []
   m_onExitShowViews: []

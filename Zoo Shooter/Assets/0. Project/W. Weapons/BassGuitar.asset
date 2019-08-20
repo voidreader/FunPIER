@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
+  m_Name: BassGuitar
+  m_EditorClassIdentifier: 
+  CurrentType: 2
+  HowToGet: 2
+  WeaponID: BassGuitar
+  DisplayName: 'Bass
+
+    Guitar
+
+'
+  WeaponSprite: {fileID: 21300000, guid: ec4a4ffe14241ad4cb721db93a1ae008, type: 3}
+  ShootSound: {fileID: 8300000, guid: 7146c71681842427996de7010eabdf71, type: 3}
+  ReloadSound: {fileID: 8300000, guid: 9f1328f257b966d4b98588967db1f067, type: 3}
+  bulletPrefab: {fileID: 6404463751213108133, guid: ee61db28846e5224882683de7a2660e4,
+    type: 3}
+  BulletsCount: 1
+  Damage: 10
+  BulletSpeed: 0
+  FireRate: 0.1
+  Accuracy: 90
+  AimSpeed: 72
+  AimRange: 1.2
+  posEquip: {x: -0.148, y: -0.076, z: 0}
+  posGunPoint: {x: -1.615, y: 0, z: 0}
+  posScale: {x: 0.7, y: 0.7, z: 1}
+  AimTrailScale: {x: -1.24, y: 1.24, z: 1}

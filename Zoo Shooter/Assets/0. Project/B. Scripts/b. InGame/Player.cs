@@ -93,16 +93,20 @@ public class Player : MonoBehaviour
 
         rigid.bodyType = RigidbodyType2D.Dynamic;
 
-        if(isLeft)
-            rigid.AddForce(new Vector2(Random.Range(-250f, -100f), 600));
-        else
-            rigid.AddForce(new Vector2(Random.Range(100f, 250f), 600));
+        if (isLeft) {
+            rigid.AddForce(new Vector2(Random.Range(-250f, -150), 800));
+            this.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+        else {
+            rigid.AddForce(new Vector2(Random.Range(150f, 250f), 800));
+            this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
 
-        this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        // this.transform.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         // rigid.AddTorque(360, ForceMode2D.Impulse);
         DropWeapon();
 
-        Destroy(this, 5f);
+        Destroy(this, 4f);
     }
 
     void DropWeapon() {

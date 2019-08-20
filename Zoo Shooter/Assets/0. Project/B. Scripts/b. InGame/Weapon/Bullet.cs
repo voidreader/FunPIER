@@ -22,6 +22,8 @@ public class Bullet : MonoBehaviour
     public GameObject MuzzlePrefab;
     public GameObject HitPrefab;
 
+    public bool NeedHitPrefabRotation = false;
+
     // 꼬리.
     public List<GameObject> trails;
     public bool collided = false;
@@ -42,6 +44,7 @@ public class Bullet : MonoBehaviour
     // Hit 효과 
     Transform hitSpawned;
     ParticleSystem hitSpawnedVFX;
+    Quaternion hitRot;
 
 
     void Start() {
@@ -117,10 +120,13 @@ public class Bullet : MonoBehaviour
     /// <summary>
     /// 히트 효과 
     /// </summary>
-    void SetHit() {
+    void SetHit(Collider2D co) {
+
+        
 
         if (HitPrefab == null)
             return;
+
 
         hitSpawned = PoolManager.Pools[ConstBox.poolGame].Spawn(HitPrefab, this.transform.position, Quaternion.identity);
         hitSpawnedVFX = hitSpawned.GetComponent<ParticleSystem>();
@@ -183,7 +189,7 @@ public class Bullet : MonoBehaviour
         collided = true;
 
         // 파티클 히트 효과 
-        SetHit();
+        SetHit(col);
 
 
         // 플레이어 처리 

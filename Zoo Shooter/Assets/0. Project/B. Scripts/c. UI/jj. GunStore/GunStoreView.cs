@@ -144,18 +144,30 @@ public class GunStoreView : MonoBehaviour
             return;
         }
 
-
-        if(CurrentGroupIndex == 0) {
+        if(_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock250) {
             _bottoms.transform.DOScale(1, 0.2f);
             _lblUnlock.text = "250";
         }
-        else if(CurrentGroupIndex == 1 || CurrentGroupIndex == 2) {
-            _bottoms.transform.DOScale(0, 0.2f);
-        }
-        else {
+        else if(_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock500) {
             _bottoms.transform.DOScale(1, 0.2f);
             _lblUnlock.text = "500";
         }
+        else {
+            _bottoms.transform.DOScale(0, 0.2f);
+        }
+
+
+        /*
+        if(CurrentGroupIndex == 0) {
+            
+        }
+        else if(CurrentGroupIndex == 1 || CurrentGroupIndex == 2) {
+            
+        }
+        else {
+
+        }
+        */
 
     }
 

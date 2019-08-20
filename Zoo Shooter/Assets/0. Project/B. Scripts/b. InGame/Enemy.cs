@@ -181,11 +181,11 @@ public class Enemy : MonoBehaviour {
     /// </summary>
     void PoseHeadKillRotate() {
         if (isLeft) {
-            this.rigid.AddForce(new Vector2(-250, 800));
+            this.rigid.AddForce(new Vector2(-350, 900));
             this.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart); 
         }
         else {
-            this.rigid.AddForce(new Vector2(250, 800));
+            this.rigid.AddForce(new Vector2(350, 900));
             this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         }
 

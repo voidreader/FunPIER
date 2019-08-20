@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
+  m_Name: Corgi
+  m_EditorClassIdentifier: 
+  CurrentType: 2
+  HowToGet: 2
+  WeaponID: Corgi
+  DisplayName: Corgi
+  WeaponSprite: {fileID: 21300000, guid: 0e1702a8c3250a74c9fb1f2b5dedf6a4, type: 3}
+  ShootSound: {fileID: 8300000, guid: 7323366eae00b0e469eab6317b718446, type: 3}
+  ReloadSound: {fileID: 8300000, guid: ccdb849e34bafdf429920105088c7100, type: 3}
+  bulletPrefab: {fileID: 446077419713833669, guid: 5b5f1fbd1dd525547b81ded5373b148b,
+    type: 3}
+  BulletsCount: 3
+  Damage: 4
+  BulletSpeed: 45
+  FireRate: 0.08
+  Accuracy: 90
+  AimSpeed: 75
+  AimRange: 0.8
+  posEquip: {x: -0.022, y: -0.014, z: 0}
+  posGunPoint: {x: -1.301, y: -0.026, z: 0}
+  posScale: {x: 0.7, y: 0.7, z: 1}
+  AimTrailScale: {x: -0.92, y: 0.92, z: 1}

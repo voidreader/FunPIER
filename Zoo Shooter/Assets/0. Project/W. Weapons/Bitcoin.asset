@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
+  m_Name: Bitcoin
+  m_EditorClassIdentifier: 
+  CurrentType: 2
+  HowToGet: 4
+  WeaponID: Bitcoin
+  DisplayName: 'Beat Coin
+
+'
+  WeaponSprite: {fileID: 21300000, guid: ff57fdbb5e8414244ae9c8c81f34288c, type: 3}
+  ShootSound: {fileID: 8300000, guid: c2c3846da555a0448bc6d3212db4dac2, type: 3}
+  ReloadSound: {fileID: 8300000, guid: da8afc7ef2088684885c2dc1be013132, type: 3}
+  bulletPrefab: {fileID: 7639926216580094937, guid: 74d53ec38b9ec16489c36ac70c7f1bb6,
+    type: 3}
+  BulletsCount: 6
+  Damage: 2
+  BulletSpeed: 45
+  FireRate: 0.08
+  Accuracy: 90
+  AimSpeed: 72
+  AimRange: 1
+  posEquip: {x: -0.172, y: -0.014, z: 0}
+  posGunPoint: {x: -0.971, y: 0, z: 0}
+  posScale: {x: 0.8, y: 0.8, z: 1}
+  AimTrailScale: {x: -0.87, y: 0.87, z: 1}
