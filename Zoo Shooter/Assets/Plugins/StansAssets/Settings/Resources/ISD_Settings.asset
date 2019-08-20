@@ -61,7 +61,22 @@ MonoBehaviour:
   VariableDictionary: []
   Languages: []
   ShellScripts: []
-  m_buildProperties: []
+  m_buildProperties:
+  - m_name: ENABLE_BITCODE
+    m_value: NO
+    m_options:
+    - YES
+    - NO
+  - m_name: ENABLE_TESTABILITY
+    m_value: NO
+    m_options:
+    - YES
+    - NO
+  - m_name: GENERATE_PROFILING_CODE
+    m_value: NO
+    m_options:
+    - YES
+    - NO
   Capability:
     iCloud:
       Enabled: 0

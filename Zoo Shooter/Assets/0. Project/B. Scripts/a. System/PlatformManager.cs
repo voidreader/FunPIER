@@ -5,10 +5,7 @@ using SA.Android.GMS.Auth;
 using SA.Android.GMS.Common;
 using SA.Android.GMS.Games;
 
-#if UNITY_IOS
-using SA.Foundation.Templates;
-using SA.iOS.GameKit;
-#endif
+using UnityEngine.SocialPlatforms.GameCenter;
 
 
 using UnityEngine;
@@ -71,8 +68,10 @@ public class PlatformManager : MonoBehaviour {
 
 #elif UNITY_IOS
         PlatformAvailable = true;
+        GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
         GameCenter_IsSignedIn();    
 #endif
+
 
 
 
@@ -121,43 +120,44 @@ public class PlatformManager : MonoBehaviour {
         }
 
 #elif UNITY_IOS
-        
-        if(!GameCenter_IsSignedIn()) {
+        if (!GameCenter_IsSignedIn()) {
             OnSignIn = ShowLeaderBoardUI;
             GameCenter_Signin();
         }
         else {
             Debug.Log("Show Gamecenter Leaderboard");
-            ISN_GKGameCenterViewController viewController = new ISN_GKGameCenterViewController();
-            viewController.ViewState = ISN_GKGameCenterViewControllerState.Leaderboards;
-            viewController.Show();
+            Social.ShowLeaderboardUI();
         }
+
 
 #endif
 
 
+
+
     }
 
+#if UNITY_IOS
 
-    #if UNITY_IOS
     public void GameCenter_Signin() {
 
-        ISN_GKLocalPlayer.Authenticate((SA_Result result) => {
-            if (result.IsSucceeded) {
-                Debug.Log("Authenticate is succeeded!");
+        Social.localUser.Authenticate((bool success) => {
+            if(success) {
+                Debug.Log("Game Center Sign in Sucess");
                 OnSignIn();
             }
             else {
-                Debug.Log("Authenticate is failed! Error with code: " + result.Error.Code + " and description: " + result.Error.Message);
+                Debug.Log("Game Center Sign in Fail..!!");
             }
         });
     }
 
+
     private bool GameCenter_IsSignedIn() {
-        return ISN_GKLocalPlayer.LocalPlayer != null;
+        return Social.localUser.authenticated;
     }
 
-    #endif
+#endif
 
 
     /// <summary>
@@ -173,20 +173,8 @@ public class PlatformManager : MonoBehaviour {
 
 #elif UNITY_IOS
         
-                if (GameCenter_IsSignedIn()) {
-
-            ISN_GKScore scoreReporter = new ISN_GKScore(LB_ID);
-            scoreReporter.Value = score;
-            scoreReporter.Context = 1;
-
-            scoreReporter.Report((result) => {
-                if (result.IsSucceeded) {
-                    Debug.Log("Score Report Success");
-                }
-                else {
-                    Debug.Log("Score Report failed! Code: " + result.Error.Code + " Message: " + result.Error.Message);
-                }
-            });
+        if(GameCenter_IsSignedIn()) {
+            Social.ReportScore(score);
         }
 
 #endif
@@ -200,7 +188,7 @@ public class PlatformManager : MonoBehaviour {
 
 
 
-    #region GPGS
+#region GPGS
 #if UNITY_ANDROID
 
     private bool GPGS_IsSignedIn() {
