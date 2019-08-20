@@ -4,6 +4,13 @@ using SA.Android.App;
 using SA.Android.GMS.Auth;
 using SA.Android.GMS.Common;
 using SA.Android.GMS.Games;
+
+#if UNITY_IOS
+using SA.Foundation.Templates;
+using SA.iOS.GameKit;
+#endif
+
+
 using UnityEngine;
 
 
@@ -63,10 +70,12 @@ public class PlatformManager : MonoBehaviour {
         }
 
 #elif UNITY_IOS
-            
+        PlatformAvailable = true;
+        GameCenter_IsSignedIn();    
 #endif
 
-        
+
+
 
     }
 
@@ -110,12 +119,46 @@ public class PlatformManager : MonoBehaviour {
             }
 
         }
+
+#elif UNITY_IOS
+        
+        if(!GameCenter_IsSignedIn()) {
+            OnSignIn = ShowLeaderBoardUI;
+            GameCenter_Signin();
+        }
+        else {
+            Debug.Log("Show Gamecenter Leaderboard");
+            ISN_GKGameCenterViewController viewController = new ISN_GKGameCenterViewController();
+            viewController.ViewState = ISN_GKGameCenterViewControllerState.Leaderboards;
+            viewController.Show();
+        }
+
 #endif
 
 
-
-
     }
+
+
+    #if UNITY_IOS
+    public void GameCenter_Signin() {
+
+        ISN_GKLocalPlayer.Authenticate((SA_Result result) => {
+            if (result.IsSucceeded) {
+                Debug.Log("Authenticate is succeeded!");
+                OnSignIn();
+            }
+            else {
+                Debug.Log("Authenticate is failed! Error with code: " + result.Error.Code + " and description: " + result.Error.Message);
+            }
+        });
+    }
+
+    private bool GameCenter_IsSignedIn() {
+        return ISN_GKLocalPlayer.LocalPlayer != null;
+    }
+
+    #endif
+
 
     /// <summary>
     /// 스코어 제출 
@@ -127,17 +170,42 @@ public class PlatformManager : MonoBehaviour {
 #if UNITY_ANDROID
         if (PlatformAvailable && GPGS_IsSignedIn()) 
             AN_Games.GetLeaderboardsClient().SubmitScore(LB_ID, score);
+
+#elif UNITY_IOS
+        
+                if (GameCenter_IsSignedIn()) {
+
+            ISN_GKScore scoreReporter = new ISN_GKScore(LB_ID);
+            scoreReporter.Value = score;
+            scoreReporter.Context = 1;
+
+            scoreReporter.Report((result) => {
+                if (result.IsSucceeded) {
+                    Debug.Log("Score Report Success");
+                }
+                else {
+                    Debug.Log("Score Report failed! Code: " + result.Error.Code + " Message: " + result.Error.Message);
+                }
+            });
+        }
+
 #endif
+
+
+
 
     }
 
+
+
+
+
+    #region GPGS
+#if UNITY_ANDROID
 
     private bool GPGS_IsSignedIn() {
         return AN_GoogleSignIn.GetLastSignedInAccount() != null;
     }
-
-
-    #region GPGS
 
     public void GPGS_SignIn(bool isSilent) {
         AN_GoogleSignInOptions.Builder builder = new AN_GoogleSignInOptions.Builder(AN_GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
@@ -178,8 +246,10 @@ public class PlatformManager : MonoBehaviour {
         }
 
 
+
     }
+#endif
 
 
-    #endregion
+#endregion
 }
