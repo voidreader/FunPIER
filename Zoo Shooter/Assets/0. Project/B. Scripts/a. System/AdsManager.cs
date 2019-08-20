@@ -68,6 +68,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         RequestInterstitial();
         RequestRewardAd();
 
+
+        Debug.Log(">>> Unity Ads init.... !!!! :: " + unityAdsID);
+
         Advertisement.AddListener(this);
         Advertisement.Initialize(unityAdsID, false);
 
@@ -148,9 +151,13 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         OnWatchReward = callback;
 
         // 애드몹 최우선 
-        if(this.rewardedAd == null || !this.rewardedAd.IsLoaded()) {
-            RequestRewardAd();
+        if(this.rewardedAd.IsLoaded()) {
+            Debug.Log("Admob rewarded ad play");
+            rewardedAd.Show();
             return;
+        }
+        else {
+            RequestRewardAd();
         }
 
         if(Advertisement.IsReady(unityads_placement)) {
@@ -375,17 +382,21 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
     void IUnityAdsListener.OnUnityAdsReady(string placementId) {
         IsUnityAdsAvailable = true;
+        Debug.Log(">> OnUnityAdsReady :: " + placementId);
     }
 
     void IUnityAdsListener.OnUnityAdsDidError(string message) {
-        throw new NotImplementedException();
+        Debug.Log(">> OnUnityAdsDidError :: " + message);
+
     }
 
     void IUnityAdsListener.OnUnityAdsDidStart(string placementId) {
-        throw new NotImplementedException();
+        Debug.Log(">> OnUnityAdsDidStart :: " + placementId);
     }
 
     void IUnityAdsListener.OnUnityAdsDidFinish(string placementId, ShowResult showResult) {
+        Debug.Log(">> OnUnityAdsDidFinish :: " + showResult.ToString());
+
         // Define conditional logic for each ad completion status:
         if (showResult == ShowResult.Finished) {
             OnWatchReward();

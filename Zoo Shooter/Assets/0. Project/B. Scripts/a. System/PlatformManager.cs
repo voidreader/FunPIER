@@ -157,6 +157,11 @@ public class PlatformManager : MonoBehaviour {
         return Social.localUser.authenticated;
     }
 
+
+    void CallbackReportScore(bool result) {
+        Debug.Log("Report Score callback :: " + result);
+    }
+
 #endif
 
 
@@ -174,7 +179,7 @@ public class PlatformManager : MonoBehaviour {
 #elif UNITY_IOS
         
         if(GameCenter_IsSignedIn()) {
-            Social.ReportScore(score);
+            Social.ReportScore(score, LB_ID,  CallbackReportScore);
         }
 
 #endif
