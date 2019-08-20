@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     
 
     public SpriteRenderer sp;
+    public Animator anim;
 
     public bool isRevived = false;
     public Sprite SpriteSpecialist; // 스페셜리스트 
@@ -56,7 +57,9 @@ public class Player : MonoBehaviour
 
         Debug.Log(">> SetNormalAgentForce <<");
 
-        sp.sprite = SpriteNormal;
+        // sp.sprite = SpriteNormal;
+        anim.Play("GeneralAgent");
+        anim.SetBool("isSpecial", false);
         ExtraLife = false;
     }
 
@@ -67,12 +70,14 @@ public class Player : MonoBehaviour
         Debug.Log(">> Player Check Specialist <<");
         // 외향 설정
         if (PIER.IsSpecialist) {
-            sp.sprite = SpriteSpecialist;
+            // sp.sprite = SpriteSpecialist;
+            anim.SetBool("isSpecial", true);
             ExtraLife = true;
         }
         else {
-            sp.sprite = SpriteNormal;
-            ExtraLife = false;
+            // sp.sprite = SpriteNormal;
+            // ExtraLife = false;
+            SetNormalAgentForce();
         }
 
         if (isRevived)
@@ -80,12 +85,20 @@ public class Player : MonoBehaviour
 
     }
 
+    public void SetBlue() {
+        if (ExtraLife)
+            return;
+
+        anim.SetBool("isKilled", true);
+    }
+
     public void KillPlayer() {
 
         // 엑스트라 라이프.
         if(ExtraLife && PIER.IsSpecialist) {
             _breakingArmor.PlayBreakingArmor();
-            sp.sprite = SpriteNormal;
+            //sp.sprite = SpriteNormal;
+            anim.SetBool("isSpecial", false);
             ExtraLife = false;
             return;
         }

@@ -559,6 +559,7 @@ public class GameManager : MonoBehaviour {
 
             if (isMissed) { // 빗나갔을때 Gameover, Enemy Shoot 처리 
 
+                player.SetBlue();
 
                 // Enemy가 아직 인포지션 안된 상태라면 대기
                 while (!enemy.isOnGroud)
