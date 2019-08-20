@@ -1,8 +1,13 @@
 <dependencies>
   <packages>
     <package>com.google.android.gms:play-services-ads:18.1.0</package>
+    <package>com.google.android.gms:play-services-auth:17.0.0</package>
+    <package>com.google.android.gms:play-services-games:18.0.0</package>
+    <package>com.google.code.gson:gson:2.8.5</package>
+    <package>me.panpf:androidx:1.0.0-alpha3</package>
   </packages>
   <files>
+    <file>Assets/Plugins/Android/androidx.activity.activity-1.0.0-alpha02.aar</file>
     <file>Assets/Plugins/Android/androidx.annotation.annotation-1.0.0.jar</file>
     <file>Assets/Plugins/Android/androidx.arch.core.core-common-2.0.0.jar</file>
     <file>Assets/Plugins/Android/androidx.arch.core.core-runtime-2.0.0.aar</file>
@@ -10,12 +15,12 @@
     <file>Assets/Plugins/Android/androidx.browser.browser-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.collection.collection-1.0.0.jar</file>
     <file>Assets/Plugins/Android/androidx.coordinatorlayout.coordinatorlayout-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/androidx.core.core-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.core.core-1.1.0-alpha01.aar</file>
     <file>Assets/Plugins/Android/androidx.cursoradapter.cursoradapter-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.customview.customview-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.documentfile.documentfile-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.drawerlayout.drawerlayout-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/androidx.fragment.fragment-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.fragment.fragment-1.1.0-alpha02.aar</file>
     <file>Assets/Plugins/Android/androidx.interpolator.interpolator-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.legacy.legacy-support-core-ui-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.legacy.legacy-support-core-utils-1.0.0.aar</file>
@@ -29,13 +34,19 @@
     <file>Assets/Plugins/Android/androidx.print.print-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.slidingpanelayout.slidingpanelayout-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.swiperefreshlayout.swiperefreshlayout-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.1.0-alpha01.aar</file>
     <file>Assets/Plugins/Android/androidx.viewpager.viewpager-1.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-18.1.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-base-18.1.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-identifier-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-lite-18.1.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-api-phone-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-auth-base-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-base-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-basement-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-drive-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-games-18.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-gass-18.1.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-base-17.0.0.aar</file>
@@ -43,9 +54,14 @@
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-sdk-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-sdk-api-17.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-stats-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-tasks-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.code.gson.gson-2.8.5.jar</file>
+    <file>Assets/Plugins/Android/me.panpf.androidx-1.0.0-alpha3.aar</file>
+    <file>Assets/Plugins/Android/me.panpf.javax-1.0.0-alpha2.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.annotations-13.0.jar</file>
   </files>
   <settings>
-    <setting name="androidAbis" value="arm64-v8a,armeabi-v7a,x86" />
+    <setting name="androidAbis" value="armeabi-v7a" />
     <setting name="bundleId" value="com.utplus.hitmonkey" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
