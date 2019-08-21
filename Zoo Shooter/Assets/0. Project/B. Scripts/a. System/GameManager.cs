@@ -583,7 +583,8 @@ public class GameManager : MonoBehaviour {
                     }
                     else {
                         // 한번도 부활하지 않은 경우는 Continue 화면을 호출. 
-                        GameEventMessage.SendEvent("ContinueEvent");
+                        // GameEventMessage.SendEvent("ContinueEvent");
+                        ContinueEvent();
                     }
                     
                 }
@@ -686,7 +687,8 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 // 한번도 부활하지 않은 경우는 Continue 화면을 호출. 
-                GameEventMessage.SendEvent("ContinueEvent");
+                // GameEventMessage.SendEvent("ContinueEvent");
+                ContinueEvent();
             }
 
         }
@@ -759,6 +761,17 @@ public class GameManager : MonoBehaviour {
         isCameraMoving = false;
     }
 
+
+
+    /// <summary>
+    /// continue 가능 여부 체크해서 GameOver 혹은 Continue 처리 
+    /// </summary>
+    void ContinueEvent() {
+        if (AdsManager.main.IsAvailableRewardAD())
+            GameEventMessage.SendEvent("ContinueEvent");
+        else
+            GameOver();
+    }
 
     /// <summary>
     /// 게임 오버 처리 

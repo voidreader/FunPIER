@@ -17,6 +17,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     private BannerView bannerView = null;
     private GoogleMobileAds.Api.InterstitialAd interstitial = null;
     private RewardedAd rewardedAd = null;
+    public bool isBannerActivated = false;
 
     public string admob_android_appID, admob_ios_appID;
     public string admob_android_bannerID, admob_android_interstitialID, admob_android_rewardedID;
@@ -47,7 +48,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     }
 
     // Start is called before the first frame update
-    void Start() {
+    IEnumerator Start() {
+
+        yield return new WaitForSeconds(0.5f);
+
         string unityAdsID = string.Empty;
 
 #if UNITY_ANDROID
@@ -90,6 +94,11 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     /// 중간 광고 넣기 (게임오버, 클리어)
     /// </summary>
     public void OpenMidAdvertisement() {
+
+        // 스페셜리스트 상품 구매자는 광고 띄우지 않음 
+        if (PIER.IsSpecialist)
+            return;
+
         int rand = UnityEngine.Random.Range(0, 1000);
 
 
@@ -124,7 +133,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
 
         //if (this.rewardedAd.IsLoaded() || isFBLoaded)
-        if (this.rewardedAd.IsLoaded())
+        if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement))
             return true;
         else
             return false;
@@ -178,7 +187,24 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
     #region 배너
 
+    public void HideBannerView() {
+        if(bannerView != null) {
+            bannerView.Hide();
+            isBannerActivated = false;
+        }
+    }
+
+    public void ActivateBannerView() {
+        if (isBannerActivated)
+            return;
+
+        RequestBanner();
+    }
+
     private void RequestBanner() {
+
+        if (PIER.IsSpecialist)
+            return;
 
 #if UNITY_ANDROID
         string adUnitId = admob_android_bannerID;
@@ -210,11 +236,15 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
     public void HandleOnAdLoaded(object sender, EventArgs args) {
         Debug.Log("HandleAdLoaded event received");
+
+        isBannerActivated = true;
     }
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) {
         Debug.Log("HandleFailedToReceiveAd event received with message: "
                             + args.Message);
+
+        isBannerActivated = false;
     }
 
     public void HandleOnAdOpened(object sender, EventArgs args) {

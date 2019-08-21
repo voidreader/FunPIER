@@ -206,7 +206,7 @@ public class AudioAssistant : MonoBehaviour {
     public void ChangeSFXVolume(float v) {
         
         sfx.volume = v;
-        loopingSFX.volume = v;
+        loopingSFX.volume = v / 2;
         lowSFX.volume = v / 2;
     }
 

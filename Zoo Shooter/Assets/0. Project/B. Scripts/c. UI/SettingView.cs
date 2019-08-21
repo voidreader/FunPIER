@@ -6,10 +6,17 @@ using UnityEngine.UI;
 public class SettingView : MonoBehaviour {
 
     public Image _btnBGM, _btnSE;
-
     public Sprite _spriteOn, _spriteOff;
+    public GameObject _btnRestore; // 구매 리스토어 (iOS)
 
     public void OnView() {
+
+#if UNITY_IOS
+        _btnRestore.SetActive(true);
+#else
+        _btnRestore.SetActive(false);
+#endif
+
         SetStatus();
     }
 

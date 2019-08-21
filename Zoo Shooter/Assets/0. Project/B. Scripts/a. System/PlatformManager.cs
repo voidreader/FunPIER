@@ -69,13 +69,8 @@ public class PlatformManager : MonoBehaviour {
 #elif UNITY_IOS
         PlatformAvailable = true;
         GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
-        GameCenter_IsSignedIn();    
+        GameCenter_Signin();
 #endif
-
-
-
-
-
     }
 
 
@@ -124,6 +119,7 @@ public class PlatformManager : MonoBehaviour {
             OnSignIn = ShowLeaderBoardUI;
             GameCenter_Signin();
         }
+
         else {
             Debug.Log("Show Gamecenter Leaderboard");
             Social.ShowLeaderboardUI();
@@ -171,6 +167,7 @@ public class PlatformManager : MonoBehaviour {
     /// <param name="score"></param>
     public void ReportScore(long score) {
 
+        Debug.Log(">> Report Score :: " + score);
 
 #if UNITY_ANDROID
         if (PlatformAvailable && GPGS_IsSignedIn()) 
@@ -179,21 +176,18 @@ public class PlatformManager : MonoBehaviour {
 #elif UNITY_IOS
         
         if(GameCenter_IsSignedIn()) {
+            Debug.Log(">> GameCenter Report Score :: " + score);
             Social.ReportScore(score, LB_ID,  CallbackReportScore);
         }
 
 #endif
-
-
-
-
     }
 
 
 
 
 
-#region GPGS
+    #region GPGS
 #if UNITY_ANDROID
 
     private bool GPGS_IsSignedIn() {

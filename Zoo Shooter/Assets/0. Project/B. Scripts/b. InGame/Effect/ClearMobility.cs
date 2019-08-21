@@ -13,9 +13,12 @@ public class ClearMobility : MonoBehaviour
         this.gameObject.SetActive(true);
         this.transform.DOMove(new Vector3(2.11f, 3.87f, 0), 0.4f);
         // 2.11, 3.87
+
+        AudioAssistant.main.PlayLoopingSFX("Helicorpter");
     }
 
     public void OffMobility() {
         this.gameObject.SetActive(false);
+        AudioAssistant.main.StopLoopingSFX();
     }
 }

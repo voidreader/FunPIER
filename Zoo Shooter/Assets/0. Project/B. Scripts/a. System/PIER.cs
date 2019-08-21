@@ -48,13 +48,23 @@ public class PIER : MonoBehaviour {
 
     #region 스페셜 리스트 
 
-    public void SetSpecialist() {
-        if(IsSpecialist) {
+    /// <summary>
+    /// 스페셜리스트 세팅 
+    /// </summary>
+    /// <param name="flag"></param>
+    public void SetSpecialist(bool flag) {
+        IsSpecialist = flag;
+
+        if(IsSpecialist) { // 스페셜리스트 !
             AddGun(Stocks.main.WeaponSpecialist);
             ChangeEquipWeapon(Stocks.main.WeaponSpecialist);
+
+            // 광고 모듈 처리 
+            AdsManager.main.HideBannerView();
         }
-        else {
-            RemoveGun(Stocks.main.WeaponSpecialist);
+        else { // 일반 
+            RemoveGun(Stocks.main.WeaponSpecialist); // 특별 무기 제거
+            AdsManager.main.ActivateBannerView(); // 배너뷰 살리기 
         }
     }
 

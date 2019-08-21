@@ -54,8 +54,19 @@ public class ContinueView : MonoBehaviour {
     }
 
     public void OnClickWatchAD() {
-        Debug.Log("WatchAD!");
+        Debug.Log("WatchAD! Continue...... ");
 
+        if(Application.isEditor) {
+            OnCompletedWathADContinue();
+            return;
+        }
+
+        AdsManager.main.OpenRewardAd(OnCompletedWathADContinue);
+        
+    }
+
+    void OnCompletedWathADContinue() {
+        Debug.Log("WatchAD! OnCompletedWathADContinue...... ");
         // 다시 게임으로 돌아가서.. 부활시켜야 된다. 
         Doozy.Engine.GameEventMessage.SendEvent("ReviveEvent");
         GameManager.main.Revive();

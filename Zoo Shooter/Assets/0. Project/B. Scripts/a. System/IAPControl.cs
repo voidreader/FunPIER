@@ -18,13 +18,13 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
     void Awake() {
         main = this;
-        InitBilling();
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitBilling();
     }
 
     void InitBilling() {
@@ -101,8 +101,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                     Debug.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
 
                     if(info.isSubscribed() == Result.True ) {
-                        PIER.IsSpecialist = true;
-                        PIER.main.SetSpecialist();
+                        PIER.main.SetSpecialist(true);
                         Debug.Log("Is Specialist!!!!!!");
                     }
 
@@ -126,17 +125,16 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
 
 
-        IsInitialized = true;
+        
         Debug.Log("IAP init completed");
-
-        PIER.main.SetSpecialist();
-
+        IsInitialized = true;
         // SubscriptionManager.UpdateSubscription
     }
 
 
     public void OnInitializeFailed(InitializationFailureReason error) {
         Debug.Log(">>> Unity IAP OnInitializeFailed :: " + error.ToString());
+        IsInitialized = false;
     }
 
 
@@ -169,8 +167,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         Debug.Log(">> Called ProcessPurchase  :: " + e.purchasedProduct.definition.id);
 
         if(e.purchasedProduct.definition.type == ProductType.Subscription) {
-            PIER.IsSpecialist = true;
-            PIER.main.SetSpecialist();
+            
+            PIER.main.SetSpecialist(true);
             GameManager.main.RefreshPlayerWeapon(); // 구매시에는 무기도 변경해준다. 
             Debug.Log("Is Specialist!!!!!! by new purchase !!");
 
@@ -242,6 +240,20 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     }
 
     #endregion
+
+    /// <summary>
+    /// 구독상품 가격정보 
+    /// </summary>
+    /// <returns></returns>
+    public string GetSubscriptionProductPrice() {
+        foreach(var item in controller.products.all) {
+            if(item.definition.id == "hm_weekly_subs") {
+                return item.metadata.localizedPriceString;
+            }
+        }
+
+        return string.Empty;
+    }
 
     public void RestorePurchase() {
         if (!IsInitialized)
