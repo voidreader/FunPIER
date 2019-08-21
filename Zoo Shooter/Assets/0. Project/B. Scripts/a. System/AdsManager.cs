@@ -370,6 +370,14 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
     public void HandleRewardedAdOpening(object sender, EventArgs args) {
         Debug.Log("HandleRewardedAdOpening event received");
+
+        // 애드몹이 오픈되도 소리가 자꾸 나와... 
+#if UNITY_IOS
+        if(SoundControlSystem.BGM_Available) {
+            AudioAssistant.main.ChangeMusicVolume(0);
+        }
+
+#endif
     }
 
     public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args) {
@@ -381,6 +389,14 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     public void HandleRewardedAdClosed(object sender, EventArgs args) {
         Debug.Log("HandleRewardedAdClosed event received");
 
+
+#if UNITY_IOS
+        if (SoundControlSystem.BGM_Available) {
+            AudioAssistant.main.ChangeMusicVolume(0.6f);
+        }
+
+#endif
+
         RequestRewardAd();
     }
 
@@ -391,9 +407,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         
     }
 
-    #endregion
+#endregion
 
-    #region 유니티 애즈 동영상
+#region 유니티 애즈 동영상
 
     public void ShowUnityAds() {
         Advertisement.Show(unityads_placement);
@@ -429,5 +445,5 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         }
     }
 
-    #endregion
+#endregion
 }

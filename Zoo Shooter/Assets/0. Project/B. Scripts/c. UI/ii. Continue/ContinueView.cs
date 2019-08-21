@@ -9,9 +9,12 @@ public class ContinueView : MonoBehaviour {
     public Progressor _timer;
     float maxSec = 6f;
 
+    public bool isContinue = false;
+
     public void OnView() {
         Debug.Log("OnView in ContinueView");
 
+        isContinue = false;
         _timer.InstantSetValue(1);
         _btnNoThanks.SetActive(false);
 
@@ -49,6 +52,11 @@ public class ContinueView : MonoBehaviour {
         // Doozy.Engine.GameEventMessage.SendEvent("GameOverEvent");
 
         Debug.Log("TIME OVER... ");
+
+        // 광고보기 눌렀으면 끝. 
+        if (isContinue)
+            yield break;
+
         GameManager.main.GameOver();
 
 
@@ -56,6 +64,9 @@ public class ContinueView : MonoBehaviour {
 
     public void OnClickWatchAD() {
         Debug.Log("WatchAD! Continue...... ");
+
+        // 컨티뉴 눌렀다..!
+        isContinue = true;
 
         if(Application.isEditor) {
             OnCompletedWathADContinue();
