@@ -5,7 +5,9 @@ using SA.Android.GMS.Auth;
 using SA.Android.GMS.Common;
 using SA.Android.GMS.Games;
 
+#if UNITY_IOS
 using UnityEngine.SocialPlatforms.GameCenter;
+#endif
 
 
 using UnityEngine;
@@ -187,7 +189,7 @@ public class PlatformManager : MonoBehaviour {
 
 
 
-    #region GPGS
+#region GPGS
 #if UNITY_ANDROID
 
     private bool GPGS_IsSignedIn() {

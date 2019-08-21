@@ -51,6 +51,7 @@ public class ContinueView : MonoBehaviour {
         Debug.Log("TIME OVER... ");
         GameManager.main.GameOver();
 
+
     }
 
     public void OnClickWatchAD() {
