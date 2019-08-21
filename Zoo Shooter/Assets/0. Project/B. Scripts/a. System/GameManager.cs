@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour {
     public void OnClickPlay() {
 
         GameViewManager.isContinueWatchAD = false;
+        SingularSDK.Event("Game Play");
 
 
         isPlaying = true;

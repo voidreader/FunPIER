@@ -164,7 +164,7 @@ public class EnemyWeapon : MonoBehaviour
                 break;
 
             case WeaponDropType.HighJump:
-                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 700));
+                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 600));
                 this.transform.DORotate(new Vector3(0, 0, rotateAngle), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
                 break;
         }

@@ -37,6 +37,7 @@ public class CinemaPoster : MonoBehaviour
 
         CollectionManager.main.OpenBigPoster(_posterID);
 
+
     }
 
     public void FocusPoster() {

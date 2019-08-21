@@ -122,7 +122,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             } // end of item.availableToPurchase 
         }
 
-
+        if (!PIER.IsSpecialist)
+            PIER.main.SetSpecialist(false);
 
 
         
@@ -177,7 +178,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
             }
 
         }
-            
+
+        SingularSDK.InAppPurchase(e.purchasedProduct, null);
 
 
         // todo

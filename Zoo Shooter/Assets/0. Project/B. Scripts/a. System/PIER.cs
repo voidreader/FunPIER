@@ -386,6 +386,13 @@ public class PIER : MonoBehaviour {
                 GunListNode[ColumnGun].Remove(i);
         }
 
+        if(CurrentWeapon == w) {
+            // ChangeEquipWeapon(Stocks.GetWeaponByID(GunListNode )
+            ChangeEquipWeapon(Stocks.main.WeaponBasic);
+        }
+
+        
+
         SaveGun();
     }
 

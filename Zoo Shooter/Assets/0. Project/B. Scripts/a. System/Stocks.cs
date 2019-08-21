@@ -7,6 +7,7 @@ public class Stocks : MonoBehaviour
 {
     static Stocks _main = null;
     public Weapon WeaponSpecialist;
+    public Weapon WeaponBasic; // 피스톨 기본무기 
 
     public List<Weapon> ListWeapons; // 무기 데이터 
     public List<Sprite> ListWeaponSprites; // 무기 스프라이트
