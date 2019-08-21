@@ -83,13 +83,18 @@ public class Enemy : MonoBehaviour {
         if (type == EnemyType.Normal)
             sp.sprite = Stocks.GetEnemySprite(id);
         else {
-
-            
-            // HP 따로 처리
-            if(PIER.main.InfiniteMode)
-                HP = BossData.Instance.Rows[GameManager.main.InfiniteIndex]._hp;
-            else
+            if(PIER.main == null) {
                 HP = BossData.Instance.Rows[PIER.CurrentLevel]._hp;
+            }
+            else {
+                // HP 따로 처리
+                if (PIER.main.InfiniteMode)
+                    HP = BossData.Instance.Rows[GameManager.main.InfiniteIndex]._hp;
+                else
+                    HP = BossData.Instance.Rows[PIER.CurrentLevel]._hp;
+            }
+            
+
 
             sp.sprite = Stocks.GetBossSprite(data._sprite);
             Debug.Log("Enemy.cs Boss HP :: " + HP);
