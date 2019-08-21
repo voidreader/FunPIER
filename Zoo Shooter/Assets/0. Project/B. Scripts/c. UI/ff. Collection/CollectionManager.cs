@@ -187,7 +187,7 @@ public class CollectionManager : MonoBehaviour
 
     public void OpenBigPoster(int id) {
         NewPoster.sprite = Stocks.GetPosterSprite(id);
-        NewPoster.transform.localScale = Vector3.zero;
+        NewPoster.transform.localPosition = Vector3.zero;
         NewPoster.transform.localEulerAngles = new Vector3(0, 0, 719);
         NewPoster.transform.localScale = new Vector3(0, 0, 1);
         NewPoster.color = new Color(1, 1, 1, 0);

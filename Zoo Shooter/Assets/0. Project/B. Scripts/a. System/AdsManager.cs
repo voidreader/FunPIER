@@ -329,8 +329,6 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
     public void RequestRewardAd() {
 
-        if (rewardedAd != null && rewardedAd.IsLoaded())
-            return;
 
         string adUnitId;
 #if UNITY_ANDROID
@@ -367,9 +365,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     }
 
     public void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs args) {
-        Debug.Log(
-            "HandleRewardedAdFailedToLoad event received with message: "
-                             + args.Message);
+        Debug.Log("HandleRewardedAdFailedToLoad event received with message: " + args.Message);
     }
 
     public void HandleRewardedAdOpening(object sender, EventArgs args) {
@@ -389,16 +385,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     }
 
     public void HandleUserEarnedReward(object sender, Reward args) {
-        string type = args.Type;
-        double amount = args.Amount;
-        Debug.Log(
-            "HandleRewardedAdRewarded event received for "
-                        + amount.ToString() + " " + type);
-
-
-        RequestRewardAd();
-
+        Debug.Log(">> HandleUserEarnedReward << ");
         OnWatchReward(); // callback 호출 
+
+        
     }
 
     #endregion

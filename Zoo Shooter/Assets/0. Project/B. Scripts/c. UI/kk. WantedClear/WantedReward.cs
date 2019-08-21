@@ -186,8 +186,18 @@ public class WantedReward : MonoBehaviour
         // 
         listSelect.Remove(selectedCol); // 이미 받은건 제거
 
-        // 
-        OnCompleteWatch();
+        if(Application.isEditor) {
+            OnCompleteWatch();
+            return;
+        }
+
+        if(AdsManager.main.IsAvailableRewardAD()) {
+            AdsManager.main.OpenRewardAd(OnCompleteWatch);
+        }
+        else {
+            OnCompleteWatch();
+        }
+        
     }
 
 

@@ -80,10 +80,10 @@ namespace Google2u
 	public sealed class WantedRewardData : IGoogle2uDB
 	{
 		public enum rowIds {
-			reward0, reward1, reward2, reward3, reward4, reward5, reward6, reward7, reward8
+			reward0, reward1, reward2, reward3, reward4, reward5, reward6, reward7, reward8, reward9, reward10, reward11
 		};
 		public string [] rowNames = {
-			"reward0", "reward1", "reward2", "reward3", "reward4", "reward5", "reward6", "reward7", "reward8"
+			"reward0", "reward1", "reward2", "reward3", "reward4", "reward5", "reward6", "reward7", "reward8", "reward9", "reward10", "reward11"
 		};
 		public System.Collections.Generic.List<WantedRewardDataRow> Rows = new System.Collections.Generic.List<WantedRewardDataRow>();
 
@@ -101,14 +101,17 @@ namespace Google2u
 		private WantedRewardData()
 		{
 			Rows.Add( new WantedRewardDataRow("reward0", "0", "broom"));
-			Rows.Add( new WantedRewardDataRow("reward1", "1", "bubble"));
+			Rows.Add( new WantedRewardDataRow("reward1", "1", "BearBoot"));
 			Rows.Add( new WantedRewardDataRow("reward2", "2", "bluedragon"));
-			Rows.Add( new WantedRewardDataRow("reward3", "3", "bat"));
+			Rows.Add( new WantedRewardDataRow("reward3", "3", "Corgi"));
 			Rows.Add( new WantedRewardDataRow("reward4", "4", "chicken"));
 			Rows.Add( new WantedRewardDataRow("reward5", "5", "punch"));
-			Rows.Add( new WantedRewardDataRow("reward6", "6", "dryer"));
-			Rows.Add( new WantedRewardDataRow("reward7", "7", "ozone"));
-			Rows.Add( new WantedRewardDataRow("reward8", "8", "kitchenglove"));
+			Rows.Add( new WantedRewardDataRow("reward6", "6", "Keyboard"));
+			Rows.Add( new WantedRewardDataRow("reward7", "7", "bubble"));
+			Rows.Add( new WantedRewardDataRow("reward8", "8", "bat"));
+			Rows.Add( new WantedRewardDataRow("reward9", "9", "dryer"));
+			Rows.Add( new WantedRewardDataRow("reward10", "10", "ozone"));
+			Rows.Add( new WantedRewardDataRow("reward11", "11", "kitchenglove"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

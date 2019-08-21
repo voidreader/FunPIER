@@ -80,10 +80,10 @@ namespace Google2u
 	public sealed class DailyRewardData : IGoogle2uDB
 	{
 		public enum rowIds {
-			reward0, reward1, reward2
+			reward0, reward1, reward2, reward3
 		};
 		public string [] rowNames = {
-			"reward0", "reward1", "reward2"
+			"reward0", "reward1", "reward2", "reward3"
 		};
 		public System.Collections.Generic.List<DailyRewardDataRow> Rows = new System.Collections.Generic.List<DailyRewardDataRow>();
 
@@ -103,6 +103,7 @@ namespace Google2u
 			Rows.Add( new DailyRewardDataRow("reward0", "0", "cluck"));
 			Rows.Add( new DailyRewardDataRow("reward1", "1", "kitchenknife"));
 			Rows.Add( new DailyRewardDataRow("reward2", "2", "musket"));
+			Rows.Add( new DailyRewardDataRow("reward3", "3", "airpod"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
