@@ -41,32 +41,42 @@ public class PlatformManager : MonoBehaviour {
         Debug.Log("InitPlatformService..... ");
 
 #if UNITY_ANDROID
+        try {
+            int responce = AN_GoogleApiAvailability.IsGooglePlayServicesAvailable();
+            if (responce == AN_ConnectionResult.SUCCESS) {
+                // All good you can use GMS API
 
-        int responce = AN_GoogleApiAvailability.IsGooglePlayServicesAvailable();
-        if (responce == AN_ConnectionResult.SUCCESS) {
-            // All good you can use GMS API
+                Debug.Log("InitPlatformService..... IsGooglePlayServicesAvailable");
 
-            Debug.Log("InitPlatformService..... IsGooglePlayServicesAvailable");
+                PlatformAvailable = true;
+                GPGS_SignIn(true);
+            }
+            else {
+                Debug.Log("Google Api not avaliable on current device, trying to resolve");
+                AN_GoogleApiAvailability.MakeGooglePlayServicesAvailable((result) => {
+                    if (result.IsSucceeded) {
+                        Debug.Log("InitPlatformService..... MakeGooglePlayServicesAvailable");
+
+                        // Issue resolved you can use GMS API now
+                        PlatformAvailable = true;
+                        GPGS_SignIn(true);
+                    }
+                    else {
+                        Debug.Log("InitPlatformService..... Fail GPGS");
+                        PlatformAvailable = false;
+                    }
+                });
+            }
+        }
+        catch(System.Exception e) {
+            Debug.Log("Exception!! : " + e.StackTrace);
 
             PlatformAvailable = true;
             GPGS_SignIn(true);
         }
-        else {
-            Debug.Log("Google Api not avaliable on current device, trying to resolve");
-            AN_GoogleApiAvailability.MakeGooglePlayServicesAvailable((result) => {
-                if (result.IsSucceeded) {
-                    Debug.Log("InitPlatformService..... MakeGooglePlayServicesAvailable");
 
-                    // Issue resolved you can use GMS API now
-                    PlatformAvailable = true;
-                    GPGS_SignIn(true);
-                }
-                else {
-                    Debug.Log("InitPlatformService..... Fail GPGS");
-                    PlatformAvailable = false;
-                }
-            });
-        }
+
+
 
 #elif UNITY_IOS
         PlatformAvailable = true;

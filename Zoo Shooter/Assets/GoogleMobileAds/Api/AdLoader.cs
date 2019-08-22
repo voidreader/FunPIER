@@ -22,7 +22,7 @@ namespace GoogleMobileAds.Api
 {
     public enum NativeAdType
     {
-        CustomTemplate
+        CustomTemplate = 0
     }
 
     public class AdLoader
