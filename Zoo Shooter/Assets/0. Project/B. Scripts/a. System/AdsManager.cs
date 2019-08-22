@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
 using UnityEngine.Advertisements;
-
 using System;
+
+using AudienceNetwork;
+using AudienceNetwork.Utility;
+
 
 public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
@@ -34,13 +37,12 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     #endregion
 
     #region Facebook Audience 
-    // [Header("- Facebook Audience -")]
-    /*
+    [Header("- Facebook Audience -")]
+    
     public bool isFBLoaded = false;
     public bool didCloseFB = false;
     public string fb_android_rewardedID, fb_ios_rewardedID;
     private RewardedVideoAd rewardedVideoAd; // 보상형 동영상 광고 
-    */
     #endregion
 
     private void Awake() {
@@ -79,14 +81,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         Advertisement.Initialize(unityAdsID, false);
 
 
-        /*
-        if (!AdUtility.IsInitialized()) {
-            AdUtility.Initialize();
-        }
-
-        // Facebook Audience
-        LoadRewardedVideo();
-        */
+        // FAN
+        Init_FAN();
+        
     }
 
 
@@ -133,7 +130,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
 
         //if (this.rewardedAd.IsLoaded() || isFBLoaded)
-        if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement))
+        if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
             return true;
         else
             return false;
@@ -158,6 +155,12 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     public void OpenRewardAd(Action callback) {
 
         OnWatchReward = callback;
+
+        // 페이스북 테스트
+        if(isFBLoaded) {
+            FAN_ShowRewardedVideo();
+            return;
+        }
 
         // 애드몹 최우선 
         if(this.rewardedAd.IsLoaded()) {
@@ -445,5 +448,93 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         }
     }
 
-#endregion
+    #endregion
+
+    #region FAN
+
+    void Init_FAN() {
+
+        if (Application.isEditor)
+            return;
+
+        if (!AdUtility.IsInitialized()) {
+            AdUtility.Initialize();
+        }
+
+
+        // Facebook Audience
+        FAN_LoadRewardedVideo();
+    }
+
+    public void FAN_LoadRewardedVideo() {
+
+        string pid = string.Empty;
+
+#if UNITY_ANDROID
+
+        pid = fb_android_rewardedID;
+
+#elif UNITY_IOS
+
+        pid = fb_ios_rewardedID;
+
+#endif
+
+        Debug.Log("FAN :: LoadRewardedVideo : " + pid);
+        // Create the rewarded video unit with a placement ID (generate your own on the Facebook app settings).
+        // Use different ID for each ad placement in your app.
+        this.rewardedVideoAd = new RewardedVideoAd(pid);
+
+        this.rewardedVideoAd.Register(this.gameObject);
+
+        // Set delegates to get notified on changes or when the user interacts with the ad.
+        this.rewardedVideoAd.RewardedVideoAdDidLoad = (delegate () {
+            Debug.Log("FAN :: RewardedVideo ad loaded.");
+            this.isFBLoaded = true;
+        });
+        this.rewardedVideoAd.RewardedVideoAdDidFailWithError = (delegate (string error) {
+            Debug.Log("FAN :: RewardedVideo ad failed to load with error: " + error);
+        });
+        this.rewardedVideoAd.RewardedVideoAdWillLogImpression = (delegate () {
+            Debug.Log("FAN :: RewardedVideo ad logged impression.");
+        });
+        this.rewardedVideoAd.RewardedVideoAdDidClick = (delegate () {
+            Debug.Log("FAN :: RewardedVideo ad clicked.");
+        });
+
+        this.rewardedVideoAd.RewardedVideoAdDidClose = (delegate () {
+            Debug.Log("FAN :: Rewarded video ad did close.");
+            if (this.rewardedVideoAd != null) {
+                this.rewardedVideoAd.Dispose();
+            }
+
+            FAN_LoadRewardedVideo();
+        });
+
+        this.rewardedVideoAd.rewardedVideoAdComplete = OnCompleteFAN;
+            
+
+        // Initiate the request to load the ad.
+        this.rewardedVideoAd.LoadAd();
+    }
+
+    void OnCompleteFAN() {
+
+        Debug.Log("Rewarded video ad OnCompleteFAN");
+        OnWatchReward();
+    }
+
+    public void FAN_ShowRewardedVideo() {
+        if (this.isFBLoaded) {
+            Debug.Log("FAN_ShowRewardedVideo");
+
+            this.rewardedVideoAd.Show();
+            this.isFBLoaded = false;
+        }
+        else {
+            Debug.Log("Ad not loaded. Click load to request an ad.");
+        }
+    }
+
+    #endregion
 }
