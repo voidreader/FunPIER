@@ -101,7 +101,7 @@ namespace Google2u
 		private WantedRewardData()
 		{
 			Rows.Add( new WantedRewardDataRow("reward0", "0", "broom"));
-			Rows.Add( new WantedRewardDataRow("reward1", "1", "BearBoot"));
+			Rows.Add( new WantedRewardDataRow("reward1", "1", "BeerBoot"));
 			Rows.Add( new WantedRewardDataRow("reward2", "2", "bluedragon"));
 			Rows.Add( new WantedRewardDataRow("reward3", "3", "Corgi"));
 			Rows.Add( new WantedRewardDataRow("reward4", "4", "chicken"));

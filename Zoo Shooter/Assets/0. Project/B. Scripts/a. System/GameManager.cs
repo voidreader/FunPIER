@@ -1030,11 +1030,12 @@ public class GameManager : MonoBehaviour {
         _whiteBox.gameObject.SetActive(true);
         _whiteBox.color = new Color(0, 0, 0, 0);
         _whiteBox.gameObject.SetActive(true);
-        _whiteBox.DOColor(new Color(1, 1, 1, 1), 0.1f).OnComplete(SplashOff);
+        _whiteBox.DOColor(new Color(1, 1, 1, 1), 0.06f).OnComplete(SplashOff);
     }
 
     void SplashOff() {
-        _whiteBox.DOColor(new Color(0, 0, 0, 0), 0.1f).OnComplete(OnCompleteSplash);
+        _whiteBox.DOColor(new Color(0, 0, 0, 0), 0.06f).OnComplete(OnCompleteSplash);
+
     }
     void OnCompleteSplash() {
         _whiteBox.gameObject.SetActive(false);

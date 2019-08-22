@@ -103,7 +103,7 @@ namespace Google2u
 			Rows.Add( new DailyRewardDataRow("reward0", "0", "cluck"));
 			Rows.Add( new DailyRewardDataRow("reward1", "1", "kitchenknife"));
 			Rows.Add( new DailyRewardDataRow("reward2", "2", "musket"));
-			Rows.Add( new DailyRewardDataRow("reward3", "3", "airpod"));
+			Rows.Add( new DailyRewardDataRow("reward3", "3", "Airpod"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

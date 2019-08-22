@@ -50,6 +50,8 @@ public class WantedReward : MonoBehaviour
         // 
         for (int i=0; i<listRewardData.Count; i++) {
 
+            Debug.Log("Wanted Reward weapon check :: " + listRewardData[i]._weaponid);
+
             _weapon = Stocks.GetWeaponByID(listRewardData[i]._weaponid);
             if (!PIER.main.HasGun(_weapon)) {
                 existsNewWeapon = true; 

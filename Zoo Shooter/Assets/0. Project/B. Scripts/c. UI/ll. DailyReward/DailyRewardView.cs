@@ -87,6 +87,9 @@ public class DailyRewardView : MonoBehaviour
         // 이번 리스트 보상 찾기 
         ListDailyRewardData = DailyRewardData.Instance.Rows;
         for (int i = 0; i < ListDailyRewardData.Count; i++) {
+
+            Debug.Log("Daily Reward Weapon Check : " + ListDailyRewardData[i]._weaponid);
+
             rewardWeapon = Stocks.GetWeaponByID(ListDailyRewardData[i]._weaponid);
 
             if (!PIER.main.HasGun(rewardWeapon)) {

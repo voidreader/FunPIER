@@ -44,6 +44,8 @@ public class PIER : MonoBehaviour {
     void Start() {
         ListBossData = BossData.Instance.Rows;
         LoadData();
+
+        AddEveryGun();
     }
 
     #region 스페셜 리스트 
@@ -364,13 +366,21 @@ public class PIER : MonoBehaviour {
         return false;
     }
 
+    public void AddEveryGun() {
+        for(int i=0; i<Stocks.main.ListWeapons.Count;i++) {
+            if(!HasGun(Stocks.main.ListWeapons[i])) {
+                AddGun(Stocks.main.ListWeapons[i]);
+            }
+        }
+    }
+
     /// <summary>
     /// 구매한 총 추가
     /// </summary>
     /// <param name="w"></param>
     public void AddGun(Weapon w) {
 
-        Debug.Log(w.WeaponID + "Get!! ");
+        // Debug.Log(w.WeaponID + "Get!! ");
 
         if (HasGun(w))
             return;

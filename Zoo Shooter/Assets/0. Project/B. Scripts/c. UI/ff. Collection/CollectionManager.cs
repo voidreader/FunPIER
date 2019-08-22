@@ -33,6 +33,12 @@ public class CollectionManager : MonoBehaviour
         main = this;
     }
 
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.A)) {
+            GameEventMessage.SendEvent("CallWantedReward");
+        }
+    }
+
 
     #region OnStart
     /// <summary>
