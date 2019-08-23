@@ -37,6 +37,21 @@ namespace AudienceNetwork.Editor
                                         aboutString,
                                         "Okay");
         }
+
+        [MenuItem("Tools/Audience Network/Regenerate Android Manifest")]
+        private static void RegenerateManifest()
+        {
+            bool updateManifest = EditorUtility.DisplayDialog(title,
+                                  "Are you sure you want to regenerate your Android Manifest.xml?",
+                                  "Okay",
+                                  "Cancel");
+
+            if (updateManifest) {
+                ManifestMod.GenerateManifest();
+                EditorUtility.DisplayDialog(title, "Android Manifest updated. \n \n If interstitial ads still throw ActivityNotFoundException, " +
+                                            "you may need to copy the generated manifest at " + ManifestMod.AndroidManifestPath + " to /Assets/Plugins/Android.", "Okay");
+            }
+        }
     }
 
     public class SDKVersionWindow : EditorWindow

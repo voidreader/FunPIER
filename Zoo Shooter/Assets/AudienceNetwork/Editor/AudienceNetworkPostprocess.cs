@@ -19,12 +19,8 @@
  */
 namespace AudienceNetwork.Editor
 {
-    using System.IO;
     using UnityEditor;
     using UnityEditor.Callbacks;
-#if UNITY_IOS
-    using UnityEditor.iOS.Xcode;
-#endif
     using UnityEngine;
 
     public static class XCodePostProcess
@@ -32,53 +28,50 @@ namespace AudienceNetwork.Editor
         public static string AudienceNetworkFramework = "FBAudienceNetwork.framework";
         public static string AudienceNetworkAAR = "AudienceNetwork.aar";
         public static string FrameworkDependenciesKey = "FrameworkDependencies";
-        public static string RequiredFrameworks = "AdSupport;StoreKit;WebKit";
+        public static string RequiredFrameworks = "AdSupport;StoreKit;";
 
         [PostProcessBuild(100)]
         public static void OnPostProcessBuild(BuildTarget target, string path)
         {
+            if (target == BuildTarget.Android) {
+                string defaultIdentifier = "com.Company.ProductName";
 
-#if UNITY_IOS
-            if (target == BuildTarget.iOS) {
-                string projectPath = PBXProject.GetPBXProjectPath(path);
-                PBXProject project = new PBXProject();
-                project.ReadFromString(File.ReadAllText(projectPath));
-                string targetName = PBXProject.GetUnityTargetName();
-                string targetGUID = project.TargetGuidByName(targetName);
-                project.AddFrameworkToProject(targetGUID, "AdSupport.framework", false);
-                project.AddFrameworkToProject(targetGUID, "StoreKit.framework", false);
-                project.AddFrameworkToProject(targetGUID, "WebKit.framework", false);
+                // Find application identifier (backwards compatible prior to Unity 5.6)
+                if (Utility.GetApplicationIdentifier() == defaultIdentifier) {
+                    Debug.LogError("The default Unity Bundle Identifier (com.Company.ProductName) will not work correctly.");
+                }
 
-                File.WriteAllText(projectPath, project.WriteToString());
+                if (!ManifestMod.CheckManifest()) {
+                    // If something is wrong with the Android Manifest, try to regenerate it to fix it for the next build.
+                    ManifestMod.GenerateManifest();
+                }
+            } else if (target == BuildTarget.iOS) {
+                ConfigurePluginPlatforms();
             }
-#endif
+        }
 
+        public static void ConfigurePluginPlatforms()
+        {
             PluginImporter[] importers = PluginImporter.GetAllImporters();
             PluginImporter iOSPlugin = null;
             PluginImporter androidPlugin = null;
-            foreach (PluginImporter importer in importers)
-            {
-                if (importer.assetPath.Contains(AudienceNetworkFramework))
-                {
+            foreach (PluginImporter importer in importers) {
+                if (importer.assetPath.Contains(AudienceNetworkFramework)) {
                     iOSPlugin = importer;
                     Debug.Log("Audience Network iOS plugin found at " + importer.assetPath + ".");
-                }
-                else if (importer.assetPath.Contains(AudienceNetworkAAR))
-                {
+                } else if (importer.assetPath.Contains(AudienceNetworkAAR)) {
                     androidPlugin = importer;
                     Debug.Log("Audience Network Android plugin found at " + importer.assetPath + ".");
                 }
             }
-            if (iOSPlugin != null)
-            {
+            if (iOSPlugin != null) {
                 iOSPlugin.SetCompatibleWithAnyPlatform(false);
                 iOSPlugin.SetCompatibleWithEditor(false);
                 iOSPlugin.SetCompatibleWithPlatform(BuildTarget.iOS, true);
                 iOSPlugin.SetPlatformData(BuildTarget.iOS, FrameworkDependenciesKey, RequiredFrameworks);
                 iOSPlugin.SaveAndReimport();
             }
-            if (androidPlugin != null)
-            {
+            if (androidPlugin != null) {
                 androidPlugin.SetCompatibleWithAnyPlatform(false);
                 androidPlugin.SetCompatibleWithEditor(false);
                 androidPlugin.SetCompatibleWithPlatform(BuildTarget.Android, true);

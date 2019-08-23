@@ -25,7 +25,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 FB_CLASS_EXPORT
-FB_DEPRECATED_WITH_MESSAGE("This class will be removed in a future release. Use FBMediaView instead.")
 @interface FBAdIconView : FBMediaView
 
 /**

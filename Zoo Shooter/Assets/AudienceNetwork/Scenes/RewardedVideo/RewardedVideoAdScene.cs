@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using AudienceNetwork;
 using UnityEngine.SceneManagement;
-using AudienceNetwork.Utility;
 
 public class RewardedVideoAdScene : MonoBehaviour
 {
@@ -15,14 +14,6 @@ public class RewardedVideoAdScene : MonoBehaviour
 
     // UI elements in scene
     public Text statusLabel;
-
-    private void Awake()
-    {
-        if (!AdUtility.IsInitialized())
-        {
-            AdUtility.Initialize();
-        }
-    }
 
     // Load button
     public void LoadRewardedVideo()
@@ -145,6 +136,6 @@ public class RewardedVideoAdScene : MonoBehaviour
     // Next button
     public void NextScene()
     {
-        SceneManager.LoadScene("InterstitialAdScene");
+        SceneManager.LoadScene("NativeAdScene");
     }
 }

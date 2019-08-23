@@ -90,9 +90,7 @@ typedef NS_ENUM(NSInteger, FBAdTestAdType) {
     /// carousel ad with square image and app install CTA option
     FBAdTestAdType_Carousel_Img_Square_App_Install,
     /// carousel ad with square image and link CTA option
-    FBAdTestAdType_Carousel_Img_Square_Link,
-    /// carousel ad with square video and link CTA option
-    FBAdTestAdType_Carousel_Vid_Square_Link
+    FBAdTestAdType_Carousel_Img_Square_Link
 };
 
 @protocol FBAdLoggingDelegate;

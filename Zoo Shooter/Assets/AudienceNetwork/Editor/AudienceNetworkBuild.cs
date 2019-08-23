@@ -89,6 +89,8 @@ namespace AudienceNetwork.Editor
             {
                 return new string[] { "Assets/AudienceNetwork/Scenes/Banner/AdViewScene.unity",
                 "Assets/AudienceNetwork/Scenes/Interstitial/InterstitialAdScene.unity",
+                "Assets/AudienceNetwork/Scenes/NativeAd/NativeAdScene.unity",
+                "Assets/AudienceNetwork/Scenes/NativeBannerAd/NativeBannerAdScene.unity",
                 "Assets/AudienceNetwork/Scenes/RewardedVideo/RewardedVideoAdScene.unity" };
             }
         }
@@ -118,18 +120,30 @@ namespace AudienceNetwork.Editor
             }
 
 
-            string[] facebookFiles = Directory.GetFiles(AudienceNetworkPath, "*.*", SearchOption.AllDirectories);
-            string[] pluginsFiles = Directory.GetFiles(AudienceNetworkPluginsPath, "*.*", SearchOption.AllDirectories);
-            string[] files = new string[facebookFiles.Length + pluginsFiles.Length];
+            try
+            {
+                AssetDatabase.DeleteAsset(PluginsPath + "Android/AndroidManifest.xml");
+                AssetDatabase.DeleteAsset(PluginsPath + "Android/AndroidManifest.xml.meta");
+                AssetDatabase.DeleteAsset(AudienceNetworkPluginsPath + "Android/AndroidManifest.xml");
+                AssetDatabase.DeleteAsset(AudienceNetworkPluginsPath + "Android/AndroidManifest.xml.meta");
 
-            facebookFiles.CopyTo(files, 0);
-            pluginsFiles.CopyTo(files, facebookFiles.Length);
+                string[] facebookFiles = Directory.GetFiles(AudienceNetworkPath, "*.*", SearchOption.AllDirectories);
+                string[] pluginsFiles = Directory.GetFiles(AudienceNetworkPluginsPath, "*.*", SearchOption.AllDirectories);
+                string[] files = new string[facebookFiles.Length + pluginsFiles.Length];
 
-            AssetDatabase.ExportPackage(
-                files,
-                UnityPackagePath,
-                ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse);
+                facebookFiles.CopyTo(files, 0);
+                pluginsFiles.CopyTo(files, facebookFiles.Length);
 
+                AssetDatabase.ExportPackage(
+                    files,
+                    UnityPackagePath,
+                    ExportPackageOptions.IncludeDependencies | ExportPackageOptions.Recurse);
+            }
+            finally
+            {
+                // regenerate the manifest
+                ManifestMod.GenerateManifest();
+            }
             return true;
         }
 

@@ -41,19 +41,6 @@ namespace AudienceNetwork.Utility
             audienceNetworkAds.CallStatic("initialize", context);
 #endif
         }
-
-        internal static bool IsInitialized()
-        {
-#if UNITY_ANDROID
-            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            AndroidJavaObject context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
-            AndroidJavaClass audienceNetworkAds = new AndroidJavaClass("com.facebook.ads.AudienceNetworkAds");
-            return audienceNetworkAds.CallStatic<bool>("isInitialized", context);
-#else
-            return true;
-#endif
-        }
     }
 
     internal interface IAdUtilityBridge
@@ -173,6 +160,15 @@ namespace AudienceNetwork.Utility
         public override void Prepare()
         {
 #if UNITY_ANDROID
+            try
+            {
+                AndroidJavaClass displayAdControllerClass = new AndroidJavaClass("com.facebook.ads.internal.DisplayAdController");
+                displayAdControllerClass.CallStatic("setMainThreadForced", true);
+            }
+            catch (Exception)
+            {
+
+            }
 
             try
             {

@@ -2,8 +2,6 @@
 using AudienceNetwork;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using AudienceNetwork.Utility;
-
 
 public class AdViewScene : MonoBehaviour
 {
@@ -19,14 +17,6 @@ public class AdViewScene : MonoBehaviour
             adView.Dispose();
         }
         Debug.Log("AdViewTest was destroyed!");
-    }
-
-    private void Awake()
-    {
-        if (!AdUtility.IsInitialized())
-        {
-            AdUtility.Initialize();
-        }
     }
 
     // Load Banner button

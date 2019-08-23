@@ -457,9 +457,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         if (Application.isEditor)
             return;
 
-        if (!AdUtility.IsInitialized()) {
-            AdUtility.Initialize();
-        }
+        AdUtility.Initialize();
 
 
         // Facebook Audience

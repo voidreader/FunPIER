@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using AudienceNetwork;
 using UnityEngine.SceneManagement;
-using AudienceNetwork.Utility;
 
 public class InterstitialAdScene : MonoBehaviour
 {
@@ -14,14 +13,6 @@ public class InterstitialAdScene : MonoBehaviour
 #pragma warning restore 0414
     // UI elements in scene
     public Text statusLabel;
-
-    private void Awake()
-    {
-        if (!AdUtility.IsInitialized())
-        {
-            AdUtility.Initialize();
-        }
-    }
 
     // Load button
     public void LoadInterstitial()
