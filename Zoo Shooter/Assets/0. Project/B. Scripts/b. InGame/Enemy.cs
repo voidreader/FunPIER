@@ -211,6 +211,28 @@ public class Enemy : MonoBehaviour {
 
     }
 
+    void PoseHeadKillRotateStrong() {
+        if (isLeft) {
+            this.rigid.AddForce(new Vector2(-550, 1100));
+            this.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+        else {
+            this.rigid.AddForce(new Vector2(550, 1100));
+            this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+
+        PostKillProcess();
+
+        if (Random.Range(0, 3) < 2)
+            WeaponDrop(WeaponDropType.BigHit);
+        else
+            WeaponDrop(WeaponDropType.HighJump);
+
+    }
+
+
+
+
     /// <summary>
     /// 일반 킬 with 회전 
     /// </summary>
@@ -227,6 +249,22 @@ public class Enemy : MonoBehaviour {
         PostKillProcess();
         WeaponDrop(WeaponDropType.Normal);
     }
+
+    void PoseGeneralKillRotateStrong() {
+        if (isLeft) {
+            this.rigid.AddForce(new Vector2(-300, 750));
+            this.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+        else {
+            this.rigid.AddForce(new Vector2(300, 750));
+            this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        }
+
+        PostKillProcess();
+        WeaponDrop(WeaponDropType.Normal);
+
+    }
+
 
     void PoseKillDrop() {
         //this.rigid.isKinematic = true; // 일단 물리를 끄고.
@@ -281,12 +319,14 @@ public class Enemy : MonoBehaviour {
         // 헤드샷때는 더 강렬하게 kill
         if(isHeadShotKill) {
 
-            PoseHeadKillRotate();
+            // PoseHeadKillRotate();
+            PoseHeadKillRotateStrong();
             
         } // 헤드샷 킬 종료
         else { // 일반 킬 
 
-            PoseGeneralKillRotate();
+            // PoseGeneralKillRotate();
+            PoseGeneralKillRotateStrong();
 
 
             /*

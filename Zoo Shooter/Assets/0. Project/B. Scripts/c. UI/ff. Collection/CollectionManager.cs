@@ -146,9 +146,11 @@ public class CollectionManager : MonoBehaviour
         NewPoster.transform.DORotate(new Vector3(0, 0, 0), 0.3f, RotateMode.FastBeyond360).SetEase(Ease.InSine);
         NewPoster.transform.DOScale(1.3f, 0.3f).SetEase(Ease.InOutExpo);
         NewPoster.DOFade(1, 0.3f).SetEase(Ease.Linear);
+        AudioAssistant.Shot("CameraShot");
+
         // NewPoster.transform.doc
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
 
         // 지금 리스트가 몇번째 인덱스인지 찾는다.
         Transform target = null;
@@ -202,6 +204,9 @@ public class CollectionManager : MonoBehaviour
         NewPoster.transform.DORotate(new Vector3(0, 0, 0), 0.3f, RotateMode.FastBeyond360).SetEase(Ease.InSine);
         NewPoster.transform.DOScale(1.3f, 0.3f).SetEase(Ease.InOutExpo);
         NewPoster.DOFade(1, 0.3f).SetEase(Ease.Linear);
+
+        AudioAssistant.Shot("CameraShot"); // 사운드
+
     }
 
     #region Prisoner Moving

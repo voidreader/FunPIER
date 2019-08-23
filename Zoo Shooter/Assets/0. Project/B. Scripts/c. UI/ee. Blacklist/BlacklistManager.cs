@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Google2u;
 using Doozy.Engine;
+using DG.Tweening;
 
 
 public class BlacklistManager : MonoBehaviour {
@@ -23,6 +24,9 @@ public class BlacklistManager : MonoBehaviour {
     public void OnView() {
 
         _btnClaim.SetActive(true);
+        _btnClaim.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f); // 크기 초기화..
+        _btnClaim.transform.DOKill();
+
         _btnClaim.GetComponent<Image>().sprite = _inactiveButtonSprtie;
         _btnBack.SetActive(true);
 
@@ -69,6 +73,8 @@ public class BlacklistManager : MonoBehaviour {
             _btnBack.SetActive(false);
             _btnClaim.SetActive(true);
             _btnClaim.GetComponent<Image>().sprite = _activeButtonSprtie;
+
+            _btnClaim.transform.DOScale(1, 0.4f).SetLoops(-1, LoopType.Yoyo); // 효과
 
             _lblList.text = "List is completed!";
         }

@@ -131,6 +131,11 @@ public class GunColumn : MonoBehaviour
 
 
     public void SetUnlockSelect(bool f) {
+
+        if(f) {
+            AudioAssistant.Shot("WantedRewardPing");
+        }
+
         _unlockSelect.SetActive(f);
     }
    
