@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
+  m_Name: Like
+  m_EditorClassIdentifier: 
+  CurrentType: 0
+  HowToGet: 4
+  WeaponID: Like
+  DisplayName: Like you
+  WeaponSprite: {fileID: 21300000, guid: 87020891bef246c42abe91409140aeba, type: 3}
+  ShootSound: {fileID: 8300000, guid: 1ef531b5677829043b6d50699cb7d098, type: 3}
+  ReloadSound: {fileID: 8300000, guid: ccdb849e34bafdf429920105088c7100, type: 3}
+  bulletPrefab: {fileID: 446077419713833669, guid: 5b5f1fbd1dd525547b81ded5373b148b,
+    type: 3}
+  BulletsCount: 1
+  Damage: 8
+  BulletSpeed: 45
+  FireRate: 0.1
+  Accuracy: 50
+  AimSpeed: 66
+  AimRange: 2.5
+  posEquip: {x: -0.092, y: -0.033, z: 0}
+  posGunPoint: {x: -1.373, y: 0.02, z: 0}
+  posScale: {x: 0.7, y: 0.7, z: 1}
+  AimTrailScale: {x: -1.74, y: 1.74, z: 1}

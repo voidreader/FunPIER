@@ -80,10 +80,10 @@ namespace Google2u
 	public sealed class WantedRewardData : IGoogle2uDB
 	{
 		public enum rowIds {
-			reward0, reward1, reward2, reward3, reward4, reward5, reward6, reward7, reward8, reward9, reward10, reward11
+			reward0, reward1, reward2, reward3, reward4, reward5, reward6, reward7, reward8, reward9, reward10, reward11, reward12
 		};
 		public string [] rowNames = {
-			"reward0", "reward1", "reward2", "reward3", "reward4", "reward5", "reward6", "reward7", "reward8", "reward9", "reward10", "reward11"
+			"reward0", "reward1", "reward2", "reward3", "reward4", "reward5", "reward6", "reward7", "reward8", "reward9", "reward10", "reward11", "reward12"
 		};
 		public System.Collections.Generic.List<WantedRewardDataRow> Rows = new System.Collections.Generic.List<WantedRewardDataRow>();
 
@@ -112,6 +112,7 @@ namespace Google2u
 			Rows.Add( new WantedRewardDataRow("reward9", "9", "dryer"));
 			Rows.Add( new WantedRewardDataRow("reward10", "10", "ozone"));
 			Rows.Add( new WantedRewardDataRow("reward11", "11", "kitchenglove"));
+			Rows.Add( new WantedRewardDataRow("reward12", "12", "MelonCat"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

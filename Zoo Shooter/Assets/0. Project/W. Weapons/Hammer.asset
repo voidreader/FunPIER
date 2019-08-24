@@ -10,25 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6397b689b1f912e4683280feafe014b3, type: 3}
-  m_Name: frog
+  m_Name: Hammer
   m_EditorClassIdentifier: 
   CurrentType: 1
   HowToGet: 4
-  WeaponID: frog
-  DisplayName: Frog
-  WeaponSprite: {fileID: 21300000, guid: b4114557ed2395f4a90ad07c835ee776, type: 3}
+  WeaponID: Hammer
+  DisplayName: 'Thor''s
+
+    Hammer'
+  WeaponSprite: {fileID: 21300000, guid: a788c5d5ebaf9d944b90dd1fde98cff3, type: 3}
   ShootSound: {fileID: 8300000, guid: 2e0e7c4ebc404436287e7aecb4237617, type: 3}
   ReloadSound: {fileID: 8300000, guid: f4f2a5e7d39adf84bbf677f5bb0d7011, type: 3}
   bulletPrefab: {fileID: 7639926216580094937, guid: 74d53ec38b9ec16489c36ac70c7f1bb6,
     type: 3}
-  BulletsCount: 4
-  Damage: 4
+  BulletsCount: 3
+  Damage: 3
   BulletSpeed: 45
   FireRate: 0.1
-  Accuracy: 5
-  AimSpeed: 80
-  AimRange: 0.4
-  posEquip: {x: -0.037, y: -0.045, z: 0}
-  posGunPoint: {x: -1.06, y: 0, z: 0}
+  Accuracy: 15
+  AimSpeed: 70
+  AimRange: 0.5
+  posEquip: {x: 0.027, y: 0.04, z: 0}
+  posGunPoint: {x: -1.658, y: 0, z: 0}
   posScale: {x: 0.8, y: 0.8, z: 1}
   AimTrailScale: {x: -0.93, y: 0.93, z: 1}
