@@ -92,14 +92,18 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     /// </summary>
     public void OpenMidAdvertisement() {
 
+        Debug.Log("Called OpenMidAdvertisement");
+
         // 스페셜리스트 상품 구매자는 광고 띄우지 않음 
         if (PIER.IsSpecialist)
             return;
 
         int rand = UnityEngine.Random.Range(0, 1000);
 
+        Debug.Log("Called OpenMidAdvertisement rand :: " + rand);
 
-        if(rand < 600 && IsAvailableInterstitial()) {
+
+        if (rand < 600 && IsAvailableInterstitial()) {
             OpenInterstitial();
         }
         else {
@@ -142,10 +146,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     /// 전면광고 오픈 
     /// </summary>
     public void OpenInterstitial() {
-        if(this.interstitial == null || !this.interstitial.IsLoaded()) {
-            RequestInterstitial();
-            return;
-        }
+        Debug.Log(">> OpenInterstitial <<");
+        this.interstitial.Show();   
     }
 
 
@@ -156,11 +158,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
         OnWatchReward = callback;
 
-        // 페이스북 테스트
-        if(isFBLoaded) {
-            FAN_ShowRewardedVideo();
-            return;
-        }
+
 
         // 애드몹 최우선 
         if(this.rewardedAd.IsLoaded()) {
@@ -172,19 +170,19 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
             RequestRewardAd();
         }
 
-        if(Advertisement.IsReady(unityads_placement)) {
+        // 페이스북 테스트
+        if (isFBLoaded) {
+            FAN_ShowRewardedVideo();
+            return;
+        }
+
+
+        if (Advertisement.IsReady(unityads_placement)) {
             ShowUnityAds();
             return;
         }
 
-        // Facebook Audience
-        /*
-        if(isFBLoaded) {
-            this.rewardedVideoAd.Show();
-            this.isFBLoaded = false;
-            return;
-        }
-        */
+        
     }
 
 

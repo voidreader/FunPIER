@@ -25,7 +25,7 @@ public class BossDamageText : MonoBehaviour
         Vector3 pos = mainCamera.WorldToScreenPoint(target.position);
         // pos = new Vector3(pos.x + Random.Range(-20f, 20f), pos.y + Random.Range(-20f, 20f), 0);
         this.transform.position = pos;
-        this.transform.position = new Vector3(this.transform.position.x + Random.Range(-10f, 10f), this.transform.position.y + Random.Range(-10f, 10f), 0);
+        this.transform.position = new Vector3(this.transform.position.x + Random.Range(-15f, 15f), this.transform.position.y + Random.Range(-15f, 15f), 0);
         
             
         // lblDamage.color = Color.white;

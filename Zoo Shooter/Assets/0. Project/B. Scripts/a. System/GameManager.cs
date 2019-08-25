@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour {
     #region 인피니트 모드 변수들
     public int InfiniteIndex = 0; // 보스 인덱스 Loop 
     public int InfiniteKillCount = 0; // 킬 카운트 
+    public int InfiniteHPx = 1; // 순환 HP 배수 
 
     #endregion
 
@@ -132,6 +133,9 @@ public class GameManager : MonoBehaviour {
     public void OnClickPlay() {
 
         GameViewManager.isContinueWatchAD = false;
+        InfiniteIndex = 0;
+        InfiniteKillCount = 0;
+
         SingularSDK.Event("Game Play");
 
 
@@ -410,8 +414,7 @@ public class GameManager : MonoBehaviour {
         Debug.Log("### Infinite Routine Go...!! ###");
 
 
-        InfiniteIndex = 0;
-        InfiniteKillCount = 0;
+
 
 
         bool isEnemyKillCheck = false; // 미리 변수 갖기 용도 
@@ -513,6 +516,13 @@ public class GameManager : MonoBehaviour {
         InfiniteIndex++;
         InfiniteKillCount++;
 
+        // 다 돌았으면 다시 0으로..
+        if(BossData.Instance.Rows.Count >= InfiniteIndex) {
+            InfiniteIndex = 0;
+            InfiniteHPx *= 2;
+        }
+
+
         GameViewManager.main.SetInfiniteBossInfo(InfiniteIndex);
         GameViewManager.main.SetInfiniteKillCount(InfiniteKillCount);
     }
@@ -602,8 +612,17 @@ public class GameManager : MonoBehaviour {
                 #region 보스 처리 
                 if (enemy.type == EnemyType.Boss) { // 보스 Hit. 
 
+                    // 샷건의 경우에는 동시타격이 진행되기 때문에, 다 처리될때까지 대기
+                    while(PIER.main.CurrentWeapon.CurrentType == WeaponType.Shotgun && WeaponManager.ListShootingBullets.Count > 0) {
+                        yield return null;
+                    }
+
+
                     // 죽은 경우
                     if (enemy.isKilled) {
+
+                        Debug.Log("PlayRoutine Boss is just killed!!! ");
+
                         // 점프 뛰지 않는다. 
                         // 헬리콥터 등장해야 한다. 
                         helicopter.CallMobility();
@@ -615,7 +634,10 @@ public class GameManager : MonoBehaviour {
 
                     }
                     else { // 보스 죽지 않은 경우.
-                           // 보스 한칸 이동 
+
+                        Debug.Log("PlayRoutine Boss is about to move!!! ");
+
+                        // 보스 한칸 이동 
                         InsertNewStair();
 
                         while (!stair.isInPosition)

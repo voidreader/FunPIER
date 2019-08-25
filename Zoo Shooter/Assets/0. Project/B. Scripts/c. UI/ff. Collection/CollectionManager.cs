@@ -101,23 +101,6 @@ public class CollectionManager : MonoBehaviour
 
     public void PanelChanged() {
 
-        /*
-        Debug.Log("PanelChanged :: " + _sc.TargetPanel);
-        
-
-        if(_sc.TargetPanel == 0) {
-            btnLeft.SetActive(false);
-            btnRight.SetActive(true);
-        }
-        else if(_sc.TargetPanel == 3) {
-            btnLeft.SetActive(true);
-            btnRight.SetActive(false);
-        }
-        else {
-            btnLeft.SetActive(true);
-            btnRight.SetActive(true);
-        }
-        */
     }
     
 
@@ -158,6 +141,11 @@ public class CollectionManager : MonoBehaviour
         for(int i=0; i<5;i++) {
             if(ListCinemas[TargetPanel].ListPosters[i].GetComponent<CinemaPoster>()._posterID == PIER.CurrentList) {
                 target = ListCinemas[TargetPanel].ListPosters[i].transform;
+
+                // 가장 첫번째 포스터의 경우 오픈처리 
+                if(i == 0) {
+                    ListCinemas[TargetPanel].SetOpen();
+                }
             }
         }
         

@@ -89,7 +89,7 @@ public class Enemy : MonoBehaviour {
             else {
                 // HP 따로 처리
                 if (PIER.main.InfiniteMode)
-                    HP = BossData.Instance.Rows[GameManager.main.InfiniteIndex]._hp;
+                    HP = BossData.Instance.Rows[GameManager.main.InfiniteIndex]._hp * GameManager.main.InfiniteHPx;
                 else
                     HP = BossData.Instance.Rows[PIER.CurrentLevel]._hp;
             }
