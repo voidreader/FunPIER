@@ -103,7 +103,7 @@ public class EnemyWeapon : MonoBehaviour
                 _canShoot = false; // 발사 처리 
 
                 GameManager.main.player.SetLargeCollider();
-                Invoke("ShotBullet", 0.25f);
+                Invoke("ShotBullet", 0.2f);
 
             }
         }
