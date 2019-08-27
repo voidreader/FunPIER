@@ -7,6 +7,8 @@ using DG.Tweening;
 
 public class BossEnemy : Enemy {
 
+    bool isHitMoving = false;
+
     public override void SetEnemy(EnemyType t, string pID) {
         base.SetEnemy(t, pID);
     }
@@ -15,17 +17,16 @@ public class BossEnemy : Enemy {
 
         this.transform.DOKill();
 
+
         // 보스의 경우 맞고 죽지 않는 경우 뒤로 살짝 밀리게 
-        if(HP > d) {
+        if(HP > d && !isHitMoving) {
             if(isLeft)
-                this.transform.DOLocalMoveX(this.transform.localPosition.x - 0.1f, 0.05f).SetLoops(2, LoopType.Yoyo);
+                this.transform.DOLocalMoveX(this.transform.localPosition.x - 0.2f, 0.05f).SetLoops(2, LoopType.Yoyo).OnStart(OnStartHitMoving).OnComplete(OnFinishHitMoving);
             else
-                this.transform.DOLocalMoveX(this.transform.localPosition.x + 0.1f, 0.05f).SetLoops(2, LoopType.Yoyo);
+                this.transform.DOLocalMoveX(this.transform.localPosition.x + 0.2f, 0.05f).SetLoops(2, LoopType.Yoyo).OnStart(OnStartHitMoving).OnComplete(OnFinishHitMoving);
         }
 
         base.HitEnemy(d, isHeadShot);
-        
-
     }
 
     public override void KillEnemy(bool isHeadShot = false) {
@@ -45,6 +46,14 @@ public class BossEnemy : Enemy {
         else {
             GameManager.main.ShowGetCoinTriple();  // 보스는 죽을때 코인 3개 떨군다. 
         }
+    }
+
+    void OnStartHitMoving() {
+        isHitMoving = true;
+    }
+
+    void OnFinishHitMoving() {
+        isHitMoving = false;
     }
 
 }

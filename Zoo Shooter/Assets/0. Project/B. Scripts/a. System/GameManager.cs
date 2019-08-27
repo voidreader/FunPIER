@@ -588,7 +588,7 @@ public class GameManager : MonoBehaviour {
                 }
                 else { // 게임 오버 처리 
 
-                    yield return new WaitForSeconds(3f);
+                    yield return new WaitForSeconds(1.8f);
                     if (isRevived) {
                         GameOver();
                     }
@@ -704,7 +704,7 @@ public class GameManager : MonoBehaviour {
         }
         else { // 게임 오버 처리 
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1.8f);
             if (isRevived) {
                 GameOver();
             }
