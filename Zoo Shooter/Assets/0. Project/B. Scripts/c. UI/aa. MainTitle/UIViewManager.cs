@@ -156,4 +156,8 @@ public class UIViewManager : MonoBehaviour
         MessageView.SetText("Congratulation!!\nYou are now a Specialist.");
     }
 
+    public void OnClickMoreGames() {
+        Application.OpenURL("http://onelink.to/dxx2gh");
+    }
+
 }

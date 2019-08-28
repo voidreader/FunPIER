@@ -5,8 +5,10 @@ using GoogleMobileAds.Api;
 using UnityEngine.Advertisements;
 using System;
 
+/*
 using AudienceNetwork;
 using AudienceNetwork.Utility;
+*/
 
 
 public class AdsManager : MonoBehaviour, IUnityAdsListener {
@@ -37,12 +39,14 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     #endregion
 
     #region Facebook Audience 
+    /*
     [Header("- Facebook Audience -")]
     
     public bool isFBLoaded = false;
     public bool didCloseFB = false;
     public string fb_android_rewardedID, fb_ios_rewardedID;
     private RewardedVideoAd rewardedVideoAd; // 보상형 동영상 광고 
+    */
     #endregion
 
     private void Awake() {
@@ -82,7 +86,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
 
         // FAN
-        Init_FAN();
+        // Init_FAN();
         
     }
 
@@ -134,7 +138,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
 
         //if (this.rewardedAd.IsLoaded() || isFBLoaded)
-        if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
+        //if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
+        if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement))
             return true;
         else
             return false;
@@ -171,10 +176,12 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         }
 
         // 페이스북 테스트
+        /*
         if (isFBLoaded) {
             FAN_ShowRewardedVideo();
             return;
         }
+        */
 
 
         if (Advertisement.IsReady(unityads_placement)) {
@@ -450,6 +457,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
     #region FAN
 
+    /*
     void Init_FAN() {
 
         if (Application.isEditor)
@@ -531,6 +539,6 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
             Debug.Log("Ad not loaded. Click load to request an ad.");
         }
     }
-
+    */
     #endregion
 }
