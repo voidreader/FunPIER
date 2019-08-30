@@ -514,11 +514,18 @@ public class GameManager : MonoBehaviour {
     /// 다음 인피니트 모드 보스 처리 
     /// </summary>
     public void SetNextInfiniteModeIndex() {
+
+        
+            
+
         InfiniteIndex++;
         InfiniteKillCount++;
 
+        Debug.Log("SetNextInfiniteModeIndex :: " + InfiniteIndex + "/" + BossData.Instance.Rows.Count);
+
         // 다 돌았으면 다시 0으로..
-        if(BossData.Instance.Rows.Count >= InfiniteIndex) {
+        if (BossData.Instance.Rows.Count <= InfiniteIndex) {
+            Debug.Log("Infinite Cycle Init.... !");
             InfiniteIndex = 0;
             InfiniteHPx *= 2;
         }

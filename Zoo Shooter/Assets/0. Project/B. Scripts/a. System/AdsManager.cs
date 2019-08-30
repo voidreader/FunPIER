@@ -97,6 +97,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
         Debug.Log("Called OpenMidAdvertisement");
 
+        if (Application.isEditor)
+            return;
+
         // 스페셜리스트 상품 구매자는 광고 띄우지 않음 
         if (PIER.IsSpecialist)
             return;

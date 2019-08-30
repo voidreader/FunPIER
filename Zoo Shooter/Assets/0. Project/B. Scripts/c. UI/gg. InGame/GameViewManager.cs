@@ -97,6 +97,7 @@ public class GameViewManager : MonoBehaviour {
     public void SetInfiniteBossInfo(int bossIndex) {
 
 
+
         // 보스 HP 등장 
         _InfiniteHP.gameObject.SetActive(true);
 
@@ -106,7 +107,7 @@ public class GameViewManager : MonoBehaviour {
 
         _textInfiniteBossName.text = _bossData._name;
 
-        Debug.Log(">> SetInfiniteBossInfo :: " + _bossData._name + "/" + _bossData._hp);
+        Debug.Log(">> SetInfiniteBossInfo :: " + bossIndex + "/" + _bossData._name + "/" + _bossData._hp);
 
         // _InfiniteHP.InstantSetValue(1); // HP 만피로 설정 
         Invoke("InvokedSetInfiniteHPFull", 0.4f);
@@ -273,7 +274,7 @@ public class GameViewManager : MonoBehaviour {
         if(isHeadShot)
             _currentBossHP -= damage;
 
-        Debug.Log("CalcBossHP currentHP :: " + _currentBossHP);
+        // Debug.Log("CalcBossHP currentHP :: " + _currentBossHP);
 
         if (_currentBossHP <= 0) {
             _bossHP.SetValue(0);
