@@ -45,7 +45,8 @@ public class PIER : MonoBehaviour {
         ListBossData = BossData.Instance.Rows;
         LoadData();
 
-        AddEveryGun();
+        // 무기 테스트 용도
+        // AddEveryGun();
     }
 
     #region 스페셜 리스트 
@@ -325,6 +326,8 @@ public class PIER : MonoBehaviour {
     /// </summary>
     public void AddAdCounter() {
         AdsCounter++;
+
+        Debug.Log(">> AddAdCounter :: " + AdsCounter);
 
         if(AdsCounter % 4 == 0) {
             AdsManager.main.OpenMidAdvertisement();

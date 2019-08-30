@@ -35833,15 +35833,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7fb7479dd83b14396fa8d177ba5a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBannerActivated: 0
-  admob_android_appID: ca-app-pub-2800442891988043~3581147088
-  admob_ios_appID: ca-app-pub-2800442891988043~5632595355
-  admob_android_bannerID: ca-app-pub-2800442891988043/1480338177
-  admob_android_interstitialID: ca-app-pub-2800442891988043/7232138556
-  admob_android_rewardedID: ca-app-pub-2800442891988043/5824167048
-  admob_ios_bannerID: ca-app-pub-2800442891988043/9854432467
-  admob_ios_interstitialID: ca-app-pub-2800442891988043/9380268671
-  admob_ios_rewardedID: ca-app-pub-2800442891988043/5441023668
+  IronSource_Android_ID: 9ef28cbd
+  IronSource_iOS_ID: 9ef2c645
   unityads_android: 3240753
   unityads_ios: 3240752
   unityads_placement: rewardedVideo
@@ -88479,6 +88472,7 @@ MonoBehaviour:
   _bottoms: {fileID: 1533341108}
   _lblUnlock: {fileID: 187217408}
   _btnAds: {fileID: 1008668454}
+  _btnUnlock: {fileID: 1537915953}
   debugVector2: {x: 0, y: 0}
   isUnlocking: 0
   lockCover: {fileID: 548134832}
@@ -94419,7 +94413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5882353}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

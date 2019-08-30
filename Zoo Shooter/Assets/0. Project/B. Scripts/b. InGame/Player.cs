@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void SetNormalAgentForce() {
 
-        Debug.Log(">> SetNormalAgentForce <<");
+        // Debug.Log(">> SetNormalAgentForce <<");
 
         // sp.sprite = SpriteNormal;
         anim.Play("GeneralAgent");
@@ -67,7 +67,8 @@ public class Player : MonoBehaviour
     /// 스페셜 리스트 처리 
     /// </summary>
     public void SetSpecialist() {
-        Debug.Log(">> Player Check Specialist <<");
+        // Debug.Log(">> Player Check Specialist <<");
+
         // 외향 설정
         if (PIER.IsSpecialist) {
             // sp.sprite = SpriteSpecialist;
@@ -171,7 +172,7 @@ public class Player : MonoBehaviour
 
     public void SetSpriteDirection(bool p) {
 
-        Debug.Log("Player SetSpriteDirection " + p);
+        // Debug.Log("Player SetSpriteDirection " + p);
         isLeft = p;
 
         // sp.flipX = isLeft;

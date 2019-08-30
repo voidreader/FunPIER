@@ -266,7 +266,7 @@ public class WeaponManager : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator ShootWithMachineGun() {
 
-        Debug.Log("ShootWithMachineGun :: " + EquipWeapon.BulletsCount);
+        // Debug.Log("ShootWithMachineGun :: " + EquipWeapon.BulletsCount);
 
         AimController.Wait = true; // 더이상 조준하지 않음. 
         
