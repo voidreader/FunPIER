@@ -69,6 +69,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         Debug.Log(">>> IronSource Init..!! << "  + ironSourceID);
 
         InitIronSourceRewarded(); // 예만 예외적으로 가장 먼저. 
+        IronSource.Agent.setAdaptersDebug(true);
         IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO);
         IronSource.Agent.init(ironSourceID, IronSourceAdUnits.INTERSTITIAL);
         IronSource.Agent.init(ironSourceID, IronSourceAdUnits.BANNER);
