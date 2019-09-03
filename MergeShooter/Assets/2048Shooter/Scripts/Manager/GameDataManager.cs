@@ -166,7 +166,7 @@ public class GameDataManager : MonoSingleton<GameDataManager>
 
     private int m_HardStartTimes;
 
-    private bool m_PhoneShake = true;
+    private bool m_PhoneShake = false;
 
     private bool m_Audio = true;
 
@@ -662,7 +662,10 @@ public class GameDataManager : MonoSingleton<GameDataManager>
         this.m_Money = PlayerPrefs.GetInt("MONEY", 0);
         this.m_getMoney = PlayerPrefs.GetInt("GETMONEY", 0);
         this.m_Audio = (PlayerPrefs.GetInt("AUDIO", 1) == 1);
-        this.m_PhoneShake = (PlayerPrefs.GetInt("PHONESHAKE", 1) == 1);
+
+       
+
+        this.m_PhoneShake = (PlayerPrefs.GetInt("PHONESHAKE", 0) == 1);
         this.m_Grade = (PlayerPrefs.GetInt("GRADE", 0) == 1);
         this.m_GradeTimer = PlayerPrefs.GetInt("GRADETIMERNEW", 0);
         //this.m_AD = (PlayerPrefs.GetInt("AD", 1) == 0);
