@@ -18,6 +18,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
     void Awake() {
         main = this;
+        DontDestroyOnLoad(this);
         
     }
 
@@ -100,10 +101,19 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                     Debug.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
                     Debug.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
 
-                    if(info.isSubscribed() == Result.True ) {
-                        PIER.main.SetSpecialist(true);
-                        Debug.Log("Is Specialist!!!!!!");
+                    
+                    // 구독기록 있을 경우. 
+                    if(info.isSubscribed() == Result.True) {
+
+                        // 구독을 취소해도 기간이 끝날때까지는 상품을 유지해야 한다. 
+                        // 만료 체크
+                        if(info.isExpired() == Result.False) {
+                            PIER.main.SetSpecialist(true);
+                            Debug.Log("Is Specialist!!!!!!");
+                        }
+
                     }
+
 
                 }
                 else {
@@ -135,7 +145,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
     public void OnInitializeFailed(InitializationFailureReason error) {
         Debug.Log(">>> Unity IAP OnInitializeFailed :: " + error.ToString());
-        IsInitialized = false;
+        PIER.main.SetSpecialist(false);
+        IsInitialized = false; // Fail 떠도.. true로 처리 
     }
 
 

@@ -16,7 +16,7 @@ public class TitleManager : MonoBehaviour
         // Screen.SetResolution(720, 1280, true);
     }
 
-    private void Start() {
+    void Start() {
 
         _loader.LoadSceneAsync();
         

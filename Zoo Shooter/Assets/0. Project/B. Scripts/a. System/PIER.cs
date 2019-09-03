@@ -276,8 +276,8 @@ public class PIER : MonoBehaviour {
         // CurrentList = 10;
         // CurrentLevel = 43;
         
-        CurrentList = 20;
-        CurrentLevel = 86;
+        // CurrentList = 20;
+        // CurrentLevel = 86;
 
         debugCurrentLevel = CurrentLevel;
         debugCurrentList = CurrentList;
@@ -428,6 +428,8 @@ public class PIER : MonoBehaviour {
         CurrentWeapon = w;
         PlayerPrefs.SetString(ConstBox.keyEquipGun, CurrentWeapon.name);
         PlayerPrefs.Save();
+
+        GameManager.main.RefreshFakeEquipGun();
     }
 
 

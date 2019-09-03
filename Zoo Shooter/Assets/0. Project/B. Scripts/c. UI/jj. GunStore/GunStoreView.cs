@@ -206,6 +206,11 @@ public class GunStoreView : MonoBehaviour
     /// </summary>
     public void UnlockRandom() {
 
+        int consumeCoin = 250;
+
+        if (_currentGroup._groupType == WeaponGetType.Unlock500)
+            consumeCoin = 500;
+
         if (_currentGroup._groupType == WeaponGetType.Unlock250 && PIER.main.Coin < 250)
             return;
 
@@ -228,11 +233,11 @@ public class GunStoreView : MonoBehaviour
             return;
 
         // 돌린다!
-        StartCoroutine(UnlockRoutine());
+        StartCoroutine(UnlockRoutine(consumeCoin));
 
     }
 
-    IEnumerator UnlockRoutine() {
+    IEnumerator UnlockRoutine(int consumeCoin) {
 
         float interval = 0.1f;
         GunColumn gc = null;
@@ -268,6 +273,7 @@ public class GunStoreView : MonoBehaviour
             PIER.main.AddGun(gc._weapon);
             gc.SetGunProduct(gc._weapon);
             gc.OnClickProduct();
+            PIER.main.AddCoin(-consumeCoin);
         }
 
 
@@ -288,5 +294,35 @@ public class GunStoreView : MonoBehaviour
         Debug.Log("GunStore OnCallbackAD");
         PIER.main.AddCoin(35);
         SetAdButton(); // 버튼 활성화 처리 
+
+
+        RefreshUnlockCoinButtonState();
+    }
+
+    void RefreshUnlockCoinButtonState() {
+        if (_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock250) {
+            _bottoms.transform.DOScale(1, 0.2f);
+            _lblUnlock.text = "250";
+
+            if (PIER.main.Coin < 250) {
+                _btnUnlock.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            }
+            else {
+                _btnUnlock.GetComponent<Image>().color = Stocks.main.ColorOrigin;
+            }
+
+        }
+        else if (_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock500) {
+            _bottoms.transform.DOScale(1, 0.2f);
+            _lblUnlock.text = "500";
+
+            if (PIER.main.Coin < 500) {
+                _btnUnlock.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            }
+            else {
+                _btnUnlock.GetComponent<Image>().color = Stocks.main.ColorOrigin;
+            }
+
+        }
     }
 }

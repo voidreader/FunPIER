@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine.Advertisements;
+
 using System;
 
 /*
@@ -11,7 +11,7 @@ using AudienceNetwork.Utility;
 */
 
 
-public class AdsManager : MonoBehaviour, IUnityAdsListener {
+public class AdsManager : MonoBehaviour {
 
     public static AdsManager main = null;
 
@@ -22,11 +22,12 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     public string IronSource_iOS_ID;
 
     #region Unity Ads
+    /*
     [Header("- Unity Ads -")]
     public string unityads_android;
     public string unityads_ios, unityads_placement;
     public bool IsUnityAdsAvailable = false;
-
+    */
     #endregion
 
     #region Facebook Audience 
@@ -58,10 +59,10 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
 #if UNITY_ANDROID
         ironSourceID = IronSource_Android_ID;
-        unityAdsID = unityads_android;
+        // unityAdsID = unityads_android;
 #elif UNITY_IOS
         ironSourceID = IronSource_iOS_ID;
-        unityAdsID = unityads_ios;
+        // unityAdsID = unityads_ios;
 #else
 
 #endif
@@ -78,10 +79,12 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
         InitIronSourceBanner();
         InitIronSourceInterstitial();
 
-        Debug.Log(">>> Unity Ads init.... !!!! :: " + unityAdsID);
+        // Debug.Log(">>> Unity Ads init.... !!!! :: " + unityAdsID);
 
+        /*
         Advertisement.AddListener(this);
         Advertisement.Initialize(unityAdsID, false);
+        */
 
 
         // FAN
@@ -139,7 +142,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
         //if (this.rewardedAd.IsLoaded() || isFBLoaded)
         //if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
-        if (IronSource.Agent.isRewardedVideoAvailable() || Advertisement.IsReady(unityads_placement))
+        //if (IronSource.Agent.isRewardedVideoAvailable() || Advertisement.IsReady(unityads_placement))
+        if (IronSource.Agent.isRewardedVideoAvailable())
             return true;
         else
             return false;
@@ -169,10 +173,12 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
             return;
         }
 
+        /*
         if (Advertisement.IsReady(unityads_placement)) {
             ShowUnityAds();
             return;
         }
+        */
 
         
     }
@@ -359,6 +365,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
     #region 유니티 애즈 동영상
 
+    /*
     public void ShowUnityAds() {
         Advertisement.Show(unityads_placement);
     }
@@ -392,6 +399,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
             
         }
     }
+    */
 
     #endregion
 

@@ -265,6 +265,14 @@ public class GameManager : MonoBehaviour {
         FakeEquipGun.SetFakeEquipWeapon(player.transform.position, PIER.main.CurrentWeapon);
     }
 
+    public void RefreshFakeEquipGun() {
+
+        if (player == null)
+            return;
+
+        FakeEquipGun.SetFakeEquipWeapon(player.transform.position, PIER.main.CurrentWeapon);
+    }
+
     #endregion
 
     #region GetNewPlayer 신규 플레이어 캐릭터 생성 
@@ -330,7 +338,7 @@ public class GameManager : MonoBehaviour {
         Debug.Log("EnterMission Start");
     }
 
-    void InitEnvironments() {
+    public void InitEnvironments() {
         _leftTreeGroup.gameObject.SetActive(false);
         _rightTreeGroup.gameObject.SetActive(false);
         _nightBox.gameObject.SetActive(false);
