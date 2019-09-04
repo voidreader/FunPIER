@@ -7,6 +7,9 @@ using DG.Tweening;
     
 
 public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
+
+    public static bool IsMerging = false;
+
     public int Level = 0;
     public Machine ItemData; // 데이터 ScriptableObject
 
@@ -15,6 +18,11 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Text TextLevel; // 단계 
 
     public bool IsPacked = false; // 상자 상태여부 
+
+
+    // 드래그 시작시 정보 
+    [SerializeField] Vector3 StartDragPosition;
+    [SerializeField] Transform StartDragParent;
 
 
 
@@ -83,16 +91,31 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         LevelSign.SetActive(false);
     }
 
-    
+
+    /// <summary>
+    /// 유닛 레벨업!
+    /// </summary>
+    public void LevelUp() {
+
+    }
 
 
+    #region Drag & Drop
 
     public void OnBeginDrag(PointerEventData eventData) {
 
         if (IsPacked)
             return;
 
-        MergeSystem.main.DraggingItem = this;
+        MergeSystem.DraggingItem = this;
+        StartDragPosition = this.transform.position;
+        StartDragParent = this.transform.parent;
+
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        transform.SetParent(MergeSystem.main.DragParent);
+        LevelSign.SetActive(false);
+
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -112,6 +135,39 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (IsPacked)
             return;
 
-        MergeSystem.main.DraggingItem = null;
+        Debug.Log("OnEndDrop!");
+
+        MergeSystem.DraggingItem = null;
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        LevelSign.SetActive(true);
+
+
+        if (IsMerging)
+            return;
+
+        
+        // 올바르지 않은 위치, 같은 슬롯이면 원상 복구 
+        if (MergeSystem.main.TargetSlot == null || StartDragParent == MergeSystem.main.TargetSlot.transform) {
+            this.transform.SetParent(StartDragParent);
+            this.transform.localPosition = Vector3.zero;
+        }
+        else { // 빈 공간으로의 이동 
+
+            // MergeItem 처리 
+            StartDragParent.GetComponent<MergeSlot>().mergeItem = null;
+            MergeSystem.main.TargetSlot.mergeItem = this; 
+
+            this.transform.SetParent(MergeSystem.main.TargetSlot.transform); 
+            this.transform.localPosition = Vector3.zero;
+
+            this.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+            this.transform.DOKill();
+            this.transform.DOScale(1, 0.25f).SetEase(Ease.OutBack);
+        }
+        
+        MergeSystem.main.SetTargetSlot(null);
+        
     }
+
+    #endregion
 }

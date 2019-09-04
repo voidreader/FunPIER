@@ -7,13 +7,16 @@ public class MergeSystem : MonoBehaviour
     public static MergeSystem main = null;
 
     [Header(" - Drag Item - ")]
-    public MergeItem DraggingItem;
+    public static MergeItem DraggingItem;
 
     public List<MergeSlot> ListSlots;
     public List<MergeSlot> ListEmptySlots;
 
     public float SecondSpawnBox;
 
+    public Transform DragParent;
+    public MergeSlot TargetSlot; // 드래그 하는 머지아이템이 이동할 슬롯 
+    
     MergeSlot slot;
 
     private void Awake() {
@@ -87,6 +90,15 @@ public class MergeSystem : MonoBehaviour
 
         return ListEmptySlots[Random.Range(0, ListEmptySlots.Count)];
 
+    }
+
+
+    /// <summary>
+    /// 타겟 슬록 설정
+    /// </summary>
+    /// <param name="s"></param>
+    public void SetTargetSlot(MergeSlot s) {
+        TargetSlot = s;
     }
 
     public MergeSlot GetNearestSlot(Vector3 pos) {

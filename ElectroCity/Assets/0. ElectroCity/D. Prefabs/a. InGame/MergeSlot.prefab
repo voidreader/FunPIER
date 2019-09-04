@@ -13,9 +13,7 @@ GameObject:
   - component: {fileID: 6738573769466322769}
   - component: {fileID: 6672074826971053298}
   - component: {fileID: 6672074826971053300}
-  - component: {fileID: 6672074826971053299}
-  - component: {fileID: 8588880684890883112}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MergeSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,26 +135,3 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!225 &6672074826971053299
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4613527812058074538}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!210 &8588880684890883112
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4613527812058074538}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
