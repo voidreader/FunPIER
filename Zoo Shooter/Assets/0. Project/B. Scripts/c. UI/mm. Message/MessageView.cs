@@ -15,6 +15,8 @@ public class MessageView : MonoBehaviour
     }
 
     public static void SetText(string m) {
+
+        Debug.Log(">>>> MessageView SetText Called ");
         main._text.text = m;
         GameEventMessage.SendEvent("MessageEvent");
     }

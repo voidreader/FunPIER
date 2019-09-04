@@ -16,7 +16,16 @@ public class TitleManager : MonoBehaviour
         // Screen.SetResolution(720, 1280, true);
     }
 
-    void Start() {
+    IEnumerator Start() {
+
+        Debug.Log(">>>>> Start Waiting in IAP Billing");
+
+        // IAP 모듈 대기 
+        while (!IAPControl.IsModuleLoaded)
+            yield return null;
+
+
+        Debug.Log(">>>>> End Waiting in IAP Billing");
 
         _loader.LoadSceneAsync();
         

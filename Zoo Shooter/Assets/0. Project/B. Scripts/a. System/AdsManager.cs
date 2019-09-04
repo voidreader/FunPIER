@@ -51,7 +51,7 @@ public class AdsManager : MonoBehaviour {
         if (Application.isEditor)
             yield break;
 
-
+        // 0.5초의 대기시간.
         yield return new WaitForSeconds(0.5f);
 
         string unityAdsID = string.Empty;
