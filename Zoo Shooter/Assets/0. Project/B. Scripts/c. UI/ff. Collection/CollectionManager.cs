@@ -120,7 +120,7 @@ public class CollectionManager : MonoBehaviour
         // CurrentList는 실제 보상을 받고 나서 증가한다.
         // CurrentList는 현재 진행중인 현상금 수배 리스트다. 
         NewPoster.sprite = Stocks.GetPosterSprite(PIER.CurrentList);
-        NewPoster.transform.localScale = Vector3.zero;
+        NewPoster.transform.localPosition = Vector3.zero;
         NewPoster.transform.localEulerAngles = new Vector3(0, 0, 719);
         NewPoster.transform.localScale = new Vector3(0, 0, 1);
         NewPoster.color = new Color(1, 1, 1, 0);

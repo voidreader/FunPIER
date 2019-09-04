@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GoogleMobileAds.Api;
-using UnityEngine.Advertisements;
+
+
 using System;
 
 /*
@@ -11,31 +11,23 @@ using AudienceNetwork.Utility;
 */
 
 
-public class AdsManager : MonoBehaviour, IUnityAdsListener {
+public class AdsManager : MonoBehaviour {
 
     public static AdsManager main = null;
 
     public Action OnWatchReward;
 
-    #region 애드몹 
-    [Header("- Google Admob -")]
-    private BannerView bannerView = null;
-    private GoogleMobileAds.Api.InterstitialAd interstitial = null;
-    private RewardedAd rewardedAd = null;
-    public bool isBannerActivated = false;
-
-    public string admob_android_appID, admob_ios_appID;
-    public string admob_android_bannerID, admob_android_interstitialID, admob_android_rewardedID;
-    public string admob_ios_bannerID, admob_ios_interstitialID, admob_ios_rewardedID;
-
-    #endregion
+    [Header("- IronSource -")]
+    public string IronSource_Android_ID;
+    public string IronSource_iOS_ID;
 
     #region Unity Ads
+    /*
     [Header("- Unity Ads -")]
     public string unityads_android;
     public string unityads_ios, unityads_placement;
     public bool IsUnityAdsAvailable = false;
-
+    */
     #endregion
 
     #region Facebook Audience 
@@ -56,33 +48,43 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     // Start is called before the first frame update
     IEnumerator Start() {
 
+        if (Application.isEditor)
+            yield break;
+
+        // 0.5초의 대기시간.
         yield return new WaitForSeconds(0.5f);
 
         string unityAdsID = string.Empty;
+        string ironSourceID = string.Empty;
 
 #if UNITY_ANDROID
-        string appId = admob_android_appID;
-        unityAdsID = unityads_android;
+        ironSourceID = IronSource_Android_ID;
+        // unityAdsID = unityads_android;
 #elif UNITY_IOS
-        string appId = admob_ios_appID;
-        unityAdsID = unityads_ios;
+        ironSourceID = IronSource_iOS_ID;
+        // unityAdsID = unityads_ios;
 #else
-            string appId = "unexpected_platform";
+
 #endif
 
-        // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize(appId); 
+        Debug.Log(">>> IronSource Init..!! << "  + ironSourceID);
 
-        // 애드몹 초기화 
-        RequestBanner();
-        RequestInterstitial();
-        RequestRewardAd();
+        InitIronSourceRewarded(); // 예만 예외적으로 가장 먼저. 
+        IronSource.Agent.setAdaptersDebug(true);
+        IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO);
+        IronSource.Agent.init(ironSourceID, IronSourceAdUnits.INTERSTITIAL);
+        IronSource.Agent.init(ironSourceID, IronSourceAdUnits.BANNER);
+        IronSource.Agent.validateIntegration();
 
+        InitIronSourceBanner();
+        InitIronSourceInterstitial();
 
-        Debug.Log(">>> Unity Ads init.... !!!! :: " + unityAdsID);
+        // Debug.Log(">>> Unity Ads init.... !!!! :: " + unityAdsID);
 
+        /*
         Advertisement.AddListener(this);
         Advertisement.Initialize(unityAdsID, false);
+        */
 
 
         // FAN
@@ -97,6 +99,9 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     public void OpenMidAdvertisement() {
 
         Debug.Log("Called OpenMidAdvertisement");
+
+        if (Application.isEditor)
+            return;
 
         // 스페셜리스트 상품 구매자는 광고 띄우지 않음 
         if (PIER.IsSpecialist)
@@ -116,10 +121,12 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     }
 
     public bool IsAvailableInterstitial() {
-        if (this.interstitial == null)
+
+        if (Application.isEditor)
             return false;
 
-        return this.interstitial.IsLoaded();
+        Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady());
+        return IronSource.Agent.isInterstitialReady();
     }
 
     /// <summary>
@@ -128,18 +135,15 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     /// <returns></returns>
     public bool IsAvailableRewardAD() {
 
-        if (!this.rewardedAd.IsLoaded())
-            RequestRewardAd();
+        if (Application.isEditor)
+            return false;
 
-        /*
-        if (!this.isFBLoaded)
-            LoadRewardedVideo();
-        */
 
 
         //if (this.rewardedAd.IsLoaded() || isFBLoaded)
         //if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
-        if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement))
+        //if (IronSource.Agent.isRewardedVideoAvailable() || Advertisement.IsReady(unityads_placement))
+        if (IronSource.Agent.isRewardedVideoAvailable())
             return true;
         else
             return false;
@@ -152,7 +156,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     /// </summary>
     public void OpenInterstitial() {
         Debug.Log(">> OpenInterstitial <<");
-        this.interstitial.Show();   
+        IronSource.Agent.showInterstitial();
+        // this.interstitial.Show();   
     }
 
 
@@ -163,262 +168,204 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
 
         OnWatchReward = callback;
 
-
-
-        // 애드몹 최우선 
-        if(this.rewardedAd.IsLoaded()) {
-            Debug.Log("Admob rewarded ad play");
-            rewardedAd.Show();
+        if(IronSource.Agent.isRewardedVideoAvailable()) {
+            IronSource.Agent.showRewardedVideo();
             return;
         }
-        else {
-            RequestRewardAd();
-        }
 
-        // 페이스북 테스트
         /*
-        if (isFBLoaded) {
-            FAN_ShowRewardedVideo();
-            return;
-        }
-        */
-
-
         if (Advertisement.IsReady(unityads_placement)) {
             ShowUnityAds();
             return;
         }
+        */
 
         
     }
 
 
-    #region 배너
 
-    public void HideBannerView() {
-        if(bannerView != null) {
-            bannerView.Hide();
-            isBannerActivated = false;
-        }
+
+
+
+    #region IronSource Banner
+
+    void InitIronSourceBanner() {
+        IronSourceEvents.onBannerAdLoadedEvent += BannerAdLoadedEvent;
+        IronSourceEvents.onBannerAdLoadFailedEvent += BannerAdLoadFailedEvent;
+        IronSourceEvents.onBannerAdClickedEvent += BannerAdClickedEvent;
+        IronSourceEvents.onBannerAdScreenPresentedEvent += BannerAdScreenPresentedEvent;
+        IronSourceEvents.onBannerAdScreenDismissedEvent += BannerAdScreenDismissedEvent;
+        IronSourceEvents.onBannerAdLeftApplicationEvent += BannerAdLeftApplicationEvent;
+
+        if(!PIER.IsSpecialist)
+            IronSource.Agent.loadBanner(new IronSourceBannerSize(320, 50), IronSourceBannerPosition.BOTTOM);
+        
     }
 
     public void ActivateBannerView() {
-        if (isBannerActivated)
+
+        if (Application.isEditor)
             return;
 
-        RequestBanner();
+        IronSource.Agent.displayBanner();
     }
 
-    private void RequestBanner() {
-
-        if (PIER.IsSpecialist)
+    public void HideBannerView() {
+        if (Application.isEditor)
             return;
 
-#if UNITY_ANDROID
-        string adUnitId = admob_android_bannerID;
-#elif UNITY_IPHONE
-            string adUnitId = admob_ios_bannerID;
-#else
-            string adUnitId = "unexpected_platform";
-#endif
-
-        bannerView = new BannerView(adUnitId, GoogleMobileAds.Api.AdSize.Banner, GoogleMobileAds.Api.AdPosition.Bottom);
-
-        // Called when an ad request has successfully loaded.
-        bannerView.OnAdLoaded += HandleOnAdLoaded;
-        // Called when an ad request failed to load.
-        bannerView.OnAdFailedToLoad += HandleOnAdFailedToLoad;
-        // Called when an ad is clicked.
-        bannerView.OnAdOpening += HandleOnAdOpened;
-        // Called when the user returned from the app after an ad click.
-        bannerView.OnAdClosed += HandleOnAdClosed;
-        // Called when the ad click caused the user to leave the application.
-        bannerView.OnAdLeavingApplication += HandleOnAdLeavingApplication;
-
-        // Create an empty ad request.
-        AdRequest request = new AdRequest.Builder().Build();
-
-        // Load the banner with the request.
-        bannerView.LoadAd(request);
+        IronSource.Agent.hideBanner();
     }
 
-    public void HandleOnAdLoaded(object sender, EventArgs args) {
-        Debug.Log("HandleAdLoaded event received");
-
-        isBannerActivated = true;
+    //Invoked once the banner has loaded
+    void BannerAdLoadedEvent() {
+        Debug.Log("BannerAdLoadedEvent");
     }
-
-    public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) {
-        Debug.Log("HandleFailedToReceiveAd event received with message: "
-                            + args.Message);
-
-        isBannerActivated = false;
+    //Invoked when the banner loading process has failed.
+    //@param description - string - contains information about the failure.
+    void BannerAdLoadFailedEvent(IronSourceError error) {
+        Debug.Log("BannerAdLoadFailedEvent : " + error.getDescription());
     }
-
-    public void HandleOnAdOpened(object sender, EventArgs args) {
-        Debug.Log("HandleAdOpened event received");
+    // Invoked when end user clicks on the banner ad
+    void BannerAdClickedEvent() {
+        Debug.Log("BannerAdClickedEvent");
     }
-
-    public void HandleOnAdClosed(object sender, EventArgs args) {
-        Debug.Log("HandleAdClosed event received");
+    //Notifies the presentation of a full screen content following user click
+    void BannerAdScreenPresentedEvent() {
+        Debug.Log("BannerAdScreenPresentedEvent");
     }
-
-    public void HandleOnAdLeavingApplication(object sender, EventArgs args) {
-        Debug.Log("HandleAdLeavingApplication event received");
+    //Notifies the presented screen has been dismissed
+    void BannerAdScreenDismissedEvent() {
+        Debug.Log("BannerAdScreenDismissedEvent");
+    }
+    //Invoked when the user leaves the app
+    void BannerAdLeftApplicationEvent() {
+        Debug.Log("BannerAdLeftApplicationEvent");
     }
 
     #endregion
 
-    #region 전면
-    private void RequestInterstitial() {
+    #region IronSource Interstitial
+    void InitIronSourceInterstitial() {
+        IronSourceEvents.onInterstitialAdReadyEvent += InterstitialAdReadyEvent;
+        IronSourceEvents.onInterstitialAdLoadFailedEvent += InterstitialAdLoadFailedEvent;
+        IronSourceEvents.onInterstitialAdShowSucceededEvent += InterstitialAdShowSucceededEvent;
+        IronSourceEvents.onInterstitialAdShowFailedEvent += InterstitialAdShowFailedEvent;
+        IronSourceEvents.onInterstitialAdClickedEvent += InterstitialAdClickedEvent;
+        IronSourceEvents.onInterstitialAdOpenedEvent += InterstitialAdOpenedEvent;
+        IronSourceEvents.onInterstitialAdClosedEvent += InterstitialAdClosedEvent;
 
-
-        if (this.interstitial != null && this.interstitial.IsLoaded())
-            return;
-
-
-#if UNITY_ANDROID
-        string adUnitId = admob_android_interstitialID;
-#elif UNITY_IPHONE
-        string adUnitId = admob_ios_interstitialID;
-#else
-        string adUnitId = "unexpected_platform";
-#endif
-
-        // Initialize an InterstitialAd.
-        this.interstitial = new GoogleMobileAds.Api.InterstitialAd(adUnitId);
-
-        // Called when an ad request has successfully loaded.
-        this.interstitial.OnAdLoaded += InterHandleOnAdLoaded;
-        // Called when an ad request failed to load.
-        this.interstitial.OnAdFailedToLoad += InterHandleOnAdFailedToLoad;
-        // Called when an ad is shown.
-        this.interstitial.OnAdOpening += InterHandleOnAdOpened;
-        // Called when the ad is closed.
-        this.interstitial.OnAdClosed += InterHandleOnAdClosed;
-        // Called when the ad click caused the user to leave the application.
-        this.interstitial.OnAdLeavingApplication += InterHandleOnAdLeavingApplication;
-
-        // Create an empty ad request.
-        AdRequest request = new AdRequest.Builder().Build();
-        // Load the interstitial with the request.
-        this.interstitial.LoadAd(request);
-
-
-
-        
+        IronSource.Agent.loadInterstitial();
 
     }
 
-    public void InterHandleOnAdLoaded(object sender, EventArgs args) {
-        Debug.Log("HandleAdLoaded event received");
+    //Invoked when the Interstitial Ad Unit has opened
+    void InterstitialAdOpenedEvent() {
+        Debug.Log("InterstitialAdOpenedEvent");
     }
 
-    public void InterHandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args) {
-        Debug.Log("HandleFailedToReceiveAd event received with message: "
-                            + args.Message);
+    //Invoked when the initialization process has failed.
+    //@param description - string - contains information about the failure.
+    void InterstitialAdLoadFailedEvent(IronSourceError error) {
+        Debug.Log("InterstitialAdLoadFailedEvent : " + error.getDescription());
+    }
+    //Invoked right before the Interstitial screen is about to open.
+    void InterstitialAdShowSucceededEvent() {
+        Debug.Log("InterstitialAdShowSucceededEvent");
+    }
+    //Invoked when the ad fails to show.
+    //@param description - string - contains information about the failure.
+    void InterstitialAdShowFailedEvent(IronSourceError error) {
+        Debug.Log("InterstitialAdShowFailedEvent : " + error.getDescription());
+    }
+    // Invoked when end user clicked on the interstitial ad
+    void InterstitialAdClickedEvent() {
+        Debug.Log("InterstitialAdClickedEvent");
+    }
+    //Invoked when the interstitial ad closed and the user goes back to the application screen.
+    void InterstitialAdClosedEvent() {
+        Debug.Log("InterstitialAdClosedEvent");
+        IronSource.Agent.loadInterstitial();
+    }
+    //Invoked when the Interstitial is Ready to shown after load function is called
+    void InterstitialAdReadyEvent() {
+        Debug.Log("InterstitialAdReadyEvent");
     }
 
-    public void InterHandleOnAdOpened(object sender, EventArgs args) {
-        Debug.Log("HandleAdOpened event received");
-    }
-
-    public void InterHandleOnAdClosed(object sender, EventArgs args) {
-        Debug.Log("HandleAdClosed event received");
-        RequestInterstitial();
-    }
-
-    public void InterHandleOnAdLeavingApplication(object sender, EventArgs args) {
-        Debug.Log("HandleAdLeavingApplication event received");
-    }
     #endregion
 
-    #region 애드몹 동영상
+    #region IronSource Rewarded
 
-    public void RequestRewardAd() {
+    void InitIronSourceRewarded() {
+        IronSourceEvents.onRewardedVideoAdOpenedEvent += RewardedVideoAdOpenedEvent;
+        IronSourceEvents.onRewardedVideoAdClosedEvent += RewardedVideoAdClosedEvent;
+        IronSourceEvents.onRewardedVideoAvailabilityChangedEvent += RewardedVideoAvailabilityChangedEvent;
+        IronSourceEvents.onRewardedVideoAdStartedEvent += RewardedVideoAdStartedEvent;
+        IronSourceEvents.onRewardedVideoAdEndedEvent += RewardedVideoAdEndedEvent;
+        IronSourceEvents.onRewardedVideoAdRewardedEvent += RewardedVideoAdRewardedEvent;
+        IronSourceEvents.onRewardedVideoAdShowFailedEvent += RewardedVideoAdShowFailedEvent;
 
-
-        string adUnitId;
-#if UNITY_ANDROID
-        adUnitId = admob_android_rewardedID;
-#elif UNITY_IPHONE
-            adUnitId = admob_ios_rewardedID;
-#else
-            adUnitId = "unexpected_platform";
-#endif
-
-        this.rewardedAd = new RewardedAd(adUnitId);
-
-        // Called when an ad request has successfully loaded.
-        this.rewardedAd.OnAdLoaded += HandleRewardedAdLoaded;
-        // Called when an ad request failed to load.
-        this.rewardedAd.OnAdFailedToLoad += HandleRewardedAdFailedToLoad;
-        // Called when an ad is shown.
-        this.rewardedAd.OnAdOpening += HandleRewardedAdOpening;
-        // Called when an ad request failed to show.
-        this.rewardedAd.OnAdFailedToShow += HandleRewardedAdFailedToShow;
-        // Called when the user should be rewarded for interacting with the ad.
-        this.rewardedAd.OnUserEarnedReward += HandleUserEarnedReward;
-        // Called when the ad is closed.
-        this.rewardedAd.OnAdClosed += HandleRewardedAdClosed;
-
-        // Create an empty ad request.
-        AdRequest request = new AdRequest.Builder().Build();
-        // Load the rewarded ad with the request.
-        this.rewardedAd.LoadAd(request);
-    }
-
-    public void HandleRewardedAdLoaded(object sender, EventArgs args) {
-        Debug.Log("HandleRewardedAdLoaded event received");
-    }
-
-    public void HandleRewardedAdFailedToLoad(object sender, AdErrorEventArgs args) {
-        Debug.Log("HandleRewardedAdFailedToLoad event received with message: " + args.Message);
-    }
-
-    public void HandleRewardedAdOpening(object sender, EventArgs args) {
-        Debug.Log("HandleRewardedAdOpening event received");
-
-        // 애드몹이 오픈되도 소리가 자꾸 나와... 
-#if UNITY_IOS
-        if(SoundControlSystem.BGM_Available) {
-            AudioAssistant.main.ChangeMusicVolume(0);
-        }
-
-#endif
-    }
-
-    public void HandleRewardedAdFailedToShow(object sender, AdErrorEventArgs args) {
-        Debug.Log(
-            "HandleRewardedAdFailedToShow event received with message: "
-                             + args.Message);
-    }
-
-    public void HandleRewardedAdClosed(object sender, EventArgs args) {
-        Debug.Log("HandleRewardedAdClosed event received");
-
-
-#if UNITY_IOS
-        if (SoundControlSystem.BGM_Available) {
-            AudioAssistant.main.ChangeMusicVolume(0.6f);
-        }
-
-#endif
-
-        RequestRewardAd();
-    }
-
-    public void HandleUserEarnedReward(object sender, Reward args) {
-        Debug.Log(">> HandleUserEarnedReward << ");
-        OnWatchReward(); // callback 호출 
-
+        IronSource.Agent.shouldTrackNetworkState(true);
         
+
     }
 
-#endregion
+    //Invoked when the RewardedVideo ad view has opened.
+    //Your Activity will lose focus. Please avoid performing heavy 
+    //tasks till the video ad will be closed.
+    void RewardedVideoAdOpenedEvent() {
+        Debug.Log("RewardedVideoAdOpenedEvent");
+    }
+    //Invoked when the RewardedVideo ad view is about to be closed.
+    //Your activity will now regain its focus.
+    void RewardedVideoAdClosedEvent() {
+        Debug.Log("RewardedVideoAdClosedEvent");
+    }
+    //Invoked when there is a change in the ad availability status.
+    //@param - available - value will change to true when rewarded videos are available. 
+    //You can then show the video by calling showRewardedVideo().
+    //Value will change to false when no videos are available.
+    void RewardedVideoAvailabilityChangedEvent(bool available) {
+        //Change the in-app 'Traffic Driver' state according to availability.
+        bool rewardedVideoAvailability = available;
+        Debug.Log("RewardedVideoAvailabilityChangedEvent : " + available);
+    }
+    //  Note: the events below are not available for all supported rewarded video 
+    //   ad networks. Check which events are available per ad network you choose 
+    //   to include in your build.
+    //   We recommend only using events which register to ALL ad networks you 
+    //   include in your build.
+    //Invoked when the video ad starts playing.
+    void RewardedVideoAdStartedEvent() {
+        Debug.Log("RewardedVideoAdStartedEvent");
+    }
+    //Invoked when the video ad finishes playing.
+    void RewardedVideoAdEndedEvent() {
+        Debug.Log("RewardedVideoAdEndedEvent");
+    }
+    //Invoked when the user completed the video and should be rewarded. 
+    //If using server-to-server callbacks you may ignore this events and wait for the callback from the  ironSource server.
+    //
+    //@param - placement - placement object which contains the reward data
+    //
+    void RewardedVideoAdRewardedEvent(IronSourcePlacement placement) {
+        Debug.Log("RewardedVideoAdRewardedEvent");
+        OnWatchReward();
+    }
+    //Invoked when the Rewarded Video failed to show
+    //@param description - string - contains information about the failure.
+    void RewardedVideoAdShowFailedEvent(IronSourceError error) {
 
-#region 유니티 애즈 동영상
+        Debug.Log("RewardedVideoAdShowFailedEvent : " + error.getDescription());
+    }
 
+
+    #endregion
+
+    #region 유니티 애즈 동영상
+
+    /*
     public void ShowUnityAds() {
         Advertisement.Show(unityads_placement);
     }
@@ -452,6 +399,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
             
         }
     }
+    */
 
     #endregion
 
@@ -541,4 +489,11 @@ public class AdsManager : MonoBehaviour, IUnityAdsListener {
     }
     */
     #endregion
+
+    private void OnApplicationPause(bool pause) {
+        if (Application.isEditor)
+            return;
+
+        IronSource.Agent.onApplicationPause(pause);
+    }
 }

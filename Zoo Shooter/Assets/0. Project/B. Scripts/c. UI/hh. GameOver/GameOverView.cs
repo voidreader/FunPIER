@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using SA.Android.App;
 using SA.Android.Content;
+// using SA.iOS.StoreKit;
 
 public class GameOverView : MonoBehaviour
 {
@@ -82,10 +83,13 @@ public class GameOverView : MonoBehaviour
 
 
 #if UNITY_ANDROID
-        System.Uri uri = new System.Uri("market://details?id=" + Application.identifier);
-        AN_Intent viewIntent = new AN_Intent(AN_Intent.ACTION_VIEW, uri);
-        AN_MainActivity.Instance.StartActivity(viewIntent);
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.utplus.hitmonkey");
+
+#elif UNITY_IOS
+        // ISN_SKStoreReviewController.RequestReview();
 #endif
+
+
 
     }
 

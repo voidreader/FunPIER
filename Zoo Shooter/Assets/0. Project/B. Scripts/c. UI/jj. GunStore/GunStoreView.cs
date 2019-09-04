@@ -27,6 +27,7 @@ public class GunStoreView : MonoBehaviour
 
     public Text _lblUnlock; // 가격표
     public Button _btnAds; // 광고보고 코인받기... 
+    public Button _btnUnlock;
 
     public Vector2 debugVector2;
     public bool isUnlocking = false; // 언락 연출중.
@@ -147,10 +148,26 @@ public class GunStoreView : MonoBehaviour
         if(_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock250) {
             _bottoms.transform.DOScale(1, 0.2f);
             _lblUnlock.text = "250";
+
+            if(PIER.main.Coin < 250) {
+                _btnUnlock.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            }
+            else {
+                _btnUnlock.GetComponent<Image>().color = Stocks.main.ColorOrigin;
+            }
+
         }
         else if(_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock500) {
             _bottoms.transform.DOScale(1, 0.2f);
             _lblUnlock.text = "500";
+
+            if (PIER.main.Coin < 500) {
+                _btnUnlock.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            }
+            else {
+                _btnUnlock.GetComponent<Image>().color = Stocks.main.ColorOrigin;
+            }
+
         }
         else {
             _bottoms.transform.DOScale(0, 0.2f);
@@ -189,6 +206,17 @@ public class GunStoreView : MonoBehaviour
     /// </summary>
     public void UnlockRandom() {
 
+        int consumeCoin = 250;
+
+        if (_currentGroup._groupType == WeaponGetType.Unlock500)
+            consumeCoin = 500;
+
+        if (_currentGroup._groupType == WeaponGetType.Unlock250 && PIER.main.Coin < 250)
+            return;
+
+        if (_currentGroup._groupType == WeaponGetType.Unlock500 && PIER.main.Coin < 500)
+            return;
+
 
         _listUnlock = new List<GunColumn>();
         
@@ -205,11 +233,11 @@ public class GunStoreView : MonoBehaviour
             return;
 
         // 돌린다!
-        StartCoroutine(UnlockRoutine());
+        StartCoroutine(UnlockRoutine(consumeCoin));
 
     }
 
-    IEnumerator UnlockRoutine() {
+    IEnumerator UnlockRoutine(int consumeCoin) {
 
         float interval = 0.1f;
         GunColumn gc = null;
@@ -245,6 +273,7 @@ public class GunStoreView : MonoBehaviour
             PIER.main.AddGun(gc._weapon);
             gc.SetGunProduct(gc._weapon);
             gc.OnClickProduct();
+            PIER.main.AddCoin(-consumeCoin);
         }
 
 
@@ -265,5 +294,35 @@ public class GunStoreView : MonoBehaviour
         Debug.Log("GunStore OnCallbackAD");
         PIER.main.AddCoin(35);
         SetAdButton(); // 버튼 활성화 처리 
+
+
+        RefreshUnlockCoinButtonState();
+    }
+
+    void RefreshUnlockCoinButtonState() {
+        if (_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock250) {
+            _bottoms.transform.DOScale(1, 0.2f);
+            _lblUnlock.text = "250";
+
+            if (PIER.main.Coin < 250) {
+                _btnUnlock.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            }
+            else {
+                _btnUnlock.GetComponent<Image>().color = Stocks.main.ColorOrigin;
+            }
+
+        }
+        else if (_listGroups[CurrentGroupIndex]._groupType == WeaponGetType.Unlock500) {
+            _bottoms.transform.DOScale(1, 0.2f);
+            _lblUnlock.text = "500";
+
+            if (PIER.main.Coin < 500) {
+                _btnUnlock.GetComponent<Image>().color = new Color(1, 1, 1, 0.6f);
+            }
+            else {
+                _btnUnlock.GetComponent<Image>().color = Stocks.main.ColorOrigin;
+            }
+
+        }
     }
 }

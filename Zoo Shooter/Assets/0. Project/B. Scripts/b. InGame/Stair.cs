@@ -257,9 +257,9 @@ public class Stair : MonoBehaviour
         }
 
         if (isLeftStair)
-            this.transform.localPosition = new Vector3(-6, p.y, 0);
+            this.transform.localPosition = new Vector3(-8, p.y, 0);
         else
-            this.transform.localPosition = new Vector3(6, p.y, 0);
+            this.transform.localPosition = new Vector3(8, p.y, 0);
 
         this.transform.DOLocalMoveX(targetPosX, 0.1f).OnComplete(OnCompletePos);
     }

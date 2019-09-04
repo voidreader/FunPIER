@@ -39,13 +39,20 @@ public class PIER : MonoBehaviour {
 
     void Awake() {
         main = this;
-    }
-
-    void Start() {
         ListBossData = BossData.Instance.Rows;
         LoadData();
 
-        AddEveryGun();
+        if (IAPControl.main == null)
+            SetSpecialist(false);
+        else
+            SetSpecialist(IAPControl.main.IsSubscribe);
+    }
+
+    void Start() {
+
+
+        // 무기 테스트 용도
+        // AddEveryGun();
     }
 
     #region 스페셜 리스트 
@@ -58,15 +65,18 @@ public class PIER : MonoBehaviour {
         IsSpecialist = flag;
 
         if(IsSpecialist) { // 스페셜리스트 !
-            AddGun(Stocks.main.WeaponSpecialist);
-            ChangeEquipWeapon(Stocks.main.WeaponSpecialist);
+
+            if(AddGun(Stocks.main.WeaponSpecialist))
+                ChangeEquipWeapon(Stocks.main.WeaponSpecialist);
 
             // 광고 모듈 처리 
-            AdsManager.main.HideBannerView();
+            if(AdsManager.main)
+                AdsManager.main.HideBannerView();
         }
         else { // 일반 
             RemoveGun(Stocks.main.WeaponSpecialist); // 특별 무기 제거
-            AdsManager.main.ActivateBannerView(); // 배너뷰 살리기 
+            if (AdsManager.main)
+                AdsManager.main.ActivateBannerView(); // 배너뷰 살리기 
         }
     }
 
@@ -274,6 +284,7 @@ public class PIER : MonoBehaviour {
         // 테스트 용도 
         // CurrentList = 10;
         // CurrentLevel = 43;
+        
         // CurrentList = 20;
         // CurrentLevel = 86;
 
@@ -325,6 +336,8 @@ public class PIER : MonoBehaviour {
     /// </summary>
     public void AddAdCounter() {
         AdsCounter++;
+
+        Debug.Log(">> AddAdCounter :: " + AdsCounter);
 
         if(AdsCounter % 4 == 0) {
             AdsManager.main.OpenMidAdvertisement();
@@ -378,15 +391,17 @@ public class PIER : MonoBehaviour {
     /// 구매한 총 추가
     /// </summary>
     /// <param name="w"></param>
-    public void AddGun(Weapon w) {
+    public bool AddGun(Weapon w) {
 
         // Debug.Log(w.WeaponID + "Get!! ");
 
         if (HasGun(w))
-            return;
+            return false;
 
         GunListNode[ColumnGun][-1]["name"] = w.name;
         SaveGun();
+
+        return true;
     }
 
     public void RemoveGun(Weapon w) {
@@ -424,6 +439,8 @@ public class PIER : MonoBehaviour {
         CurrentWeapon = w;
         PlayerPrefs.SetString(ConstBox.keyEquipGun, CurrentWeapon.name);
         PlayerPrefs.Save();
+
+        GameManager.main.RefreshFakeEquipGun();
     }
 
 

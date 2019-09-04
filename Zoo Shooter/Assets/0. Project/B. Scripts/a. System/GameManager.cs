@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
     public bool AutoInit;
     public int SpawnEnemyCount = 0;
     public bool isRevived = false; // 광고보고 부활 여부. (Continue)
+    public bool isContinueAvailable = false; // Continue 창 오픈 가능 
 
     public List<BossDamageText> ListBossDamageTexts;
     int BossDamageIndex = 0;
@@ -222,6 +223,7 @@ public class GameManager : MonoBehaviour {
         InitEnvironments();
 
         isRevived = false;
+        isContinueAvailable = false;
         isMissed = false;
         isEnemyHit = false;
         isWait = false;
@@ -260,6 +262,14 @@ public class GameManager : MonoBehaviour {
 
         yield return null;
         Dancer.SetPosition(player.transform.position);
+        FakeEquipGun.SetFakeEquipWeapon(player.transform.position, PIER.main.CurrentWeapon);
+    }
+
+    public void RefreshFakeEquipGun() {
+
+        if (player == null)
+            return;
+
         FakeEquipGun.SetFakeEquipWeapon(player.transform.position, PIER.main.CurrentWeapon);
     }
 
@@ -328,7 +338,7 @@ public class GameManager : MonoBehaviour {
         Debug.Log("EnterMission Start");
     }
 
-    void InitEnvironments() {
+    public void InitEnvironments() {
         _leftTreeGroup.gameObject.SetActive(false);
         _rightTreeGroup.gameObject.SetActive(false);
         _nightBox.gameObject.SetActive(false);
@@ -440,8 +450,7 @@ public class GameManager : MonoBehaviour {
 
         // 본격 게임 투틴 시작 지점 
         while(isPlaying) {
-
-            
+           
 
 
             while (WeaponManager.isShooting) {
@@ -513,11 +522,18 @@ public class GameManager : MonoBehaviour {
     /// 다음 인피니트 모드 보스 처리 
     /// </summary>
     public void SetNextInfiniteModeIndex() {
+
+        
+            
+
         InfiniteIndex++;
         InfiniteKillCount++;
 
+        Debug.Log("SetNextInfiniteModeIndex :: " + InfiniteIndex + "/" + BossData.Instance.Rows.Count);
+
         // 다 돌았으면 다시 0으로..
-        if(BossData.Instance.Rows.Count >= InfiniteIndex) {
+        if (BossData.Instance.Rows.Count <= InfiniteIndex) {
+            Debug.Log("Infinite Cycle Init.... !");
             InfiniteIndex = 0;
             InfiniteHPx *= 2;
         }
@@ -671,6 +687,7 @@ public class GameManager : MonoBehaviour {
                         SetLevelProgressor();
                     }
                     else { //  다음 몹이 보스일때는 연출을 기다린다.
+                        isContinueAvailable = true; // 컨티뉴 사용가능 
                         SetLevelProgressor();
                         GameViewManager.main.AppearBoss();
                         AimController.Wait = true;
@@ -750,7 +767,7 @@ public class GameManager : MonoBehaviour {
             yield return null;
 
 
-        Debug.Log("SetPlayer with Direction");
+        // Debug.Log("SetPlayer with Direction");
 
         listStairs[indexPlayerStair].SetPlayer(player);
         player.Aim();
@@ -790,7 +807,7 @@ public class GameManager : MonoBehaviour {
     /// continue 가능 여부 체크해서 GameOver 혹은 Continue 처리 
     /// </summary>
     void ContinueEvent() {
-        if (AdsManager.main.IsAvailableRewardAD())
+        if (AdsManager.main.IsAvailableRewardAD() && isContinueAvailable)
             GameEventMessage.SendEvent("ContinueEvent");
         else
             GameOver();
@@ -801,6 +818,7 @@ public class GameManager : MonoBehaviour {
     /// </summary>
     public void GameOver() {
 
+        Debug.Log("!! GameOver !!");
         PIER.main.AddAdCounter(); // 광고 
 
 
@@ -810,7 +828,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GameClear() {
-
+        Debug.Log("!! GameClear !!");
         PIER.main.AddAdCounter(); // 광고 
 
         // 스코어 이어하기를 위해 저장 
@@ -857,6 +875,12 @@ public class GameManager : MonoBehaviour {
         e = GameObject.Instantiate(Stocks.main.prefabBossEnemy, new Vector3(20, 0, 0), Quaternion.identity).GetComponent<Enemy>();
         e.SetEnemy(EnemyType.Boss, Stocks.GetBossDataRow(InfiniteIndex)._identifier);
 
+
+        SpawnEnemyCount++;
+
+        if (SpawnEnemyCount > 6)
+            isContinueAvailable = true;
+
         return e;
 
     }
@@ -885,6 +909,10 @@ public class GameManager : MonoBehaviour {
         }
 
         SpawnEnemyCount++;
+
+        if (SpawnEnemyCount > 8)
+            isContinueAvailable = true;
+
         return e;
     }
 

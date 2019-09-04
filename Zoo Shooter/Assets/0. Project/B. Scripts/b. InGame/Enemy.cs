@@ -148,7 +148,7 @@ public class Enemy : MonoBehaviour {
             GameViewManager.main.CalcBossHP(d, isHeadShot); // HP 게이지 연동 추가 
 
 
-        Debug.Log("HP after hit :: " + HP);
+        // Debug.Log("HP after hit :: " + HP);
         // 헤드샷 연출
         if (isHeadShot) {
             GameManager.main.Splash(); // 스플래시 효과

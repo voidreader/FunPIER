@@ -6,28 +6,73 @@ using UnityEngine.Purchasing.Security;
 
 public class IAPControl : MonoBehaviour, IStoreListener {
 
+    // ※ 모듈 초기화가 즉시 되는게 아니다. 
     public static IAPControl main = null;
-    public static bool IsInitialized = false;
+
+    public static bool IsInitialized = false; // 정상적으로 초기화 되었는지에 대한 여부 
+    public static bool IsModuleLoaded = false; // 모듈 초기화 여부 
+
+    public bool IsSubscribe = false; // 구독 여부 체크 
+    const string KeySubscribe = "KeySubscribe";
+    const string subscriptionID = "hm_weekly_subs";
 
     IStoreController controller = null;
     IExtensionProvider extensions = null; // 여러 플랫폼을 위한 확장 처리를 제공
     private IAppleExtensions m_AppleExtensions; 
+
 
     public IStoreController Controller { get => controller; set => controller = value; } // 구매 과정을 제어하는 함수 제공 
     
 
     void Awake() {
         main = this;
+        DontDestroyOnLoad(this);
+
+        IsModuleLoaded = false;
+        IsInitialized = false;
         
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    IEnumerator Start() {
+
+        yield return new WaitForSeconds(0.5f);
+
+        LoadSubscribeData();  // 구독 정보 조회 (데이터) 
         InitBilling();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    void LoadSubscribeData() {
+
+        // 네트워크 상의 이유로 초기화가 잘 되지 않는 경우도 있다. 
+        // 그래서 데이터로 미리 저장 
+        if (PlayerPrefs.GetInt(KeySubscribe, 0) == 0)
+            IsSubscribe = false;
+        else
+            IsSubscribe = true;
+    }
+
+    void SaveSubscibeData(bool flag) {
+        IsSubscribe = flag;
+
+        if (flag)
+            PlayerPrefs.SetInt(KeySubscribe, 1);
+        else
+            PlayerPrefs.SetInt(KeySubscribe, 0);
+
+        PlayerPrefs.Save();
+    }
+
+
+    /// <summary>
+    /// 결제 모듈 초기화
+    /// </summary>
     void InitBilling() {
+
+
         if (IsInitialized)
             return;
 
@@ -50,7 +95,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions) {
         Debug.Log(">>> Unity IAP OnInitialized <<< ");
 
-        PIER.IsSpecialist = false;
+        // PIER.IsSpecialist = false;
         // PIER.IsSpecialist = true;
 
         this.Controller = controller;
@@ -62,9 +107,15 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         Dictionary<string, string> introductory_info_dict = m_AppleExtensions.GetIntroductoryPriceDictionary();
 
 
-        Debug.Log("Available items:");
-
+        // 구독상품 관련 처리 
+        Debug.Log("Available Subscription items:");
         foreach(var item in controller.products.all) {
+
+            // 구독상품만 체크 
+            if(item.definition.id != "subscriptionID") {
+                continue;
+            }
+
             if(item.availableToPurchase) {
                 Debug.Log(string.Join(" - ",
                         new[]
@@ -100,12 +151,26 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                     Debug.Log("the product introductory price period is: " + info.getIntroductoryPricePeriod());
                     Debug.Log("the number of product introductory price period cycles is: " + info.getIntroductoryPricePeriodCycles());
 
-                    if(info.isSubscribed() == Result.True ) {
-                        PIER.main.SetSpecialist(true);
-                        Debug.Log("Is Specialist!!!!!!");
+                    
+                    // 구독기록 있을 경우. 
+                    if(info.isSubscribed() == Result.True) {
+
+                        // 구독을 취소해도 기간이 끝날때까지는 상품을 유지해야 한다. 
+                        // 만료 체크
+                        if (info.isExpired() == Result.False) {
+                            // PIER.main.SetSpecialist(true);
+                            Debug.Log(">>> You are already Specialist <<<");
+                            SaveSubscibeData(true);
+                        }
+                        else {
+                            Debug.Log(">>> Specialist period is expired <<<");
+                            SaveSubscibeData(false);
+                        }
+
                     }
 
-                }
+
+                } // end of.. !
                 else {
 
                     if(!checkIfProductIsAvailableForSubscriptionManager(item.receipt))
@@ -116,26 +181,33 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                         Debug.Log("the product should have a valid receipt");
 
 
+                    SaveSubscibeData(false);
                 }
                 // end
 
-            } // end of item.availableToPurchase 
-        }
 
+
+            } // end of item.availableToPurchase 
+        } // end of foreach
+
+        /*
         if (!PIER.IsSpecialist)
             PIER.main.SetSpecialist(false);
+        */
 
 
         
         Debug.Log("IAP init completed");
         IsInitialized = true;
-        // SubscriptionManager.UpdateSubscription
+        IsModuleLoaded = true;
     }
 
 
     public void OnInitializeFailed(InitializationFailureReason error) {
         Debug.Log(">>> Unity IAP OnInitializeFailed :: " + error.ToString());
-        IsInitialized = false;
+        SaveSubscibeData(false);
+        IsInitialized = false; 
+        IsModuleLoaded = true;
     }
 
 
@@ -168,10 +240,15 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         Debug.Log(">> Called ProcessPurchase  :: " + e.purchasedProduct.definition.id);
 
         if(e.purchasedProduct.definition.type == ProductType.Subscription) {
-            
-            PIER.main.SetSpecialist(true);
-            GameManager.main.RefreshPlayerWeapon(); // 구매시에는 무기도 변경해준다. 
+
             Debug.Log("Is Specialist!!!!!! by new purchase !!");
+            SaveSubscibeData(true);
+
+            if (PIER.main != null) {
+                PIER.main.SetSpecialist(true);
+                GameManager.main.RefreshPlayerWeapon(); // 구매시에는 무기도 변경해준다. 
+            }
+            
 
             if(SubscribeView.main.gameObject.activeSelf) {
                 SubscribeView.main.CloseView();
@@ -247,15 +324,25 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     /// 구독상품 가격정보 
     /// </summary>
     /// <returns></returns>
-    public string GetSubscriptionProductPrice() {
-        foreach(var item in controller.products.all) {
-            if(item.definition.id == "hm_weekly_subs") {
+    public static string GetSubscriptionProductPrice() {
+
+        // 초기화 되어 있지 않으면 empty 
+        if(!IsInitialized) {
+            return string.Empty;
+        }
+
+        if (main == null)
+            return string.Empty;
+
+        foreach(var item in main.controller.products.all) {
+            if(item.definition.id == subscriptionID) {
                 return item.metadata.localizedPriceString;
             }
         }
 
         return string.Empty;
     }
+
 
     public void RestorePurchase() {
         if (!IsInitialized)
