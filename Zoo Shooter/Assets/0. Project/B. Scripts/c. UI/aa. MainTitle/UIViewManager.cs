@@ -37,6 +37,8 @@ public class UIViewManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(">> UIViewManager Start << ");
+
     }
 
     void Update() {
@@ -117,6 +119,7 @@ public class UIViewManager : MonoBehaviour
 
 
         AudioAssistant.main.PlayMusic("Main");
+        Debug.Log(">> UIViewManager Main View Called << ");
     }
 
     public void OnViewSubscribe() {

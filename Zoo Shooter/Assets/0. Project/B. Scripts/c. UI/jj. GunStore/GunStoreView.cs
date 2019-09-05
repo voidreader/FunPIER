@@ -79,7 +79,7 @@ public class GunStoreView : MonoBehaviour
 
 
     public void OnSelectedFocusItem() {
-        Debug.Log("GunStore OnSelectedFocusItem :: " + _sc.TargetPanel + "/" + _sc.CurrentPanel);
+        // Debug.Log("GunStore OnSelectedFocusItem :: " + _sc.TargetPanel + "/" + _sc.CurrentPanel);
         
         
     }

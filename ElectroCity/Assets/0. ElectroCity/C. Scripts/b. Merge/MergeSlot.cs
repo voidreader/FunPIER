@@ -61,9 +61,13 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
     /// <param name="u2">드래그하던애</param>
     public void MergeUnit(MergeItem u1, MergeItem u2) {
         Debug.Log("MergeUnit is just called!");
+        MergeItem.IsMerging = true;
 
-        u1.transform.localPosition = new Vector3(-30, 0, 0);
-        u2.transform.localPosition = new Vector3(30, 0, 0);
+        u1.transform.SetParent(this.transform);
+        u2.transform.SetParent(this.transform);
+
+        u1.transform.localPosition = new Vector3(-40, 0, 0);
+        u2.transform.localPosition = new Vector3(40, 0, 0);
 
         u1.transform.DOLocalMoveX(0, 0.4f).SetEase(Ease.InBack).OnComplete(()=>OnMergeLevelUp(u1));
         u2.transform.DOLocalMoveX(0, 0.4f).SetEase(Ease.InBack).OnComplete(() => OnMergeDestroy(u2));
@@ -71,6 +75,7 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
 
     void OnMergeLevelUp(MergeItem m) {
         m.LevelUp();
+        MergeItem.IsMerging = false;
     }
 
     void OnMergeDestroy(MergeItem m) {

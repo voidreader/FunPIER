@@ -52,11 +52,11 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     /// <param name="l"></param>
     public void SetMergeItem(int l) {
-        if(ItemData == null) {
-            Level = l;
-            ItemData = Stock.GetMergeItemData(Level); 
-        }
 
+        Debug.Log(">> SetMergeItem :: " + l);
+
+        Level = l;
+        ItemData = Stock.GetMergeItemData(Level);
         ImageItem.sprite = ItemData.SpriteMergeUI;
         ImageItem.SetNativeSize();
         this.transform.localScale = Vector3.zero;
@@ -96,7 +96,9 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// 유닛 레벨업!
     /// </summary>
     public void LevelUp() {
+        Level++;
 
+        SetMergeItem(Level);
     }
 
 
@@ -145,13 +147,20 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (IsMerging)
             return;
 
+
+
         
         // 올바르지 않은 위치, 같은 슬롯이면 원상 복구 
         if (MergeSystem.main.TargetSlot == null || StartDragParent == MergeSystem.main.TargetSlot.transform) {
+
+            Debug.Log("Restore Position");
+
             this.transform.SetParent(StartDragParent);
             this.transform.localPosition = Vector3.zero;
         }
         else { // 빈 공간으로의 이동 
+
+            Debug.Log("Move Position");
 
             // MergeItem 처리 
             StartDragParent.GetComponent<MergeSlot>().mergeItem = null;
