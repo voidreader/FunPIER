@@ -225,7 +225,7 @@ public class AdsManager : MonoBehaviour {
     //Invoked when the banner loading process has failed.
     //@param description - string - contains information about the failure.
     void BannerAdLoadFailedEvent(IronSourceError error) {
-        Debug.Log("BannerAdLoadFailedEvent : " + error.getDescription());
+        Debug.Log("BannerAdLoadFailedEvent : " + error.getDescription() + "/"+ error.getCode());
     }
     // Invoked when end user clicks on the banner ad
     void BannerAdClickedEvent() {
@@ -268,7 +268,7 @@ public class AdsManager : MonoBehaviour {
     //Invoked when the initialization process has failed.
     //@param description - string - contains information about the failure.
     void InterstitialAdLoadFailedEvent(IronSourceError error) {
-        Debug.Log("InterstitialAdLoadFailedEvent : " + error.getDescription());
+        Debug.Log("InterstitialAdLoadFailedEvent : " + error.getDescription() + "/" + error.getCode());
     }
     //Invoked right before the Interstitial screen is about to open.
     void InterstitialAdShowSucceededEvent() {
@@ -277,7 +277,7 @@ public class AdsManager : MonoBehaviour {
     //Invoked when the ad fails to show.
     //@param description - string - contains information about the failure.
     void InterstitialAdShowFailedEvent(IronSourceError error) {
-        Debug.Log("InterstitialAdShowFailedEvent : " + error.getDescription());
+        Debug.Log("InterstitialAdShowFailedEvent : " + error.getDescription() + "/" + error.getCode());
     }
     // Invoked when end user clicked on the interstitial ad
     void InterstitialAdClickedEvent() {
@@ -357,7 +357,7 @@ public class AdsManager : MonoBehaviour {
     //@param description - string - contains information about the failure.
     void RewardedVideoAdShowFailedEvent(IronSourceError error) {
 
-        Debug.Log("RewardedVideoAdShowFailedEvent : " + error.getDescription());
+        Debug.Log("RewardedVideoAdShowFailedEvent : " + error.getDescription() + "/" + error.getCode());
     }
 
 

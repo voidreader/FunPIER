@@ -18,16 +18,25 @@ public class TitleManager : MonoBehaviour
 
     IEnumerator Start() {
 
+
+        Debug.Log(">> LoadSceneAsync <<");
+        _loader.LoadSceneAsync();
+
         Debug.Log(">>>>> Start Waiting in IAP Billing");
 
         // IAP 모듈 대기 
         while (!IAPControl.IsModuleLoaded)
             yield return null;
 
-
+        yield return new WaitForSeconds(0.1f);
         Debug.Log(">>>>> End Waiting in IAP Billing");
 
-        _loader.LoadSceneAsync();
-        
+
+        Debug.Log(">>>>> SetAllowSceneActivation");
+        _loader.SetAllowSceneActivation(true);
+
+
+
+
     }
 }

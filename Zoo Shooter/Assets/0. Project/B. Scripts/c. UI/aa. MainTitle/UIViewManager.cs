@@ -45,9 +45,9 @@ public class UIViewManager : MonoBehaviour
 
         
         if(Input.GetKeyDown(KeyCode.F)) {
-            // GameEventMessage.SendEvent("FakeWantedReward");
+            GameEventMessage.SendEvent("MessageEvent");
             // CheckDailyReward();
-            ConfirmSpecialistMessage();
+            //ConfirmSpecialistMessage();
         }
         
         
