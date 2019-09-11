@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoogleMobileAds.Api;
 
+
 using System;
 
 /*
@@ -24,24 +25,24 @@ public class AdsManager : MonoBehaviour {
 
     #region 애드몹 
     [Header("- Google Admob -")]
-    private BannerView bannerView = null;
-    private GoogleMobileAds.Api.InterstitialAd interstitial = null;
-    private RewardedAd rewardedAd = null;
-    public bool isBannerActivated = false;
 
+    public bool isBannerActivated = false;
     public string admob_android_appID, admob_ios_appID;
     public string admob_android_bannerID, admob_android_interstitialID, admob_android_rewardedID;
     public string admob_ios_bannerID, admob_ios_interstitialID, admob_ios_rewardedID;
+    private BannerView bannerView = null;
+    private GoogleMobileAds.Api.InterstitialAd interstitial = null;
+    private RewardedAd rewardedAd = null;
 
     #endregion
 
     #region Unity Ads
-    /*
+
     [Header("- Unity Ads -")]
     public string unityads_android;
     public string unityads_ios, unityads_placement;
     public bool IsUnityAdsAvailable = false;
-    */
+    
     #endregion
 
     #region Facebook Audience 
@@ -72,14 +73,26 @@ public class AdsManager : MonoBehaviour {
         string ironSourceID = string.Empty;
 
 #if UNITY_ANDROID
+        string appId = admob_android_appID;
         ironSourceID = IronSource_Android_ID;
         // unityAdsID = unityads_android;
 #elif UNITY_IOS
+        string appId = admob_ios_appID;
         ironSourceID = IronSource_iOS_ID;
         // unityAdsID = unityads_ios;
 #else
+        string appId = "unexpected_platform";
 
 #endif
+
+        // Google Admob 초기화
+        // Initialize the Google Mobile Ads SDK.
+        MobileAds.Initialize(appId);
+
+        // 애드몹 초기화 
+        RequestBanner();
+        RequestInterstitial();
+        RequestRewardAd();
 
         Debug.Log(">>> IronSource Init..!! << "  + ironSourceID);
 
@@ -87,10 +100,10 @@ public class AdsManager : MonoBehaviour {
         IronSource.Agent.setAdaptersDebug(true);
         IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO);
         IronSource.Agent.init(ironSourceID, IronSourceAdUnits.INTERSTITIAL);
-        IronSource.Agent.init(ironSourceID, IronSourceAdUnits.BANNER);
+        // IronSource.Agent.init(ironSourceID, IronSourceAdUnits.BANNER);
         IronSource.Agent.validateIntegration();
 
-        InitIronSourceBanner();
+        // InitIronSourceBanner();
         InitIronSourceInterstitial();
 
         // Debug.Log(">>> Unity Ads init.... !!!! :: " + unityAdsID);
@@ -139,8 +152,15 @@ public class AdsManager : MonoBehaviour {
         if (Application.isEditor)
             return false;
 
-        Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady());
-        return IronSource.Agent.isInterstitialReady();
+        // Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady());
+        Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady() + "/" + this.interstitial.IsLoaded());
+        if (this.interstitial.IsLoaded() || IronSource.Agent.isInterstitialReady()) 
+            
+            return true;
+        else
+            return false;
+
+        // return IronSource.Agent.isInterstitialReady();
     }
 
     /// <summary>
@@ -157,7 +177,7 @@ public class AdsManager : MonoBehaviour {
         //if (this.rewardedAd.IsLoaded() || isFBLoaded)
         //if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
         //if (IronSource.Agent.isRewardedVideoAvailable() || Advertisement.IsReady(unityads_placement))
-        if (IronSource.Agent.isRewardedVideoAvailable())
+        if (IronSource.Agent.isRewardedVideoAvailable() || this.rewardedAd.IsLoaded())
             return true;
         else
             return false;
@@ -170,8 +190,17 @@ public class AdsManager : MonoBehaviour {
     /// </summary>
     public void OpenInterstitial() {
         Debug.Log(">> OpenInterstitial <<");
-        IronSource.Agent.showInterstitial();
+        // IronSource.Agent.showInterstitial();
         // this.interstitial.Show();   
+        if (this.interstitial.IsLoaded()) {
+            this.interstitial.Show();
+            return;
+        }
+
+        if(IronSource.Agent.isInterstitialReady())
+            this.interstitial.Show();
+
+
     }
 
 
@@ -181,6 +210,15 @@ public class AdsManager : MonoBehaviour {
     public void OpenRewardAd(Action callback) {
 
         OnWatchReward = callback;
+
+
+        if(this.rewardedAd.IsLoaded()) {
+            rewardedAd.Show();
+            return;
+        }
+        else {
+            RequestRewardAd();
+        }
 
         if(IronSource.Agent.isRewardedVideoAvailable()) {
             IronSource.Agent.showRewardedVideo();
@@ -427,19 +465,35 @@ public class AdsManager : MonoBehaviour {
         
     }
 
+
+    /// <summary>
+    /// 배너 활성화
+    /// </summary>
     public void ActivateBannerView() {
 
         if (Application.isEditor)
             return;
 
-        IronSource.Agent.displayBanner();
+        // IronSource.Agent.displayBanner();
+        if (isBannerActivated)
+            return;
+
+        RequestBanner();
+
     }
 
+    /// <summary>
+    /// 배너 비활성화
+    /// </summary>
     public void HideBannerView() {
         if (Application.isEditor)
             return;
 
-        IronSource.Agent.hideBanner();
+        // IronSource.Agent.hideBanner();
+        if (bannerView != null) {
+            bannerView.Hide();
+            isBannerActivated = false;
+        }
     }
 
     //Invoked once the banner has loaded
@@ -624,7 +678,8 @@ public class AdsManager : MonoBehaviour {
         }
     }
     */
-
+    
+        
     #endregion
 
     #region FAN
