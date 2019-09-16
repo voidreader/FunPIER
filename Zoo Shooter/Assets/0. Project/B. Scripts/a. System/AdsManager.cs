@@ -87,23 +87,23 @@ public class AdsManager : MonoBehaviour {
 
         // Google Admob 초기화
         // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize(appId);
-
-        // 애드몹 초기화 
-        RequestBanner();
-        RequestInterstitial();
-        RequestRewardAd();
+        //MobileAds.Initialize(appId);
+        //RequestBanner();
+        //RequestInterstitial();
+        //RequestRewardAd();
 
         Debug.Log(">>> IronSource Init..!! << "  + ironSourceID);
 
         InitIronSourceRewarded(); // 예만 예외적으로 가장 먼저. 
         IronSource.Agent.setAdaptersDebug(true);
-        IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO);
-        IronSource.Agent.init(ironSourceID, IronSourceAdUnits.INTERSTITIAL);
+        IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.OFFERWALL, IronSourceAdUnits.BANNER);
+
+        //IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO);
+        //IronSource.Agent.init(ironSourceID, IronSourceAdUnits.INTERSTITIAL);
         // IronSource.Agent.init(ironSourceID, IronSourceAdUnits.BANNER);
         IronSource.Agent.validateIntegration();
 
-        // InitIronSourceBanner();
+        InitIronSourceBanner();
         InitIronSourceInterstitial();
 
         // Debug.Log(">>> Unity Ads init.... !!!! :: " + unityAdsID);
@@ -152,10 +152,10 @@ public class AdsManager : MonoBehaviour {
         if (Application.isEditor)
             return false;
 
-        // Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady());
-        Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady() + "/" + this.interstitial.IsLoaded());
-        if (this.interstitial.IsLoaded() || IronSource.Agent.isInterstitialReady()) 
-            
+        Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady());
+        //Debug.Log(">> IsAvailableInterstitial :: " + IronSource.Agent.isInterstitialReady() + "/" + this.interstitial.IsLoaded());
+        //if (this.interstitial.IsLoaded() || IronSource.Agent.isInterstitialReady()) 
+        if (IronSource.Agent.isInterstitialReady())
             return true;
         else
             return false;
@@ -177,7 +177,8 @@ public class AdsManager : MonoBehaviour {
         //if (this.rewardedAd.IsLoaded() || isFBLoaded)
         //if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
         //if (IronSource.Agent.isRewardedVideoAvailable() || Advertisement.IsReady(unityads_placement))
-        if (IronSource.Agent.isRewardedVideoAvailable() || this.rewardedAd.IsLoaded())
+        //if (IronSource.Agent.isRewardedVideoAvailable() || this.rewardedAd.IsLoaded())
+        if (IronSource.Agent.isRewardedVideoAvailable())
             return true;
         else
             return false;
@@ -190,15 +191,20 @@ public class AdsManager : MonoBehaviour {
     /// </summary>
     public void OpenInterstitial() {
         Debug.Log(">> OpenInterstitial <<");
-        // IronSource.Agent.showInterstitial();
+        IronSource.Agent.showInterstitial();
+
         // this.interstitial.Show();   
+        /*
         if (this.interstitial.IsLoaded()) {
             this.interstitial.Show();
             return;
         }
+        */
 
+        /*
         if(IronSource.Agent.isInterstitialReady())
             this.interstitial.Show();
+        */
 
 
     }
@@ -212,6 +218,7 @@ public class AdsManager : MonoBehaviour {
         OnWatchReward = callback;
 
 
+        /*
         if(this.rewardedAd.IsLoaded()) {
             rewardedAd.Show();
             return;
@@ -219,6 +226,7 @@ public class AdsManager : MonoBehaviour {
         else {
             RequestRewardAd();
         }
+        */
 
         if(IronSource.Agent.isRewardedVideoAvailable()) {
             IronSource.Agent.showRewardedVideo();
@@ -440,9 +448,11 @@ public class AdsManager : MonoBehaviour {
 
     public void HandleUserEarnedReward(object sender, Reward args) {
         Debug.Log(">> HandleUserEarnedReward << ");
-        OnWatchReward(); // callback 호출 
+        // OnWatchReward(); // callback 호출 
+        CallDelayedWatchReward();
 
-        
+
+
     }
 
 #endregion
@@ -629,7 +639,9 @@ public class AdsManager : MonoBehaviour {
     //
     void RewardedVideoAdRewardedEvent(IronSourcePlacement placement) {
         Debug.Log("RewardedVideoAdRewardedEvent");
-        OnWatchReward();
+        // OnWatchReward();
+        CallDelayedWatchReward();
+
     }
     //Invoked when the Rewarded Video failed to show
     //@param description - string - contains information about the failure.
@@ -768,6 +780,19 @@ public class AdsManager : MonoBehaviour {
     }
     */
     #endregion
+
+
+    void CallDelayedWatchReward() {
+
+        // 광고를 보는 즉시 사운드를 재생하면, Exception이 발생한다. 
+        StartCoroutine(CallingWatchReward());
+
+    }
+
+    IEnumerator CallingWatchReward() {
+        yield return new WaitForSeconds(0.2f);
+        OnWatchReward();
+    }
 
     private void OnApplicationPause(bool pause) {
         if (Application.isEditor)

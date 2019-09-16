@@ -168,6 +168,9 @@ public class IAPControl : MonoBehaviour, IStoreListener {
                         }
 
                     }
+                    else {
+                        SaveSubscibeData(false);
+                    }
 
 
                 } // end of.. !

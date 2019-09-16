@@ -78,6 +78,8 @@ public class Stair : MonoBehaviour
             return;
 
         StartCoroutine(EnemyPositionRoutine());
+
+        BossDamageText.IncrementalV = 0;
     }
 
 

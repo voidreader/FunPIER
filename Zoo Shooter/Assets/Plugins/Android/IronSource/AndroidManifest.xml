@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    
+    android:installLocation="preferExternal"
     package="com.Company.ProductName"
     android:versionName="1.0"
     android:versionCode="1">
@@ -164,9 +164,8 @@
         
       <!--As Requiered By Admob please add your App ID-->
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-2800442891988043~3581147088"/>
+		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
+           android:value="ca-app-pub-2800442891988043~3581147088"/>
         
         <!-- MoPub -->
         <activity

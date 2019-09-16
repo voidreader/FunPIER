@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour {
     Vector3 jumpPos;
     public bool isMoving = false;
     public System.Action JumpCallback;
+    bool isHeadShotSoundPlay = false;
 
     void InitEnemy() {
         
@@ -155,8 +156,16 @@ public class Enemy : MonoBehaviour {
             PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabHeadshot, new Vector3(0, 5f, 0), Quaternion.identity);
             GameManager.main.ShowGetCoin(); // 코인 획득 
 
-            // 헤드샷에 소리 추가
-            AudioAssistant.Shot("Headshot");
+            // 사운드가 중복해서 여러번 나지 않게.
+            if (!isHeadShotSoundPlay) {
+
+
+                // 헤드샷에 소리 추가
+                isHeadShotSoundPlay = true;
+                AudioAssistant.LowShot("HeadshotVocal");
+                StartCoroutine(WaitingPlayHeadShot());
+            }
+
         
         }
 
@@ -395,7 +404,7 @@ public class Enemy : MonoBehaviour {
             this.transform.DORotate(new Vector3(0, 0, 360), 0.3f, RotateMode.WorldAxisAdd).SetDelay(0.4f);
 
         AudioAssistant.Shot("BossJump");
-
+        BossDamageText.IncrementalV = 0; // 데미지 위치 좌표값 초기화 
 
 
         /*
@@ -467,7 +476,15 @@ public class Enemy : MonoBehaviour {
     }
     #endregion
 
+    #region 헤드샷 사운드 제어
 
+    IEnumerator WaitingPlayHeadShot() {
+        yield return new WaitForSeconds(0.5f);
+
+        isHeadShotSoundPlay = false;
+    }
+
+    #endregion
 
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -485,6 +502,8 @@ public class Enemy : MonoBehaviour {
 
         }
     }
+
+
 
 
 }

@@ -296,6 +296,21 @@ public class PIER : MonoBehaviour {
 
     }
 
+    public void ClearLevelCheat() {
+
+        Debug.Log("Clear Level Cheat!!");
+
+        CurrentList = 20;
+        CurrentLevel = 86;
+
+        InfiniteMode = true;
+
+        SaveData();
+
+        UIViewManager.main.OnViewMain();
+        GameManager.main.InitGame();
+    }
+
     /// <summary>
     /// 데이터 저장 
     /// </summary>
@@ -380,7 +395,10 @@ public class PIER : MonoBehaviour {
     }
 
     public void AddEveryGun() {
-        for(int i=0; i<Stocks.main.ListWeapons.Count;i++) {
+
+        Debug.Log("AddEveryGun Cheat!!");
+
+        for (int i=0; i<Stocks.main.ListWeapons.Count;i++) {
             if(!HasGun(Stocks.main.ListWeapons[i])) {
                 AddGun(Stocks.main.ListWeapons[i]);
             }

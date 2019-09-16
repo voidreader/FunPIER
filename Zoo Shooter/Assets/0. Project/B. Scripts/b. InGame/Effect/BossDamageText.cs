@@ -13,6 +13,8 @@ public class BossDamageText : MonoBehaviour
     public Transform target;
     public Text lblDamage;
 
+    public static float IncrementalV = 0;
+
 
     /// <summary>
     /// 데미지 표시기
@@ -25,11 +27,16 @@ public class BossDamageText : MonoBehaviour
         Vector3 pos = mainCamera.WorldToScreenPoint(target.position);
         // pos = new Vector3(pos.x + Random.Range(-20f, 20f), pos.y + Random.Range(-20f, 20f), 0);
         this.transform.position = pos;
-        this.transform.position = new Vector3(this.transform.position.x + Random.Range(-15f, 15f), this.transform.position.y + Random.Range(-15f, 15f), 0);
-        
-            
-        // lblDamage.color = Color.white;
-        
+        //this.transform.position = new Vector3(this.transform.position.x + Random.Range(-15f, 15f), this.transform.position.y + Random.Range(-15f, 15f), 0);
+
+        if(GameManager.main.enemy.isLeft)
+            this.transform.position = new Vector3(this.transform.position.x + Random.Range(5f,15f), this.transform.position.y + IncrementalV, 0);
+        else
+            this.transform.position = new Vector3(this.transform.position.x - Random.Range(5f, 15f), this.transform.position.y + IncrementalV, 0);
+
+        // 위치 좌표 추가
+        IncrementalV += 10f;
+
 
 
 

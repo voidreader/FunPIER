@@ -207,7 +207,7 @@ public class AudioAssistant : MonoBehaviour {
         
         sfx.volume = v;
         loopingSFX.volume = v / 2;
-        lowSFX.volume = v / 2;
+        lowSFX.volume = v * 0.75f;
     }
 
     
