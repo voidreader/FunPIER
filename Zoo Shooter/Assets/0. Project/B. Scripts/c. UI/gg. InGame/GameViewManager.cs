@@ -148,6 +148,7 @@ public class GameViewManager : MonoBehaviour {
         _InfiniteHP.gameObject.SetActive(false);
         _bossHP.gameObject.SetActive(false);
         _levelProgressor.gameObject.SetActive(false);
+        SetInfiniteKillCount(0);
 
         // 무브무브!
         _infiniteBox1.DOLocalMoveX(0, 0.8f);

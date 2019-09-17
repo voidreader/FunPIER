@@ -91,6 +91,10 @@ public class GameManager : MonoBehaviour {
         mainCamera.aspect = 9f / 16f;
         bgCamera.aspect = 9f / 16f;
 
+        // 보스데미지 좌표 증가 계수처리
+        BossDamageText.factor = Screen.height / 80;
+        Debug.Log("Boss Damage Text Factor :: " + BossDamageText.factor);
+
     }
 
 

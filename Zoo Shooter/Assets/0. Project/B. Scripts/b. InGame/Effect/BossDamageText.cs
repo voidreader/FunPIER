@@ -14,6 +14,7 @@ public class BossDamageText : MonoBehaviour
     public Text lblDamage;
 
     public static float IncrementalV = 0;
+    public static float factor = 0; // 증가 계수 (해상도에 따라 다르다)
 
 
     /// <summary>
@@ -27,16 +28,25 @@ public class BossDamageText : MonoBehaviour
         Vector3 pos = mainCamera.WorldToScreenPoint(target.position);
         // pos = new Vector3(pos.x + Random.Range(-20f, 20f), pos.y + Random.Range(-20f, 20f), 0);
         this.transform.position = pos;
-        //this.transform.position = new Vector3(this.transform.position.x + Random.Range(-15f, 15f), this.transform.position.y + Random.Range(-15f, 15f), 0);
 
+
+        this.transform.position = new Vector3(this.transform.position.x + Random.Range(-15f, 15f), this.transform.position.y + IncrementalV, 0);
+
+
+        /*
         if(GameManager.main.enemy.isLeft)
-            this.transform.position = new Vector3(this.transform.position.x + Random.Range(5f,15f), this.transform.position.y + IncrementalV, 0);
+            this.transform.position = new Vector3(this.transform.position.x + Random.Range(-15f,15f), this.transform.position.y + IncrementalV, 0);
         else
-            this.transform.position = new Vector3(this.transform.position.x - Random.Range(5f, 15f), this.transform.position.y + IncrementalV, 0);
+            this.transform.position = new Vector3(this.transform.position.x + Random.Range(-15f, 15f), this.transform.position.y + IncrementalV, 0);
+        */
 
         // 위치 좌표 추가
-        IncrementalV += 10f;
+        // IncrementalV += 15f;
+        IncrementalV += factor;
 
+        // 1280 일때 10 
+
+        
 
 
 
@@ -60,6 +70,8 @@ public class BossDamageText : MonoBehaviour
         // lblDamage.CrossFadeAlpha(0, 1f, true);
         lblDamage.DOColor(Stocks.main.ColorTransparent, 1.5f).SetEase(Ease.InQuad);
         this.transform.DOScale(1.2f, 0.8f).SetLoops(2, LoopType.Yoyo).OnComplete(OnComplteteScale1);
+
+        this.transform.SetAsLastSibling();
 
     }
 
