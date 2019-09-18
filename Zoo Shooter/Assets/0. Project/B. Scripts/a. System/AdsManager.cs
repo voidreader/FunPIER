@@ -15,6 +15,7 @@ using AudienceNetwork.Utility;
 public class AdsManager : MonoBehaviour {
 
     public static AdsManager main = null;
+    public static bool IsAdsInit = false;
 
     public Action OnWatchReward;
 
@@ -69,6 +70,31 @@ public class AdsManager : MonoBehaviour {
         // 0.5초의 대기시간.
         yield return new WaitForSeconds(0.5f);
 
+
+
+        InitializeSDKs(); // 광고 SDK 초기화
+
+    }
+
+
+    /// <summary>
+    /// 광고 SDK 초기화
+    /// </summary>
+    public void InitializeSDKs() {
+
+        // 네트워크 상태 체크 
+        if(Application.internetReachability == NetworkReachability.NotReachable) {
+
+            
+
+            Debug.Log(">> AdsManager can't InitializeSDKs << ");
+
+            IsAdsInit = false;
+            return;
+        }
+
+        Debug.Log(">> AdsManager InitializeSDKs << ");
+
         string unityAdsID = string.Empty;
         string ironSourceID = string.Empty;
 
@@ -92,11 +118,12 @@ public class AdsManager : MonoBehaviour {
         //RequestInterstitial();
         //RequestRewardAd();
 
-        Debug.Log(">>> IronSource Init..!! << "  + ironSourceID);
+        Debug.Log(">>> IronSource Init..!! << " + ironSourceID);
 
         InitIronSourceRewarded(); // 예만 예외적으로 가장 먼저. 
         IronSource.Agent.setAdaptersDebug(true);
         IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO, IronSourceAdUnits.INTERSTITIAL, IronSourceAdUnits.OFFERWALL, IronSourceAdUnits.BANNER);
+        
 
         //IronSource.Agent.init(ironSourceID, IronSourceAdUnits.REWARDED_VIDEO);
         //IronSource.Agent.init(ironSourceID, IronSourceAdUnits.INTERSTITIAL);
@@ -116,7 +143,9 @@ public class AdsManager : MonoBehaviour {
 
         // FAN
         // Init_FAN();
-        
+
+
+        IsAdsInit = true;
     }
 
 
@@ -178,10 +207,15 @@ public class AdsManager : MonoBehaviour {
         //if (this.rewardedAd.IsLoaded() || Advertisement.IsReady(unityads_placement) || isFBLoaded)
         //if (IronSource.Agent.isRewardedVideoAvailable() || Advertisement.IsReady(unityads_placement))
         //if (IronSource.Agent.isRewardedVideoAvailable() || this.rewardedAd.IsLoaded())
+
+        return IronSource.Agent.isRewardedVideoAvailable();
+
+        /*
         if (IronSource.Agent.isRewardedVideoAvailable())
             return true;
         else
             return false;
+        */
         
     }
 

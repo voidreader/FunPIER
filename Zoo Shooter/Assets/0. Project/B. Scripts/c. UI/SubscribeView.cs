@@ -18,7 +18,7 @@ public class SubscribeView : MonoBehaviour
 
     private void Update() {
         if(Input.GetKeyDown(KeyCode.X)) {
-            CloseView();
+            PurchaseSubscription();
         }
     }
 
@@ -63,7 +63,18 @@ public class SubscribeView : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// 구독상품 구매 시작 처리 
+    /// </summary>
     public void PurchaseSubscription() {
+
+        if(Application.internetReachability != NetworkReachability.NotReachable) {
+            PIER.SetNotReachInternetText();
+            return;
+        }
+
+
         Debug.Log(">> PurchaseSubscription <<");
         IAPControl.main.Purchase("hm_weekly_subs");
     }

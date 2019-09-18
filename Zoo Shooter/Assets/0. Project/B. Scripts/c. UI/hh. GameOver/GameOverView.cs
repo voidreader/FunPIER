@@ -59,10 +59,22 @@ public class GameOverView : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     void SetAdvertiseButton() {
-        _btnAds.SetActive(AdsManager.main.IsAvailableRewardAD());
+        //_btnAds.SetActive(AdsManager.main.IsAvailableRewardAD());
+        _btnAds.SetActive(true);
     }
 
     public void OnClickWatchAD() {
+
+        if(Application.internetReachability == NetworkReachability.NotReachable) {
+            PIER.SetNotReachInternetText();
+            return;
+        }
+
+        if(!AdsManager.main.IsAvailableRewardAD()) {
+            PIER.SetNotAvailableAdvertisement();
+            return;
+        }
+
         AdsManager.main.OpenRewardAd(CallbackWatchAD);
     }
 
@@ -95,6 +107,20 @@ public class GameOverView : MonoBehaviour
 
     public void OnClickLB() {
         PlatformManager.main.ShowLeaderBoardUI();
+    }
+
+    public void OnClickHome() {
+        /* 메인 화면으로 돌아갈때마다 SDK 및 IAP 체크 */
+        // 인터넷 연결되어있는데 IAP 초기화가 안되어있는 경우 
+        if (Application.internetReachability != NetworkReachability.NotReachable && !IAPControl.IsInitialized) {
+            Debug.Log(">> Re-Init Billing System <<");
+            IAPControl.main.InitBilling(); // 다시 초기화 시작 
+        }
+
+        if (Application.internetReachability != NetworkReachability.NotReachable && !AdsManager.IsAdsInit) {
+            Debug.Log(">> Re-Init SDKs <<");
+            AdsManager.main.InitializeSDKs();
+        }
     }
 
 }

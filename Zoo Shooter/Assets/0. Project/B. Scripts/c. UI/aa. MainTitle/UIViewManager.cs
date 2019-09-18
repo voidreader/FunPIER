@@ -39,6 +39,10 @@ public class UIViewManager : MonoBehaviour
     {
         Debug.Log(">> UIViewManager Start << ");
 
+        
+
+
+
     }
 
     void Update() {
@@ -63,7 +67,7 @@ public class UIViewManager : MonoBehaviour
     }
 
     IEnumerator DailyRewardCheckRoutine() {
-        yield return new WaitForSeconds(0.5f); // 트윈이 있어서 대기한다. 
+        yield return new WaitForSeconds(0.25f); // 트윈이 있어서 대기한다. 
 
         if(DailyRewardView.CheckNewDailyRewardWeapon() && DailyRewardView.CheckNewDay()) {
             GameEventMessage.SendEvent("DailyRewardEvent"); // 무기 보상있고, 새로운 날이면 고고!
@@ -118,7 +122,7 @@ public class UIViewManager : MonoBehaviour
         
 
 
-        AudioAssistant.main.PlayMusic("Main");
+        
         Debug.Log(">> UIViewManager Main View Called << ");
     }
 
@@ -161,6 +165,21 @@ public class UIViewManager : MonoBehaviour
 
     public void OnClickMoreGames() {
         Application.OpenURL("http://onelink.to/dxx2gh");
+    }
+
+
+    /// <summary>
+    /// 메세지 띄우기 이벤트 (딜레이)
+    /// </summary>
+    /// <param name="t"></param>
+    public void DelayText(string t) {
+        StartCoroutine(DelayingText(t));
+    }
+
+    IEnumerator DelayingText(string t) {
+
+        yield return new WaitForSeconds(0.2f);
+        MessageView.SetText(t);
     }
 
 }

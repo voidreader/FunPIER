@@ -117,7 +117,8 @@ public class GunStoreView : MonoBehaviour
     /// 광고 버튼 활성화 여부 
     /// </summary>
     void SetAdButton() {
-        _btnAds.gameObject.SetActive(AdsManager.main.IsAvailableRewardAD());
+        // _btnAds.gameObject.SetActive(AdsManager.main.IsAvailableRewardAD());
+        _btnAds.gameObject.SetActive(true);
     }
 
     void BottomRoutine() {
@@ -286,6 +287,20 @@ public class GunStoreView : MonoBehaviour
     /// 
     /// </summary>
     public void OnClickWatchAD() {
+
+
+        if (Application.internetReachability == NetworkReachability.NotReachable) {
+            PIER.SetNotReachInternetText();
+            return;
+        }
+
+        if (!AdsManager.main.IsAvailableRewardAD()) {
+            PIER.SetNotAvailableAdvertisement();
+            return;
+        }
+
+
+
         Debug.Log("GunStore Watch AD Click");
         AdsManager.main.OpenRewardAd(OnCallbackAD);
     }

@@ -73,6 +73,10 @@ public class ContinueView : MonoBehaviour {
             return;
         }
 
+
+
+
+
         AdsManager.main.OpenRewardAd(OnCompletedWathADContinue);
         
     }

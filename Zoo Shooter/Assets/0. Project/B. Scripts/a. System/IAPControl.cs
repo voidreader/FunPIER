@@ -34,9 +34,9 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     }
 
     // Start is called before the first frame update
-    IEnumerator Start() {
+    void Start() {
 
-        yield return new WaitForSeconds(0.5f);
+        // yield return new WaitForSeconds(0.2f);
 
         LoadSubscribeData();  // 구독 정보 조회 (데이터) 
         InitBilling();
@@ -70,7 +70,17 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     /// <summary>
     /// 결제 모듈 초기화
     /// </summary>
-    void InitBilling() {
+    public void InitBilling() {
+
+
+        // 인터넷 되지 않을때. 
+        if(Application.internetReachability == NetworkReachability.NotReachable) {
+            IsInitialized = false;
+            IsModuleLoaded = true;
+            // 모듈은 로드되었지만 초기화는 되지 않음
+
+            return;
+        }
 
 
         if (IsInitialized)
@@ -214,7 +224,20 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     }
 
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="productID"></param>
     public void Purchase(string productID) {
+
+        // 구매.. 
+        if(Application.internetReachability == NetworkReachability.NotReachable) {
+
+            return;
+        }
+
+
         
         Product p = Controller.products.WithID(productID);
 
@@ -225,7 +248,6 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         else {
             Debug.Log(">> Purchase Start... Failed!!");
         }
-
     }
 
     public void OnPurchaseFailed(Product i, PurchaseFailureReason p) {

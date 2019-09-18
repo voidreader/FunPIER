@@ -193,13 +193,27 @@ public class WantedReward : MonoBehaviour
             return;
         }
 
+
+        /*
         if(AdsManager.main.IsAvailableRewardAD()) {
             AdsManager.main.OpenRewardAd(OnCompleteWatch);
         }
         else {
             OnCompleteWatch();
         }
-        
+        */
+
+        if (Application.internetReachability == NetworkReachability.NotReachable) {
+            PIER.SetNotReachInternetText();
+            return;
+        }
+
+        if (!AdsManager.main.IsAvailableRewardAD()) {
+            PIER.SetNotAvailableAdvertisement();
+            return;
+        }
+
+        AdsManager.main.OpenRewardAd(OnCompleteWatch);
     }
 
 

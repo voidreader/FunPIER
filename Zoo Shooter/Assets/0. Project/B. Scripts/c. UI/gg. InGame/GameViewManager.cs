@@ -83,7 +83,7 @@ public class GameViewManager : MonoBehaviour {
 
 
 
-        AudioAssistant.main.PlayMusic("Battle");
+        // AudioAssistant.main.PlayMusic("Battle");
 
     }
 

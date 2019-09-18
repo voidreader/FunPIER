@@ -5,6 +5,7 @@ using Google2u;
 using SimpleJSON;
 using System;
 using Doozy.Engine;
+using UnityEngine.Networking;
 
 public class PIER : MonoBehaviour {
 
@@ -515,8 +516,44 @@ public class PIER : MonoBehaviour {
         return null;
     }
 
-    
+
 
     #endregion
 
+
+    IEnumerator CheckingInternetConnection(Action<bool> action) {
+
+        /*
+        WWW www = new WWW("https://www.google.com");
+        yield return www;
+        if (www.error != null) {
+            action(false);
+        }
+        else {
+            action(true);
+        }
+        */
+        UnityWebRequest request = UnityWebRequest.Get("https://www.google.com");
+
+        yield return request.SendWebRequest();
+
+
+    }
+
+    /// <summary>
+    /// 인터넷 안됨
+    /// </summary>
+    public static void SetNotReachInternetText() {
+        // GameEventMessage.SendEvent("CloseEvent");
+        // UIViewManager.main.DelayText("You must be connected to the internet");
+        SimpleMessageBox.SetNetworkMessage();
+    }
+
+
+    /// <summary>
+    /// 광고 재고 없음 
+    /// </summary>
+    public static void SetNotAvailableAdvertisement() {
+        SimpleMessageBox.SetNoAdsMessage();
+    }
 }

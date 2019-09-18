@@ -95,6 +95,9 @@ public class GameManager : MonoBehaviour {
         BossDamageText.factor = Screen.height / 80;
         Debug.Log("Boss Damage Text Factor :: " + BossDamageText.factor);
 
+
+        AudioAssistant.main.PlayMusic("Main");
+
     }
 
 
@@ -811,7 +814,9 @@ public class GameManager : MonoBehaviour {
     /// continue 가능 여부 체크해서 GameOver 혹은 Continue 처리 
     /// </summary>
     void ContinueEvent() {
-        if (AdsManager.main.IsAvailableRewardAD() && isContinueAvailable)
+
+        // 컨티뉴 가능하고, 광고재고 있고, 인터넷 연결 상태일때만. 
+        if (AdsManager.main.IsAvailableRewardAD() && isContinueAvailable && Application.internetReachability != NetworkReachability.NotReachable)
             GameEventMessage.SendEvent("ContinueEvent");
         else
             GameOver();

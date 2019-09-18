@@ -24,7 +24,7 @@ public class TitleManager : MonoBehaviour
 
         Debug.Log(">>>>> Start Waiting in IAP Billing");
 
-        // IAP 모듈 대기 
+        // IAP 모듈 초기화 완료 대기 
         while (!IAPControl.IsModuleLoaded)
             yield return null;
 
