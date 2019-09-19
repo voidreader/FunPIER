@@ -46,13 +46,13 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         LoadSubscribeData();  // 구독 정보 조회 (데이터) 
         yield return new WaitForSeconds(0.5f); // 네트워크 체크 시간이 필요하다.
 
-        while(elapsed < 5) {
+        while(elapsed < 4) {
 
             if (IsNetVerified()) // 네트워크 연결되었으면 바로 break.
                 break;
 
             elapsed += Time.deltaTime; // 5초 기다려준다. 
-            yield return new WaitForSeconds(0.2f);
+            yield return null;
           
         }
 
@@ -104,16 +104,24 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     /// </summary>
     public void InitBilling() {
 
+        Debug.Log("InitBilling Start <<<<");
+
         // 인터넷 안될떄.
         if(!IAPControl.IsNetVerified()) {
             IsInitialized = false;
             IsModuleLoaded = true;
             // 모듈은 로드되었지만 초기화는 되지 않음
+
+            Debug.Log("InitBilling Failed. Offline..  <<<<");
+
             return;
         }
 
         if (IsInitialized)
             return;
+
+
+        Debug.Log("InitBilling Go on.....  <<<<");
 
         ConfigurationBuilder builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
