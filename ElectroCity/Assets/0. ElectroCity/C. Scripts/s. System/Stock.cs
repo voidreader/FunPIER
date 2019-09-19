@@ -20,6 +20,10 @@ public class Stock : MonoBehaviour
 
     public List<Sprite> ListMergeItemSprite;
 
+    [Header("- Passive Skill Icon -")]
+    public Sprite SpriteDiscountIcon;
+    public Sprite SpriteDPSIcon;
+
 
 
     #endregion
