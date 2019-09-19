@@ -65,7 +65,7 @@ public class GameOverView : MonoBehaviour
 
     public void OnClickWatchAD() {
 
-        if(Application.internetReachability == NetworkReachability.NotReachable) {
+        if(!IAPControl.IsNetVerified()) {
             PIER.SetNotReachInternetText();
             return;
         }
@@ -112,12 +112,12 @@ public class GameOverView : MonoBehaviour
     public void OnClickHome() {
         /* 메인 화면으로 돌아갈때마다 SDK 및 IAP 체크 */
         // 인터넷 연결되어있는데 IAP 초기화가 안되어있는 경우 
-        if (Application.internetReachability != NetworkReachability.NotReachable && !IAPControl.IsInitialized) {
+        if (IAPControl.IsNetVerified() && !IAPControl.IsInitialized) {
             Debug.Log(">> Re-Init Billing System <<");
             IAPControl.main.InitBilling(); // 다시 초기화 시작 
         }
 
-        if (Application.internetReachability != NetworkReachability.NotReachable && !AdsManager.IsAdsInit) {
+        if (IAPControl.IsNetVerified() && !AdsManager.IsAdsInit) {
             Debug.Log(">> Re-Init SDKs <<");
             AdsManager.main.InitializeSDKs();
         }

@@ -83,10 +83,7 @@ public class AdsManager : MonoBehaviour {
     public void InitializeSDKs() {
 
         // 네트워크 상태 체크 
-        if(Application.internetReachability == NetworkReachability.NotReachable) {
-
-            
-
+        if(!IAPControl.IsNetVerified()) { // 네트워크 안될때.
             Debug.Log(">> AdsManager can't InitializeSDKs << ");
 
             IsAdsInit = false;

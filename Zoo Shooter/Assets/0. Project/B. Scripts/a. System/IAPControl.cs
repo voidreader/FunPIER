@@ -34,12 +34,44 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     }
 
     // Start is called before the first frame update
-    void Start() {
+    IEnumerator Start() {
+        //internetReachabilityVerifier.statusChangedDelegate += netStatusChanged;
 
+        InternetReachabilityVerifier.Instance.statusChangedDelegate += netStatusChanged;
+
+
+        float elapsed = 0;
         // yield return new WaitForSeconds(0.2f);
 
         LoadSubscribeData();  // 구독 정보 조회 (데이터) 
+        yield return new WaitForSeconds(0.5f); // 네트워크 체크 시간이 필요하다.
+
+        while(elapsed < 5) {
+
+            if (IsNetVerified()) // 네트워크 연결되었으면 바로 break.
+                break;
+
+            elapsed += Time.deltaTime; // 5초 기다려준다. 
+            yield return new WaitForSeconds(0.2f);
+          
+        }
+
+
         InitBilling();
+    }
+
+    /// <summary>
+    /// 네트워크 활성화
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsNetVerified() {
+        return (InternetReachabilityVerifier.Instance.status == InternetReachabilityVerifier.Status.NetVerified);
+    }
+
+
+
+    public void netStatusChanged(InternetReachabilityVerifier.Status newStatus) {
+        Debug.Log("netStatusChanged: new InternetReachabilityVerifier.Status = " + newStatus);
     }
 
     /// <summary>
@@ -72,16 +104,13 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     /// </summary>
     public void InitBilling() {
 
-
-        // 인터넷 되지 않을때. 
-        if(Application.internetReachability == NetworkReachability.NotReachable) {
+        // 인터넷 안될떄.
+        if(!IAPControl.IsNetVerified()) {
             IsInitialized = false;
             IsModuleLoaded = true;
             // 모듈은 로드되었지만 초기화는 되지 않음
-
             return;
         }
-
 
         if (IsInitialized)
             return;
@@ -232,8 +261,8 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     public void Purchase(string productID) {
 
         // 구매.. 
-        if(Application.internetReachability == NetworkReachability.NotReachable) {
-
+        if(!IAPControl.IsNetVerified()) {
+            PIER.SetNotReachInternetText();
             return;
         }
 

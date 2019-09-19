@@ -289,7 +289,7 @@ public class GunStoreView : MonoBehaviour
     public void OnClickWatchAD() {
 
 
-        if (Application.internetReachability == NetworkReachability.NotReachable) {
+        if (!IAPControl.IsNetVerified()) {
             PIER.SetNotReachInternetText();
             return;
         }

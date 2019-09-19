@@ -816,7 +816,7 @@ public class GameManager : MonoBehaviour {
     void ContinueEvent() {
 
         // 컨티뉴 가능하고, 광고재고 있고, 인터넷 연결 상태일때만. 
-        if (AdsManager.main.IsAvailableRewardAD() && isContinueAvailable && Application.internetReachability != NetworkReachability.NotReachable)
+        if (AdsManager.main.IsAvailableRewardAD() && isContinueAvailable && IAPControl.IsNetVerified())
             GameEventMessage.SendEvent("ContinueEvent");
         else
             GameOver();

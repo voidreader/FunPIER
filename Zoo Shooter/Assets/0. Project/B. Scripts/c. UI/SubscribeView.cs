@@ -69,7 +69,7 @@ public class SubscribeView : MonoBehaviour
     /// </summary>
     public void PurchaseSubscription() {
 
-        if(Application.internetReachability != NetworkReachability.NotReachable) {
+        if(!IAPControl.IsNetVerified()) {
             PIER.SetNotReachInternetText();
             return;
         }

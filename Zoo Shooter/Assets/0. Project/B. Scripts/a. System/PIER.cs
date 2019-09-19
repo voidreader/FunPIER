@@ -521,24 +521,6 @@ public class PIER : MonoBehaviour {
     #endregion
 
 
-    IEnumerator CheckingInternetConnection(Action<bool> action) {
-
-        /*
-        WWW www = new WWW("https://www.google.com");
-        yield return www;
-        if (www.error != null) {
-            action(false);
-        }
-        else {
-            action(true);
-        }
-        */
-        UnityWebRequest request = UnityWebRequest.Get("https://www.google.com");
-
-        yield return request.SendWebRequest();
-
-
-    }
 
     /// <summary>
     /// 인터넷 안됨
