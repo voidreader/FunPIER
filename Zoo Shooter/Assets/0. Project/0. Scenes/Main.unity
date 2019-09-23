@@ -52949,7 +52949,7 @@ MonoBehaviour:
           m_RotationOrder: 4
         StartDelay: 0
         Duration: 0.5
-    Enabled: 1
+    Enabled: 0
     IsPlaying: 0
     LoopAnimationType: 0
     LoadSelectedPresetAtRuntime: 0
@@ -61071,6 +61071,7 @@ MonoBehaviour:
   listSelect: []
   btnNoThanks: {fileID: 815463739}
   btnAgain: {fileID: 606569036}
+  btnOK: {fileID: 1584090251}
   isGetFirstReward: 0
   _inactiveButtonSprtie: {fileID: 21300000, guid: d9e3d41adf40c1542bb85d54884ec4ac,
     type: 3}
@@ -61796,7 +61797,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &889055021
 RectTransform:
   m_ObjectHideFlags: 0
@@ -104807,10 +104808,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1584090252}
   - component: {fileID: 1584090257}
-  - component: {fileID: 1584090256}
   - component: {fileID: 1584090255}
   - component: {fileID: 1584090254}
   - component: {fileID: 1584090253}
+  - component: {fileID: 1584090256}
   m_Layer: 0
   m_Name: Button - OK
   m_TagString: Untagged
@@ -104836,7 +104837,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -478.99994}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1584090253
 MonoBehaviour:
@@ -107009,25 +107010,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1584090251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.6392157, g: 0.8156863, b: 0.22352941, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: a1166304671095e47b87fd92d504f2a8, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: OK
 --- !u!222 &1584090257
 CanvasRenderer:
   m_ObjectHideFlags: 0
