@@ -88,4 +88,8 @@ public class SettingView : MonoBehaviour {
         SetStatus();
     }
 
+    public void OnClickRestore() {
+        Debug.Log("Restore Start.... ");
+        IAPControl.main.RestorePurchase();
+    }
 }

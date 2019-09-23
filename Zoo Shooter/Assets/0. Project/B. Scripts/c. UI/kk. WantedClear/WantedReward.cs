@@ -16,7 +16,7 @@ public class WantedReward : MonoBehaviour
 
 
     public List<WantedRewardCol> listSelect; // 선택용 임시 리스트 
-    public GameObject btnNoThanks, btnAgain; // 버튼 2개
+    public GameObject btnNoThanks, btnAgain, btnOK; // 버튼 3개
     WantedRewardCol selectedCol;
     public bool isGetFirstReward = false;
 
@@ -35,6 +35,7 @@ public class WantedReward : MonoBehaviour
         btnNoThanks.SetActive(false);
         btnAgain.SetActive(false);
         btnAgain.GetComponent<Image>().sprite = _activeButtonSprtie;
+        btnOK.SetActive(false);
 
         listRewardData = WantedRewardData.Instance.Rows;
         listSelect = new List<WantedRewardCol>();
@@ -158,15 +159,21 @@ public class WantedReward : MonoBehaviour
         if(isGetFirstReward) { // 두번째 돌림 
 
             // 잠깐 대기탔다가 메인으로 돌아간다 
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
 
-            GameEventMessage.SendEvent("CallMainFromWantedReward");
+            // GameEventMessage.SendEvent("CallMainFromWantedReward");
+            // OK 버튼 등장
+            PIER.LoopFade(btnOK.transform);
+
         }
-        else { // 첫 보상!
+        else { // 첫 보상 완료 후 처리 
+            
             // 버튼 두개 활성화
             btnAgain.SetActive(true);
-            btnNoThanks.SetActive(true);
-            isGetFirstReward = true; // 한번 받았음!
+            PIER.LoopFade(btnNoThanks.transform); 
+
+
+            isGetFirstReward = true; // 한번 받았다고 flag 변경 
 
             // 보상을 받아야 리스트 증가 처리 
             PIER.CurrentList++;
@@ -222,11 +229,16 @@ public class WantedReward : MonoBehaviour
         // 한번 봤으면 동작 하지 않음 
         btnAgain.GetComponent<Image>().sprite = _inactiveButtonSprtie;
         StartCoroutine(Selecting());
+
+        // Again 버튼 눌렀으면  NoThanks 버튼 비활성화 처리
+        btnNoThanks.SetActive(false);
     }
 
 
     public void OnClickNoThanks() {
         // 메인으로 고고 
+        
     }
+
 
 }

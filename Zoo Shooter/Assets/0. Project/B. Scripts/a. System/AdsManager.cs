@@ -260,6 +260,15 @@ public class AdsManager : MonoBehaviour {
         */
 
         if(IronSource.Agent.isRewardedVideoAvailable()) {
+
+
+#if UNITY_IOS
+            // 아이폰의 경우 BGM 뮤트 시키기(현 SDK에서 뮤트가 되고 있지 않음)
+            if(SoundControlSystem.BGM_Available) {
+                AudioAssistant.main.BGM_Available = false;
+            }
+#endif
+
             IronSource.Agent.showRewardedVideo();
             return;
         }
@@ -276,7 +285,7 @@ public class AdsManager : MonoBehaviour {
 
 
 
-    #region 배너
+#region 배너
 
     private void RequestBanner() {
 
@@ -338,7 +347,7 @@ public class AdsManager : MonoBehaviour {
 
 #endregion
 
-    #region 전면
+#region 전면
     private void RequestInterstitial() {
 
 
@@ -400,9 +409,9 @@ public class AdsManager : MonoBehaviour {
     public void InterHandleOnAdLeavingApplication(object sender, EventArgs args) {
         Debug.Log("HandleAdLeavingApplication event received");
     }
-    #endregion
+#endregion
 
-    #region 애드몹 동영상
+#region 애드몹 동영상
 
     public void RequestRewardAd() {
 
@@ -491,7 +500,7 @@ public class AdsManager : MonoBehaviour {
 
 
 
-    #region IronSource Banner
+#region IronSource Banner
 
     void InitIronSourceBanner() {
         IronSourceEvents.onBannerAdLoadedEvent += BannerAdLoadedEvent;
@@ -563,9 +572,9 @@ public class AdsManager : MonoBehaviour {
         Debug.Log("BannerAdLeftApplicationEvent");
     }
 
-    #endregion
+#endregion
 
-    #region IronSource Interstitial
+#region IronSource Interstitial
     void InitIronSourceInterstitial() {
         IronSourceEvents.onInterstitialAdReadyEvent += InterstitialAdReadyEvent;
         IronSourceEvents.onInterstitialAdLoadFailedEvent += InterstitialAdLoadFailedEvent;
@@ -612,9 +621,9 @@ public class AdsManager : MonoBehaviour {
         Debug.Log("InterstitialAdReadyEvent");
     }
 
-    #endregion
+#endregion
 
-    #region IronSource Rewarded
+#region IronSource Rewarded
 
     void InitIronSourceRewarded() {
         IronSourceEvents.onRewardedVideoAdOpenedEvent += RewardedVideoAdOpenedEvent;
@@ -640,6 +649,14 @@ public class AdsManager : MonoBehaviour {
     //Your activity will now regain its focus.
     void RewardedVideoAdClosedEvent() {
         Debug.Log("RewardedVideoAdClosedEvent");
+
+#if UNITY_IOS
+            // BGM 살리기 
+            if(SoundControlSystem.BGM_Available) {
+                AudioAssistant.main.BGM_Available = true;
+            }
+#endif
+
     }
     //Invoked when there is a change in the ad availability status.
     //@param - available - value will change to true when rewarded videos are available. 
@@ -682,9 +699,9 @@ public class AdsManager : MonoBehaviour {
     }
 
 
-    #endregion
+#endregion
 
-    #region 유니티 애즈 동영상
+#region 유니티 애즈 동영상
 
     /*
     public void ShowUnityAds() {
@@ -723,9 +740,9 @@ public class AdsManager : MonoBehaviour {
     */
     
         
-    #endregion
+#endregion
 
-    #region FAN
+#region FAN
 
     /*
     void Init_FAN() {
@@ -810,7 +827,7 @@ public class AdsManager : MonoBehaviour {
         }
     }
     */
-    #endregion
+#endregion
 
 
     void CallDelayedWatchReward() {

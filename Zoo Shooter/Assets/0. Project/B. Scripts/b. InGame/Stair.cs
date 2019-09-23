@@ -69,7 +69,7 @@ public class Stair : MonoBehaviour
 
 
     /// <summary>
-    /// 적, 움직임과 함께 등장
+    ///  몹이 계단의 끝부분으로 이동한다. 
     /// </summary>
     /// <param name="e"></param>
     public void SetReadyEnemy() {
@@ -79,6 +79,7 @@ public class Stair : MonoBehaviour
 
         StartCoroutine(EnemyPositionRoutine());
 
+        // 데미지 플로팅 계수 수치 초기화
         BossDamageText.IncrementalV = 0;
     }
 
@@ -91,6 +92,11 @@ public class Stair : MonoBehaviour
 
         while (!enemy.isOnGroud) // 첫 생성되고, 땅에 닿을때까지 대기 
             yield return null;
+
+
+        // enemy의 Freeze 로테이션을 풀어준다.
+        enemy.SetFreezeRotation(false);
+
 
         if (PIER.main.InfiniteMode)
             InfiniteModeEnemyPositioning();
@@ -168,6 +174,10 @@ public class Stair : MonoBehaviour
     /// </summary>
     void OnCompleteEnemyAppear() {
         enemy.OnGround();
+
+        
+        
+
 
         // 아래 로직은 무한모드에서는 사용하지 않음.
         if (PIER.main.InfiniteMode)

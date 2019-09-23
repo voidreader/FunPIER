@@ -183,7 +183,7 @@ public class PlayerBullet : MonoBehaviour
         else if(co.tag == "Head") { // 헤드샷
             Debug.Log("Head Shot!!");
 
-            GameManager.main.ShowGetCoin(); // 코인 획득 
+            // GameManager.main.ShowGetCoin(); // 코인 획득 
 
             hitEnemy = co.GetComponentInParent<Enemy>();
             hitEnemy.HitEnemy(GameManager.main.currentWeapon.Damage * 2, true); // 두배 

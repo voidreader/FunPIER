@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Google2u;
 using SimpleJSON;
 using System;
 using Doozy.Engine;
-using UnityEngine.Networking;
+
+using DG.Tweening;
 
 public class PIER : MonoBehaviour {
 
@@ -538,4 +540,21 @@ public class PIER : MonoBehaviour {
     public static void SetNotAvailableAdvertisement() {
         SimpleMessageBox.SetNoAdsMessage();
     }
+
+
+    #region Transform 연출 처리 
+
+    public static void LoopFade(Transform tr) {
+
+        
+        if (tr.GetComponent<MaskableGraphic>() == null)
+            return;
+
+        tr.gameObject.SetActive(true);
+
+        tr.GetComponent<MaskableGraphic>().DOKill();
+        tr.GetComponent<MaskableGraphic>().color = new Color(tr.GetComponent<MaskableGraphic>().color.r, tr.GetComponent<MaskableGraphic>().color.g, tr.GetComponent<MaskableGraphic>().color.b, 0.5f);
+        tr.GetComponent<MaskableGraphic>().DOFade(1, 0.5f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
+    }
+    #endregion
 }

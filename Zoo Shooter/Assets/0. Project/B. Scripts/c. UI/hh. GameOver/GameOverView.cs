@@ -98,8 +98,13 @@ public class GameOverView : MonoBehaviour
 #if UNITY_ANDROID
         Application.OpenURL("https://play.google.com/store/apps/details?id=com.utplus.hitmonkey");
 
+
+
+
+
 #elif UNITY_IOS
-        ISN_SKStoreReviewController.RequestReview();
+        // ISN_SKStoreReviewController.RequestReview();
+        Application.OpenURL("https://itunes.apple.com/app/id1474934321");
 #endif
 
 
@@ -111,6 +116,10 @@ public class GameOverView : MonoBehaviour
     }
 
     public void OnClickHome() {
+
+        if (!IAPControl.main)
+            return;
+
         /* 메인 화면으로 돌아갈때마다 SDK 및 IAP 체크 */
         // 인터넷 연결되어있는데 IAP 초기화가 안되어있는 경우 
         if (IAPControl.IsNetVerified() && !IAPControl.IsInitialized) {

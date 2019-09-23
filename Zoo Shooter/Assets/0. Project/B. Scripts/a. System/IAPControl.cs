@@ -65,6 +65,10 @@ public class IAPControl : MonoBehaviour, IStoreListener {
     /// </summary>
     /// <returns></returns>
     public static bool IsNetVerified() {
+
+        if (!InternetReachabilityVerifier.Instance)
+            return true;
+
         return (InternetReachabilityVerifier.Instance.status == InternetReachabilityVerifier.Status.NetVerified);
     }
 
@@ -410,12 +414,20 @@ public class IAPControl : MonoBehaviour, IStoreListener {
         if (!IsInitialized)
             return;
 
-        if(Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer) {
-            Debug.Log("Purchase Restore Start...");
-            m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
-            m_AppleExtensions.RestoreTransactions(
-                callback: result => Debug.Log(message: $"Restore result - {result}"));
-                
+
+
+#if UNITY_ANDROID
+        return;
+#endif
+
+        Debug.Log("Purchase Restore Start...");
+        m_AppleExtensions = extensions.GetExtension<IAppleExtensions>();
+        m_AppleExtensions.RestoreTransactions(callback: result => Debug.Log(message: $"Restore result - {result}"));
+
+
+
+        if (Application.platform == RuntimePlatform.IPhonePlayer || Application.platform == RuntimePlatform.OSXPlayer) {
+
         }
     }
 

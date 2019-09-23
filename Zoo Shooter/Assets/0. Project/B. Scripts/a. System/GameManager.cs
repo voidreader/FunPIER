@@ -870,7 +870,7 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    #region Enemy 처리 
+    #region Enemy 처리 (인피니트 모드와 일반모드 두개의 메소드가 있음!)
 
     /// <summary>
     /// 인피니트 모드 몹 생성 
@@ -1037,12 +1037,11 @@ public class GameManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// 헤드샷 발생시, 코인획득 
+    /// 코인 1개 획득
     /// </summary>
     public void ShowGetCoin() {
-        // 보스는 헤드샷 맞아도 코인 안줌.
-        if (enemy.type == EnemyType.Boss)
-            return;
+
+        
 
         ListGetCoins[GetCoinIndex++].SetCoin(enemy.transform);
         if (GetCoinIndex >= ListGetCoins.Count)

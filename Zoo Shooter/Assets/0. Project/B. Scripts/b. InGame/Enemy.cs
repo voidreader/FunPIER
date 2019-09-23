@@ -102,6 +102,10 @@ public class Enemy : MonoBehaviour {
         }
 
         rigid.bodyType = RigidbodyType2D.Dynamic;
+        SetFreezeRotation(true); // 넘어지는 현상을 방지하기 위해 true로 했다가 등장이 완료되면 false 로 처리 
+        
+
+
 
         EquipWeapon(); // 무기 장착
 
@@ -154,11 +158,13 @@ public class Enemy : MonoBehaviour {
         if (isHeadShot) {
             GameManager.main.Splash(); // 스플래시 효과
             PoolManager.Pools[ConstBox.poolGame].Spawn(ConstBox.prefabHeadshot, new Vector3(0, 5f, 0), Quaternion.identity);
-            GameManager.main.ShowGetCoin(); // 코인 획득 
+
+            // 헤드샷 코인은 노멀모드에서 일반몹만 준다. (2019.09.23)
+            if(!PIER.main.InfiniteMode && type == EnemyType.Normal)
+                GameManager.main.ShowGetCoin(); // 헤드샷 코인 획득 
 
             // 사운드가 중복해서 여러번 나지 않게.
             if (!isHeadShotSoundPlay) {
-
 
                 // 헤드샷에 소리 추가
                 isHeadShotSoundPlay = true;
@@ -472,7 +478,14 @@ public class Enemy : MonoBehaviour {
         anim.SetBool("isWalk", false);
         anim.SetBool("isJump", false);
 
+        // 땅에 낳았으면, 물리력 해소 및 Dynamic 처리 
         rigid.bodyType = RigidbodyType2D.Dynamic;
+        rigid.velocity = Vector2.zero;
+        rigid.angularVelocity = 0;
+
+        // 넘어지는 현상 ...때문에 추가 
+        this.transform.localEulerAngles = new Vector3(0, this.transform.localEulerAngles.y, 0);
+         
     }
     #endregion
 
@@ -486,6 +499,9 @@ public class Enemy : MonoBehaviour {
 
     #endregion
 
+    public void SetFreezeRotation(bool flag) {
+        rigid.freezeRotation = flag;
+    }
 
     private void OnCollisionEnter2D(Collision2D collision) {
 
