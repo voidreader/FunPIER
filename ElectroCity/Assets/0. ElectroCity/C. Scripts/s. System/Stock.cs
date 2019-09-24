@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Stock : MonoBehaviour
 {
     public static Stock main = null;
