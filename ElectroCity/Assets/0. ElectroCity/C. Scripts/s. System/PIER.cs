@@ -18,7 +18,8 @@ public class PIER : MonoBehaviour
     /// 유저 정보
     /// </summary>
     public int UserLevel, EXP, DamageLevel, DiscountLevel;
-
+    public int HighestUnitLevel; // 개방한 최고 레벨 유닛 
+    public List<int> ListUnitPurchaseStep = new List<int>();
 
     void Awake() {
         main = this;
@@ -38,6 +39,7 @@ public class PIER : MonoBehaviour
         PlayerPrefs.SetInt("EXP", EXP);
         PlayerPrefs.SetInt("DamageLevel", DamageLevel);
         PlayerPrefs.SetInt("DiscountLevel", DiscountLevel);
+        PlayerPrefs.SetInt("HighestUnitLevel", HighestUnitLevel);
 
         PlayerPrefs.Save();
 
@@ -53,8 +55,17 @@ public class PIER : MonoBehaviour
         EXP = PlayerPrefs.GetInt("EXP", 1);
         DamageLevel = PlayerPrefs.GetInt("DamageLevel", 1);
         DiscountLevel = PlayerPrefs.GetInt("DiscountLevel", 1);
+        HighestUnitLevel = PlayerPrefs.GetInt("HighestUnitLevel", 1);
+        
+
 
     }
+
+
+    void LoadUnitPurchaseStep() {
+        ListUnitPurchaseStep.Clear();
+    }
+
 
 
     public void SetDamageLevel(int l) {
