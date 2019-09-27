@@ -217,7 +217,7 @@ public class Enemy : MonoBehaviour {
             this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         }
 
-        PostKillProcess();
+        
 
         if (Random.Range(0, 3) < 2)
             WeaponDrop(WeaponDropType.BigHit);
@@ -236,7 +236,7 @@ public class Enemy : MonoBehaviour {
             this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         }
 
-        PostKillProcess();
+        
 
         if (Random.Range(0, 3) < 2)
             WeaponDrop(WeaponDropType.BigHit);
@@ -261,11 +261,15 @@ public class Enemy : MonoBehaviour {
             this.transform.DORotate(new Vector3(0, 0, -360), Random.Range(0.8f, 1.2f), RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         }
 
-        PostKillProcess();
+        
         WeaponDrop(WeaponDropType.Normal);
     }
 
     void PoseGeneralKillRotateStrong() {
+        
+            
+            
+
         if (isLeft) {
             this.rigid.AddForce(new Vector2(-300, 750));
             this.transform.DORotate(new Vector3(0, 0, 360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
@@ -275,7 +279,7 @@ public class Enemy : MonoBehaviour {
             this.transform.DORotate(new Vector3(0, 0, -360), 0.4f, RotateMode.WorldAxisAdd).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
         }
 
-        PostKillProcess();
+        
         WeaponDrop(WeaponDropType.Normal);
 
     }
@@ -319,9 +323,13 @@ public class Enemy : MonoBehaviour {
         if (isKilled)
             return;
 
+        if(type == EnemyType.Boss)
+            Debug.Log(data._name + " is killed :: " + pHeadShotKill);
+
+
         isHeadShotKill = pHeadShotKill;
         isKilled = true; // 얘는 죽었음!
-        this.transform.DOKill();
+        GameManager.main.isEnemyKillCheck = true;
 
         int killRand = Random.Range(0, 3);
 
@@ -330,9 +338,12 @@ public class Enemy : MonoBehaviour {
             .GetComponent<KillEffect>().SetKillEffect(this.transform.position);
 
 
-        
+        this.transform.DOKill();
+        this.rigid.velocity = Vector2.zero;
+        this.rigid.angularVelocity = 0;
+
         // 헤드샷때는 더 강렬하게 kill
-        if(isHeadShotKill) {
+        if (isHeadShotKill) {
 
             // PoseHeadKillRotate();
             PoseHeadKillRotateStrong();
@@ -352,12 +363,9 @@ public class Enemy : MonoBehaviour {
                 PoseKillDrop();
             }
             */
-
-
-
-
-
         } // 일반 킬 종료 
+
+        PostKillProcess();
 
     }
 
@@ -365,8 +373,12 @@ public class Enemy : MonoBehaviour {
     /// Kill 후 처리. 
     /// </summary>
     void PostKillProcess() {
-        head.gameObject.layer = 15;
-        this.gameObject.layer = 15; // 레이어 수정해서 충돌 처리 되지 않도록 수정 
+
+
+        DisableColliders();
+
+        // head.gameObject.layer = 15;
+        // this.gameObject.layer = 15; // 레이어 수정해서 충돌 처리 되지 않도록 수정 
         
         StartCoroutine(Destroying());
     }

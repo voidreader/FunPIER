@@ -21,7 +21,7 @@ public class HeadShot : MonoBehaviour
     }
 
     void OnSpawned() {
-        anim.Play("HeadShot");
+        anim.Play("Headshot");
         isSpawned = true;
 
     }

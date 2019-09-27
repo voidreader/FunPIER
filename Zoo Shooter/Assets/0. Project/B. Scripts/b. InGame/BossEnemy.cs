@@ -15,6 +15,9 @@ public class BossEnemy : Enemy {
 
     public override void HitEnemy(int d, bool isHeadShot) {
 
+        if (isKilled)
+            return;
+
         this.transform.DOKill();
 
 
@@ -34,7 +37,7 @@ public class BossEnemy : Enemy {
         if (isKilled)
             return;
 
-        Debug.Log("BossEnemy Killed");
+        
         base.KillEnemy(isHeadShot);
         
 
