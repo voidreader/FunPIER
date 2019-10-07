@@ -6,7 +6,23 @@ using UnityEngine;
 
 public class Stock : MonoBehaviour
 {
-    public static Stock main = null;
+    public static Stock _main = null;
+
+    public static Stock main {
+        get {
+            if (_main == null) {
+
+                _main = FindObjectOfType<Stock>();
+
+                if (_main == null)
+                    _main = Instantiate(Resources.Load<Stock>("Prefab/Stock"));
+            }
+
+            return _main;
+        }
+    }
+
+
 
     [Header("- GameObject -")]
     public GameObject ObjectMergeItem;
@@ -27,11 +43,16 @@ public class Stock : MonoBehaviour
     public Sprite SpriteDPSIcon;
 
 
+    [Header("- Frendly Unit Sprites -")]
+    public List<Sprite> ListFriendlyUnitBody;
+    public List<Sprite> ListFriendlyUnitFace;
+    public List<Sprite> ListFriendlyWeapon;
+
 
     #endregion
 
     private void Awake() {
-        main = this;
+        
     }
 
 
@@ -49,4 +70,46 @@ public class Stock : MonoBehaviour
 
         return null;
     }
+
+
+    /// <summary>
+    /// 프렌들리 유닛 바디, 레그 스프라이트 
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static Sprite GetFriendlyUnitBody(string n) {
+
+        for(int i=0; i<main.ListFriendlyUnitBody.Count;i++) {
+            if (main.ListFriendlyUnitBody[i].name == n)
+                return main.ListFriendlyUnitBody[i];
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    /// 프렌들리 유닛 얼굴
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static Sprite GetFriendlyUnitFace(string n) {
+
+        for (int i = 0; i < main.ListFriendlyUnitFace.Count; i++) {
+            if (main.ListFriendlyUnitFace[i].name == n)
+                return main.ListFriendlyUnitFace[i];
+        }
+
+        return null;
+    }
+
+    public static Sprite GetFriendlyUnitWeapon(string n) {
+
+        for (int i = 0; i < main.ListFriendlyWeapon.Count; i++) {
+            if (main.ListFriendlyWeapon[i].name == n)
+                return main.ListFriendlyWeapon[i];
+        }
+
+        return null;
+    }
+
 }

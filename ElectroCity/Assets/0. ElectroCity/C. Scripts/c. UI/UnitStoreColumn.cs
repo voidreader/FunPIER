@@ -30,6 +30,12 @@ public class UnitStoreColumn : MonoBehaviour
     [SerializeField] string _debugPrice = string.Empty;
 
 
+
+    /// <summary>
+    /// 유닛 상점 컬럼 초기화
+    /// </summary>
+    /// <param name="r"></param>
+    /// <param name="p"></param>
     public void InitUnitStoreColumn(UnitDataRow r, Action p) {
         this.gameObject.SetActive(true);
         SetLock(false);
