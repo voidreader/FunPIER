@@ -129,6 +129,7 @@ public class TweProjectileControl : MonoBehaviour
             rotationSpeed += (new Vector3(Random.Range(-weapon.angularTurbulance.x, weapon.angularTurbulance.x), Random.Range(-weapon.angularTurbulance.y, weapon.angularTurbulance.y), Random.Range(-weapon.angularTurbulance.z, weapon.angularTurbulance.z)));
             futurePosition = transform.position + ((transform.forward * speedForward) * (Time.deltaTime/1));
             futureRotation = Quaternion.Euler(transform.eulerAngles.x + rotationSpeed.x * Time.deltaTime, transform.eulerAngles.y + rotationSpeed.y * Time.deltaTime, transform.eulerAngles.z + rotationSpeed.z * Time.deltaTime);
+            
 
             if (weapon.gravity != 0)
             {

@@ -165,8 +165,12 @@ public class TweWeapon : ScriptableObject
                     }
                     GameObject spawn = objectPool.Dequeue();
 
-                    spawn.transform.position = aimpoint.position;
+                    
                     spawn.transform.rotation = aimpoint.rotation;//basic position set, we do accuracy in Initialize() on projectileControl now
+                    spawn.transform.position = aimpoint.position;
+                    // spawn.transform.position = new Vector2(aimpoint.position.x, aimpoint.position.y);
+
+
                     TweProjectileControl pc = spawn.GetComponent<TweProjectileControl>();
                     pc.aimpoint = aimpoint;
                     pc.bulletNum = i;
@@ -227,6 +231,7 @@ public class TweWeapon : ScriptableObject
         if (particleTrail != null)
         {
            pt  = Instantiate(particleTrail, projectile.transform);//adds the particle trail
+            pt.transform.localPosition = Vector3.zero;
         }
 
 

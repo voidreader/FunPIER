@@ -20,10 +20,10 @@ MonoBehaviour:
   burst: 0
   burstDelay: 0.1
   bulletsPerBurst: 3
-  fireRate: 2
+  fireRate: 0.5
   damage: 1
   breakOnHit: 1
-  lifetime: 0.5
+  lifetime: 5
   innacuracy: {x: 0, y: 0, z: 0}
   evenInnacuracy: 0
   reverseSweep: 0
@@ -51,14 +51,15 @@ MonoBehaviour:
   fizzleParticle: {fileID: 0}
   fizzleSpawn: {fileID: 0}
   fizzleSound: {fileID: 0}
-  homing: 0
-  homingTags: []
+  homing: 1
+  homingTags:
+  - Enemy
   homingCheckInterval: 0.5
   homingCheckInitialOnly: 0
-  homingCheckInitialRange: 10
-  homingCheckIntervalRange: 5
+  homingCheckInitialRange: 30
+  homingCheckIntervalRange: 50
   homingSpeed: 1
-  homingAcceleration: 1
+  homingAcceleration: 55
   showHomingGizmo: 0
   fireSound: {fileID: 0}
   fireParticle: {fileID: 601935975656947892, guid: 22b7de0dce8c08f438c37d4e16e23c6c,
@@ -67,11 +68,11 @@ MonoBehaviour:
   projectileMesh: {fileID: 0}
   projectileScale: {x: 1, y: 1, z: 1}
   hitboxRadius: 1
-  showCollisionDebug: 0
+  showCollisionDebug: 1
   material: {fileID: 0}
-  receiveShadows: 1
+  receiveShadows: 0
   trail: 0
-  particleTrail: {fileID: 198077786928129308, guid: 264494dc569ff86469cdadfc66f073fc,
+  particleTrail: {fileID: 2294801326802568026, guid: 4cda68af262eec84dad29b086feb0b1b,
     type: 3}
   trailMaterial: {fileID: 0}
   trailTime: 5
@@ -115,12 +116,12 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   trailAlignment: 0
   trailTextureMode: 0
-  initalForwardSpeed: 100
+  initalForwardSpeed: 10
   limitSpeed: 0
   maxForwardSpeed: 1000
   minForwardSpeed: -1000
-  forwardAcceleration: 0
-  rotationSpeed: {x: 0, y: 0, z: 0}
+  forwardAcceleration: 150
+  rotationSpeed: {x: 0, y: 25, z: 0}
   randomRotationSpeed: 0
   angularDrag: 0
   angularTurbulance: {x: 0, y: 0, z: 0}
@@ -134,4 +135,4 @@ MonoBehaviour:
   usePool: 1
   poolSize: 10
   autoExpansion: 5
-  poolID: 1
+  poolID: 23
