@@ -205,6 +205,12 @@ public class TweWeapon : ScriptableObject
 
     }
 
+
+
+    /// <summary>
+    /// 투사체 생성.
+    /// </summary>
+    /// <returns></returns>
     public GameObject Projectile()//essentially a very specific instantiate, creates an inactive game object
     {
         GameObject projectile;
