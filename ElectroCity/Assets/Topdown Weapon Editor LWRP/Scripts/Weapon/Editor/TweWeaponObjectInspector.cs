@@ -111,6 +111,9 @@ public class TweWeaponObjectInspector : Editor
 
                 GUILayout.Label("Motion", EditorStyles.boldLabel); 
                 {
+
+                    weapon.is2D = EditorGUILayout.Toggle(new GUIContent("Check it if on 2D", "is 2D projectile?"), weapon.is2D);
+
                     weapon.initalForwardSpeed = EditorGUILayout.FloatField(new GUIContent("Initial Forward Speed", "Initial forward speed for the projectile, this is in Units per second"), weapon.initalForwardSpeed);
                     weapon.forwardAcceleration = EditorGUILayout.FloatField(new GUIContent("Forward Acceleration", "Forward acceleration for the projectile, negative values can be used."), weapon.forwardAcceleration);
                     weapon.limitSpeed = EditorGUILayout.Toggle(new GUIContent("Limit Speed", "If enabled uses the following values to clamp the speed of the projectile"),weapon.limitSpeed);
@@ -123,6 +126,9 @@ public class TweWeaponObjectInspector : Editor
                     weapon.randomRotationSpeed = EditorGUILayout.Toggle(new GUIContent("Random Rotational Speed", "When enabled, rotational speed becomes a random value functioning similar to Innacuracy"), weapon.randomRotationSpeed);
                     weapon.angularDrag = EditorGUILayout.FloatField(new GUIContent("Angular Drag", "Drag force applied to the projectiles rotational speed"), weapon.angularDrag);
                     weapon.angularTurbulance = EditorGUILayout.Vector3Field(new GUIContent("Angular Turbulance", "Adds random rotational speed overtime"), weapon.angularTurbulance);
+
+
+                    weapon.rotationSpeed2D = EditorGUILayout.FloatField(new GUIContent("2D Rotational Speed", "The constant rotation speed for the projectile."), weapon.rotationSpeed2D);
                 }
 
 

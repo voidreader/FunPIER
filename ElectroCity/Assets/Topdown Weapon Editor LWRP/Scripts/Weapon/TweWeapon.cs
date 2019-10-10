@@ -90,6 +90,8 @@ public class TweWeapon : ScriptableObject
     public float minForwardSpeed = -1000f;
     public float forwardAcceleration;
     public Vector3 rotationSpeed;
+    public float rotationSpeed2D; // 2D 회전값
+    public bool is2D = false; // 2D인지 아닌지.
     public bool randomRotationSpeed;
     public float angularDrag;
     public Vector3 angularTurbulance;//randomly adds this to rotationspeed
@@ -232,6 +234,7 @@ public class TweWeapon : ScriptableObject
         {
            pt  = Instantiate(particleTrail, projectile.transform);//adds the particle trail
             pt.transform.localPosition = Vector3.zero;
+            pt.transform.localEulerAngles = new Vector3(0, 90, 0);
         }
 
 
@@ -261,6 +264,20 @@ public class TweWeapon : ScriptableObject
             projTR.alignment = trailAlignment;
             projTR.textureMode = trailTextureMode;
         }
+
+        // 2D인 경우 추가 
+        /* 2D의 경우 Trail도 파티클 시스템을 사용하기 때문에 기존 툴과 조금 다른 방식 */
+        if(is2D) {
+            projectile.AddComponent<Rigidbody2D>();
+            Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+            rb.gravityScale = 0;
+
+            projectile.AddComponent<CircleCollider2D>();
+            CircleCollider2D circle = projectile.GetComponent<CircleCollider2D>();
+            circle.radius = hitboxRadius;
+            circle.isTrigger = true;
+        }
+
 
 
         projectile.transform.position = Vector3.zero;
