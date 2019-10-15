@@ -11,8 +11,12 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
 
 
     /// <summary>
-    /// 박스 생성 
+    /// 
+    /// 박스 생성
+    /// 
     /// </summary>
+    /// <param name="l">유닛 레벨</param>
+    /// <param name="isSpecialBox">스페셜 박스 여부</param>
     public void SpawnBox(int l, bool isSpecialBox = false) {
 
         MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();

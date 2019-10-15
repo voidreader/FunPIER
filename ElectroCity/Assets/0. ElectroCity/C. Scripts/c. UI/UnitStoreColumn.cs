@@ -9,7 +9,7 @@ using Doozy.Engine.Progress;
 public class UnitStoreColumn : MonoBehaviour
 {
     public Action OnPurchaseCallback = delegate { };
-    public Machine machine;
+    
     public UnitDataRow row; // 기준 데이터 
 
     public Text textLevel, textName, textEarning, textPower, textRPM, textPrice;
@@ -47,7 +47,7 @@ public class UnitStoreColumn : MonoBehaviour
             
 
         _level = r._level;
-        machine = Stock.GetMergeItemData(_level);
+        row = Stock.GetMergeItemData(_level);
         _price = long.Parse(r._price);
         textLevel.text = "LV " + _level.ToString(); // 레벨 
         textPrice.text = PIER.GetBigNumber(_price); // 가격.. step 계산 포함. 
@@ -61,9 +61,9 @@ public class UnitStoreColumn : MonoBehaviour
         textPower.text = row._damage.ToString();
         textRPM.text = row._firerate.ToString();
         SetProgressor();
-        
+
         // 스파라이트
-        spriteUnit.sprite = machine.SpriteMergeUI;
+        spriteUnit.sprite = Stock.GetFriendlyUnitUI(row._spriteUI);
 
 
         // 초당 획득 코인 정보 

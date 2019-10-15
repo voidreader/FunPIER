@@ -35,22 +35,22 @@ MonoBehaviour:
   randomBounceAngle: {x: 0, y: 0}
   bounceTags: []
   bounceSound: {fileID: 0}
-  bounceParticle: {fileID: 7364172515049400161, guid: b0f9148bbff0a3f46b47c2383d60770a,
+  bounceParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
     type: 3}
   bounceSpawn: {fileID: 0}
   damageTags:
   - Enemy
   damageSound: {fileID: 0}
-  damageParticle: {fileID: 7364172515049400161, guid: b0f9148bbff0a3f46b47c2383d60770a,
+  damageParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
     type: 3}
   damageSpawn: {fileID: 0}
   breakTags:
   - Wall
   breakSound: {fileID: 0}
-  breakParticle: {fileID: 7364172515049400161, guid: b0f9148bbff0a3f46b47c2383d60770a,
+  breakParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
     type: 3}
   breakSpawn: {fileID: 0}
-  fizzleParticle: {fileID: 7364172515049400161, guid: b0f9148bbff0a3f46b47c2383d60770a,
+  fizzleParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
     type: 3}
   fizzleSpawn: {fileID: 0}
   fizzleSound: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   homingAcceleration: 55
   showHomingGizmo: 0
   fireSound: {fileID: 0}
-  fireParticle: {fileID: 1772475836853194834, guid: df9a551d03dad8c4b8eed0e1bf0a4bd3,
+  fireParticle: {fileID: 5201992977322975232, guid: d94f2494a14dd0943907ced02874cfae,
     type: 3}
   screenShake: 0
   projectileMesh: {fileID: 0}
@@ -75,7 +75,7 @@ MonoBehaviour:
   material: {fileID: 0}
   receiveShadows: 0
   trail: 0
-  particleTrail: {fileID: 2294801326802568026, guid: 4cda68af262eec84dad29b086feb0b1b,
+  particleTrail: {fileID: 1566809944057006865, guid: 904a14d253a3eb54e90995c22ad7bae3,
     type: 3}
   trailMaterial: {fileID: 0}
   trailTime: 5
@@ -119,11 +119,11 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   trailAlignment: 0
   trailTextureMode: 0
-  initalForwardSpeed: 15
+  initalForwardSpeed: 50
   limitSpeed: 1
   maxForwardSpeed: 100
   minForwardSpeed: -1000
-  forwardAcceleration: 50
+  forwardAcceleration: 0
   rotationSpeed: {x: 0, y: 25, z: 0}
   rotationSpeed2D: 500
   is2D: 1
@@ -140,4 +140,4 @@ MonoBehaviour:
   usePool: 1
   poolSize: 10
   autoExpansion: 5
-  poolID: 121
+  poolID: 131

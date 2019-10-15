@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Google2u;
 
 
 public class Stock : MonoBehaviour
@@ -28,13 +28,15 @@ public class Stock : MonoBehaviour
     public GameObject ObjectMergeItem;
 
 
-    [Header("- Machine Data -")]
-    public List<Machine> ListMachines;
+    
 
     #region Sprites...
     [Header("- Sprite Resources -")]
     public Sprite SpriteBox; // 일반박스 
     public Sprite SpriteGoldBox; // 골드 박스
+    public Sprite SpriteBottomButtonInactive;
+    public Sprite SpriteBottomButtonActive;
+
 
     public List<Sprite> ListMergeItemSprite;
 
@@ -47,6 +49,12 @@ public class Stock : MonoBehaviour
     public List<Sprite> ListFriendlyUnitBody;
     public List<Sprite> ListFriendlyUnitFace;
     public List<Sprite> ListFriendlyWeapon;
+    public List<Sprite> ListFriendlyUnitUI;
+
+
+    [Header("- Colors -")]
+    public Color ColorBottomButtonInactiveText;
+    
 
 
     #endregion
@@ -61,11 +69,28 @@ public class Stock : MonoBehaviour
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    public static Machine GetMergeItemData(int level) {
+    public static UnitDataRow GetMergeItemData(int level) {
 
-        for(int i=0; i<main.ListMachines.Count;i++) {
-            if (main.ListMachines[i].Level == level)
-                return main.ListMachines[i];
+
+        for(int i=0; i<UnitData.Instance.Rows.Count;i++) {
+            if (UnitData.Instance.Rows[i]._level == level)
+                return UnitData.Instance.Rows[i];
+        }
+
+        return null;
+    }
+
+
+    /// <summary>
+    /// 프렌들리 유닛 UI 스프라이트 가져오기 
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static Sprite GetFriendlyUnitUI(string n) {
+
+        for (int i = 0; i < main.ListFriendlyUnitUI.Count; i++) {
+            if (main.ListFriendlyUnitUI[i].name == n)
+                return main.ListFriendlyUnitUI[i];
         }
 
         return null;

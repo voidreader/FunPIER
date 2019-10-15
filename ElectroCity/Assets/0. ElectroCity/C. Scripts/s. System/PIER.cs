@@ -23,6 +23,7 @@ public class PIER : MonoBehaviour
 
     void Awake() {
         main = this;
+
     }
 
     // Start is called before the first frame update
@@ -34,7 +35,7 @@ public class PIER : MonoBehaviour
 
     #region 데이터 Save & Load 
 
-    public void SaveData() {
+    public void SaveData(bool refresh = true) {
         PlayerPrefs.SetInt("UserLevel", UserLevel);
         PlayerPrefs.SetInt("EXP", EXP);
         PlayerPrefs.SetInt("DamageLevel", DamageLevel);
@@ -43,7 +44,8 @@ public class PIER : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        OnRefreshPlayerInfo();
+        if(refresh)
+            OnRefreshPlayerInfo();
     }
 
 
@@ -52,7 +54,7 @@ public class PIER : MonoBehaviour
     /// </summary>
     void LoadData() {
         UserLevel = PlayerPrefs.GetInt("UserLevel", 1);
-        EXP = PlayerPrefs.GetInt("EXP", 1);
+        EXP = PlayerPrefs.GetInt("EXP", 0);
         DamageLevel = PlayerPrefs.GetInt("DamageLevel", 1);
         DiscountLevel = PlayerPrefs.GetInt("DiscountLevel", 1);
         HighestUnitLevel = PlayerPrefs.GetInt("HighestUnitLevel", 1);

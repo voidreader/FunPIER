@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Doozy.Engine.Events;
+using Google2u;
 
 public class MergeSystem : MonoBehaviour
 {
@@ -19,6 +21,9 @@ public class MergeSystem : MonoBehaviour
     
     MergeSlot slot;
 
+
+    public float SpawnBoxTime = 0;
+
     private void Awake() {
         main = this;
     }
@@ -31,11 +36,28 @@ public class MergeSystem : MonoBehaviour
     }
 
     private void Update() {
+
+        SpawnBoxTime += Time.deltaTime;
+
         if(Input.GetKeyDown(KeyCode.A)) {
-            slot = GetRandomEmptySlot();
-            if (slot != null) {
-                slot.SpawnBox(1);
-            }
+            SpawnBoxToEmptySlot();
+        }
+
+
+        if(SpawnBoxTime > 60) {
+            SpawnBoxTime = 0;
+            SpawnBoxToEmptySlot();
+        }
+
+    }
+
+
+    void SpawnBoxToEmptySlot() { 
+
+        // 슬롯이 꽉차있을때.. 빈자리가 나자마자 바로 생성되는 처리 필요
+        slot = GetRandomEmptySlot();
+        if (slot != null) {
+            slot.SpawnBox(1);
         }
     }
 
@@ -119,5 +141,29 @@ public class MergeSystem : MonoBehaviour
         return null;
     }
 
-    
+
+
+    #region UNLOCK
+
+    /// <summary>
+    /// 유닛 언락 여부 체크
+    /// </summary>
+    /// <param name="unit"></param>
+    public void CheckUnlock(UnitDataRow unit) {
+
+        // 신규 유닛 체크 
+        if(unit._level > PIER.main.HighestUnitLevel) {
+            PIER.main.HighestUnitLevel = unit._level;
+            PIER.main.SaveData(false);
+
+            ViewUnlock.unlockUnit = unit;
+
+            Doozy.Engine.GameEventMessage.SendEvent("UnlockEvent");
+        }
+
+    }
+
+
+    #endregion
+
 }

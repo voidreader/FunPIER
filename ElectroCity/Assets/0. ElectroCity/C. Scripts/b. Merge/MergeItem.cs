@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using Google2u;
     
 
 public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
@@ -11,7 +12,8 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public static bool IsMerging = false;
 
     public int Level = 0;
-    public Machine ItemData; // 데이터 ScriptableObject
+    
+    public UnitDataRow unitRow;
 
     public Image ImageItem; // 머지 아이템 이미지 
     public GameObject LevelSign;
@@ -37,7 +39,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
 
         Level = l;
-        ItemData = Stock.GetMergeItemData(Level); // 데이터 가져오기 
+        unitRow = Stock.GetMergeItemData(Level);
 
         HideLevel();
 
@@ -56,9 +58,12 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         Debug.Log(">> SetMergeItem :: " + l);
 
         Level = l;
-        ItemData = Stock.GetMergeItemData(Level);
-        ImageItem.sprite = ItemData.SpriteMergeUI;
+        unitRow = Stock.GetMergeItemData(Level);
+
+
+        ImageItem.sprite = Stock.GetFriendlyUnitUI(unitRow._spriteUI);
         ImageItem.SetNativeSize();
+
         this.transform.localScale = Vector3.zero;
         this.transform.DOScale(1, 0.25f).SetEase(Ease.OutBack);
 
@@ -96,9 +101,17 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// 유닛 레벨업!
     /// </summary>
     public void LevelUp() {
+
+
         Level++;
 
         SetMergeItem(Level);
+
+        Debug.Log(">> Unit Merge !! :: " + Level);
+
+        MergeSystem.main.CheckUnlock(unitRow); // UNLOCK 체크 호출
+        PlayerInfo.main.AddExp(Level); // 경험치 추가
+
     }
 
 
