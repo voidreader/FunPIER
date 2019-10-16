@@ -83,9 +83,11 @@ public class PlayerInfo : MonoBehaviour
         if (EXP >= MaxEXP) {
             // 레벨업 처리
             PlayerLevel++;
-            EXP = MaxEXP - EXP;
+            EXP = EXP - MaxEXP;
 
             // 게이지가 차 오르는... 연출 후에 레벨업이 되어야 함. 
+            PIER.main.UserLevel = PlayerLevel;
+            PIER.main.EXP = EXP;
             PIER.main.SaveData(false);
             _levelBar.SetValue(1);
 
@@ -94,6 +96,8 @@ public class PlayerInfo : MonoBehaviour
 
         }
         else {
+
+            PIER.main.EXP = EXP;
             PIER.main.SaveData(false); // 저장.
             SetLevelProgressor(false);
         }

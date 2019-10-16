@@ -150,7 +150,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (IsPacked)
             return;
 
-        Debug.Log("OnEndDrop!");
+        Debug.Log(">> MergeItem OnEndDrop :: " + this.name);
 
         MergeSystem.DraggingItem = null;
         GetComponent<CanvasGroup>().blocksRaycasts = true;

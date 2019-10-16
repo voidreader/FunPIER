@@ -25,6 +25,10 @@ public class TweWeapon : ScriptableObject
     public bool reverseSweep;//used to reverse the direction of the sweep on burst even
     public Vector2 randomVelocityMultiplier = new Vector2(1,1);
 
+    public float bulletRate = 0.1f; // 총알 사이의 간격 - 0이면 한번에 발사 
+
+
+
     public bool bounce = false;
     public bool stopStickOnBounce = true;//when true projectile will stop sticking when bouncing. This is perfered as bouncing can give x rotation which is not good with stick
     public int bounces = 1;
@@ -60,6 +64,7 @@ public class TweWeapon : ScriptableObject
 
     public AudioClip fireSound;
     public ParticleSystem fireParticle;
+    public Vector3 fireMuzzleRotation = Vector3.zero;
     public float screenShake;
     public Mesh projectileMesh;
     public Vector3 projectileScale = new Vector3(1,1,1);
@@ -139,7 +144,15 @@ public class TweWeapon : ScriptableObject
             }
             if (fireParticle != null)
             {
-                Instantiate(fireParticle, aimpoint.transform.position, aimpoint.transform.rotation);
+
+                if(fireMuzzleRotation != Vector3.zero)
+                    Instantiate(fireParticle, aimpoint.transform.position, Quaternion.Euler(fireMuzzleRotation));
+                // Instantiate(fireParticle, aimpoint.transform.position, aimpoint.transform.rotation);
+                else
+                    Instantiate(fireParticle, aimpoint.transform.position, aimpoint.transform.rotation);
+
+
+                
             }
 
             ScreenShake();

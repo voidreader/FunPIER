@@ -63,6 +63,9 @@ public class TweWeaponObjectInspector : Editor
                 EditorGUILayout.EndHorizontal();
                 weapon.fireRate = EditorGUILayout.FloatField(new GUIContent("Fire Rate", "The time between shots fired. This does not have any inherent function and must be implemented inside your combat script. See the PlayerCombat.cs for an example"), weapon.fireRate);
                 weapon.bullets = EditorGUILayout.IntField(new GUIContent("Bullets", "How many bullets are fired per shot"), weapon.bullets);
+
+                weapon.bulletRate= EditorGUILayout.FloatField(new GUIContent("Bullet Rate", "Bullet 사이간 발사간격"), weapon.bulletRate);
+
                 weapon.lifetime = EditorGUILayout.FloatField(new GUIContent("Lifetime", "How long the bullets lasts before automatically being destroyed. Triggers fizzle particle on time-out"), weapon.lifetime);
                 weapon.screenShake = EditorGUILayout.FloatField(new GUIContent("Screen Shake", "Screen shake for each weapon. This does not have any inherent function and must be implemented inside your combat script. See PlayerCombat.cs for an example"), weapon.screenShake);
 
@@ -233,6 +236,9 @@ public class TweWeaponObjectInspector : Editor
 
                 weapon.fireSound = EditorGUILayout.ObjectField(new GUIContent("Fire Sound", "Audio Clip played when the weapon is fired"), weapon.fireSound, typeof(AudioClip), false) as AudioClip;
                 weapon.fireParticle = EditorGUILayout.ObjectField(new GUIContent("Fire Particle", "Particle spawned when the weapon is fired"), weapon.fireParticle, typeof(ParticleSystem), false) as ParticleSystem;
+                weapon.fireMuzzleRotation = EditorGUILayout.Vector3Field(new GUIContent("Muzzle Rotation", "Muzzle Rotation"), weapon.fireMuzzleRotation);
+
+
 
                 EditorGUILayout.Space();
                 EditorGUILayout.Space();

@@ -32,6 +32,7 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
 
     public void OnDrop(PointerEventData eventData) {
 
+        Debug.Log(">> OnDrop :: " + this.name);
         
 
         // 아이템 존재하는 경우 

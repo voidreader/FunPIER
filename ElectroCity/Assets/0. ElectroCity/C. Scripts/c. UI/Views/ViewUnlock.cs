@@ -46,7 +46,9 @@ public class ViewUnlock : MonoBehaviour
         // 유닛 정보 세팅 
         TextUnitName.text = unlockUnit._displayname;
         SpriteUnlockUnit.sprite = Stock.GetFriendlyUnitUI(unlockUnit._spriteUI);
-            
+        // SpriteUnlockUnit.SetNativeSize();
+        // SpriteUnlockUnit.transform.localScale *= 2;
+
 
 
         // 연출 시작 
@@ -54,10 +56,10 @@ public class ViewUnlock : MonoBehaviour
         BigAura.transform.DOScale(1, 0.45f).SetEase(Ease.OutBack);
         SmallAura.transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
         // 회전 
-        BigAura.transform.DOLocalRotate(new Vector3(0, 0, 720), 2, RotateMode.FastBeyond360);
-        SmallAura.transform.DOLocalRotate(new Vector3(0, 0, -720), 2, RotateMode.FastBeyond360);
+        BigAura.transform.DOLocalRotate(new Vector3(0, 0, 720), 4, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        SmallAura.transform.DOLocalRotate(new Vector3(0, 0, -720), 4, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
 
-        SpriteUnlockUnit.transform.DOScale(1, 0.4f).SetEase(Ease.OutBack).SetDelay(0.1f);
+        SpriteUnlockUnit.transform.DOScale(2, 0.4f).SetEase(Ease.OutBack).SetDelay(0.1f);
 
         TextUnitName.transform.DOLocalMoveY(390, 0.4f);
         ButtonBack.transform.DOLocalMoveY(-480, 0.4f);

@@ -20,7 +20,7 @@ MonoBehaviour:
   burst: 0
   burstDelay: 0.1
   bulletsPerBurst: 3
-  fireRate: 0.5
+  fireRate: 3
   damage: 1
   breakOnHit: 1
   lifetime: 5
@@ -28,6 +28,7 @@ MonoBehaviour:
   evenInnacuracy: 0
   reverseSweep: 0
   randomVelocityMultiplier: {x: 1, y: 1}
+  bulletRate: 0
   bounce: 0
   stopStickOnBounce: 1
   bounces: 1
@@ -35,22 +36,22 @@ MonoBehaviour:
   randomBounceAngle: {x: 0, y: 0}
   bounceTags: []
   bounceSound: {fileID: 0}
-  bounceParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
+  bounceParticle: {fileID: 8360818400726038441, guid: 57bbc740386c9f74d8ef1840e0a8ae85,
     type: 3}
   bounceSpawn: {fileID: 0}
   damageTags:
   - Enemy
   damageSound: {fileID: 0}
-  damageParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
+  damageParticle: {fileID: 8360818400726038441, guid: 57bbc740386c9f74d8ef1840e0a8ae85,
     type: 3}
   damageSpawn: {fileID: 0}
   breakTags:
   - Wall
   breakSound: {fileID: 0}
-  breakParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
+  breakParticle: {fileID: 8360818400726038441, guid: 57bbc740386c9f74d8ef1840e0a8ae85,
     type: 3}
   breakSpawn: {fileID: 0}
-  fizzleParticle: {fileID: 3811194795878759508, guid: 657b0e04a72762e44a1e636edeb8ebb9,
+  fizzleParticle: {fileID: 8360818400726038441, guid: 57bbc740386c9f74d8ef1840e0a8ae85,
     type: 3}
   fizzleSpawn: {fileID: 0}
   fizzleSound: {fileID: 0}
@@ -65,8 +66,9 @@ MonoBehaviour:
   homingAcceleration: 55
   showHomingGizmo: 0
   fireSound: {fileID: 0}
-  fireParticle: {fileID: 5201992977322975232, guid: d94f2494a14dd0943907ced02874cfae,
+  fireParticle: {fileID: 4622834680447161818, guid: 2e1fab1334eb1f448866d8debbb38c57,
     type: 3}
+  fireMuzzleRotation: {x: 0, y: 90, z: 0}
   screenShake: 0
   projectileMesh: {fileID: 0}
   projectileScale: {x: 0.5, y: 0.5, z: 0.5}
@@ -75,7 +77,7 @@ MonoBehaviour:
   material: {fileID: 0}
   receiveShadows: 0
   trail: 0
-  particleTrail: {fileID: 1566809944057006865, guid: 904a14d253a3eb54e90995c22ad7bae3,
+  particleTrail: {fileID: 7473950604140140795, guid: e018a239895cba446befd086506a5fe2,
     type: 3}
   trailMaterial: {fileID: 0}
   trailTime: 5
@@ -119,12 +121,12 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   trailAlignment: 0
   trailTextureMode: 0
-  initalForwardSpeed: 50
+  initalForwardSpeed: 30
   limitSpeed: 1
-  maxForwardSpeed: 100
+  maxForwardSpeed: 50
   minForwardSpeed: -1000
   forwardAcceleration: 0
-  rotationSpeed: {x: 0, y: 25, z: 0}
+  rotationSpeed: {x: 0, y: 0, z: 0}
   rotationSpeed2D: 500
   is2D: 1
   randomRotationSpeed: 0
@@ -140,4 +142,4 @@ MonoBehaviour:
   usePool: 1
   poolSize: 10
   autoExpansion: 5
-  poolID: 131
+  poolID: 147
