@@ -63,6 +63,10 @@ public class ContinueView : MonoBehaviour {
     }
 
     public void OnClickWatchAD() {
+
+        if (_timer.Value <= 0)
+            return;
+
         Debug.Log("WatchAD! Continue...... ");
 
         // 컨티뉴 눌렀다..!

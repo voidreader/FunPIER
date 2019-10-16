@@ -17,6 +17,10 @@ public class AdsManager : MonoBehaviour {
     public static AdsManager main = null;
     public static bool IsAdsInit = false;
 
+    /* iOS 에서는 Close 이벤트의 타이밍이 달라서.. */
+    public bool isRewarded = false; // 리워드 동영상 재생 완료 여부 
+
+
     public Action OnWatchReward;
 
     [Header("- IronSource -")]
@@ -644,17 +648,28 @@ public class AdsManager : MonoBehaviour {
     //tasks till the video ad will be closed.
     void RewardedVideoAdOpenedEvent() {
         Debug.Log("RewardedVideoAdOpenedEvent");
+
+        isRewarded = false;
+
     }
     //Invoked when the RewardedVideo ad view is about to be closed.
     //Your activity will now regain its focus.
     void RewardedVideoAdClosedEvent() {
         Debug.Log("RewardedVideoAdClosedEvent");
 
+
 #if UNITY_IOS
             // BGM 살리기 
             if(SoundControlSystem.BGM_Available) {
                 AudioAssistant.main.BGM_Available = true;
             }
+
+        
+        if(isRewarded) {
+            CallDelayedWatchReward();
+            isRewarded = false;
+        }
+
 #endif
 
     }
@@ -680,6 +695,9 @@ public class AdsManager : MonoBehaviour {
     void RewardedVideoAdEndedEvent() {
         Debug.Log("RewardedVideoAdEndedEvent");
     }
+
+
+
     //Invoked when the user completed the video and should be rewarded. 
     //If using server-to-server callbacks you may ignore this events and wait for the callback from the  ironSource server.
     //
@@ -687,8 +705,15 @@ public class AdsManager : MonoBehaviour {
     //
     void RewardedVideoAdRewardedEvent(IronSourcePlacement placement) {
         Debug.Log("RewardedVideoAdRewardedEvent");
-        // OnWatchReward();
+        isRewarded = true; // 다 봤음!
+
+#if UNITY_ANDROID
         CallDelayedWatchReward();
+#endif
+
+        // iOS에서는 Close 이벤트에서 처리한다.
+
+
 
     }
     //Invoked when the Rewarded Video failed to show
