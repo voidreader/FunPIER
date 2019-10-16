@@ -2,11 +2,11 @@
 
 
 
-/*
+
 #if !UNITY_EDITOR
 #undef ENABLE_LOG
 #endif
-*/
+
 
 
 

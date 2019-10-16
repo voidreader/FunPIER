@@ -35,8 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define IS_OFFERWALL @"offerwall"
 #define IS_BANNER @"banner"
 
-
-static NSString * const MEDIATION_SDK_VERSION     = @"6.8.4.2";
+static NSString * const MEDIATION_SDK_VERSION     = @"6.8.7";
+static NSString * GitHash = @"bce1559b1";
 
 @interface IronSource : NSObject
 

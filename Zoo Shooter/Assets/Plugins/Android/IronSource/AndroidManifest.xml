@@ -8,7 +8,7 @@
     
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
     <application>
         <!-- IronSource -->
@@ -166,6 +166,7 @@
 
 		<meta-data android:name="com.google.android.gms.ads.APPLICATION_ID"
            android:value="ca-app-pub-2800442891988043~3581147088"/>
+		   
         
         <!-- MoPub -->
         <activity
@@ -195,6 +196,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
+
+         <!-- amazon -->
+        <activity android:name="com.amazon.device.ads.AdActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+
        
     </application>
 </manifest>
