@@ -73,13 +73,12 @@ public class Unit : MonoBehaviour
                 break;
 
             case "gunParts3":
-                ListAimPoint[0].localPosition = new Vector3(-0.124f, 0.008f);
-                ListAimPoint[0].gameObject.SetActive(true);
-                break;
-
             case "gunParts4":
-                ListAimPoint[0].localPosition = new Vector3(-0.124f, 0.008f);
+                ListAimPoint[0].localPosition = new Vector3(0.227f, 0.063f);
+                ListAimPoint[1].localPosition = new Vector3(0.276f, 0.063f);
+
                 ListAimPoint[0].gameObject.SetActive(true);
+                ListAimPoint[1].gameObject.SetActive(true);
                 break;
 
             case "gunParts5":
@@ -144,6 +143,10 @@ public class Unit : MonoBehaviour
 
         }
 
+    }
+
+    public Transform GetAimPoint(int muzzleindex) {
+        return ListAimPoint[muzzleindex];
     }
 
 }

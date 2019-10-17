@@ -16,6 +16,7 @@ public class TweWeapon : ScriptableObject
     public bool burst = false;
     public float burstDelay = .1f;//time between bullets in a single burst
     public int bulletsPerBurst = 3;//size of burst  
+    public int muzzles = 1; // 총구 카운트 
     public float fireRate = .1f;
     public float damage = 1;
     public bool breakOnHit = true;
@@ -158,29 +159,51 @@ public class TweWeapon : ScriptableObject
             ScreenShake();
         }
 
-        if (usePool)
-        {
-            for (int i = 0; i < bullets; i++)
-            {
-                if (burst)
-                {
-                    for (int j = 0; j < bulletsPerBurst; j++)
-                    {
+        if (usePool) {
+            if (bulletRate == 0) {
+                for (int i = 0; i < bullets; i++) {
+                    if (burst) {
+                        for (int j = 0; j < bulletsPerBurst; j++) {
+                            aimpoint.gameObject.AddComponent<TweBurstSpawn>().Initialize(burstDelay * j, this, j);
+                        }
+                    }
+                    else {
+                        if (usePool) {
+                            if (objectPool.Count == 0) {
+                                AddToPool();
+                            }
+                        }
+                        GameObject spawn = objectPool.Dequeue();
+
+
+                        spawn.transform.rotation = aimpoint.rotation;//basic position set, we do accuracy in Initialize() on projectileControl now
+                        spawn.transform.position = aimpoint.position;
+                        // spawn.transform.position = new Vector2(aimpoint.position.x, aimpoint.position.y);
+
+
+                        TweProjectileControl pc = spawn.GetComponent<TweProjectileControl>();
+                        pc.aimpoint = aimpoint;
+                        pc.bulletNum = i;
+
+                        spawn.SetActive(true);
+                    }
+                } // end of for (int i = 0; i < bullets; i++)
+            }
+            else { // 그 외에는 무조건 1발씩 쏜다. 
+                if (burst) {
+                    for (int j = 0; j < bulletsPerBurst; j++) {
                         aimpoint.gameObject.AddComponent<TweBurstSpawn>().Initialize(burstDelay * j, this, j);
                     }
                 }
-                else
-                {
-                    if (usePool)
-                    {
-                        if (objectPool.Count == 0)
-                        {
+                else {
+                    if (usePool) {
+                        if (objectPool.Count == 0) {
                             AddToPool();
                         }
                     }
                     GameObject spawn = objectPool.Dequeue();
 
-                    
+
                     spawn.transform.rotation = aimpoint.rotation;//basic position set, we do accuracy in Initialize() on projectileControl now
                     spawn.transform.position = aimpoint.position;
                     // spawn.transform.position = new Vector2(aimpoint.position.x, aimpoint.position.y);
@@ -188,12 +211,13 @@ public class TweWeapon : ScriptableObject
 
                     TweProjectileControl pc = spawn.GetComponent<TweProjectileControl>();
                     pc.aimpoint = aimpoint;
-                    pc.bulletNum = i;
+                    pc.bulletNum = 0;
 
                     spawn.SetActive(true);
                 }
             }
-        }
+
+        } // end of if usePool
         else
         {
             for (int i = 0; i < bullets; i++)
