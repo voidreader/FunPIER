@@ -51,6 +51,9 @@ public class Stock : MonoBehaviour
     public List<Sprite> ListFriendlyWeapon;
     public List<Sprite> ListFriendlyUnitUI;
 
+    [Header("- Weapon List -")]
+    public List<TweWeapon> ListWeapon;
+
 
     [Header("- Colors -")]
     public Color ColorBottomButtonInactiveText;
@@ -127,7 +130,7 @@ public class Stock : MonoBehaviour
         return null;
     }
 
-    public static Sprite GetFriendlyUnitWeapon(string n) {
+    public static Sprite GetFriendlyUnitWeaponSprite(string n) {
 
         for (int i = 0; i < main.ListFriendlyWeapon.Count; i++) {
             if (main.ListFriendlyWeapon[i].name == n)
@@ -136,5 +139,24 @@ public class Stock : MonoBehaviour
 
         return null;
     }
+
+
+    #region Find Weapon
+
+    public static TweWeapon GetFriendlyUnitWeapon(string n) {
+
+        for (int i = 0; i < main.ListWeapon.Count; i++) {
+            if (main.ListWeapon[i].name == n)
+                return main.ListWeapon[i];
+        }
+
+        return null;
+    }
+    
+
+
+    #endregion
+
+
 
 }

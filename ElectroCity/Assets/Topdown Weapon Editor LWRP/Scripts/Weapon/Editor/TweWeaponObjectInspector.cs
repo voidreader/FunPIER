@@ -62,6 +62,7 @@ public class TweWeaponObjectInspector : Editor
                 weapon.breakOnHit = EditorGUILayout.ToggleLeft(new GUIContent("Destroy On Damage", "When enabled the projectile will destroy when it damages an enemy. Use this if you don't want to mix break and damage together."), weapon.breakOnHit);
                 EditorGUILayout.EndHorizontal();
                 weapon.fireRate = EditorGUILayout.FloatField(new GUIContent("Fire Rate", "The time between shots fired. This does not have any inherent function and must be implemented inside your combat script. See the PlayerCombat.cs for an example"), weapon.fireRate);
+                weapon.fireRateGrade= EditorGUILayout.IntField(new GUIContent("Fire Rate Grade", "Grade of firerate "), weapon.fireRateGrade);
                 weapon.bullets = EditorGUILayout.IntField(new GUIContent("Bullets", "How many bullets are fired per shot"), weapon.bullets);
                 weapon.bulletRate= EditorGUILayout.FloatField(new GUIContent("Bullet Rate", "Bullet 사이간 발사간격"), weapon.bulletRate);
                 weapon.muzzles = EditorGUILayout.IntField(new GUIContent("Muzzles", "How many muzzles at weapon"), weapon.muzzles);

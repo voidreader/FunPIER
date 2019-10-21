@@ -20,7 +20,7 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
     public void SpawnBox(int l, bool isSpecialBox = false) {
 
         MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();
-        item.SetMergeBox(l);
+        item.SetMergeBox(this, l);
 
         mergeItem = item;
     }
@@ -63,19 +63,28 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
     /// 두개의 머지 아이템 합치기 
     /// </summary>
     /// <param name="u1">가만히있던애</param>
-    /// <param name="u2">드래그하던애</param>
+    /// <param name="u2">드래그되던애</param>
     public void MergeUnit(MergeItem u1, MergeItem u2) {
         Debug.Log("MergeUnit is just called!");
-        MergeItem.IsMerging = true;
 
-        u1.transform.SetParent(this.transform);
-        u2.transform.SetParent(this.transform);
+        // 드래그되던 유닛의 Slot을 비워준다
+        u2.Slot.mergeItem = null;
 
+        MergeItem.IsMerging = true; // Merge 연출을 위한 거였는데.. 필요없어진듯..?
+
+        OnMergeLevelUp(u1);
+        OnMergeDestroy(u2);
+
+        // u1.transform.SetParent(this.transform);
+        // u2.transform.SetParent(this.transform);
+
+        /*
         u1.transform.localPosition = new Vector3(-40, 0, 0);
         u2.transform.localPosition = new Vector3(40, 0, 0);
 
         u1.transform.DOLocalMoveX(0, 0.4f).SetEase(Ease.InBack).OnComplete(()=>OnMergeLevelUp(u1));
         u2.transform.DOLocalMoveX(0, 0.4f).SetEase(Ease.InBack).OnComplete(() => OnMergeDestroy(u2));
+        */
     }
 
     void OnMergeLevelUp(MergeItem m) {

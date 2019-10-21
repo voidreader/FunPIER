@@ -20,6 +20,11 @@ public class PIER : MonoBehaviour
     public int UserLevel, EXP, DamageLevel, DiscountLevel;
     public int HighestUnitLevel; // 개방한 최고 레벨 유닛 
     public List<int> ListUnitPurchaseStep = new List<int>();
+    // public List<int> ListMergeSpotMemory = new List<int>();
+    public int[] ArrSpotMemory = new int[16];
+
+    const string KeyUnitPurchaseStep = "UnitPurchaseStep";
+    const string KeySpot = "Spot";
 
     void Awake() {
         main = this;
@@ -58,15 +63,75 @@ public class PIER : MonoBehaviour
         DamageLevel = PlayerPrefs.GetInt("DamageLevel", 1);
         DiscountLevel = PlayerPrefs.GetInt("DiscountLevel", 1);
         HighestUnitLevel = PlayerPrefs.GetInt("HighestUnitLevel", 1);
-        
 
-
+        LoadUnitPurchaseStep();
+        LoadMergeSpotMemory();
     }
 
+
+    #region 머지 스팟 위치 기억 LoadMergeSpotMemory & SaveMergeSpotMemory
+
+    /// <summary>
+    /// 머지 스팟 기억 불러오기 
+    /// </summary>
+    public void LoadMergeSpotMemory() {
+
+        
+        int l;
+
+
+        // Spot 정보는 -2 : 스페셜 박스, -1 : 걍 박스, 0 : 비었음. 
+        for (int i =0; i< 16; i++) { // 최대 16자리라고 가정 한다.
+
+            l = PlayerPrefs.GetInt(KeySpot + i.ToString(), 0);
+            ArrSpotMemory[i] = l;
+
+        }
+    }
+
+    /// <summary>
+    /// 머지 스팟 위치 저장 
+    /// </summary>
+    public void SaveMergeSpotMemory() {
+        for (int i = 0; i < MergeSystem.main.ListSlots.Count; i++) {
+
+            if (MergeSystem.main.ListSlots[i].mergeItem == null)
+                continue;
+
+            PlayerPrefs.SetInt(KeySpot + i.ToString(), MergeSystem.main.ListSlots[i].mergeItem.Level);
+        }
+
+        PlayerPrefs.Save();
+    }
+
+    #endregion
+
+
+    #region 유닛 구매 단계  LoadUnitPurchaseStep, SaveUnitPurchaseStep
 
     void LoadUnitPurchaseStep() {
         ListUnitPurchaseStep.Clear();
+
+        int step;
+
+        // 40가지의 유닛이 존재한다. 
+        for(int i = 0; i < 40; i++) {
+            step = PlayerPrefs.GetInt(KeyUnitPurchaseStep + (i + 1).ToString(), 0);
+            ListUnitPurchaseStep.Add(step);
+        }
     }
+
+    public void SaveUnitPurchaseStep(int unitLevel) {
+        // 1 더한다. 
+        ListUnitPurchaseStep[unitLevel - 1] = ListUnitPurchaseStep[unitLevel - 1] + 1;
+
+        // 개별저장 
+        PlayerPrefs.SetInt(KeyUnitPurchaseStep + unitLevel.ToString(), ListUnitPurchaseStep[unitLevel - 1]);
+        PlayerPrefs.Save();
+    }
+
+    #endregion
+
 
 
 

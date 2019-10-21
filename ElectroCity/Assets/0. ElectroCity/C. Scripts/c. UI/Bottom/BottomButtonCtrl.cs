@@ -14,6 +14,10 @@ public class BottomButtonCtrl : MonoBehaviour
     public GameObject _text;
     public GameObject _icon;
 
+
+    public Sprite _spriteActiveIcon, _spriteInactiveIcon;
+
+
     private void Start() {
         if (!ListBotButtons.Contains(this))
             ListBotButtons.Add(this);
@@ -21,6 +25,11 @@ public class BottomButtonCtrl : MonoBehaviour
         SetActive(false);
     }
 
+
+    /// <summary>
+    /// Set Active ...
+    /// </summary>
+    /// <param name="flag"></param>
     public void SetActive(bool flag) {
 
         // 버튼 활성화시 
@@ -45,6 +54,11 @@ public class BottomButtonCtrl : MonoBehaviour
 
             _text.transform.DOLocalMoveY(-18, 0.4f);
             _icon.transform.DOLocalMoveY(15, 0.4f);
+
+
+            _icon.GetComponent<Image>().sprite = _spriteActiveIcon;
+            _icon.GetComponent<Image>().SetNativeSize();
+
         }
         else { // 비 활성화
             _button.sprite = Stock.main.SpriteBottomButtonInactive;
@@ -58,6 +72,9 @@ public class BottomButtonCtrl : MonoBehaviour
 
             _text.transform.DOLocalMoveY(-16, 0.4f);
             _icon.transform.DOLocalMoveY(14, 0.4f);
+
+            _icon.GetComponent<Image>().sprite = _spriteInactiveIcon;
+            _icon.GetComponent<Image>().SetNativeSize();
         }
 
     }

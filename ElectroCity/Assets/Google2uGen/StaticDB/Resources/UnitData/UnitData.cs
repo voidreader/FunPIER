@@ -19,7 +19,7 @@ namespace Google2u
 		public string _displayname;
 		public string _price;
 		public float _damage;
-		public float _firerate;
+		public string _weaponid;
 		public string _earning;
 		public float _attackfactor;
 		public string _spriteUI;
@@ -34,7 +34,7 @@ namespace Google2u
 		public string _weaponSprite;
 		public float _weaponX;
 		public float _weaponY;
-		public UnitDataRow(string __ID, string __uid, string __level, string __displayname, string __price, string __damage, string __firerate, string __earning, string __attackfactor, string __spriteUI, string __spriteBody, string __spriteLeg, string __legX, string __legY, string __spriteFaceIdle, string __spriteFaceShoot, string __faceX, string __faceY, string __weaponSprite, string __weaponX, string __weaponY) 
+		public UnitDataRow(string __ID, string __uid, string __level, string __displayname, string __price, string __damage, string __weaponid, string __earning, string __attackfactor, string __spriteUI, string __spriteBody, string __spriteLeg, string __legX, string __legY, string __spriteFaceIdle, string __spriteFaceShoot, string __faceX, string __faceY, string __weaponSprite, string __weaponX, string __weaponY) 
 		{
 			_uid = __uid.Trim();
 			{
@@ -53,13 +53,7 @@ namespace Google2u
 				else
 					Debug.LogError("Failed To Convert _damage string: "+ __damage +" to float");
 			}
-			{
-			float res;
-				if(float.TryParse(__firerate, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
-					_firerate = res;
-				else
-					Debug.LogError("Failed To Convert _firerate string: "+ __firerate +" to float");
-			}
+			_weaponid = __weaponid.Trim();
 			_earning = __earning.Trim();
 			{
 			float res;
@@ -149,7 +143,7 @@ namespace Google2u
 					ret = _damage.ToString();
 					break;
 				case 5:
-					ret = _firerate.ToString();
+					ret = _weaponid.ToString();
 					break;
 				case 6:
 					ret = _earning.ToString();
@@ -218,8 +212,8 @@ namespace Google2u
 				case "damage":
 					ret = _damage.ToString();
 					break;
-				case "firerate":
-					ret = _firerate.ToString();
+				case "weaponid":
+					ret = _weaponid.ToString();
 					break;
 				case "earning":
 					ret = _earning.ToString();
@@ -275,7 +269,7 @@ namespace Google2u
 			ret += "{" + "displayname" + " : " + _displayname.ToString() + "} ";
 			ret += "{" + "price" + " : " + _price.ToString() + "} ";
 			ret += "{" + "damage" + " : " + _damage.ToString() + "} ";
-			ret += "{" + "firerate" + " : " + _firerate.ToString() + "} ";
+			ret += "{" + "weaponid" + " : " + _weaponid.ToString() + "} ";
 			ret += "{" + "earning" + " : " + _earning.ToString() + "} ";
 			ret += "{" + "attackfactor" + " : " + _attackfactor.ToString() + "} ";
 			ret += "{" + "spriteUI" + " : " + _spriteUI.ToString() + "} ";
@@ -320,46 +314,46 @@ namespace Google2u
 
 		private UnitData()
 		{
-			Rows.Add( new UnitDataRow("U1", "U1", "1", "unit1", "120", "15", "1", "5", "1", "01", "01_body", "01_leg", "0.02", "-0.46", "01_face_idle", "01_face_shoot", "0.015", "-0.074", "gunParts4", "-0.124", "0.008"));
-			Rows.Add( new UnitDataRow("U2", "U2", "2", "unit2", "1800", "22", "2", "11", "2", "02", "02_body", "02_leg", "0.02", "-0.46", "02_face_idle", "02_face_shoot", "0.015", "0.27", "gunParts3", "-0.064", "0.382"));
-			Rows.Add( new UnitDataRow("U3", "U3", "3", "unit3", "5700", "6", "3", "24", "3", "03", "03_body", "03_leg", "0.02", "-0.36", "03_face_idle", "03_face_shoot", "0.024", "-0.041", "gunParts2", "-0.085", "0.234"));
-			Rows.Add( new UnitDataRow("U4", "U4", "4", "unit4", "16000", "30", "4", "53", "4", "04", "04_body", "04_leg", "0.02", "-0.445", "04_face_idle", "04_face_shoot", "0.034", "0.066", "gunParts1", "-0.229", "0.414"));
-			Rows.Add( new UnitDataRow("U5", "U5", "5", "unit5", "55000", "8", "5", "117", "5", "05", "05_body", "05_leg", "0.02", "-0.404", "05_face_idle", "05_face_shoot", "0.015", "-0.126", "gunParts2", "-0.068", "0.247"));
-			Rows.Add( new UnitDataRow("U6", "U6", "6", "unit6", "171600", "6", "6", "257", "6", "06", "06_body", "06_leg", "0.02", "-0.526", "06_face_idle", "06_face_shoot", "0.062", "-0.112", "gunParts4", "-0.087", "0.163"));
-			Rows.Add( new UnitDataRow("U7", "U7", "7", "unit7", "530000", "88", "7", "566", "7", "07", "07_body", "07_leg", "0.02", "-0.684", "07_face_idle", "07_face_shoot", "0.048", "-0.022", "gunParts3", "-0.105", "0.264"));
-			Rows.Add( new UnitDataRow("U8", "U8", "8", "unit8", "1650000", "60", "8", "1247", "8", "08", "08_body", "08_leg", "0.02", "-0.438", "08_face_idle", "08_face_shoot", "0.088", "0.263", "gunParts2", "0.158", "0.547"));
-			Rows.Add( new UnitDataRow("U9", "U9", "9", "unit9", "5115000", "25", "9", "2743", "9", "09", "09_body", "09_leg", "0.099", "-0.548", "09_face_idle", "09_face_shoot", "0.133", "-0.112", "gunParts4", "-0.057", "0.197"));
-			Rows.Add( new UnitDataRow("U10", "U10", "10", "unit10", "15856500", "33", "10", "6036", "10", "10", "10_body", "10_leg", "0.02", "-0.592", "10_face_idle", "10_face_shoot", "0.154", "-0.037", "gunParts1", "-0.259", "0.008"));
-			Rows.Add( new UnitDataRow("U11", "U11", "11", "unit11", "49155150", "44", "11", "13279", "11", "11", "11_body", "11_leg", "0.02", "-0.567", "11_face_idle", "11_face_shoot", "0.064", "0.171", "gunParts3", "0.044", "0.631"));
-			Rows.Add( new UnitDataRow("U12", "U12", "12", "unit12", "152,380,965", "66", "12", "29215", "12", "12", "12_body", "12_leg", "0.02", "-0.46", "12_face_idle", "12_face_shoot", "0.184", "-0.057", "gunParts4", "0.03", "0.554"));
-			Rows.Add( new UnitDataRow("U13", "U13", "13", "unit13", "472,380,992", "70", "13", "64275", "13", "13", "13_body", "13_leg", "0.061", "-0.46", "13_face_idle", "13_face_shoot", "0.323", "-0.086", "gunParts1", "-0.031", "0.503"));
-			Rows.Add( new UnitDataRow("U14", "U14", "14", "unit14", "1,464,381,073", "80", "14", "141405", "14", "14", "14_body", "14_leg", "0.02", "-0.393", "14_face_idle", "14_face_shoot", "0.015", "0.049", "gunParts3", "0.108", "0.419"));
-			Rows.Add( new UnitDataRow("U15", "U15", "15", "unit15", "4,539,581,328", "90", "15", "311091", "15", "15", "15_body", "15_leg", "0.02", "-0.46", "15_face_idle", "15_face_shoot", "0.015", "0.457", "gunParts1", "0.061", "0.567"));
-			Rows.Add( new UnitDataRow("U16", "U16", "16", "unit16", "14,072,702,117", "100", "16", "684400", "16", "16", "16_body", "16_leg", "0.02", "-0.741", "16_face_idle", "16_face_shoot", "0.095", "-0.146", "gunParts2", "0.205", "-0.016"));
-			Rows.Add( new UnitDataRow("U17", "U17", "17", "unit17", "14,072,702,117", "100", "16", "684400", "17", "17", "17_body", "17_leg", "-0.14", "-0.46", "17_face_idle", "17_face_shoot", "-0.145", "0.038", "gunParts5", "-0.284", "0.713"));
-			Rows.Add( new UnitDataRow("U18", "U18", "18", "unit18", "14,072,702,117", "100", "16", "684400", "18", "18", "18_body", "18_leg", "0.02", "-0.46", "18_face_idle", "18_face_shoot", "0.127", "-0.138", "gunParts4", "0.149", "0.577"));
-			Rows.Add( new UnitDataRow("U19", "U19", "19", "unit19", "14,072,702,117", "100", "16", "684400", "19", "19", "19_body", "19_leg", "0.02", "-0.42", "19_face_idle", "19_face_shoot", "0.095", "0.383", "gunParts5", "0.1", "0.585"));
-			Rows.Add( new UnitDataRow("U20", "U20", "20", "unit20", "14,072,702,117", "100", "16", "684400", "20", "20", "20_body", "20_leg", "-0.096", "-0.492", "20_face_idle", "20_face_shoot", "-0.029", "0.421", "gunParts3", "-0.285", "0.449"));
-			Rows.Add( new UnitDataRow("U21", "U21", "21", "unit21", "14,072,702,117", "100", "16", "684400", "21", "21", "21_body", "21_leg", "0.023", "-0.525", "21_face_idle", "21_face_shoot", "0.086", "0.489", "gunParts1", "-0.124", "0.53"));
-			Rows.Add( new UnitDataRow("U22", "U22", "22", "unit22", "14,072,702,117", "100", "16", "684400", "22", "22", "22_body", "22_leg", "-0.235", "-0.486", "22_face_idle", "22_face_shoot", "0.517", "0.284", "gunParts5", "-0.32", "0.663"));
-			Rows.Add( new UnitDataRow("U23", "U23", "23", "unit23", "14,072,702,117", "100", "16", "684400", "23", "23", "23_body", "23_leg", "0.348", "-0.399", "23_face_idle", "23_face_shoot", "0.373", "0.292", "gunParts6", "-0.376", "0.29"));
-			Rows.Add( new UnitDataRow("U24", "U24", "24", "unit24", "14,072,702,117", "100", "16", "684400", "24", "24", "24_body", "24_leg", "0.02", "-0.46", "24_face_idle", "24_face_shoot", "0.206", "0.002", "gunParts5", "-0.033", "0.649"));
-			Rows.Add( new UnitDataRow("U25", "U25", "25", "unit25", "14,072,702,117", "100", "16", "684400", "25", "25", "25_body", "25_leg", "0.02", "-0.46", "25_face_idle", "25_face_shoot", "0.16", "0.186", "gunParts7", "0.097", "0.686"));
-			Rows.Add( new UnitDataRow("U26", "U26", "26", "unit26", "14,072,702,117", "100", "16", "684400", "26", "26", "26_body", "26_leg", "0.028", "-0.567", "26_face_idle", "26_face_shoot", "0.069", "0.155", "gunParts8", "-0.071", "0.603"));
-			Rows.Add( new UnitDataRow("U27", "U27", "27", "unit27", "14,072,702,117", "100", "16", "684400", "27", "27", "27_body", "27_leg", "0.02", "-0.539", "27_face_idle", "27_face_shoot", "0.252", "0.182", "gunParts5", "-0.004", "0.701"));
-			Rows.Add( new UnitDataRow("U28", "U28", "28", "unit28", "14,072,702,117", "100", "16", "684400", "28", "28", "28_body", "28_leg", "0.02", "-0.479", "28_face_idle", "28_face_shoot", "0.158", "-0.074", "gunParts7", "-0.207", "0.468"));
-			Rows.Add( new UnitDataRow("U29", "U29", "29", "unit29", "14,072,702,117", "100", "16", "684400", "29", "29", "29_body", "29_leg", "0.02", "-0.613", "29_face_idle", "29_face_shoot", "0.126", "-0.13", "gunParts8", "-0.223", "0.31"));
-			Rows.Add( new UnitDataRow("U30", "U30", "30", "unit30", "14,072,702,117", "100", "16", "684400", "30", "30", "30_body", "30_leg", "0.02", "-0.46", "30_face_idle", "30_face_shoot", "0.17", "0.228", "gunParts9", "0.018", "0.562"));
-			Rows.Add( new UnitDataRow("U31", "U31", "31", "unit31", "14,072,702,117", "100", "16", "684400", "31", "31", "31_body", "31_leg", "-0.013", "-0.689", "31_face_idle", "31_face_shoot", "0.015", "0.188", "gunParts7", "-0.171", "0.536"));
-			Rows.Add( new UnitDataRow("U32", "U32", "32", "unit32", "14,072,702,117", "100", "16", "684400", "32", "32", "32_body", "32_leg", "0.02", "-0.333", "32_face_idle", "32_face_shoot", "0.075", "0.264", "gunParts10", "-0.382", "0.445"));
-			Rows.Add( new UnitDataRow("U33", "U33", "33", "unit33", "14,072,702,117", "100", "16", "684400", "33", "33", "33_body", "33_leg", "0.02", "-0.494", "33_face_idle", "33_face_shoot", "0.313", "0.005", "gunParts8", "-0.212", "0.609"));
-			Rows.Add( new UnitDataRow("U34", "U34", "34", "unit34", "14,072,702,117", "100", "16", "684400", "34", "34", "34_body", "34_leg", "0.02", "-0.521", "34_face_idle", "34_face_shoot", "0.478", "0.341", "gunParts5", "-0.458", "0.41"));
-			Rows.Add( new UnitDataRow("U35", "U35", "35", "unit35", "14,072,702,117", "100", "16", "684400", "35", "35", "35_body", "35_leg", "-0.203", "-0.533", "35_face_idle", "35_face_shoot", "0.015", "0.355", "gunParts8", "-0.37", "0.563"));
-			Rows.Add( new UnitDataRow("U36", "U36", "36", "unit36", "14,072,702,117", "100", "16", "684400", "36", "36", "36_body", "36_leg", "0.02", "-0.46", "36_face_idle", "36_face_shoot", "0.184", "0.518", "gunParts11", "-0.414", "0.512"));
-			Rows.Add( new UnitDataRow("U37", "U37", "37", "unit37", "14,072,702,117", "100", "16", "684400", "37", "37", "37_body", "37_leg", "0.02", "-0.6", "37_face_idle", "37_face_shoot", "0.172", "0.497", "gunParts7", "-0.338", "0.544"));
-			Rows.Add( new UnitDataRow("U38", "U38", "38", "unit38", "14,072,702,117", "100", "16", "684400", "38", "38", "38_body", "38_leg", "0.057", "-0.672", "38_face_idle", "38_face_shoot", "0.256", "-0.359", "gunParts9", "-0.124", "0.673"));
-			Rows.Add( new UnitDataRow("U39", "U39", "39", "unit39", "14,072,702,117", "100", "16", "684400", "39", "39", "39_body", "39_leg", "0.02", "-0.46", "39_face_idle", "39_face_shoot", "0.472", "-0.181", "gunParts6", "-0.099", "0.54"));
-			Rows.Add( new UnitDataRow("U40", "U40", "40", "unit40", "14,072,702,117", "100", "16", "684400", "40", "40", "40_body", "40_leg", "0.02", "-0.805", "40_face_idle", "40_face_shoot", "-0.056", "-0.074", "gunParts11", "-0.327", "0.929"));
+			Rows.Add( new UnitDataRow("U1", "U1", "1", "unit1", "120", "15", "UnitWeapon1", "5", "1", "01", "01_body", "01_leg", "0.02", "-0.46", "01_face_idle", "01_face_shoot", "0.015", "-0.074", "gunParts4", "-0.124", "0.008"));
+			Rows.Add( new UnitDataRow("U2", "U2", "2", "unit2", "1800", "22", "UnitWeapon2", "11", "2", "02", "02_body", "02_leg", "0.02", "-0.46", "02_face_idle", "02_face_shoot", "0.015", "0.27", "gunParts3", "-0.064", "0.382"));
+			Rows.Add( new UnitDataRow("U3", "U3", "3", "unit3", "5700", "6", "UnitWeapon3", "24", "3", "03", "03_body", "03_leg", "0.02", "-0.36", "03_face_idle", "03_face_shoot", "0.024", "-0.041", "gunParts2", "-0.085", "0.234"));
+			Rows.Add( new UnitDataRow("U4", "U4", "4", "unit4", "16000", "30", "UnitWeapon4", "53", "4", "04", "04_body", "04_leg", "0.02", "-0.445", "04_face_idle", "04_face_shoot", "0.034", "0.066", "gunParts1", "-0.229", "0.414"));
+			Rows.Add( new UnitDataRow("U5", "U5", "5", "unit5", "55000", "8", "UnitWeapon5", "117", "5", "05", "05_body", "05_leg", "0.02", "-0.404", "05_face_idle", "05_face_shoot", "0.015", "-0.126", "gunParts2", "-0.068", "0.247"));
+			Rows.Add( new UnitDataRow("U6", "U6", "6", "unit6", "171600", "6", "UnitWeapon6", "257", "6", "06", "06_body", "06_leg", "0.02", "-0.526", "06_face_idle", "06_face_shoot", "0.062", "-0.112", "gunParts4", "-0.087", "0.163"));
+			Rows.Add( new UnitDataRow("U7", "U7", "7", "unit7", "530000", "88", "UnitWeapon7", "566", "7", "07", "07_body", "07_leg", "0.02", "-0.684", "07_face_idle", "07_face_shoot", "0.048", "-0.022", "gunParts3", "-0.105", "0.264"));
+			Rows.Add( new UnitDataRow("U8", "U8", "8", "unit8", "1650000", "60", "UnitWeapon8", "1247", "8", "08", "08_body", "08_leg", "0.02", "-0.438", "08_face_idle", "08_face_shoot", "0.088", "0.263", "gunParts2", "0.158", "0.547"));
+			Rows.Add( new UnitDataRow("U9", "U9", "9", "unit9", "5115000", "25", "UnitWeapon9", "2743", "9", "09", "09_body", "09_leg", "0.099", "-0.548", "09_face_idle", "09_face_shoot", "0.133", "-0.112", "gunParts4", "-0.057", "0.197"));
+			Rows.Add( new UnitDataRow("U10", "U10", "10", "unit10", "15856500", "33", "UnitWeapon10", "6036", "10", "10", "10_body", "10_leg", "0.02", "-0.592", "10_face_idle", "10_face_shoot", "0.154", "-0.037", "gunParts1", "-0.259", "0.008"));
+			Rows.Add( new UnitDataRow("U11", "U11", "11", "unit11", "49155150", "44", "UnitWeapon11", "13279", "11", "11", "11_body", "11_leg", "0.02", "-0.567", "11_face_idle", "11_face_shoot", "0.064", "0.171", "gunParts3", "0.044", "0.631"));
+			Rows.Add( new UnitDataRow("U12", "U12", "12", "unit12", "49155150", "66", "UnitWeapon1", "29215", "12", "12", "12_body", "12_leg", "0.02", "-0.46", "12_face_idle", "12_face_shoot", "0.184", "-0.057", "gunParts4", "0.03", "0.554"));
+			Rows.Add( new UnitDataRow("U13", "U13", "13", "unit13", "49155150", "70", "UnitWeapon2", "64275", "13", "13", "13_body", "13_leg", "0.061", "-0.46", "13_face_idle", "13_face_shoot", "0.323", "-0.086", "gunParts1", "-0.031", "0.503"));
+			Rows.Add( new UnitDataRow("U14", "U14", "14", "unit14", "49155150", "80", "UnitWeapon3", "141405", "14", "14", "14_body", "14_leg", "0.02", "-0.393", "14_face_idle", "14_face_shoot", "0.015", "0.049", "gunParts3", "0.108", "0.419"));
+			Rows.Add( new UnitDataRow("U15", "U15", "15", "unit15", "49155150", "90", "UnitWeapon4", "311091", "15", "15", "15_body", "15_leg", "0.02", "-0.46", "15_face_idle", "15_face_shoot", "0.015", "0.457", "gunParts1", "0.061", "0.567"));
+			Rows.Add( new UnitDataRow("U16", "U16", "16", "unit16", "49155150", "100", "UnitWeapon5", "684400", "16", "16", "16_body", "16_leg", "0.02", "-0.741", "16_face_idle", "16_face_shoot", "0.095", "-0.146", "gunParts2", "0.205", "-0.016"));
+			Rows.Add( new UnitDataRow("U17", "U17", "17", "unit17", "49155150", "100", "UnitWeapon6", "684400", "17", "17", "17_body", "17_leg", "-0.14", "-0.46", "17_face_idle", "17_face_shoot", "-0.145", "0.038", "gunParts5", "-0.284", "0.713"));
+			Rows.Add( new UnitDataRow("U18", "U18", "18", "unit18", "49155150", "100", "UnitWeapon7", "684400", "18", "18", "18_body", "18_leg", "0.02", "-0.46", "18_face_idle", "18_face_shoot", "0.127", "-0.138", "gunParts4", "0.149", "0.577"));
+			Rows.Add( new UnitDataRow("U19", "U19", "19", "unit19", "49155150", "100", "UnitWeapon8", "684400", "19", "19", "19_body", "19_leg", "0.02", "-0.42", "19_face_idle", "19_face_shoot", "0.095", "0.383", "gunParts5", "0.1", "0.585"));
+			Rows.Add( new UnitDataRow("U20", "U20", "20", "unit20", "49155150", "100", "UnitWeapon9", "684400", "20", "20", "20_body", "20_leg", "-0.096", "-0.492", "20_face_idle", "20_face_shoot", "-0.029", "0.421", "gunParts3", "-0.285", "0.449"));
+			Rows.Add( new UnitDataRow("U21", "U21", "21", "unit21", "49155150", "100", "UnitWeapon10", "684400", "21", "21", "21_body", "21_leg", "0.023", "-0.525", "21_face_idle", "21_face_shoot", "0.086", "0.489", "gunParts1", "-0.124", "0.53"));
+			Rows.Add( new UnitDataRow("U22", "U22", "22", "unit22", "49155150", "100", "UnitWeapon11", "684400", "22", "22", "22_body", "22_leg", "-0.235", "-0.486", "22_face_idle", "22_face_shoot", "0.517", "0.284", "gunParts5", "-0.32", "0.663"));
+			Rows.Add( new UnitDataRow("U23", "U23", "23", "unit23", "49155150", "100", "UnitWeapon1", "684400", "23", "23", "23_body", "23_leg", "0.348", "-0.399", "23_face_idle", "23_face_shoot", "0.373", "0.292", "gunParts6", "-0.376", "0.29"));
+			Rows.Add( new UnitDataRow("U24", "U24", "24", "unit24", "49155150", "100", "UnitWeapon2", "684400", "24", "24", "24_body", "24_leg", "0.02", "-0.46", "24_face_idle", "24_face_shoot", "0.206", "0.002", "gunParts5", "-0.033", "0.649"));
+			Rows.Add( new UnitDataRow("U25", "U25", "25", "unit25", "49155150", "100", "UnitWeapon3", "684400", "25", "25", "25_body", "25_leg", "0.02", "-0.46", "25_face_idle", "25_face_shoot", "0.16", "0.186", "gunParts7", "0.097", "0.686"));
+			Rows.Add( new UnitDataRow("U26", "U26", "26", "unit26", "49155150", "100", "UnitWeapon4", "684400", "26", "26", "26_body", "26_leg", "0.028", "-0.567", "26_face_idle", "26_face_shoot", "0.069", "0.155", "gunParts8", "-0.071", "0.603"));
+			Rows.Add( new UnitDataRow("U27", "U27", "27", "unit27", "49155150", "100", "UnitWeapon5", "684400", "27", "27", "27_body", "27_leg", "0.02", "-0.539", "27_face_idle", "27_face_shoot", "0.252", "0.182", "gunParts5", "-0.004", "0.701"));
+			Rows.Add( new UnitDataRow("U28", "U28", "28", "unit28", "49155150", "100", "UnitWeapon6", "684400", "28", "28", "28_body", "28_leg", "0.02", "-0.479", "28_face_idle", "28_face_shoot", "0.158", "-0.074", "gunParts7", "-0.207", "0.468"));
+			Rows.Add( new UnitDataRow("U29", "U29", "29", "unit29", "49155150", "100", "UnitWeapon7", "684400", "29", "29", "29_body", "29_leg", "0.02", "-0.613", "29_face_idle", "29_face_shoot", "0.126", "-0.13", "gunParts8", "-0.223", "0.31"));
+			Rows.Add( new UnitDataRow("U30", "U30", "30", "unit30", "49155150", "100", "UnitWeapon8", "684400", "30", "30", "30_body", "30_leg", "0.02", "-0.46", "30_face_idle", "30_face_shoot", "0.17", "0.228", "gunParts9", "0.018", "0.562"));
+			Rows.Add( new UnitDataRow("U31", "U31", "31", "unit31", "49155150", "100", "UnitWeapon9", "684400", "31", "31", "31_body", "31_leg", "-0.013", "-0.689", "31_face_idle", "31_face_shoot", "0.015", "0.188", "gunParts7", "-0.171", "0.536"));
+			Rows.Add( new UnitDataRow("U32", "U32", "32", "unit32", "49155150", "100", "UnitWeapon10", "684400", "32", "32", "32_body", "32_leg", "0.02", "-0.333", "32_face_idle", "32_face_shoot", "0.075", "0.264", "gunParts10", "-0.382", "0.445"));
+			Rows.Add( new UnitDataRow("U33", "U33", "33", "unit33", "49155150", "100", "UnitWeapon11", "684400", "33", "33", "33_body", "33_leg", "0.02", "-0.494", "33_face_idle", "33_face_shoot", "0.313", "0.005", "gunParts8", "-0.212", "0.609"));
+			Rows.Add( new UnitDataRow("U34", "U34", "34", "unit34", "49155150", "100", "UnitWeapon1", "684400", "34", "34", "34_body", "34_leg", "0.02", "-0.521", "34_face_idle", "34_face_shoot", "0.478", "0.341", "gunParts5", "-0.458", "0.41"));
+			Rows.Add( new UnitDataRow("U35", "U35", "35", "unit35", "49155150", "100", "UnitWeapon2", "684400", "35", "35", "35_body", "35_leg", "-0.203", "-0.533", "35_face_idle", "35_face_shoot", "0.015", "0.355", "gunParts8", "-0.37", "0.563"));
+			Rows.Add( new UnitDataRow("U36", "U36", "36", "unit36", "49155150", "100", "UnitWeapon3", "684400", "36", "36", "36_body", "36_leg", "0.02", "-0.46", "36_face_idle", "36_face_shoot", "0.184", "0.518", "gunParts11", "-0.414", "0.512"));
+			Rows.Add( new UnitDataRow("U37", "U37", "37", "unit37", "49155150", "100", "UnitWeapon4", "684400", "37", "37", "37_body", "37_leg", "0.02", "-0.6", "37_face_idle", "37_face_shoot", "0.172", "0.497", "gunParts7", "-0.338", "0.544"));
+			Rows.Add( new UnitDataRow("U38", "U38", "38", "unit38", "49155150", "100", "UnitWeapon5", "684400", "38", "38", "38_body", "38_leg", "0.057", "-0.672", "38_face_idle", "38_face_shoot", "0.256", "-0.359", "gunParts9", "-0.124", "0.673"));
+			Rows.Add( new UnitDataRow("U39", "U39", "39", "unit39", "49155150", "100", "UnitWeapon6", "684400", "39", "39", "39_body", "39_leg", "0.02", "-0.46", "39_face_idle", "39_face_shoot", "0.472", "-0.181", "gunParts6", "-0.099", "0.54"));
+			Rows.Add( new UnitDataRow("U40", "U40", "40", "unit40", "49155150", "100", "UnitWeapon7", "684400", "40", "40", "40_body", "40_leg", "0.02", "-0.805", "40_face_idle", "40_face_shoot", "-0.056", "-0.074", "gunParts11", "-0.327", "0.929"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

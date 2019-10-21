@@ -10,7 +10,66 @@ public class Unit : MonoBehaviour
     public string UID = string.Empty;
 
     public SpriteRenderer _body, _leg, _face, _weapon;
+    public TweWeapon _equipWeapon;
     public List<Transform> ListAimPoint = new List<Transform>();
+
+
+    #region 유닛 관련 Static 메소드 
+
+    /// <summary>
+    /// 유닛 현재 구매가격 
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public static long GetUnitCurrentPrice(int level) {
+        UnitDataRow r = Stock.GetMergeItemData(level);
+        long price = 0;
+
+        try {
+            price = long.Parse(r._price);
+            price = System.Convert.ToInt64(price * GetPricePow(GetUnitPurchaseStep(level)));
+        }
+        catch(System.Exception e) {
+
+            if(r == null) {
+                Debug.Log("No data Exception in GetUnitCurrentPrice :: " + level);
+                return 0;
+            }
+
+            Debug.Log("Exception in GetUnitCurrentPrice :: " + level + "/" + r._price);
+        }
+
+        
+
+        
+
+        return price;
+    }
+
+    /// <summary>
+    /// 유닛 구매 단계 불러오기 
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public static int GetUnitPurchaseStep(int level) {
+        return PIER.main.ListUnitPurchaseStep[level - 1];
+    }
+
+
+    /// <summary>
+    /// 가격 지수 연산 
+    /// </summary>
+    /// <param name="step"></param>
+    /// <returns></returns>
+    public static decimal GetPricePow(int step) {
+        decimal r = 1.05M;
+        for (int i = 0; i < step; i++) {
+            r *= r;
+        }
+
+        return r;
+    }
+    #endregion
 
 
     public void SetUnit(int level) {
@@ -26,8 +85,11 @@ public class Unit : MonoBehaviour
         _body.sprite = Stock.GetFriendlyUnitBody(_data._spriteBody);
         _leg.sprite = Stock.GetFriendlyUnitBody(_data._spriteLeg);
         _face.sprite = Stock.GetFriendlyUnitFace(_data._spriteFaceIdle);
-        _weapon.sprite = Stock.GetFriendlyUnitWeapon(_data._weaponSprite);
+        _weapon.sprite = Stock.GetFriendlyUnitWeaponSprite(_data._weaponSprite);
+
+        _equipWeapon = Stock.GetFriendlyUnitWeapon(_data._weaponid);
         
+
         _leg.transform.localPosition = new Vector2(_data._legX, _data._legY);
         _face.transform.localPosition = new Vector2(_data._faceX, _data._faceY);
         _weapon.transform.localPosition = new Vector2(_data._weaponX, _data._weaponY);
@@ -148,5 +210,6 @@ public class Unit : MonoBehaviour
     public Transform GetAimPoint(int muzzleindex) {
         return ListAimPoint[muzzleindex];
     }
+
 
 }

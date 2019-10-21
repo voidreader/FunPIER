@@ -26,17 +26,20 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] Vector3 StartDragPosition;
     [SerializeField] Transform StartDragParent;
 
+    public MergeSlot Slot; // 위치한 슬롯
+
 
 
     /// <summary>
     /// 박스 처리 
     /// </summary>
     /// <param name="isSpecialBox"></param>
-    public void SetMergeBox(int l, bool isSpecialBox = false) {
+    public void SetMergeBox(MergeSlot s, int l, bool isSpecialBox = false) {
         IsPacked = true;
         ImageItem.sprite = Stock.main.SpriteBox;
         ImageItem.SetNativeSize();
 
+        Slot = s;
 
         Level = l;
         unitRow = Stock.GetMergeItemData(Level);
@@ -128,6 +131,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
+        // 화면상 순서때문에 다른 Parent를 Set 
         transform.SetParent(MergeSystem.main.DragParent);
         LevelSign.SetActive(false);
 

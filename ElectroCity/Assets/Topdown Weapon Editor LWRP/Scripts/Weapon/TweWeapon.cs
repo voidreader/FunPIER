@@ -18,6 +18,7 @@ public class TweWeapon : ScriptableObject
     public int bulletsPerBurst = 3;//size of burst  
     public int muzzles = 1; // 총구 카운트 
     public float fireRate = .1f;
+    public int fireRateGrade = 1; // 발사속도 등급(상점용도)
     public float damage = 1;
     public bool breakOnHit = true;
     public float lifetime = .5f;//max duration of the projectile
