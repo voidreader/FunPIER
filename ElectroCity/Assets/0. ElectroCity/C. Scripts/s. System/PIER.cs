@@ -75,16 +75,14 @@ public class PIER : MonoBehaviour
     /// 머지 스팟 기억 불러오기 
     /// </summary>
     public void LoadMergeSpotMemory() {
-
         
         int l;
-
 
         // Spot 정보는 -2 : 스페셜 박스, -1 : 걍 박스, 0 : 비었음. 
         for (int i =0; i< 16; i++) { // 최대 16자리라고 가정 한다.
 
             l = PlayerPrefs.GetInt(KeySpot + i.ToString(), 0);
-            ArrSpotMemory[i] = l;
+            ArrSpotMemory[i] = l; // 배열로 저장 
 
         }
     }

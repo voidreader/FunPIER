@@ -10,7 +10,7 @@ using Doozy.Engine.Progress;
 public class ViewUnlock : MonoBehaviour
 {
     public Transform Title;
-    public Text TextUnitName;
+    public Text TextUnitName, TextDPS;
 
     public GameObject BigAura, SmallAura, ButtonBack;
     public Progressor PowerBar, RPMBar;
@@ -18,7 +18,7 @@ public class ViewUnlock : MonoBehaviour
     public GameObject Next;
 
     public Image SpriteUnlockUnit, SpriteNextUnit;
-
+    TweWeapon EquipWeapon;
 
 
 
@@ -49,6 +49,7 @@ public class ViewUnlock : MonoBehaviour
         // SpriteUnlockUnit.SetNativeSize();
         // SpriteUnlockUnit.transform.localScale *= 2;
 
+        TextDPS.text = Unit.GetDPS(unlockUnit, Stock.GetFriendlyUnitWeapon(unlockUnit._weaponid));
 
 
         // 연출 시작 

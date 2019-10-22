@@ -34,14 +34,14 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// 박스 처리 
     /// </summary>
     /// <param name="isSpecialBox"></param>
-    public void SetMergeBox(MergeSlot s, int l, bool isSpecialBox = false) {
+    public void SetMergeBox(MergeSlot s, bool isSpecialBox = false) {
         IsPacked = true;
         ImageItem.sprite = Stock.main.SpriteBox;
         ImageItem.SetNativeSize();
 
         Slot = s;
 
-        Level = l;
+        
         unitRow = Stock.GetMergeItemData(Level);
 
         HideLevel();

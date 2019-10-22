@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour
     public List<Transform> ListAimPoint = new List<Transform>();
 
 
-    #region 유닛 관련 Static 메소드 
+    #region 유닛 관련 Static 메소드 GetUnitCurrentPrice, GetUnitPurchaseStep, GetPricePow
 
     /// <summary>
     /// 유닛 현재 구매가격 
@@ -38,13 +38,10 @@ public class Unit : MonoBehaviour
 
             Debug.Log("Exception in GetUnitCurrentPrice :: " + level + "/" + r._price);
         }
-
-        
-
-        
-
         return price;
     }
+
+
 
     /// <summary>
     /// 유닛 구매 단계 불러오기 
@@ -69,6 +66,40 @@ public class Unit : MonoBehaviour
 
         return r;
     }
+
+
+    /// <summary>
+    /// DPS 구하기~
+    /// </summary>
+    /// <param name="r"></param>
+    /// <param name="w"></param>
+    /// <returns></returns>
+    public static string GetDPS(UnitDataRow r, TweWeapon w) {
+
+        decimal dps = 0;
+        long ceiledDPS = 0;
+
+        if(w.bullets == 1) { // 단발 형태 무기는 쉽다. 
+            dps = (decimal)r._attackfactor * (decimal)w.damage / (decimal)w.fireRate;
+        }
+        else {
+            dps = (decimal)r._attackfactor * (decimal)w.bullets * (decimal)w.damage; // 발사 1턴의 총 데미지.
+            dps = dps / (((decimal)w.bullets * (decimal)w.bulletRate) + (decimal)w.fireRate); // 걸리는 시간으로 나누기 (초)
+        }
+
+        ceiledDPS = (long)dps;
+        return PIER.GetBigNumber(ceiledDPS);
+
+       
+    }
+
+
+    
+
+
+
+
+
     #endregion
 
 

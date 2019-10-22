@@ -10,6 +10,15 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
 
 
 
+
+    public void SpawnMergeUnitInstantly(int l) {
+        MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();
+        item.Slot = this;
+
+        item.SetMergeItem(l);
+
+    }
+
     /// <summary>
     /// 
     /// 박스 생성
@@ -17,10 +26,10 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
     /// </summary>
     /// <param name="l">유닛 레벨</param>
     /// <param name="isSpecialBox">스페셜 박스 여부</param>
-    public void SpawnBox(int l, bool isSpecialBox = false) {
+    public void SpawnBox(bool isSpecialBox = false) {
 
         MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();
-        item.SetMergeBox(this, l);
+        item.SetMergeBox(this);
 
         mergeItem = item;
     }
