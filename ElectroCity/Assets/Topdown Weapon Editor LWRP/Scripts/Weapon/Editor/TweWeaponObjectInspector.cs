@@ -228,7 +228,7 @@ public class TweWeaponObjectInspector : Editor
 
             case 2://look and feel
                 GUILayout.Label("Basic", EditorStyles.boldLabel);
-
+                weapon.weaponSpriteID = EditorGUILayout.TextField(new GUIContent("Sprite Name", "Only 2D use."), weapon.weaponSpriteID);
                 weapon.projectileMesh = EditorGUILayout.ObjectField(new GUIContent("Mesh","The mesh of the projectile, this field is OPTIONAL"),weapon.projectileMesh, typeof(Mesh), false) as Mesh;
                 weapon.material = EditorGUILayout.ObjectField(new GUIContent("Material","The material applied to the Mesh of the projectile"),weapon.material, typeof(Material), false) as Material;
 

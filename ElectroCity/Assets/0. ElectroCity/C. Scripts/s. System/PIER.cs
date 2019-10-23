@@ -28,13 +28,11 @@ public class PIER : MonoBehaviour
 
     void Awake() {
         main = this;
-
+        LoadData();
     }
 
     // Start is called before the first frame update
     void Start() {
-        LoadData();
-
         OnRefreshPlayerInfo();
     }
 
@@ -91,12 +89,25 @@ public class PIER : MonoBehaviour
     /// 머지 스팟 위치 저장 
     /// </summary>
     public void SaveMergeSpotMemory() {
+
+        MergeItem current;
+
         for (int i = 0; i < MergeSystem.main.ListSlots.Count; i++) {
 
-            if (MergeSystem.main.ListSlots[i].mergeItem == null)
+            current = MergeSystem.main.ListSlots[i].mergeItem;
+
+            if (current == null)
                 continue;
 
-            PlayerPrefs.SetInt(KeySpot + i.ToString(), MergeSystem.main.ListSlots[i].mergeItem.Level);
+            if(current.IsPacked) {
+                if(current.IsSpecialBox)
+                    PlayerPrefs.SetInt(KeySpot + i.ToString(), -2);
+                else
+                    PlayerPrefs.SetInt(KeySpot + i.ToString(), -1);
+
+            }
+            else 
+                PlayerPrefs.SetInt(KeySpot + i.ToString(), current.Level);
         }
 
         PlayerPrefs.Save();

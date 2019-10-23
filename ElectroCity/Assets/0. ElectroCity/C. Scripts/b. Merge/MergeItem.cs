@@ -11,6 +11,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public static bool IsMerging = false;
 
+    public bool IsSpecialBox = false;
     public int Level = 0;
     
     public UnitDataRow unitRow;
@@ -38,6 +39,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         IsPacked = true;
         ImageItem.sprite = Stock.main.SpriteBox;
         ImageItem.SetNativeSize();
+        IsSpecialBox = isSpecialBox;
 
         Slot = s;
 
@@ -67,6 +69,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         ImageItem.sprite = Stock.GetFriendlyUnitUI(unitRow._spriteUI);
         ImageItem.SetNativeSize();
 
+        this.transform.localPosition = Vector3.zero;
         this.transform.localScale = Vector3.zero;
         this.transform.DOScale(1, 0.25f).SetEase(Ease.OutBack);
 
@@ -86,7 +89,11 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             return;
 
         // 
-        SetMergeItem(Level);
+        if(IsSpecialBox)
+            SetMergeItem(MergeSystem.GetSpecialBoxUnitLevel());
+        else
+            SetMergeItem(MergeSystem.GetRandomBoxUnitLevel());
+
 
     }
 

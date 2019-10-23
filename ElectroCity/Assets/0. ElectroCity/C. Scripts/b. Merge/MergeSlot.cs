@@ -10,13 +10,21 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
 
 
 
+    MergeItem GetNewMergeItem() {
+        MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();
+        item.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
+        item.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
+
+        return item;
+    }
+
 
     public void SpawnMergeUnitInstantly(int l) {
-        MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();
+
+        MergeItem item = GetNewMergeItem();
         item.Slot = this;
-
         item.SetMergeItem(l);
-
+        mergeItem = item;
     }
 
     /// <summary>
@@ -28,7 +36,7 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
     /// <param name="isSpecialBox">스페셜 박스 여부</param>
     public void SpawnBox(bool isSpecialBox = false) {
 
-        MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();
+        MergeItem item = GetNewMergeItem();
         item.SetMergeBox(this);
 
         mergeItem = item;

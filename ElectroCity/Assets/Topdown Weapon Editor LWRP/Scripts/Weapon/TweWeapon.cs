@@ -77,6 +77,7 @@ public class TweWeapon : ScriptableObject
     public bool receiveShadows = true;
     public bool trail;
 
+    public string weaponSpriteID = string.Empty;
     public ParticleSystem particleTrail;//one of two trail types
 
     public Material trailMaterial;

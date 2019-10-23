@@ -95,6 +95,7 @@ public class MergeSystem : MonoBehaviour
         ListEmptySlots = new List<MergeSlot>();
 
         //StartCoroutine(MergeRoutine());
+        SetMergeSpotMemory();
 
     }
 
@@ -124,8 +125,20 @@ public class MergeSystem : MonoBehaviour
             // Spot 정보는 -2 : 스페셜 박스, -1 : 걍 박스, 0 : 비었음. 
             switch (PIER.main.ArrSpotMemory[i]) {
                 case -2:
-                    // ListSlots[i].SpawnBox()
+                    ListSlots[i].SpawnBox(true);
                     break;
+                case -1:
+                    ListSlots[i].SpawnBox(false);
+                    break;
+
+                case 0:
+                    break;
+
+                default:
+                    ListSlots[i].SpawnMergeUnitInstantly(PIER.main.ArrSpotMemory[i]);
+                    break;
+
+                   
 
 
             }
@@ -247,5 +260,15 @@ public class MergeSystem : MonoBehaviour
 
 
     #endregion
+
+
+    private void OnApplicationPause(bool pause) {
+        if (pause)
+            PIER.main.SaveMergeSpotMemory();
+    }
+
+    private void OnApplicationQuit() {
+        PIER.main.SaveMergeSpotMemory();
+    }
 
 }

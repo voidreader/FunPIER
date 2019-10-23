@@ -81,10 +81,13 @@ public class Unit : MonoBehaviour
 
         if(w.bullets == 1) { // 단발 형태 무기는 쉽다. 
             dps = (decimal)r._attackfactor * (decimal)w.damage / (decimal)w.fireRate;
+            Debug.Log(r._displayname + " Single Shot DPS :: " + dps);
         }
         else {
             dps = (decimal)r._attackfactor * (decimal)w.bullets * (decimal)w.damage; // 발사 1턴의 총 데미지.
             dps = dps / (((decimal)w.bullets * (decimal)w.bulletRate) + (decimal)w.fireRate); // 걸리는 시간으로 나누기 (초)
+
+            Debug.Log(r._displayname + " Multi Shot DPS :: " + dps);
         }
 
         ceiledDPS = (long)dps;
@@ -116,18 +119,17 @@ public class Unit : MonoBehaviour
         _body.sprite = Stock.GetFriendlyUnitBody(_data._spriteBody);
         _leg.sprite = Stock.GetFriendlyUnitBody(_data._spriteLeg);
         _face.sprite = Stock.GetFriendlyUnitFace(_data._spriteFaceIdle);
-        _weapon.sprite = Stock.GetFriendlyUnitWeaponSprite(_data._weaponSprite);
+        
 
         _equipWeapon = Stock.GetFriendlyUnitWeapon(_data._weaponid);
-        
+        _weapon.sprite = Stock.GetFriendlyUnitWeaponSprite(_equipWeapon.weaponSpriteID);
+        _weapon.transform.localScale = new Vector3(_data._weaponscale, _data._weaponscale, 1);
+            
+
 
         _leg.transform.localPosition = new Vector2(_data._legX, _data._legY);
         _face.transform.localPosition = new Vector2(_data._faceX, _data._faceY);
         _weapon.transform.localPosition = new Vector2(_data._weaponX, _data._weaponY);
-
-        ListAimPoint.Clear(); // Aim Point
-
-
         SetAimPoint();
     }
 
@@ -135,15 +137,8 @@ public class Unit : MonoBehaviour
     /// AimPoint설정 
     /// </summary>
     void SetAimPoint() {
-        /*
-        Transform[] tr = this.GetComponentsInChildren<Transform>(true);
 
-        for(int i=0; i < tr.Length; i++) {
-            if(tr[i].name.Contains("AimPoint")) {
-                ListAimPoint.Add(tr[i]);
-            }
-        }
-        */
+        _weapon.transform.localRotation = Quaternion.identity;
 
         if (ListAimPoint.Count == 0)
             return;
@@ -153,9 +148,12 @@ public class Unit : MonoBehaviour
         }
 
         // 무기 이름에 따라 AimPoint 다르게 설정
-        switch(_data._weaponSprite) {
+        switch(_equipWeapon.weaponSpriteID) {
 
             case "gunParts1":
+
+                _weapon.transform.localEulerAngles = new Vector3(0, 0, 30);
+
                 ListAimPoint[0].localPosition = new Vector3(0.297f, 0.07f);
                 ListAimPoint[0].gameObject.SetActive(true);
                 break;
@@ -192,11 +190,13 @@ public class Unit : MonoBehaviour
                 break;
 
             case "gunParts8":
+                _weapon.transform.localEulerAngles = new Vector3(0, 0, 30);
                 ListAimPoint[0].localPosition = new Vector3(0.339f, 0.03f);
                 ListAimPoint[0].gameObject.SetActive(true);
                 break;
 
             case "gunParts9":
+                _weapon.transform.localEulerAngles = new Vector3(0, 0, 30);
                 ListAimPoint[0].localPosition = new Vector3(0.348f, 0.036f);
                 ListAimPoint[0].gameObject.SetActive(true);
                 break;

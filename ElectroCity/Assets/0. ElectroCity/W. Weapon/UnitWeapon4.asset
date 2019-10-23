@@ -23,7 +23,7 @@ MonoBehaviour:
   muzzles: 2
   fireRate: 0.4
   fireRateGrade: 10
-  damage: 1
+  damage: 100
   breakOnHit: 1
   lifetime: 5
   innacuracy: {x: 0, y: 0, z: 0}
@@ -79,6 +79,7 @@ MonoBehaviour:
   material: {fileID: 0}
   receiveShadows: 0
   trail: 0
+  weaponSpriteID: gunParts4
   particleTrail: {fileID: 8322644942519737886, guid: cca7eee3794d5904f9cd9aef41011f9d,
     type: 3}
   trailMaterial: {fileID: 0}

@@ -15,14 +15,14 @@ namespace Google2u
 	public class UnlockDataRow : IGoogle2uRow
 	{
 		public int _level;
-		public int _new;
+		public int _newinshop;
 		public int _coinlimit;
 		public int _adlimit;
 		public int _gemlimit;
 		public int _quick;
 		public int _boxlimit;
 		public int _sbox;
-		public UnlockDataRow(string __ID, string __level, string __new, string __coinlimit, string __adlimit, string __gemlimit, string __quick, string __boxlimit, string __sbox) 
+		public UnlockDataRow(string __ID, string __level, string __newinshop, string __coinlimit, string __adlimit, string __gemlimit, string __quick, string __boxlimit, string __sbox) 
 		{
 			{
 			int res;
@@ -33,10 +33,10 @@ namespace Google2u
 			}
 			{
 			int res;
-				if(int.TryParse(__new, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
-					_new = res;
+				if(int.TryParse(__newinshop, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_newinshop = res;
 				else
-					Debug.LogError("Failed To Convert _new string: "+ __new +" to int");
+					Debug.LogError("Failed To Convert _newinshop string: "+ __newinshop +" to int");
 			}
 			{
 			int res;
@@ -101,7 +101,7 @@ namespace Google2u
 					ret = _level.ToString();
 					break;
 				case 1:
-					ret = _new.ToString();
+					ret = _newinshop.ToString();
 					break;
 				case 2:
 					ret = _coinlimit.ToString();
@@ -134,8 +134,8 @@ namespace Google2u
 				case "level":
 					ret = _level.ToString();
 					break;
-				case "new":
-					ret = _new.ToString();
+				case "newinshop":
+					ret = _newinshop.ToString();
 					break;
 				case "coinlimit":
 					ret = _coinlimit.ToString();
@@ -163,7 +163,7 @@ namespace Google2u
 		{
 			string ret = System.String.Empty;
 			ret += "{" + "level" + " : " + _level.ToString() + "} ";
-			ret += "{" + "new" + " : " + _new.ToString() + "} ";
+			ret += "{" + "newinshop" + " : " + _newinshop.ToString() + "} ";
 			ret += "{" + "coinlimit" + " : " + _coinlimit.ToString() + "} ";
 			ret += "{" + "adlimit" + " : " + _adlimit.ToString() + "} ";
 			ret += "{" + "gemlimit" + " : " + _gemlimit.ToString() + "} ";
@@ -203,7 +203,7 @@ namespace Google2u
 			Rows.Add( new UnlockDataRow("unlock1", "1", "0", "1", "0", "0", "1", "1", "0"));
 			Rows.Add( new UnlockDataRow("unlock2", "2", "0", "2", "0", "0", "1", "1", "0"));
 			Rows.Add( new UnlockDataRow("unlock3", "3", "0", "3", "0", "0", "1", "1", "0"));
-			Rows.Add( new UnlockDataRow("unlock4", "4", "0", "3", "0", "0", "1", "1", "0"));
+			Rows.Add( new UnlockDataRow("unlock4", "4", "0", "3", "0", "0", "1", "2", "0"));
 			Rows.Add( new UnlockDataRow("unlock5", "5", "0", "3", "0", "0", "2", "3", "0"));
 			Rows.Add( new UnlockDataRow("unlock6", "6", "4", "3", "0", "4", "2", "3", "0"));
 			Rows.Add( new UnlockDataRow("unlock7", "7", "5", "3", "0", "5", "3", "4", "0"));
