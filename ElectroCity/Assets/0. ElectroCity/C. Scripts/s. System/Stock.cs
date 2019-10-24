@@ -24,9 +24,10 @@ public class Stock : MonoBehaviour
 
 
 
-    [Header("- GameObject -")]
+    [Header("- GameObject & Prefab -")]
     public GameObject ObjectMergeItem;
-
+    public GameObject ObjectMinion;
+    public GameObject ObjectBoss;
 
     
 
@@ -50,6 +51,12 @@ public class Stock : MonoBehaviour
     public List<Sprite> ListFriendlyUnitFace;
     public List<Sprite> ListFriendlyWeapon;
     public List<Sprite> ListFriendlyUnitUI;
+
+    [Header("- Minion Unit Sprites -")]
+    public List<Sprite> ListMinionLeg;
+    public List<Sprite> ListMinionBody;
+
+
 
     [Header("- Weapon List -")]
     public List<TweWeapon> ListWeapon;
@@ -152,11 +159,38 @@ public class Stock : MonoBehaviour
 
         return null;
     }
-    
+
 
 
     #endregion
 
+    #region Minion
 
+    public static MinionDataRow GetMinionData(int id) {
+        return MinionData.Instance.Rows[id - 1];
+    }
+
+    public static Sprite GetMinionLeg(string n) {
+        for(int i=0;i<main.ListMinionLeg.Count;i++) {
+            if(main.ListMinionLeg[i].name == n) {
+                return main.ListMinionLeg[i];
+            }
+        }
+
+        return null;
+    }
+
+    public static Sprite GetMinionBody(string n) {
+        for (int i = 0; i < main.ListMinionBody.Count; i++) {
+            if (main.ListMinionBody[i].name == n) {
+                return main.ListMinionBody[i];
+            }
+        }
+
+        return null;
+    }
+
+
+    #endregion
 
 }

@@ -9,6 +9,7 @@ public class UnitAssistantEditor : Editor
 {
     UnitAssistant targetUnit = null;
     Unit unit = null;
+    Minion minion = null;
     int unitLevel = 0;
 
     public override void OnInspectorGUI() {
@@ -18,7 +19,7 @@ public class UnitAssistantEditor : Editor
         }
 
         targetUnit = (UnitAssistant)target;
-        unit = targetUnit.GetComponent<Unit>();
+        
 
         GUILayout.Label("INPUT UNIT LEVEL", EditorStyles.centeredGreyMiniLabel, GUILayout.ExpandWidth(true));
         EditorGUILayout.BeginHorizontal();
@@ -26,12 +27,13 @@ public class UnitAssistantEditor : Editor
         unitLevel = EditorGUILayout.IntField(unitLevel, GUILayout.Width(100));
 
         if (GUILayout.Button("FRIENDLY UNIT", GUILayout.Width(100))) {
-            // enemy.SetEnemy(EnemyType.Normal, enemyID);
+            unit = targetUnit.GetComponent<Unit>();
             unit.SetUnit(unitLevel);
         }
 
         if (GUILayout.Button("MINION UNIT", GUILayout.Width(100))) {
-            // enemy.SetEnemy(EnemyType.Normal, enemyID);
+            minion = targetUnit.GetComponent<Minion>();
+            minion.InitMinion(unitLevel, 100);
         }
 
         EditorGUILayout.EndHorizontal();

@@ -106,12 +106,21 @@ public class Unit : MonoBehaviour
     #endregion
 
 
+
+    /// <summary>
+    /// 유닛 기본정보 설정 
+    /// </summary>
+    /// <param name="level"></param>
     public void SetUnit(int level) {
 
         SetUnit(UnitData.Instance.GetRow("U" + level.ToString()));
         
     }
 
+    /// <summary>
+    /// 유닛 기본 정보 설정
+    /// </summary>
+    /// <param name="r"></param>
     public void SetUnit(UnitDataRow r) {
         _data = r;
         UID = _data._uid;
@@ -132,6 +141,8 @@ public class Unit : MonoBehaviour
         _weapon.transform.localPosition = new Vector2(_data._weaponX, _data._weaponY);
         SetAimPoint();
     }
+
+    #region AimPoint 처리 
 
     /// <summary>
     /// AimPoint설정 
@@ -241,6 +252,18 @@ public class Unit : MonoBehaviour
     public Transform GetAimPoint(int muzzleindex) {
         return ListAimPoint[muzzleindex];
     }
+
+    #endregion
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public float GetLegPositionY() {
+        return _leg.transform.position.y;
+    }
+
 
 
 }

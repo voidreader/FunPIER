@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     int DPSLevel, DiscountLevel;
 
+    public EnemyInfo CurrentEnemy = null;
+
     // 캐릭터 장착 슬롯
     [Header("Unit Equipment")]
     public List<EquipSlot> ListEquipSlot;
@@ -31,15 +33,37 @@ public class GameManager : MonoBehaviour
     public Text TextPassiveDPS, TextPassiveDiscount;
 
 
+    [Header("ETC")]
+    public Transform FakeTarget;
+
+    public Vector2[,] arrBattlePosition = new Vector2[4, 2];
+    //{ new Vector2(-0.319f, 1.869f), new Vector2(-0.263f, 1.239f), new Vector2(-1.082f, 1.712f), new Vector2(-0.932f, 1.05f) },  {new Vector2(-1.951f, 1.689f), new Vector2(-1.711f, 1.183f), new Vector2(-2.719f, 1.869f), new Vector2(-2.569f, 1.05f) }};
+
     const string KeyEquipSlot = "EquipSlot";
     const string KeyStage = "CurrentStage";
     const string KeyKillCountg = "CurrentKillCount";
 
     const int MaxKillCount = 200;
 
+
     void Awake() {
         main = this;
         PIER.OnRefreshPlayerInfo += RefreshInfo;
+        // mainCamera.aspect = 9f / 16f;
+        Camera.main.aspect = 9f / 16f;
+
+        arrBattlePosition[3, 0] = new Vector2(-0.319f, 1.869f);
+        arrBattlePosition[3, 1] = new Vector2(-0.263f, 1.239f);
+
+        arrBattlePosition[2, 0] = new Vector2(-0.932f, 1.05f);
+        arrBattlePosition[2, 1] = new Vector2(-1.082f, 1.712f);
+
+        arrBattlePosition[1, 0] = new Vector2(-0.319f, 1.869f);
+        arrBattlePosition[1, 1] = new Vector2(-0.263f, 1.239f);
+
+        arrBattlePosition[0, 0] = new Vector2(-0.319f, 1.869f);
+        arrBattlePosition[0, 1] = new Vector2(-0.263f, 1.239f);
+
     }
 
 
@@ -51,7 +75,52 @@ public class GameManager : MonoBehaviour
 
         LoadStageMemory();
         LoadEquipSlotMemory();
+
+        // 스테이지 진행 시작 
+        StartCoroutine(PlayRoutine());
+
     }
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.K) && CurrentEnemy) {
+            CurrentEnemy.SetDamage(1000);
+        }
+    }
+
+    IEnumerator PlayRoutine() {
+
+        // 보스 및 미니언 소환 여부 체크 
+
+        CurrentEnemy = GetNewEnemy(false);
+
+        while (true) {
+            yield return null;
+
+
+            if(!CurrentEnemy || CurrentEnemy.IsDestroy()) {
+                CurrentEnemy = GetNewEnemy(false);
+
+            }
+
+        }
+    }
+
+
+    /// <summary>
+    /// 새로운 몹 생성 
+    /// </summary>
+    /// <param name="isBoss"></param>k
+    /// <returns></returns>
+    EnemyInfo GetNewEnemy(bool isBoss) {
+
+        
+
+        EnemyInfo e = Instantiate(Stock.main.ObjectMinion, new Vector3(2.6f, 2.4f, 0), Quaternion.identity).GetComponent<EnemyInfo>();
+        e.InitMinion(Random.Range(1,8), 100);
+        return e;
+
+    }
+
 
     void RefreshInfo() {
 

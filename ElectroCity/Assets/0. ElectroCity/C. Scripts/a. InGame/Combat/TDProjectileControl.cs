@@ -429,7 +429,8 @@ public class TDProjectileControl : MonoBehaviour
         breakhit = false;
 
         if (weapon.homing) {
-            HomingCheck(weapon.homingCheckInitialRange);
+            // HomingCheck(weapon.homingCheckInitialRange);
+            FindHomingTarget();
 
         }
 
@@ -470,6 +471,20 @@ public class TDProjectileControl : MonoBehaviour
         }
 
 
+
+    }
+
+
+    /// <summary>
+    /// 범위로 찾지 않음. 
+    /// </summary>
+    void FindHomingTarget() {
+        if(!GameManager.main.CurrentEnemy) {
+            homingTarget = GameManager.main.FakeTarget.gameObject;
+        }
+        else {
+            homingTarget = GameManager.main.CurrentEnemy.gameObject;
+        }
 
     }
 
