@@ -87,5 +87,15 @@ public class SubscribeView : MonoBehaviour
         GameEventMessage.SendEvent("CloseEvent");
         UIViewManager.main.ConfirmSpecialistMessage();
     }
+
+
+    public void OnClickTerms() {
+        Application.OpenURL("http://www.playinglab.co.kr/tos.html");
+    }
+
+    public void OnClickPrivacy() {
+
+        Application.OpenURL("http://www.playinglab.co.kr/privacy.html");
+    }
     
 }
