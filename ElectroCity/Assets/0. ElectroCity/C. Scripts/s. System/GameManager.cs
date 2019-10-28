@@ -32,11 +32,18 @@ public class GameManager : MonoBehaviour
     public GameObject PassiveDiscount;
     public Text TextPassiveDPS, TextPassiveDiscount;
 
+    [Header("Battle Position")]
+    public List<BattlePosition> ListBP; // 전투 위치 자리 
+    public List<BattlePosition> ListTempBP; // 임시 리스트 
+    public Transform BattleField;
+
 
     [Header("ETC")]
     public Transform FakeTarget;
 
-    public Vector2[,] arrBattlePosition = new Vector2[4, 2];
+
+
+    // public Vector2[,] arrBattlePosition = new Vector2[4, 2];
     //{ new Vector2(-0.319f, 1.869f), new Vector2(-0.263f, 1.239f), new Vector2(-1.082f, 1.712f), new Vector2(-0.932f, 1.05f) },  {new Vector2(-1.951f, 1.689f), new Vector2(-1.711f, 1.183f), new Vector2(-2.719f, 1.869f), new Vector2(-2.569f, 1.05f) }};
 
     const string KeyEquipSlot = "EquipSlot";
@@ -52,6 +59,8 @@ public class GameManager : MonoBehaviour
         // mainCamera.aspect = 9f / 16f;
         Camera.main.aspect = 9f / 16f;
 
+
+        /*
         arrBattlePosition[3, 0] = new Vector2(-0.319f, 1.869f);
         arrBattlePosition[3, 1] = new Vector2(-0.263f, 1.239f);
 
@@ -63,6 +72,7 @@ public class GameManager : MonoBehaviour
 
         arrBattlePosition[0, 0] = new Vector2(-0.319f, 1.869f);
         arrBattlePosition[0, 1] = new Vector2(-0.263f, 1.239f);
+        */
 
     }
 
@@ -144,7 +154,96 @@ public class GameManager : MonoBehaviour
 
     }
 
-    #region Equip Slot, Data Save & Load
+    #region Equip Slot, Battle Position Data Save & Load
+
+
+    /// <summary>
+    /// 유닛 장착
+    /// </summary>
+    /// <param name="u"></param>
+    public void SetEquipUnit(MergeItem item) {
+        BattlePosition bp = GetBattlePosition(item.unitRow);
+        item.SetBattle(true);
+
+        bp.unitData = item.unitRow;
+        Unit equipUnit = Instantiate(Stock.main.ObjectUnit, bp.pos, Quaternion.identity, BattleField).GetComponent<Unit>();
+        
+        equipUnit.SetUnit(item.unitRow._level);
+        bp.SetUnit(equipUnit, item);
+
+        
+
+        RefreshEquipSlot();
+        
+    }
+
+
+    /// <summary>
+    /// Middle 장착 슬롯 리프레쉬
+    /// </summary>
+    void RefreshEquipSlot() {
+        int equipUnitCount = 0;
+        equipUnitCount = GetEquipUnitCount();
+        for (int i = 0; i < equipUnitCount; i++) {
+            ListEquipSlot[i].EquipUnit(); // 슬롯 처리 
+        }
+    }
+
+    /// <summary>
+    /// 활성화 유닛 몇개인지 체크
+    /// </summary>
+    /// <returns></returns>
+    int GetEquipUnitCount() {
+
+        int cnt = 0;
+
+        for(int i=0; i<ListBP.Count;i++) {
+            if (ListBP[i].isOccufied)
+                cnt++;
+        }
+
+        return cnt;
+    }
+
+    /// <summary>
+    /// 배틀 유닛 불러들이기 
+    /// </summary>
+    /// <param name="u"></param>
+    /// <returns></returns>
+    public void CallbackBattleUnit(MergeItem item) {
+
+        for(int i=0; i<ListBP.Count;i++) {
+            if(ListBP[i].mergeItem == item) {
+                item.SetBattle(false);
+                ListBP[i].CleanUnit();
+                RefreshEquipSlot();
+                return;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// 장착 위치 찾기 (랜덤)
+    /// </summary>
+    /// <param name="u"></param>
+    /// <returns></returns>
+    public BattlePosition GetBattlePosition(UnitDataRow u) {
+        int level = u._level; // 장착할 유닛의 레벨을 구한다. 
+
+        ListTempBP.Clear();
+        for (int i = 0; i < ListBP.Count; i++) {
+            ListTempBP.Add(ListBP[i]); 
+        }
+
+        for(int i=ListTempBP.Count-1; i>=0; i--) {
+            if(ListTempBP[i].isOccufied) {
+                ListTempBP.Remove(ListTempBP[i]); // 이미 점유된 곳 제외 
+            }
+        }
+
+        return ListTempBP[Random.Range(0, ListTempBP.Count)];
+    }
 
     /// <summary>
     /// 스테이지 진행도 불러오기 
@@ -169,6 +268,7 @@ public class GameManager : MonoBehaviour
 
     void LoadEquipSlotMemory() {
 
+        /*
         int level;
 
         for(int i=0; i<ListEquipSlot.Count;i++) {
@@ -179,9 +279,12 @@ public class GameManager : MonoBehaviour
 
             ListEquipSlot[i].EquipUnit(UnitData.Instance.Rows[level - 1]);
         }
+        */
     }
 
     void SaveEquipSlotMemory() {
+
+        /*
         for(int i =0; i<ListEquipSlot.Count; i++) {
             if(ListEquipSlot[i].equipUnit == null)
                 PlayerPrefs.SetInt(KeyEquipSlot + i.ToString(), 0);
@@ -190,6 +293,7 @@ public class GameManager : MonoBehaviour
         }
 
         PlayerPrefs.Save();
+        */
 
     }
     #endregion

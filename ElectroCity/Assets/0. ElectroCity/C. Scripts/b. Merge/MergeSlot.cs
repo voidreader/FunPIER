@@ -53,7 +53,7 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
         
 
         // 아이템 존재하는 경우 
-        if(mergeItem) {
+        if(mergeItem && mergeItem != MergeSystem.DraggingItem) {
             // 머지 체크 
             Debug.Log("OnDrop Not Empty! :: + " + this.gameObject.name);
 
@@ -61,11 +61,7 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
                 // 머지!
                 MergeUnit(mergeItem, MergeSystem.DraggingItem);
             }
-            else {
-                // .... 
-                MergeSystem.main.SetTargetSlot(null);
-                
-            }
+            
 
         }
         else { // 빈 슬롯 

@@ -212,6 +212,7 @@ public class TweProjectileControl : MonoBehaviour
             DamageLook2D();
 
             damagehit = true;
+            /*
             TweEnemyStatConrol esc = collision.gameObject.GetComponent<TweEnemyStatConrol>();//THIS IS THE DAMAGE PASSING
 
 
@@ -221,6 +222,7 @@ public class TweProjectileControl : MonoBehaviour
             else {
                 Debug.Log(collision.transform.name + " is tagged such that is taking damage, but has no enemyStatControl script");
             }
+            */
 
             if (weapon.breakOnHit) {
                 ProjectileDestroy2D();

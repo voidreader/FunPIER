@@ -124,11 +124,11 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   trailAlignment: 0
   trailTextureMode: 0
-  initalForwardSpeed: 30
+  initalForwardSpeed: 20
   limitSpeed: 1
-  maxForwardSpeed: 50
-  minForwardSpeed: -1000
-  forwardAcceleration: 0
+  maxForwardSpeed: 10
+  minForwardSpeed: 5
+  forwardAcceleration: -5
   rotationSpeed: {x: 0, y: 0, z: 0}
   rotationSpeed2D: 500
   is2D: 1
@@ -145,4 +145,4 @@ MonoBehaviour:
   usePool: 1
   poolSize: 10
   autoExpansion: 5
-  poolID: 155
+  poolID: 203

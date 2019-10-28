@@ -28,6 +28,7 @@ public class Stock : MonoBehaviour
     public GameObject ObjectMergeItem;
     public GameObject ObjectMinion;
     public GameObject ObjectBoss;
+    public GameObject ObjectUnit;
 
     
 
@@ -55,6 +56,12 @@ public class Stock : MonoBehaviour
     [Header("- Minion Unit Sprites -")]
     public List<Sprite> ListMinionLeg;
     public List<Sprite> ListMinionBody;
+
+    [Header("- Boss Unit Sprites -")]
+    public List<Sprite> ListBossHead;
+    public List<Sprite> ListBossBody;
+    public List<Sprite> ListBossLeg;
+    public List<Sprite> ListBossParts;
 
 
 
@@ -164,11 +171,82 @@ public class Stock : MonoBehaviour
 
     #endregion
 
-    #region Minion
+    #region Minion & Boss
+
+    /// <summary>
+    /// 보스 데이터 가져오기 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static BossDataRow GetBossData(int id) {
+        return BossData.Instance.Rows[id - 1];
+    }
+
+
+
+    /// <summary>
+    /// 보스 부품 스프라이트
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static Sprite GetBossParts(string n) {
+        for (int i = 0; i < main.ListBossParts.Count; i++) {
+            if (main.ListBossParts[i].name == n) {
+                return main.ListBossParts[i];
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 보스 다리 스프라이트
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static Sprite GetBossBody(string n) {
+        for (int i = 0; i < main.ListBossBody.Count; i++) {
+            if (main.ListBossBody[i].name == n) {
+                return main.ListBossBody[i];
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 보스 다리 스프라이트
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static Sprite GetBossLeg(string n) {
+        for (int i = 0; i < main.ListBossLeg.Count; i++) {
+            if (main.ListBossLeg[i].name == n) {
+                return main.ListBossLeg[i];
+            }
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 보스 헤드 스프라이트
+    /// </summary>
+    /// <param name="n"></param>
+    /// <returns></returns>
+    public static Sprite GetBossHead(string n) {
+        for (int i = 0; i < main.ListBossHead.Count; i++) {
+            if (main.ListBossHead[i].name == n) {
+                return main.ListBossHead[i];
+            }
+        }
+        return null;
+    }
+
+
 
     public static MinionDataRow GetMinionData(int id) {
         return MinionData.Instance.Rows[id - 1];
     }
+
+
 
     public static Sprite GetMinionLeg(string n) {
         for(int i=0;i<main.ListMinionLeg.Count;i++) {

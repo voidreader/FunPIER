@@ -48,6 +48,7 @@ MonoBehaviour:
   ObjectMinion: {fileID: 9189704301506654213, guid: 89fdef56a563be341bf453bced593457,
     type: 3}
   ObjectBoss: {fileID: 0}
+  ObjectUnit: {fileID: 0}
   SpriteBox: {fileID: 21300000, guid: 00b2495dc24b08345ba40ed466fe36c0, type: 3}
   SpriteGoldBox: {fileID: 21300000, guid: 770636605709ce644a074280dc8706a2, type: 3}
   SpriteBottomButtonInactive: {fileID: 21300000, guid: 0e61d6ecf47c60744825c0b7a8ba2386,
@@ -328,6 +329,54 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6e1bc2f3e9540ca43831da9e996c5326, type: 3}
   - {fileID: 21300000, guid: 4b1e68654ab3df044a3d1c38038e6f96, type: 3}
   - {fileID: 21300000, guid: 1866af32ba5a54941b599919a58323d4, type: 3}
+  ListBossHead:
+  - {fileID: 21300000, guid: cde95d528d490784d9f9791760109f13, type: 3}
+  - {fileID: 21300000, guid: 42dcdc19b341dcd47a2290f80e2dc524, type: 3}
+  - {fileID: 21300000, guid: 9d23d3290b7fe354ba939ef0fd69d478, type: 3}
+  - {fileID: 21300000, guid: 87486ebf2fb227f4485ce3f95539104d, type: 3}
+  - {fileID: 21300000, guid: f63792941db3e5c49a971e4d6831a612, type: 3}
+  - {fileID: 21300000, guid: 4b0bdb4522280ce4f9c006dd06e65f06, type: 3}
+  - {fileID: 21300000, guid: b30ad467d519a6e49bc4254beed38651, type: 3}
+  - {fileID: 21300000, guid: 32b2bfe3e83a62d4893c6f0ec49de2ba, type: 3}
+  - {fileID: 21300000, guid: 03b1b07f67cc71c419e081f3f792195b, type: 3}
+  - {fileID: 21300000, guid: 5fe23b911c92e20428e9630f6b241367, type: 3}
+  - {fileID: 21300000, guid: 1b19803683bf7954a912facabab9a199, type: 3}
+  ListBossBody:
+  - {fileID: 21300000, guid: a0f8a681642425042aac41ce4fb890a9, type: 3}
+  - {fileID: 21300000, guid: 2010aeafd37eeaa4f8755fdcf76f250c, type: 3}
+  - {fileID: 21300000, guid: 0f6b6af59e32a5444bf2d1a0dc727032, type: 3}
+  - {fileID: 21300000, guid: d53ec559e426d8e43891226c1a71ef79, type: 3}
+  - {fileID: 21300000, guid: 77176b7b6bf431e4e80d5db817ff656b, type: 3}
+  - {fileID: 21300000, guid: 574a15bc6641ae546b1e5e8f00320109, type: 3}
+  - {fileID: 21300000, guid: 5db7708501c76a8498e2c366d9cf8d56, type: 3}
+  - {fileID: 21300000, guid: bd2885574785fe6489ec6ebce2aab24e, type: 3}
+  - {fileID: 21300000, guid: 18afe9c9199a5ae4b8e532af965737da, type: 3}
+  - {fileID: 21300000, guid: dc878b98bee805b4d9cac7fabe4d812f, type: 3}
+  - {fileID: 21300000, guid: 5d06a254a8623074d881119e1a13e803, type: 3}
+  - {fileID: 21300000, guid: aef16882675fa254695ffafda73e5072, type: 3}
+  ListBossLeg:
+  - {fileID: 21300000, guid: adb1eb5169bc68a409f5e5b43debfdc9, type: 3}
+  - {fileID: 21300000, guid: 286ee127b318f734697048b43666b2c6, type: 3}
+  - {fileID: 21300000, guid: 5764c0a9c591e09439680653931c2a0b, type: 3}
+  - {fileID: 21300000, guid: cc03f012145867c4b8efa55cbe802bd3, type: 3}
+  - {fileID: 21300000, guid: 738d8a7cf920c6e4b91a8d3559047665, type: 3}
+  - {fileID: 21300000, guid: 28ae5a1b9c8c4124cbd4b58ce23d5d6c, type: 3}
+  - {fileID: 21300000, guid: 1cacc122d0fc8fe49a025c7b48dc2c6e, type: 3}
+  - {fileID: 21300000, guid: 097b5a61ffb40884185af5ffc89ff937, type: 3}
+  - {fileID: 21300000, guid: 242d26b4e1ce9524ca8818e6be969e90, type: 3}
+  - {fileID: 21300000, guid: fa5287927bc87fb4796116736d27884b, type: 3}
+  - {fileID: 21300000, guid: 96c126abdb7b35e49a469b81a013236a, type: 3}
+  - {fileID: 21300000, guid: e5d42a0960b25404d946e218d15e624e, type: 3}
+  - {fileID: 21300000, guid: 91dd91a1d6a9d1144a78f4036c3c5ec2, type: 3}
+  - {fileID: 21300000, guid: b73d37b4565933c4cb22acb8ba5c5d04, type: 3}
+  ListBossParts:
+  - {fileID: 21300000, guid: cf574321b27a1fc46943f73bcee19fb0, type: 3}
+  - {fileID: 21300000, guid: 5def29884c675e845ad9e51b1f4223c4, type: 3}
+  - {fileID: 21300000, guid: 9e2eb479c95c55a4baebbc1dc34418f1, type: 3}
+  - {fileID: 21300000, guid: b274f9767a947de4fbc1ce81397d8b7a, type: 3}
+  - {fileID: 21300000, guid: fc3a4115a12ee834caa6c44cde4c4541, type: 3}
+  - {fileID: 21300000, guid: 0f65b342db51ae040ba1d4cd5898e021, type: 3}
+  - {fileID: 21300000, guid: f5d62af5f4d568542949f30b215539ce, type: 3}
   ListWeapon:
   - {fileID: 11400000, guid: 8224b0d9762cfcf4c907298c772f4cb7, type: 2}
   - {fileID: 11400000, guid: 5433148adbdbdca41901bbd6b52636db, type: 2}

@@ -4809,6 +4809,7 @@ GameObject:
   - component: {fileID: 4480059289762577300}
   - component: {fileID: 4480059289760902082}
   - component: {fileID: 1345875205248009444}
+  - component: {fileID: -5965728289916668246}
   m_Layer: 0
   m_Name: LightningExplosionPink
   m_TagString: Untagged
@@ -9534,6 +9535,19 @@ ParticleSystemRenderer:
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
 --- !u!114 &1345875205248009444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4480059289776497572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f38a7d7e860c94eadc61f73f69a261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ps: {fileID: 0}
+--- !u!114 &-5965728289916668246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

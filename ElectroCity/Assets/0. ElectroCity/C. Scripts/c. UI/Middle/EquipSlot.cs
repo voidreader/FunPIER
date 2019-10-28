@@ -8,7 +8,6 @@ public class EquipSlot : MonoBehaviour
 {
 
     public int index = 0;
-    public UnitDataRow equipUnit;  // 장착 유닛 
     public Image image;
 
     [Header(" - Sprite Source - ")]
@@ -23,22 +22,20 @@ public class EquipSlot : MonoBehaviour
     public void InitEquipSlot(int i) {
         index = i;
         image.sprite = SpriteUnEquip;
-
-        equipUnit = null;
-
     }
 
-    public void EquipUnit(UnitDataRow r) {
-        equipUnit = r;
-
+    public void EquipUnit() {
         image.sprite = SpriteEquip;
     }
 
     public void UnEquipUnit() {
-        equipUnit = null;
+        
         image.sprite = SpriteUnEquip;
     }
 
+    public bool IsEquip() {
+        return image.sprite == SpriteEquip;
+    }
 
 
 

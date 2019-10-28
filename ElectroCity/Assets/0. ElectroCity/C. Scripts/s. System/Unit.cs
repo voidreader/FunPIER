@@ -125,6 +125,8 @@ public class Unit : MonoBehaviour
         _data = r;
         UID = _data._uid;
 
+        this.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+
         _body.sprite = Stock.GetFriendlyUnitBody(_data._spriteBody);
         _leg.sprite = Stock.GetFriendlyUnitBody(_data._spriteLeg);
         _face.sprite = Stock.GetFriendlyUnitFace(_data._spriteFaceIdle);
@@ -133,6 +135,7 @@ public class Unit : MonoBehaviour
         _equipWeapon = Stock.GetFriendlyUnitWeapon(_data._weaponid);
         _weapon.sprite = Stock.GetFriendlyUnitWeaponSprite(_equipWeapon.weaponSpriteID);
         _weapon.transform.localScale = new Vector3(_data._weaponscale, _data._weaponscale, 1);
+        this.GetComponent<UnitCombat>().weapon = _equipWeapon;
             
 
 

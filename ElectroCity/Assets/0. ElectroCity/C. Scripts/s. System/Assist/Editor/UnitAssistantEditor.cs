@@ -10,6 +10,7 @@ public class UnitAssistantEditor : Editor
     UnitAssistant targetUnit = null;
     Unit unit = null;
     Minion minion = null;
+    Boss boss = null;
     int unitLevel = 0;
 
     public override void OnInspectorGUI() {
@@ -35,6 +36,12 @@ public class UnitAssistantEditor : Editor
             minion = targetUnit.GetComponent<Minion>();
             minion.InitMinion(unitLevel, 100);
         }
+
+        if (GUILayout.Button("BOSS", GUILayout.Width(100))) {
+            boss = targetUnit.GetComponent<Boss>();
+            // minion.InitMinion(unitLevel, 100);
+        }
+
 
         EditorGUILayout.EndHorizontal();
 

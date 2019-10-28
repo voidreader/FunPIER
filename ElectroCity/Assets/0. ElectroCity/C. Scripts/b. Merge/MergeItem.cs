@@ -21,6 +21,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Text TextLevel; // 단계 
 
     public bool IsPacked = false; // 상자 상태여부 
+    public bool IsBattle = false; // 전투 중 여부 
 
 
     // 드래그 시작시 정보 
@@ -84,9 +85,16 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     /// </summary>
     public void OnClickItem() {
 
+        // 전투에서 불러오기 
+        if (IsBattle) {
+            GameManager.main.CallbackBattleUnit(this);
+            return;
+        }
+
         // 개봉되었으면 return 
         if (!IsPacked)
             return;
+
 
         // 
         if(IsSpecialBox)
@@ -125,6 +133,46 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
 
+    /// <summary>
+    /// 드래그할때 희미하게 처리 
+    /// </summary>
+    /// <param name="flag"></param>
+    public void SetDragDim(bool flag) {
+
+        if(IsBattle) {
+            TextLevel.gameObject.SetActive(true);
+            return;
+        }
+
+        if (flag) {
+            ImageItem.color = new Color(1, 1, 1, 0.6f);
+            TextLevel.gameObject.SetActive(false);
+        }
+        else {
+            ImageItem.color = new Color(1, 1, 1, 1);
+            TextLevel.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// 유닛이 필드에 나갈때 실행
+    /// </summary>
+    /// <param name="flag"></param>
+    public void SetBattle(bool flag) {
+
+        // 숫자는 그대로고, 이미지만 
+        IsBattle = flag;
+        if(flag) {
+            
+            ImageItem.color = new Color(1, 1, 1, 0.6f); 
+        }
+        else {
+            ImageItem.color = new Color(1, 1, 1, 1);
+        }
+    }
+
+
+
     #region Drag & Drop
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -141,6 +189,8 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // 화면상 순서때문에 다른 Parent를 Set 
         transform.SetParent(MergeSystem.main.DragParent);
         LevelSign.SetActive(false);
+
+        SetDragDim(true);
 
     }
 
@@ -199,6 +249,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         
         MergeSystem.main.SetTargetSlot(null);
+        SetDragDim(false);
         
     }
 
