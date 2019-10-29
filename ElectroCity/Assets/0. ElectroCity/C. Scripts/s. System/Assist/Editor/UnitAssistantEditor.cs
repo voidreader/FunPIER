@@ -39,6 +39,7 @@ public class UnitAssistantEditor : Editor
 
         if (GUILayout.Button("BOSS", GUILayout.Width(100))) {
             boss = targetUnit.GetComponent<Boss>();
+            boss.InitBoss(unitLevel, 100);
             // minion.InitMinion(unitLevel, 100);
         }
 

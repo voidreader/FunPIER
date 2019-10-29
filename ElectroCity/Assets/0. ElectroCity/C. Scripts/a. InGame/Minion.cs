@@ -40,7 +40,17 @@ public class Minion : MonoBehaviour
 
         if(HP <= 0) {
             GameManager.main.CurrentEnemy = null;
-            Destroy(this.gameObject);
+            BreakUnit();
         }
-    } 
+    }
+
+
+    /// <summary>
+    /// 파괴 처리 
+    /// </summary>
+    public void BreakUnit() {
+
+        Destroy(this.gameObject);
+    }
+
 }

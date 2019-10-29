@@ -28,8 +28,14 @@ public class EnemyInfo : MonoBehaviour
 
 
     public bool IsDestroy() {
-        if (minion.HP <= 0)
+
+        if(isBoss && boss.HP <= 0) {
             return true;
+        }
+        else if (!isBoss && minion.HP <= 0) {
+            return true;
+        }
+
 
         return false;
     }
@@ -45,16 +51,32 @@ public class EnemyInfo : MonoBehaviour
         minion.InitMinion(id, hp);
     }
 
+    public void InitBoss(int id, long hp) {
+        isBoss = true;
+        boss.InitBoss(id, hp);
+    }
+
     /// <summary>
     /// 데미지 주기!
     /// </summary>
     /// <param name="d"></param>
     public void SetDamage(long d) {
-        minion.SetDamage(d);
+
+        if (isBoss)
+            boss.SetDamage(d);
+        else
+            minion.SetDamage(d);
     }
 
     public GameObject GetHitTarget() {
-        return minion.body.gameObject;
+        if(isBoss)
+            return boss.body.gameObject;
+        else
+            return minion.body.gameObject;
+    }
+
+    public void BreakImmediate() {
+        this.SendMessage("BreakUnit");
     }
 
 }

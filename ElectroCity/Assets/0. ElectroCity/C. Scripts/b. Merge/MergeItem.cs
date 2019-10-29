@@ -30,7 +30,9 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public MergeSlot Slot; // 위치한 슬롯
 
-
+    [Header("Back Light Effect")]
+    public GameObject GroupBackLight;
+    public Transform BackCircle, BackFat, BackThin;
 
     /// <summary>
     /// 박스 처리 
@@ -41,6 +43,8 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         ImageItem.sprite = Stock.main.SpriteBox;
         ImageItem.SetNativeSize();
         IsSpecialBox = isSpecialBox;
+
+        ImageItem.transform.localScale = new Vector3(0.55f, 0.55f, 1); // 
 
         Slot = s;
 
@@ -69,6 +73,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         ImageItem.sprite = Stock.GetFriendlyUnitUI(unitRow._spriteUI);
         ImageItem.SetNativeSize();
+        ImageItem.transform.localScale = new Vector3(0.55f, 0.55f, 1); // 머지 유닛의 크기는 0.55
 
         this.transform.localPosition = Vector3.zero;
         this.transform.localScale = Vector3.zero;
@@ -171,6 +176,13 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
+
+
+    public void OnBackLight() {
+        GroupBackLight.SetActive(true);
+
+        // 
+    }
 
 
     #region Drag & Drop

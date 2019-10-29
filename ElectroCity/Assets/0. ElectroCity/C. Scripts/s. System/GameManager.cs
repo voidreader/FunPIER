@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Google2u;
+using Doozy.Engine.Progress;
+
+
 
 
 /// <summary>
@@ -41,6 +44,14 @@ public class GameManager : MonoBehaviour
     [Header("ETC")]
     public Transform FakeTarget;
 
+    [Header("Game Control")]
+    public bool IsBossMode = false;
+    // public bool 
+    public GameObject BossGroup;
+    public GameObject BossWarningView;
+    public Progressor progressorBossHP, progressorBossTimer; // 게이지들 
+    float bossTimer = 90;
+    float progressorValue;
 
 
     // public Vector2[,] arrBattlePosition = new Vector2[4, 2];
@@ -59,20 +70,7 @@ public class GameManager : MonoBehaviour
         // mainCamera.aspect = 9f / 16f;
         Camera.main.aspect = 9f / 16f;
 
-
-        /*
-        arrBattlePosition[3, 0] = new Vector2(-0.319f, 1.869f);
-        arrBattlePosition[3, 1] = new Vector2(-0.263f, 1.239f);
-
-        arrBattlePosition[2, 0] = new Vector2(-0.932f, 1.05f);
-        arrBattlePosition[2, 1] = new Vector2(-1.082f, 1.712f);
-
-        arrBattlePosition[1, 0] = new Vector2(-0.319f, 1.869f);
-        arrBattlePosition[1, 1] = new Vector2(-0.263f, 1.239f);
-
-        arrBattlePosition[0, 0] = new Vector2(-0.319f, 1.869f);
-        arrBattlePosition[0, 1] = new Vector2(-0.263f, 1.239f);
-        */
+        BossGroup.SetActive(false);
 
     }
 
@@ -95,6 +93,10 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K) && CurrentEnemy) {
             CurrentEnemy.SetDamage(1000);
         }
+
+        if (Input.GetKeyDown(KeyCode.B) && CurrentEnemy) {
+            CallBoss();
+        }
     }
 
     IEnumerator PlayRoutine() {
@@ -106,6 +108,10 @@ public class GameManager : MonoBehaviour
         while (true) {
             yield return null;
 
+            if(IsBossMode) {
+                continue;
+            }
+
 
             if(!CurrentEnemy || CurrentEnemy.IsDestroy()) {
                 CurrentEnemy = GetNewEnemy(false);
@@ -113,6 +119,54 @@ public class GameManager : MonoBehaviour
             }
 
         }
+    }
+
+    /// <summary>
+    /// 보스 모드 진입 
+    /// </summary>
+    public void CallBoss() {
+
+        // CurrentEnemy.de
+        ViewBossWarning.warningBossID = 1;
+        Doozy.Engine.GameEventMessage.SendEvent("BossWarningEvent"); // 보스 등장 UI 처리 
+
+        IsBossMode = true;
+
+        StartCoroutine(BossRoutine());
+    }
+
+    IEnumerator BossRoutine() {
+
+        float timervalue = 0;
+
+        while (BossWarningView.activeSelf) {
+            yield return null;
+        }
+
+        yield return null;
+
+
+        // 관련 UI 오픈!
+        BossGroup.SetActive(true);
+        progressorBossHP.SetValue(1);
+        progressorBossTimer.SetValue(1);
+
+        CurrentEnemy.BreakImmediate(); // 현재 minion 유닛 파괴 
+        GetNewEnemy(true); // 보스 소환 
+
+        bossTimer = 90; // 90초 
+
+        while(bossTimer >= 0) {
+            bossTimer -= Time.deltaTime;
+            timervalue = bossTimer / 90;
+            progressorBossTimer.SetValue(timervalue); // 바 갱신 
+            
+            yield return null;
+        }
+
+
+        // 보스 전 끝!
+        BossGroup.SetActive(false);
     }
 
 
@@ -123,10 +177,20 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     EnemyInfo GetNewEnemy(bool isBoss) {
 
-        
+        Debug.Log(">> GetNewEnemy :: " + isBoss);
 
-        EnemyInfo e = Instantiate(Stock.main.ObjectMinion, new Vector3(2.6f, 2.4f, 0), Quaternion.identity).GetComponent<EnemyInfo>();
-        e.InitMinion(Random.Range(1,8), 100);
+        EnemyInfo e = null;
+
+        if (isBoss) {
+            e = Instantiate(Stock.main.ObjectBoss, new Vector3(2.6f, 2.4f, 0), Quaternion.identity).GetComponent<EnemyInfo>();
+            e.InitBoss(1, 100);
+        }
+        else {
+
+            e = Instantiate(Stock.main.ObjectMinion, new Vector3(2.6f, 2.4f, 0), Quaternion.identity).GetComponent<EnemyInfo>();
+            e.InitMinion(Random.Range(1, 8), 100);
+        } 
+       
         return e;
 
     }
