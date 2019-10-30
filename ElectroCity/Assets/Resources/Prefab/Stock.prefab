@@ -57,6 +57,31 @@ MonoBehaviour:
     type: 3}
   SpriteBottomButtonActive: {fileID: 21300000, guid: 13460250e98b44a42b916b9bde88d16c,
     type: 3}
+  SpriteButtonGem: {fileID: 21300000, guid: 024d8587c66b81b4394624a102432ef7, type: 3}
+  SpriteButtonCoin: {fileID: 21300000, guid: 382eca27eca1e7a42826a4061dbf023c, type: 3}
+  SpriteButtonLock: {fileID: 21300000, guid: f06a930f2a3761a409882bb3ccdcfe08, type: 3}
+  SpriteButtonAD: {fileID: 21300000, guid: 362b34a8f0c5a75469a85d76260bd2c5, type: 3}
+  SpriteMapCurrent: {fileID: 21300000, guid: b1b320f7175c7f140bf1f9a30b8fe6c1, type: 3}
+  SpriteMapNext: {fileID: 21300000, guid: 9025a02673dad8140833d5583f15c20b, type: 3}
+  SpriteMapEnd: {fileID: 21300000, guid: b71a352b2b5207e43a0aa64a35c40a3d, type: 3}
+  SpriteStoreAvailable: {fileID: 21300000, guid: 840508a0861b8064d88cd3030e67bfde,
+    type: 3}
+  SpriteStoreLocked: {fileID: 21300000, guid: e1fcc0032eea89a46a295456f73df0dd, type: 3}
+  SpriteStoreSpecial: {fileID: 21300000, guid: bda5dd383057ec447b49a8c5d4a80863, type: 3}
+  SpriteLevelSignAvailable: {fileID: 21300000, guid: 9f41471de1c25b14bbedd6d596ea3567,
+    type: 3}
+  SpriteLevelSignLocked: {fileID: 21300000, guid: 3f333949bd4dbfe4e84295029b8452e4,
+    type: 3}
+  SpriteLevelSignSpecial: {fileID: 21300000, guid: f6d3186cf04b90245971438650cf01e8,
+    type: 3}
+  SpriteStoreButtonAvailable: {fileID: 21300000, guid: 438139bb8688f96418f93386275327ca,
+    type: 3}
+  SpriteStoreButtonLocked: {fileID: 21300000, guid: 319d0791720299641a7621ea3ae86133,
+    type: 3}
+  SpriteStoreButtonSpecial: {fileID: 21300000, guid: 88bb2db2eebf4ee438358d4d6e6f0b9c,
+    type: 3}
+  SpriteStoreButtonAD: {fileID: 21300000, guid: 0d3f369f318ab6e45a8140c906af65de,
+    type: 3}
   ListMergeItemSprite:
   - {fileID: 21300000, guid: ef360a56bf2d24a4890c489c4829ef24, type: 3}
   - {fileID: 21300000, guid: 009ff548f4bcfb941af4e958d9d42eea, type: 3}
@@ -379,6 +404,32 @@ MonoBehaviour:
   - {fileID: 21300000, guid: fc3a4115a12ee834caa6c44cde4c4541, type: 3}
   - {fileID: 21300000, guid: 0f65b342db51ae040ba1d4cd5898e021, type: 3}
   - {fileID: 21300000, guid: f5d62af5f4d568542949f30b215539ce, type: 3}
+  ListBossBrokenSprite:
+  - {fileID: 21300000, guid: 22609bd103c92784a9d69c8a1ba6391c, type: 3}
+  - {fileID: 21300000, guid: 763e1a3a2ad68a6448eeb7bafc078055, type: 3}
+  - {fileID: 21300000, guid: 45f5426b81473444981c2c1f1cedc8c6, type: 3}
+  - {fileID: 21300000, guid: 8b8a621989af22b4ab7ec40a06b956aa, type: 3}
+  - {fileID: 21300000, guid: be279e6f427e2894085a3b43623933d9, type: 3}
+  - {fileID: 21300000, guid: 25f843de528aee544996ce8ea092eddc, type: 3}
+  - {fileID: 21300000, guid: 682a655630d53bd4eb050494b157996c, type: 3}
+  - {fileID: 21300000, guid: 9458cfdc1ef755145972da3c284b3dc6, type: 3}
+  - {fileID: 21300000, guid: 198aabca5730159439abb6d082208a1f, type: 3}
+  - {fileID: 21300000, guid: 5574c3e5c51ce284e9d65e0c4a377c61, type: 3}
+  - {fileID: 21300000, guid: dcc20b1d55972334992b6bc30ba17b2f, type: 3}
+  - {fileID: 21300000, guid: 02c10eeb4209aa94ea0574f7c644e481, type: 3}
+  ListBossUI_Sprite:
+  - {fileID: 21300000, guid: 29c6ce0d776a664419b0fa17631d74a3, type: 3}
+  - {fileID: 21300000, guid: 0c2b3bf8e4e09a5459c688690d8b5faf, type: 3}
+  - {fileID: 21300000, guid: fcdd49e81bd2f2044b4489d30a7c4e86, type: 3}
+  - {fileID: 21300000, guid: 701265fd71a5f674d806e95be25963e3, type: 3}
+  - {fileID: 21300000, guid: 3b7239d871d880b4293106fd22dc6459, type: 3}
+  - {fileID: 21300000, guid: 7ca7ae5576932d940b5181625544d371, type: 3}
+  - {fileID: 21300000, guid: c7329709a07b76746863c4fe5bd98303, type: 3}
+  - {fileID: 21300000, guid: d9bd7131c0aa9924ebcf48cf039c9692, type: 3}
+  - {fileID: 21300000, guid: f764722e61579924e8cc0c1adab62ded, type: 3}
+  - {fileID: 21300000, guid: 7170e9a2f767b3a459842fac693252d4, type: 3}
+  - {fileID: 21300000, guid: 54c04ee127dd2a04a9e5f8f9e15a4a3e, type: 3}
+  - {fileID: 21300000, guid: 542a4706928f2d64eafa7e8043c81072, type: 3}
   ListWeapon:
   - {fileID: 11400000, guid: 8224b0d9762cfcf4c907298c772f4cb7, type: 2}
   - {fileID: 11400000, guid: 5433148adbdbdca41901bbd6b52636db, type: 2}
@@ -392,3 +443,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f9a86bfd99a5a4c4495c1a261f5abb0d, type: 2}
   - {fileID: 11400000, guid: 0282d5ceeb0abb241926f9d9d387ddc5, type: 2}
   ColorBottomButtonInactiveText: {r: 0, g: 0.22745098, b: 0.63529414, a: 1}
+  ColorStoreAvailableDPS: {r: 0, g: 0.7490196, b: 1, a: 1}
+  ColorStoreSpecialDPS: {r: 0.5411765, g: 0, b: 1, a: 1}
+  ColorStoreLockedDPS: {r: 0.20784314, g: 0.23137255, b: 0.73333335, a: 1}

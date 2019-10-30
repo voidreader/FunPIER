@@ -39,7 +39,9 @@ namespace Google2u
 		public string _spriteOtherParts;
 		public float _partsX;
 		public float _partsY;
-		public BossDataRow(string __ID, string __bid, string __displayname, string __spriteBody, string __spriteLeg, string __legX, string __legY, string __spriteHead, string __headX, string __headY, string __boxoffsetx, string __boxoffsety, string __boxsizex, string __boxsizey, string __spriteHead2, string __head2X, string __head2Y, string __spriteArmLeft, string __armLeftX, string __armLeftY, string __spriteArmRight, string __armRightX, string __armRightY, string __spriteOtherParts, string __partsX, string __partsY) 
+		public string _spriteBroken;
+		public string _spriteUI;
+		public BossDataRow(string __ID, string __bid, string __displayname, string __spriteBody, string __spriteLeg, string __legX, string __legY, string __spriteHead, string __headX, string __headY, string __boxoffsetx, string __boxoffsety, string __boxsizex, string __boxsizey, string __spriteHead2, string __head2X, string __head2Y, string __spriteArmLeft, string __armLeftX, string __armLeftY, string __spriteArmRight, string __armRightX, string __armRightY, string __spriteOtherParts, string __partsX, string __partsY, string __spriteBroken, string __spriteUI) 
 		{
 			{
 			int res;
@@ -168,9 +170,11 @@ namespace Google2u
 				else
 					Debug.LogError("Failed To Convert _partsY string: "+ __partsY +" to float");
 			}
+			_spriteBroken = __spriteBroken.Trim();
+			_spriteUI = __spriteUI.Trim();
 		}
 
-		public int Length { get { return 25; } }
+		public int Length { get { return 27; } }
 
 		public string this[int i]
 		{
@@ -260,6 +264,12 @@ namespace Google2u
 				case 24:
 					ret = _partsY.ToString();
 					break;
+				case 25:
+					ret = _spriteBroken.ToString();
+					break;
+				case 26:
+					ret = _spriteUI.ToString();
+					break;
 			}
 
 			return ret;
@@ -345,6 +355,12 @@ namespace Google2u
 				case "partsY":
 					ret = _partsY.ToString();
 					break;
+				case "spriteBroken":
+					ret = _spriteBroken.ToString();
+					break;
+				case "spriteUI":
+					ret = _spriteUI.ToString();
+					break;
 			}
 
 			return ret;
@@ -377,6 +393,8 @@ namespace Google2u
 			ret += "{" + "spriteOtherParts" + " : " + _spriteOtherParts.ToString() + "} ";
 			ret += "{" + "partsX" + " : " + _partsX.ToString() + "} ";
 			ret += "{" + "partsY" + " : " + _partsY.ToString() + "} ";
+			ret += "{" + "spriteBroken" + " : " + _spriteBroken.ToString() + "} ";
+			ret += "{" + "spriteUI" + " : " + _spriteUI.ToString() + "} ";
 			return ret;
 		}
 	}
@@ -403,18 +421,18 @@ namespace Google2u
 
 		private BossData()
 		{
-			Rows.Add( new BossDataRow("boss1", "1", "Boss-1", "1-body", "1-leg", "0.02", "-0.44", "1-head", "0.04", "0.65", "0.03140533", "0.1884321", "0.5812616", "1.60717", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss2", "2", "Boss-2", "2-body", "2-leg", "0", "0", "2-head", "0", "0", "0.06455421", "-0.09898329", "0.5093875", "0.8020334", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss3", "3", "Boss-3", "3-body", "3-leg", "0", "0", "3-head", "0", "0", "-0.05164349", "-0.09898329", "0.6212814", "0.8020334", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss4", "4", "Boss-4", "4-body", "4-leg", "0", "0", "4-head", "0", "0", "-0.05164349", "-0.03012514", "0.6212814", "0.5093861", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss5", "5", "Boss-5", "5-body", "5-leg", "0", "0", "5-head", "0", "0", "-0.05164349", "-0.03012514", "0.6212814", "0.5093861", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss6", "6", "Boss-6", "6-body", "6-leg", "0", "0", "6-head", "0", "0", "-0.05164349", "-0.08607244", "0.6212814", "0.5524225", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss7", "7", "Boss-7", "7-body", "7-leg", "0", "0", "7-head", "0", "0", "-0.03873265", "-0.1893592", "0.7748187", "0.4622847", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss8", "8", "Boss-8", "8-body", "8-leg", "0", "0", "8-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss9", "9", "Boss-9", "9-body", "9-leg", "0", "0", "9-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss10", "10", "Boss-10", "10-body", "10-leg", "0", "0", "10-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss11", "11", "Boss-11", "11-body", "11-leg", "0", "0", "11-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
-			Rows.Add( new BossDataRow("boss12", "12", "Boss-12", "12-body", "12-leg", "0", "0", "12-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"));
+			Rows.Add( new BossDataRow("boss1", "1", "Boss-1", "1-body", "1-leg", "0.02", "-0.44", "1-head", "0.04", "0.65", "0.03140533", "0.1884321", "0.5812616", "1.60717", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-1", "1"));
+			Rows.Add( new BossDataRow("boss2", "2", "Boss-2", "2-body", "2-leg", "0", "0", "2-head", "0", "0", "0.06455421", "-0.09898329", "0.5093875", "0.8020334", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-2", "2"));
+			Rows.Add( new BossDataRow("boss3", "3", "Boss-3", "3-body", "3-leg", "0", "0", "3-head", "0", "0", "-0.05164349", "-0.09898329", "0.6212814", "0.8020334", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-3", "3"));
+			Rows.Add( new BossDataRow("boss4", "4", "Boss-4", "4-body", "4-leg", "0", "0", "4-head", "0", "0", "-0.05164349", "-0.03012514", "0.6212814", "0.5093861", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-4", "4"));
+			Rows.Add( new BossDataRow("boss5", "5", "Boss-5", "5-body", "5-leg", "0", "0", "5-head", "0", "0", "-0.05164349", "-0.03012514", "0.6212814", "0.5093861", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-5", "5"));
+			Rows.Add( new BossDataRow("boss6", "6", "Boss-6", "6-body", "6-leg", "0", "0", "6-head", "0", "0", "-0.05164349", "-0.08607244", "0.6212814", "0.5524225", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-6", "6"));
+			Rows.Add( new BossDataRow("boss7", "7", "Boss-7", "7-body", "7-leg", "0", "0", "7-head", "0", "0", "-0.03873265", "-0.1893592", "0.7748187", "0.4622847", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-7", "7"));
+			Rows.Add( new BossDataRow("boss8", "8", "Boss-8", "8-body", "8-leg", "0", "0", "8-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-8", "8"));
+			Rows.Add( new BossDataRow("boss9", "9", "Boss-9", "9-body", "9-leg", "0", "0", "9-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-9", "9"));
+			Rows.Add( new BossDataRow("boss10", "10", "Boss-10", "10-body", "10-leg", "0", "0", "10-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-10", "10"));
+			Rows.Add( new BossDataRow("boss11", "11", "Boss-11", "11-body", "11-leg", "0", "0", "11-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-11", "11"));
+			Rows.Add( new BossDataRow("boss12", "12", "Boss-12", "12-body", "12-leg", "0", "0", "12-head", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "broken-12", "12"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

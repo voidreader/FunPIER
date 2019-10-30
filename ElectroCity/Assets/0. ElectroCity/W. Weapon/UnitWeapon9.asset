@@ -23,7 +23,7 @@ MonoBehaviour:
   muzzles: 1
   fireRate: 5
   fireRateGrade: 1
-  damage: 100
+  damage: 1
   breakOnHit: 1
   lifetime: 5
   innacuracy: {x: 0, y: 0, z: 0}
@@ -124,13 +124,13 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   trailAlignment: 0
   trailTextureMode: 0
-  initalForwardSpeed: 20
+  initalForwardSpeed: 30
   limitSpeed: 1
-  maxForwardSpeed: 100
-  minForwardSpeed: -1000
-  forwardAcceleration: 4
+  maxForwardSpeed: 30
+  minForwardSpeed: 2
+  forwardAcceleration: -4
   rotationSpeed: {x: 0, y: 0, z: 0}
-  rotationSpeed2D: 220
+  rotationSpeed2D: 500
   is2D: 1
   randomRotationSpeed: 0
   angularDrag: 0

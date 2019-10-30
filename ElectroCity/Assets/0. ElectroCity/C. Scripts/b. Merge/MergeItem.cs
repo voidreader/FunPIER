@@ -34,6 +34,11 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public GameObject GroupBackLight;
     public Transform BackCircle, BackFat, BackThin;
 
+    
+    void Awake() {
+        OffBackLight();
+    }
+
     /// <summary>
     /// 박스 처리 
     /// </summary>
@@ -56,6 +61,10 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         this.transform.localPosition = Vector3.zero;
         this.transform.localScale = Vector3.zero;
         this.transform.DOScale(1, 0.25f).SetEase(Ease.OutBack);
+
+
+        OnBackLight();
+
     }
 
 
@@ -66,6 +75,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void SetMergeItem(int l) {
 
         Debug.Log(">> SetMergeItem :: " + l);
+
 
         Level = l;
         unitRow = Stock.GetMergeItemData(Level);
@@ -99,6 +109,8 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // 개봉되었으면 return 
         if (!IsPacked)
             return;
+
+        OffBackLight();
 
 
         // 
@@ -180,8 +192,21 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBackLight() {
         GroupBackLight.SetActive(true);
+        BackCircle.DOKill();
+        BackFat.DOKill();
+        BackThin.DOKill();
 
-        // 
+        BackCircle.localScale = Vector3.one;
+        BackFat.localRotation = Quaternion.identity;
+        BackThin.localRotation = Quaternion.identity;
+
+        BackCircle.DOScale(1.1f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+        BackFat.DOLocalRotate(new Vector3(0,0,720), 3, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        BackThin.DOLocalRotate(new Vector3(0, 0, -720), 3, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+    }
+
+    void OffBackLight() {
+        GroupBackLight.SetActive(false);
     }
 
 

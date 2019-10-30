@@ -38,6 +38,32 @@ public class Stock : MonoBehaviour
     public Sprite SpriteGoldBox; // 골드 박스
     public Sprite SpriteBottomButtonInactive;
     public Sprite SpriteBottomButtonActive;
+    public Sprite SpriteButtonGem;
+    public Sprite SpriteButtonCoin;
+    public Sprite SpriteButtonLock;
+    public Sprite SpriteButtonAD;
+
+
+    [Header("- Map Sprite Resources -")]
+    public Sprite SpriteMapCurrent;
+    public Sprite SpriteMapNext;
+    public Sprite SpriteMapEnd;
+
+    [Header("- UnitStore Sprite Resources -")]
+    public Sprite SpriteStoreAvailable;
+    public Sprite SpriteStoreLocked;
+    public Sprite SpriteStoreSpecial;
+    public Sprite SpriteLevelSignAvailable;
+    public Sprite SpriteLevelSignLocked;
+    public Sprite SpriteLevelSignSpecial;
+    public Sprite SpriteStoreButtonAvailable;
+    public Sprite SpriteStoreButtonLocked;
+    public Sprite SpriteStoreButtonSpecial;
+    public Sprite SpriteStoreButtonAD;
+
+
+
+
 
 
     public List<Sprite> ListMergeItemSprite;
@@ -62,6 +88,9 @@ public class Stock : MonoBehaviour
     public List<Sprite> ListBossBody;
     public List<Sprite> ListBossLeg;
     public List<Sprite> ListBossParts;
+    public List<Sprite> ListBossBrokenSprite;
+    public List<Sprite> ListBossUI_Sprite;
+
 
 
 
@@ -71,7 +100,10 @@ public class Stock : MonoBehaviour
 
     [Header("- Colors -")]
     public Color ColorBottomButtonInactiveText;
-    
+    public Color ColorStoreAvailableDPS;
+    public Color ColorStoreSpecialDPS;
+    public Color ColorStoreLockedDPS;
+
 
 
     #endregion
@@ -182,6 +214,24 @@ public class Stock : MonoBehaviour
         return BossData.Instance.Rows[id - 1];
     }
 
+
+    public static Sprite GetBossUI_Sprite(string n) {
+        for (int i = 0; i < main.ListBossUI_Sprite.Count; i++) {
+            if (main.ListBossUI_Sprite[i].name == n) {
+                return main.ListBossUI_Sprite[i];
+            }
+        }
+        return null;
+    }
+
+    public static Sprite GetBossBrokenSprite(string n) {
+        for (int i = 0; i < main.ListBossBrokenSprite.Count; i++) {
+            if (main.ListBossBrokenSprite[i].name == n) {
+                return main.ListBossBrokenSprite[i];
+            }
+        }
+        return null;
+    }
 
 
     /// <summary>

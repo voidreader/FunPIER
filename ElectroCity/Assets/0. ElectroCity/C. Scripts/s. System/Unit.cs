@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour
     public List<Transform> ListAimPoint = new List<Transform>();
 
 
-    #region 유닛 관련 Static 메소드 GetUnitCurrentPrice, GetUnitPurchaseStep, GetPricePow
+    #region 유닛 관련 Static 메소드 GetUnitCurrentPrice, GetUnitPurchaseStep, GetPricePow, GetDPS
 
     /// <summary>
     /// 유닛 현재 구매가격 
@@ -80,11 +80,14 @@ public class Unit : MonoBehaviour
         long ceiledDPS = 0;
 
         if(w.bullets == 1) { // 단발 형태 무기는 쉽다. 
-            dps = (decimal)r._attackfactor * (decimal)w.damage / (decimal)w.fireRate;
+
+            decimal.Parse(r._attackfactor);
+
+            dps = decimal.Parse(r._attackfactor) * (decimal)w.damage / (decimal)w.fireRate;
             Debug.Log(r._displayname + " Single Shot DPS :: " + dps);
         }
         else {
-            dps = (decimal)r._attackfactor * (decimal)w.bullets * (decimal)w.damage; // 발사 1턴의 총 데미지.
+            dps = decimal.Parse(r._attackfactor) * (decimal)w.bullets * (decimal)w.damage; // 발사 1턴의 총 데미지.
             dps = dps / (((decimal)w.bullets * (decimal)w.bulletRate) + (decimal)w.fireRate); // 걸리는 시간으로 나누기 (초)
 
             Debug.Log(r._displayname + " Multi Shot DPS :: " + dps);

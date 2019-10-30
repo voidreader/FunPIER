@@ -246,6 +246,8 @@ public class MergeSystem : MonoBehaviour
     /// <param name="unit"></param>
     public void CheckUnlock(UnitDataRow unit) {
 
+        Debug.Log(">> CheckUnlock unitLevel(" + unit._level + ") / HighestLevel(" + PIER.main.HighestUnitLevel + ")");
+
         // 신규 유닛 체크 
         if(unit._level > PIER.main.HighestUnitLevel) {
             PIER.main.HighestUnitLevel = unit._level;

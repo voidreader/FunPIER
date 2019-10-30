@@ -14,10 +14,12 @@ namespace Google2u
 	[System.Serializable]
 	public class StageDataRow : IGoogle2uRow
 	{
+		public string _stage;
 		public int _factor;
-		public int _bossindex;
-		public StageDataRow(string __ID, string __factor, string __bossindex) 
+		public int _bid;
+		public StageDataRow(string __ID, string __stage, string __factor, string __bid) 
 		{
+			_stage = __stage.Trim();
 			{
 			int res;
 				if(int.TryParse(__factor, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
@@ -27,14 +29,14 @@ namespace Google2u
 			}
 			{
 			int res;
-				if(int.TryParse(__bossindex, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
-					_bossindex = res;
+				if(int.TryParse(__bid, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_bid = res;
 				else
-					Debug.LogError("Failed To Convert _bossindex string: "+ __bossindex +" to int");
+					Debug.LogError("Failed To Convert _bid string: "+ __bid +" to int");
 			}
 		}
 
-		public int Length { get { return 2; } }
+		public int Length { get { return 3; } }
 
 		public string this[int i]
 		{
@@ -50,10 +52,13 @@ namespace Google2u
 			switch( index )
 			{
 				case 0:
-					ret = _factor.ToString();
+					ret = _stage.ToString();
 					break;
 				case 1:
-					ret = _bossindex.ToString();
+					ret = _factor.ToString();
+					break;
+				case 2:
+					ret = _bid.ToString();
 					break;
 			}
 
@@ -65,11 +70,14 @@ namespace Google2u
 			var ret = System.String.Empty;
 			switch( colID )
 			{
+				case "stage":
+					ret = _stage.ToString();
+					break;
 				case "factor":
 					ret = _factor.ToString();
 					break;
-				case "bossindex":
-					ret = _bossindex.ToString();
+				case "bid":
+					ret = _bid.ToString();
 					break;
 			}
 
@@ -78,18 +86,19 @@ namespace Google2u
 		public override string ToString()
 		{
 			string ret = System.String.Empty;
+			ret += "{" + "stage" + " : " + _stage.ToString() + "} ";
 			ret += "{" + "factor" + " : " + _factor.ToString() + "} ";
-			ret += "{" + "bossindex" + " : " + _bossindex.ToString() + "} ";
+			ret += "{" + "bid" + " : " + _bid.ToString() + "} ";
 			return ret;
 		}
 	}
 	public sealed class StageData : IGoogle2uDB
 	{
 		public enum rowIds {
-			Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Stage7, Stage8, Stage9, Stage10
+			Stage1, Stage2, Stage3, Stage4, Stage5, Stage6, Stage7, Stage8, Stage9, Stage10, Stage11, Stage12
 		};
 		public string [] rowNames = {
-			"Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Stage6", "Stage7", "Stage8", "Stage9", "Stage10"
+			"Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Stage6", "Stage7", "Stage8", "Stage9", "Stage10", "Stage11", "Stage12"
 		};
 		public System.Collections.Generic.List<StageDataRow> Rows = new System.Collections.Generic.List<StageDataRow>();
 
@@ -106,16 +115,18 @@ namespace Google2u
 
 		private StageData()
 		{
-			Rows.Add( new StageDataRow("Stage1", "1", "0"));
-			Rows.Add( new StageDataRow("Stage2", "3", "1"));
-			Rows.Add( new StageDataRow("Stage3", "5", "2"));
-			Rows.Add( new StageDataRow("Stage4", "10", "3"));
-			Rows.Add( new StageDataRow("Stage5", "15", "4"));
-			Rows.Add( new StageDataRow("Stage6", "21", "5"));
-			Rows.Add( new StageDataRow("Stage7", "25", "6"));
-			Rows.Add( new StageDataRow("Stage8", "30", "7"));
-			Rows.Add( new StageDataRow("Stage9", "45", "8"));
-			Rows.Add( new StageDataRow("Stage10", "50", "9"));
+			Rows.Add( new StageDataRow("Stage1", "1", "1", "1"));
+			Rows.Add( new StageDataRow("Stage2", "2", "3", "2"));
+			Rows.Add( new StageDataRow("Stage3", "3", "5", "3"));
+			Rows.Add( new StageDataRow("Stage4", "4", "10", "4"));
+			Rows.Add( new StageDataRow("Stage5", "5", "15", "5"));
+			Rows.Add( new StageDataRow("Stage6", "6", "21", "6"));
+			Rows.Add( new StageDataRow("Stage7", "7", "25", "7"));
+			Rows.Add( new StageDataRow("Stage8", "8", "30", "8"));
+			Rows.Add( new StageDataRow("Stage9", "9", "45", "9"));
+			Rows.Add( new StageDataRow("Stage10", "10", "50", "10"));
+			Rows.Add( new StageDataRow("Stage11", "11", "60", "11"));
+			Rows.Add( new StageDataRow("Stage12", "12", "80", "12"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{
