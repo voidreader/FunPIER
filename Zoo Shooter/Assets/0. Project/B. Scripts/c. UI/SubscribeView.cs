@@ -11,6 +11,7 @@ public class SubscribeView : MonoBehaviour
 
     public Text textTerm, textTrail;
     public GameObject btnPurchase, textBill, textAlreadySpecial;
+    public GameObject GroupAndroid, GroupiOS;
 
     private void Awake() {
         main = this;
@@ -34,7 +35,10 @@ public class SubscribeView : MonoBehaviour
             + "subscription.The payment is charged to your\n"
             + "account after purchase confirmation.\n"
             + "The subscription is renewed unless you turn it off\n"
-            + "24 hours before the period ends.", IAPControl.GetSubscriptionProductPrice());
+            + "24 hours before the period ends.\n"
+            + "Your account will be charged for renewal as well\n"
+            + "For more information, check the links below :"
+            , IAPControl.GetSubscriptionProductPrice());
 
 
         btnPurchase.SetActive(false);
@@ -59,7 +63,17 @@ public class SubscribeView : MonoBehaviour
         btnPurchase.transform.DOKill();
         btnPurchase.transform.DOScale(1.05f, 0.4f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
 
+        GroupAndroid.SetActive(false);
+        GroupiOS.SetActive(false);
 
+#if UNITY_ANDROID
+
+        GroupAndroid.SetActive(true);
+
+#else
+        GroupiOS.SetActive(true);
+
+#endif
 
     }
 
