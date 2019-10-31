@@ -20,6 +20,7 @@ public class UnitCombat : MonoBehaviour
 
         unit = this.gameObject.GetComponent<Unit>();
 
+
         if (weapon.usePool) {
             weapon.CreatePool();//spawn pool on start, if you dont do this everything will still work, but the pool will instantiate the first time the player shoots.
         }
@@ -61,8 +62,9 @@ public class UnitCombat : MonoBehaviour
 
     void ShootSingle() {
         if (shotTimer <= 0) {
-            weapon.FireWeapon(GetAimPoint(), null);
-            //weapon.FireWeapon(aimPoint);
+            
+            // weapon.FireWeapon(GetAimPoint(), null);
+            weapon.FireWeapon(GetAimPoint(), long.Parse(unit._data._attackfactor));
             shotTimer = weapon.fireRate;
             //cc.ScreenShake(weapon.screenShake);
         }
@@ -85,7 +87,8 @@ public class UnitCombat : MonoBehaviour
                 yield return null;
             }
 
-            weapon.FireWeapon(GetAimPoint(), null);
+            weapon.FireWeapon(GetAimPoint(), long.Parse(unit._data._attackfactor));
+            // weapon.FireWeapon(GetAimPoint(), null);
             bulletTimer = weapon.bulletRate;
 
         }
@@ -113,4 +116,6 @@ public class UnitCombat : MonoBehaviour
 
         
     }
+
+
 }

@@ -125,10 +125,121 @@ public class TweWeapon : ScriptableObject
     public int poolID = 1;//poolID is used to track if the projectile is updated to the current Weapon version. If not it gets deleted instead of being put back into pool
     //end for pooling
 
+    
 
 
     //CHANGE HERE IF USING CUSTOM CAMERA CONTROL
     private TweCameraControl cameraControlRefernece;
+
+
+    public void FireWeapon(Transform aimpoint, long ownerDamage, int battleOrder = 0) {
+
+        if (!burst) {
+            if (fireSound != null) {
+                AudioSource.PlayClipAtPoint(fireSound, aimpoint.transform.position);
+
+            }
+            if (fireParticle != null) {
+
+                if (fireMuzzleRotation != Vector3.zero)
+                    Instantiate(fireParticle, aimpoint.transform.position, Quaternion.Euler(fireMuzzleRotation));
+                // Instantiate(fireParticle, aimpoint.transform.position, aimpoint.transform.rotation);
+                else
+                    Instantiate(fireParticle, aimpoint.transform.position, aimpoint.transform.rotation);
+
+
+
+            }
+
+            ScreenShake();
+        }
+
+        if (usePool) {
+            if (bulletRate == 0) {
+                for (int i = 0; i < bullets; i++) {
+                    if (burst) {
+                        for (int j = 0; j < bulletsPerBurst; j++) {
+                            aimpoint.gameObject.AddComponent<TweBurstSpawn>().Initialize(burstDelay * j, this, j);
+                        }
+                    }
+                    else {
+                        if (usePool) {
+                            if (objectPool.Count == 0) {
+                                AddToPool();
+                            }
+                        }
+                        GameObject spawn = objectPool.Dequeue();
+
+
+                        spawn.transform.rotation = aimpoint.rotation;//basic position set, we do accuracy in Initialize() on projectileControl now
+                        spawn.transform.position = aimpoint.position;
+                        // spawn.transform.position = new Vector2(aimpoint.position.x, aimpoint.position.y);
+
+
+                        TweProjectileControl pc = spawn.GetComponent<TweProjectileControl>();
+                        pc.aimpoint = aimpoint;
+                        pc.bulletNum = i;
+                        pc.SetUnitBulletDamageAndOrder(ownerDamage, battleOrder);
+
+                        spawn.SetActive(true);
+                    }
+                } // end of for (int i = 0; i < bullets; i++)
+            }
+            else { // 그 외에는 무조건 1발씩 쏜다. 
+                if (burst) {
+                    for (int j = 0; j < bulletsPerBurst; j++) {
+                        aimpoint.gameObject.AddComponent<TweBurstSpawn>().Initialize(burstDelay * j, this, j);
+                    }
+                }
+                else {
+                    if (usePool) {
+                        if (objectPool.Count == 0) {
+                            AddToPool();
+                        }
+                    }
+                    GameObject spawn = objectPool.Dequeue();
+
+
+                    spawn.transform.rotation = aimpoint.rotation;//basic position set, we do accuracy in Initialize() on projectileControl now
+                    spawn.transform.position = aimpoint.position;
+                    // spawn.transform.position = new Vector2(aimpoint.position.x, aimpoint.position.y);
+
+
+                    TweProjectileControl pc = spawn.GetComponent<TweProjectileControl>();
+                    pc.aimpoint = aimpoint;
+                    pc.bulletNum = 0;
+                    pc.SetUnitBulletDamageAndOrder(ownerDamage, battleOrder);
+
+
+                    spawn.SetActive(true);
+                }
+            }
+
+        } // end of if usePool
+        else {
+            for (int i = 0; i < bullets; i++) {
+                if (burst)//burst weapons create a script on the aimpoint object that waits to instantiate the bullet.
+                {
+                    for (int i2 = 0; i2 < bulletsPerBurst; i2++) {
+                        aimpoint.gameObject.AddComponent<TweBurstSpawn>().Initialize(burstDelay * i2, this, i2);
+                    }
+                }
+                else {
+
+                    GameObject spawn = Projectile();//the difference between pool an non pooled is we instantiate the object HERE instead oh having the pooll.....
+                    spawn.transform.position = aimpoint.position;
+                    spawn.transform.rotation = aimpoint.rotation;
+                    TweProjectileControl pc = spawn.GetComponent<TweProjectileControl>();
+                    pc.aimpoint = aimpoint;
+                    pc.bulletNum = i;
+                    pc.SetUnitBulletDamageAndOrder(ownerDamage, battleOrder);
+                    spawn.SetActive(true);
+                }
+            }
+        }
+
+
+    }
 
 
     public float FireWeapon(Transform aimpoint, TweCameraControl cc = null)//this is the method you should call when firing a weapon in another script
@@ -245,8 +356,8 @@ public class TweWeapon : ScriptableObject
             }
         }
 
-
         return screenShake;
+        
 
     }
 
@@ -324,6 +435,8 @@ public class TweWeapon : ScriptableObject
 
         projectile.AddComponent<TweProjectileControl>();
         TweProjectileControl projCntrl = projectile.GetComponent<TweProjectileControl>();
+
+
         if (particleTrail != null)
         {
             projCntrl.particleTrailRef = pt;

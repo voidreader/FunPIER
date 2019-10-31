@@ -8,6 +8,8 @@ public class TweProjectileControl : MonoBehaviour
 
 
     public bool is2D = true;
+    public long ownerDamage = 0;
+
     float rotationSpeed2D;
     Vector2 dir2D;
     Rigidbody2D rb2D;
@@ -182,9 +184,24 @@ public class TweProjectileControl : MonoBehaviour
 
     #region 2D Movement, OnTriggerEnter 처리 
 
+    ParticleSystemRenderer[] psr;
 
+    public void SetUnitBulletDamageAndOrder(long d, int order) {
+        ownerDamage = d;
+        ownerDamage = (long)(d * weapon.damage);
+
+        
+
+        if(particleTrailRef != null) {
+            // psr = pr
+        }
+    }
+
+    /// <summary>
+    /// 2D Movement.
+    /// </summary>
     void Movement2D() {
-        if(homingTarget != null) { // homing 일때, 
+        if(homingTarget != null && weapon.homing) { // homing 일때, 
             dir2D = (Vector2)homingTarget.transform.position - rb2D.position;
             dir2D.Normalize();
             float rotateAmount = Vector3.Cross(dir2D, transform.right).z;
@@ -216,6 +233,7 @@ public class TweProjectileControl : MonoBehaviour
             TweEnemyStatConrol esc = collision.gameObject.GetComponent<TweEnemyStatConrol>();//THIS IS THE DAMAGE PASSING
 
 
+
             if (esc != null) {
                 esc.Hit(weapon.damage);
             }
@@ -223,6 +241,11 @@ public class TweProjectileControl : MonoBehaviour
                 Debug.Log(collision.transform.name + " is tagged such that is taking damage, but has no enemyStatControl script");
             }
             */
+
+            EnemyInfo enemy = collision.gameObject.GetComponent<EnemyInfo>();
+            if(enemy != null) {
+                enemy.SetDamage(ownerDamage);
+            }
 
             if (weapon.breakOnHit) {
                 ProjectileDestroy2D();
@@ -567,8 +590,6 @@ public class TweProjectileControl : MonoBehaviour
         if(is2D) {
             rb2D = this.GetComponent<Rigidbody2D>();
             rotationSpeed2D = weapon.rotationSpeed2D;
-
-            
         }
 
         homingTarget = null;
@@ -586,11 +607,17 @@ public class TweProjectileControl : MonoBehaviour
         damagehit = false;
         breakhit = false;
 
-        if (weapon.homing)
-        {
-            HomingCheck(weapon.homingCheckInitialRange);
 
+        /* 2D 3D 방식 분기 */
+        if (weapon.is2D)
+            FindHomingTarget();
+        else {
+            if (weapon.homing) {
+                HomingCheck(weapon.homingCheckInitialRange);
+            }
         }
+
+        
 
         if (weapon.trail)
         {
@@ -636,6 +663,24 @@ public class TweProjectileControl : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(aimpoint.rotation.eulerAngles.x + Random.Range(-weapon.innacuracy.x / 2, weapon.innacuracy.x / 2), aimpoint.rotation.eulerAngles.y + Random.Range(-weapon.innacuracy.y / 2, weapon.innacuracy.y / 2), aimpoint.rotation.eulerAngles.z + Random.Range(-weapon.innacuracy.z / 2, weapon.innacuracy.z / 2));//big line, getting aimpoint rotation and adding innacuracy to xyz
         }
+    }
+
+
+
+    /// <summary>
+    /// 범위로 찾지 않음. 
+    /// </summary>
+    void FindHomingTarget() {
+        if (!is2D)
+            return;
+
+        if (!GameManager.main.CurrentEnemy) {
+            homingTarget = GameManager.main.FakeTarget.gameObject;
+        }
+        else {
+            homingTarget = GameManager.main.CurrentEnemy.gameObject;
+        }
+
     }
 
     private void HomingCheck(float range)

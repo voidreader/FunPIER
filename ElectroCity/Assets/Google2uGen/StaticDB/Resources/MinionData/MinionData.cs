@@ -208,13 +208,13 @@ namespace Google2u
 
 		private MinionData()
 		{
-			Rows.Add( new MinionDataRow("minion1", "1", "Minion-1", "1-body", "1-leg", "0", "-0.8", "0.004303575", "-0.228092", "0.6298888", "0.5438161"));
-			Rows.Add( new MinionDataRow("minion2", "2", "Minion-2", "2-body", "2-leg", "0", "-0.7", "0.06455421", "-0.09898329", "0.5093875", "0.8020334"));
-			Rows.Add( new MinionDataRow("minion3", "3", "Minion-3", "3-body", "3-leg", "-0.05", "-0.94", "-0.05164349", "-0.09898329", "0.6212814", "0.8020334"));
-			Rows.Add( new MinionDataRow("minion4", "4", "Minion-4", "4-body", "4-leg", "0", "-0.7", "-0.05164349", "-0.03012514", "0.6212814", "0.5093861"));
-			Rows.Add( new MinionDataRow("minion5", "5", "Minion-5", "5-body", "5-leg", "-0.1", "-0.79", "-0.05164349", "-0.03012514", "0.6212814", "0.5093861"));
-			Rows.Add( new MinionDataRow("minion6", "6", "Minion-6", "6-body", "6-leg", "-0.1", "-0.64", "-0.05164349", "-0.08607244", "0.6212814", "0.5524225"));
-			Rows.Add( new MinionDataRow("minion7", "7", "Minion-7", "7-body", "7-leg", "-0.1", "-0.69", "-0.03873265", "-0.1893592", "0.7748187", "0.4622847"));
+			Rows.Add( new MinionDataRow("minion1", "1", "Minion-1", "1-body", "1-leg", "0", "-0.8", "0.2365883", "-0.2517949", "0.8479521", "1.558284"));
+			Rows.Add( new MinionDataRow("minion2", "2", "Minion-2", "2-body", "2-leg", "0", "-0.7", "0.4343138", "-0.226977", "1.258388", "1.361413"));
+			Rows.Add( new MinionDataRow("minion3", "3", "Minion-3", "3-body", "3-leg", "-0.05", "-0.94", "0.1711604", "-0.2222365", "0.820383", "1.958717"));
+			Rows.Add( new MinionDataRow("minion4", "4", "Minion-4", "4-body", "4-leg", "0", "-0.7", "0.2280464", "-0.3477389", "0.9910412", "1.39112"));
+			Rows.Add( new MinionDataRow("minion5", "5", "Minion-5", "5-body", "5-leg", "-0.1", "-0.79", "0.2280464", "-0.4235873", "1.123775", "1.637627"));
+			Rows.Add( new MinionDataRow("minion6", "6", "Minion-6", "6-body", "6-leg", "-0.1", "-0.64", "0.1237553", "-0.2188067", "0.8014208", "1.272979"));
+			Rows.Add( new MinionDataRow("minion7", "7", "Minion-7", "7-body", "7-leg", "-0.1", "-0.69", "0.2646596", "-0.3315745", "1.154059", "1.201804"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

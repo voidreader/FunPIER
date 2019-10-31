@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Google2u;
-
+using Doozy.Engine.Progress;
 
 public class Minion : MonoBehaviour
 {
-    public long HP = 0;
+    public long HP, MaxHP = 0;
     public MinionDataRow row;
     public SpriteRenderer body,leg;
     public BoxCollider2D col;
     public EnemyInfo info;
+    public Doozy.Engine.Progress.Progressor progressorHP;
+    decimal hpvalue;
 
     /// <summary>
     /// 미니언 설정!
@@ -22,6 +24,8 @@ public class Minion : MonoBehaviour
 
         row = Stock.GetMinionData(id);
         HP = hp;
+        MaxHP = hp;
+        progressorHP.InstantSetValue(1);
 
         body.sprite = Stock.GetMinionBody(row._spriteBody);
         leg.sprite = Stock.GetMinionLeg(row._spriteLeg);
@@ -35,8 +39,15 @@ public class Minion : MonoBehaviour
         this.transform.DOMoveY(1.77f, 0.1f);
     }
 
+    void SetProgressorHP() {
+        hpvalue = (decimal)HP / (decimal)MaxHP;
+        progressorHP.SetValue((float)hpvalue);
+    }
+
+
     public void SetDamage(long d) {
         HP -= d;
+        SetProgressorHP();
 
         if(HP <= 0) {
             GameManager.main.CurrentEnemy = null;

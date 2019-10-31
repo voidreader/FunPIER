@@ -13,6 +13,8 @@ public class Unit : MonoBehaviour
     public TweWeapon _equipWeapon;
     public List<Transform> ListAimPoint = new List<Transform>();
 
+    public int BattleOrder = 0;
+
 
     #region 유닛 관련 Static 메소드 GetUnitCurrentPrice, GetUnitPurchaseStep, GetPricePow, GetDPS
 
@@ -109,6 +111,17 @@ public class Unit : MonoBehaviour
     #endregion
 
 
+    public void SetBattleOrder(int o) {
+        BattleOrder = o; // 화면상 sorting order 처리를 위함. 
+
+        // Leg - body - face - weapon 순서. 
+        _leg.sortingOrder = BattleOrder * 10;
+        _body.sortingOrder = (BattleOrder * 10) + 1;
+        _face.sortingOrder = (BattleOrder * 10) + 2;
+        _weapon.sortingOrder = (BattleOrder * 10) + 3;
+
+        
+    }
 
     /// <summary>
     /// 유닛 기본정보 설정 

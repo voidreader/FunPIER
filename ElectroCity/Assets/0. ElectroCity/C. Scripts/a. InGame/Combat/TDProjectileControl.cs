@@ -140,7 +140,8 @@ public class TDProjectileControl : MonoBehaviour
                 }
             }
 
-            if (homingTarget != null) {
+            // 호밍 타겟이 있는 경우..
+            if (homingTarget != null && weapon.homing) {
                 futureRotation = Quaternion.Slerp(futureRotation, Quaternion.LookRotation((homingTarget.transform.position - transform.position).normalized), Time.deltaTime * (weapon.homingSpeed + currentHomingAcceleration));
                 currentHomingAcceleration += (weapon.homingAcceleration * Time.deltaTime);
             }
@@ -428,11 +429,19 @@ public class TDProjectileControl : MonoBehaviour
         damagehit = false;
         breakhit = false;
 
+
+        /* 일렉트로 시티 한정. 무조건 타겟을 찾도록 설정 */
+        if (weapon.is2D) {
+            FindHomingTarget();
+        }
+
+        /*
         if (weapon.homing) {
             // HomingCheck(weapon.homingCheckInitialRange);
             FindHomingTarget();
 
         }
+        */
 
         if (weapon.trail) {
             tr.emitting = true;
@@ -462,12 +471,20 @@ public class TDProjectileControl : MonoBehaviour
             sign = 1;
         }
 
+
+
         //ACCURACY
         if (weapon.evenInnacuracy && ((weapon.burst && weapon.bulletsPerBurst > 1) || (!weapon.burst && weapon.bullets > 1))) {
             transform.rotation = Quaternion.Euler(aimpoint.rotation.eulerAngles.x + ((bulletNum * (sign * weapon.innacuracy.x / (inacBullets - 1))) - (sign * weapon.innacuracy.x / 2)), aimpoint.rotation.eulerAngles.y + ((bulletNum * (sign * weapon.innacuracy.y / (inacBullets - 1))) - (sign * weapon.innacuracy.y / 2)), aimpoint.rotation.eulerAngles.z + ((bulletNum * (sign * weapon.innacuracy.z / (inacBullets - 1))) - (sign * weapon.innacuracy.z / 2)));
         }
         else {
             transform.rotation = Quaternion.Euler(aimpoint.rotation.eulerAngles.x + Random.Range(-weapon.innacuracy.x / 2, weapon.innacuracy.x / 2), aimpoint.rotation.eulerAngles.y + Random.Range(-weapon.innacuracy.y / 2, weapon.innacuracy.y / 2), aimpoint.rotation.eulerAngles.z + Random.Range(-weapon.innacuracy.z / 2, weapon.innacuracy.z / 2));//big line, getting aimpoint rotation and adding innacuracy to xyz
+
+            // homing 체크가 안되어있는 경우 시작부터 각을 잡아서 직선으로 발사한다. 
+            if (weapon.is2D && homingTarget != null && !weapon.homing) {
+                // transform.rotation = Quaternion.LookRotation(homingTarget.transform.position - transform.position);
+            }
+
         }
 
 

@@ -314,13 +314,13 @@ namespace Google2u
 
 		private UnitData()
 		{
-			Rows.Add( new UnitDataRow("U1", "U1", "1", "unit1", "120", "15", "UnitWeapon4", "5", "5", "01", "01_body", "01_leg", "0.02", "-0.46", "01_face_idle", "01_face_shoot", "0.015", "-0.074", "-0.124", "0.008", "1"));
-			Rows.Add( new UnitDataRow("U2", "U2", "2", "unit2", "1800", "22", "UnitWeapon7", "11", "11", "02", "02_body", "02_leg", "0.02", "-0.46", "02_face_idle", "02_face_shoot", "0.048", "0.27", "-0.149", "0.342", "1"));
-			Rows.Add( new UnitDataRow("U3", "U3", "3", "unit3", "5700", "6", "UnitWeapon11", "24", "24", "03", "03_body", "03_leg", "0.02", "-0.36", "03_face_idle", "03_face_shoot", "0.029", "0.01", "-0.238", "0.358", "0.8"));
-			Rows.Add( new UnitDataRow("U4", "U4", "4", "unit4", "16000", "30", "UnitWeapon1", "53", "53", "04", "04_body", "04_leg", "0.02", "-0.445", "04_face_idle", "04_face_shoot", "0.034", "0.066", "-0.255", "0.331", "1"));
-			Rows.Add( new UnitDataRow("U5", "U5", "5", "unit5", "55000", "8", "UnitWeapon2", "117", "117", "05", "05_body", "05_leg", "0.02", "-0.404", "05_face_idle", "05_face_shoot", "0.015", "-0.126", "-0.119", "0.287", "1"));
-			Rows.Add( new UnitDataRow("U6", "U6", "6", "unit6", "171600", "6", "UnitWeapon11", "257", "257", "06", "06_body", "06_leg", "0.02", "-0.526", "06_face_idle", "06_face_shoot", "0.062", "-0.112", "-0.087", "0.133", "0.8"));
-			Rows.Add( new UnitDataRow("U7", "U7", "7", "unit7", "530000", "88", "UnitWeapon8", "566", "566", "07", "07_body", "07_leg", "0.02", "-0.684", "07_face_idle", "07_face_shoot", "0.048", "-0.022", "-0.101", "0.597", "0.8"));
+			Rows.Add( new UnitDataRow("U1", "U1", "1", "Transistor", "120", "15", "UnitWeapon4", "5", "5", "01", "01_body", "01_leg", "0.02", "-0.46", "01_face_idle", "01_face_shoot", "0.015", "-0.074", "-0.124", "0.008", "1"));
+			Rows.Add( new UnitDataRow("U2", "U2", "2", "Bulb", "1800", "22", "UnitWeapon7", "11", "11", "02", "02_body", "02_leg", "0.02", "-0.46", "02_face_idle", "02_face_shoot", "0.048", "0.27", "-0.149", "0.342", "1"));
+			Rows.Add( new UnitDataRow("U3", "U3", "3", "Floppy", "5700", "6", "UnitWeapon11", "24", "24", "03", "03_body", "03_leg", "0.02", "-0.36", "03_face_idle", "03_face_shoot", "0.029", "0.01", "-0.238", "0.358", "0.8"));
+			Rows.Add( new UnitDataRow("U4", "U4", "4", "Videotape", "16000", "30", "UnitWeapon1", "53", "53", "04", "04_body", "04_leg", "0.02", "-0.445", "04_face_idle", "04_face_shoot", "0.034", "0.066", "-0.255", "0.331", "1"));
+			Rows.Add( new UnitDataRow("U5", "U5", "5", "CD", "55000", "8", "UnitWeapon2", "117", "117", "05", "05_body", "05_leg", "0.02", "-0.404", "05_face_idle", "05_face_shoot", "0.015", "-0.126", "-0.119", "0.287", "1"));
+			Rows.Add( new UnitDataRow("U6", "U6", "6", "USB", "171600", "6", "UnitWeapon11", "257", "257", "06", "06_body", "06_leg", "0.02", "-0.526", "06_face_idle", "06_face_shoot", "0.062", "-0.112", "-0.087", "0.133", "0.8"));
+			Rows.Add( new UnitDataRow("U7", "U7", "7", "Remote", "530000", "88", "UnitWeapon8", "566", "566", "07", "07_body", "07_leg", "0.02", "-0.684", "07_face_idle", "07_face_shoot", "0.048", "-0.022", "-0.101", "0.597", "0.8"));
 			Rows.Add( new UnitDataRow("U8", "U8", "8", "unit8", "1650000", "60", "UnitWeapon6", "1250", "1250", "08", "08_body", "08_leg", "0.02", "-0.438", "08_face_idle", "08_face_shoot", "0.088", "0.263", "-0.345", "0.334", "0.8"));
 			Rows.Add( new UnitDataRow("U9", "U9", "9", "unit9", "5115000", "25", "UnitWeapon3", "2750", "2750", "09", "09_body", "09_leg", "0.099", "-0.548", "09_face_idle", "09_face_shoot", "0.133", "-0.112", "-0.021", "0.278", "1"));
 			Rows.Add( new UnitDataRow("U10", "U10", "10", "unit10", "15856500", "33", "UnitWeapon9", "6000", "6000", "10", "10_body", "10_leg", "0.02", "-0.592", "10_face_idle", "10_face_shoot", "0.154", "-0.037", "-0.162", "0.156", "1"));

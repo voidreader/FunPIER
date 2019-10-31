@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Doozy.Engine.Events;
 using Google2u;
 
@@ -19,12 +20,15 @@ public class MergeSystem : MonoBehaviour
     public Transform DragParent;
     public MergeSlot TargetSlot; // 드래그 하는 머지아이템이 이동할 슬롯 
 
-    static UnlockDataRow CurrentUnlockData;
+    static UnlockDataRow CurrentUnlockData = null;
 
     MergeSlot slot;
-
-
     public float SpawnBoxTime = 0;
+
+    [Header(" - Instant Purchase Unit -")]
+    public Image SpriteInstantUnit;
+    public Text TextInstantPrice;
+    public long PriceInstantPurchase;
 
 
     #region static method GetNewUnitLevel
@@ -96,6 +100,7 @@ public class MergeSystem : MonoBehaviour
 
         //StartCoroutine(MergeRoutine());
         SetMergeSpotMemory();
+        SetInstantPurchaseUnit();
 
     }
 
@@ -256,13 +261,58 @@ public class MergeSystem : MonoBehaviour
             ViewUnlock.unlockUnit = unit;
 
             Doozy.Engine.GameEventMessage.SendEvent("UnlockEvent");
+            CurrentUnlockData = UnlockData.Instance.Rows[PIER.main.HighestUnitLevel - 1];
+            SetInstantPurchaseUnit();
         }
 
     }
 
 
+
+
     #endregion
 
+    #region Instant Purchase
+
+    /// <summary>
+    /// 빠른구매 유닛 설정 
+    /// </summary>
+    public void SetInstantPurchaseUnit() {
+
+        CurrentUnlockData = UnlockData.Instance.Rows[PIER.main.HighestUnitLevel - 1];
+
+        int level = CurrentUnlockData._quick;
+        UnitDataRow r = UnitData.Instance.Rows[level - 1];
+
+        SpriteInstantUnit.sprite = Stock.GetFriendlyUnitUI(r._spriteUI);
+        PriceInstantPurchase = Unit.GetUnitCurrentPrice(level);
+        TextInstantPrice.text = PIER.GetBigNumber(PriceInstantPurchase);
+
+
+    }
+
+    /// <summary>
+    /// 빠른 구매!
+    /// </summary>
+    public void OnClickInstantUnitPurchase() {
+        MergeSlot s = GetRandomEmptySlot();
+        if(s == null) {
+            FloatingMessage.ShowMessage("NO SLOT AVAILABLE!");
+            return;
+        }
+
+        // if(PriceInstantPurchase)
+        // 금액 체크
+        // ListSlots[i].SpawnMergeUnitInstantly(PIER.main.ArrSpotMemory[i]);
+        s.SpawnMergeUnitInstantly(CurrentUnlockData._quick);
+
+        PIER.main.SaveUnitPurchaseStep(CurrentUnlockData._quick);
+        SetInstantPurchaseUnit();
+
+
+    }
+
+    #endregion
 
     private void OnApplicationPause(bool pause) {
         if (pause)
