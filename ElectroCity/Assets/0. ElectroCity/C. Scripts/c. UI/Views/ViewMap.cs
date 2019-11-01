@@ -30,7 +30,7 @@ public class ViewMap : MonoBehaviour
 
         // Vertical, 아래부터 항목이 추가되기 때문에, List 순서가 거꾸로다. 
         int index = 0;
-        int currentStageIndex = ListMaps.Count - PIER.main.StageNum;
+        int currentStageIndex = ListMaps.Count - GameManager.main.Stage;
 
         // 맵 초기화
         for (int i=ListMaps.Count-1; i >= 0;i--) { // 크기는 정해져 있다.
@@ -43,7 +43,7 @@ public class ViewMap : MonoBehaviour
 
 
         index = 1;
-        while(index < PIER.main.StageNum) {
+        while(index < GameManager.main.Stage) {
             ListMaps[ListMaps.Count - index].SetClearMap();
             index++;
         }

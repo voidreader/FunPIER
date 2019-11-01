@@ -186,14 +186,23 @@ public class TweProjectileControl : MonoBehaviour
 
     ParticleSystemRenderer[] psr;
 
+    /// <summary>
+    /// 일렉트로 시티, 실 데미지 처리 및 SortingOrder 조정
+    /// </summary>
+    /// <param name="d"></param>
+    /// <param name="order"></param>
     public void SetUnitBulletDamageAndOrder(long d, int order) {
         ownerDamage = d;
         ownerDamage = (long)(d * weapon.damage);
 
         
-
+        // Unit에서 *10 +3 까지 진행. 
         if(particleTrailRef != null) {
             // psr = pr
+            psr = particleTrailRef.GetComponentsInChildren<ParticleSystemRenderer>(true);
+            for(int i=0; i<psr.Length; i++) {
+                psr[i].sortingOrder = (order * 10) + 6;
+            }
         }
     }
 

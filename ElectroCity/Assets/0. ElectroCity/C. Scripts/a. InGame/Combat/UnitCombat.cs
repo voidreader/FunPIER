@@ -32,8 +32,10 @@ public class UnitCombat : MonoBehaviour
     void Update()
     {
         //this script fires a the weapon using the aimPoint's transform.
-
         if (!isFiring)
+            return;
+
+        if (GameManager.HoldFire)
             return;
 
         /*
@@ -64,7 +66,7 @@ public class UnitCombat : MonoBehaviour
         if (shotTimer <= 0) {
             
             // weapon.FireWeapon(GetAimPoint(), null);
-            weapon.FireWeapon(GetAimPoint(), long.Parse(unit._data._attackfactor));
+            weapon.FireWeapon(GetAimPoint(), long.Parse(unit._data._attackfactor), unit.BattleOrder);
             shotTimer = weapon.fireRate;
             //cc.ScreenShake(weapon.screenShake);
         }
@@ -76,9 +78,6 @@ public class UnitCombat : MonoBehaviour
 
     IEnumerator ShootMulti() {
         isFiring = false;
-        
-
-        
 
         for (int i=0;i<weapon.bullets; i++) {
 
@@ -87,7 +86,7 @@ public class UnitCombat : MonoBehaviour
                 yield return null;
             }
 
-            weapon.FireWeapon(GetAimPoint(), long.Parse(unit._data._attackfactor));
+            weapon.FireWeapon(GetAimPoint(), long.Parse(unit._data._attackfactor), unit.BattleOrder);
             // weapon.FireWeapon(GetAimPoint(), null);
             bulletTimer = weapon.bulletRate;
 

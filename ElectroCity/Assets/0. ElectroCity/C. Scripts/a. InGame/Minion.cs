@@ -50,6 +50,7 @@ public class Minion : MonoBehaviour
         SetProgressorHP();
 
         if(HP <= 0) {
+            GameManager.main.DecreaseKillCount();
             GameManager.main.CurrentEnemy = null;
             BreakUnit();
         }
@@ -60,7 +61,6 @@ public class Minion : MonoBehaviour
     /// 파괴 처리 
     /// </summary>
     public void BreakUnit() {
-
         Destroy(this.gameObject);
     }
 

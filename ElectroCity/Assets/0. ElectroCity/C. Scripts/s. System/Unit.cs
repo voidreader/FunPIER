@@ -111,6 +111,10 @@ public class Unit : MonoBehaviour
     #endregion
 
 
+    /// <summary>
+    /// 배치에 따라서 SortingOrder 변경 
+    /// </summary>
+    /// <param name="o"></param>
     public void SetBattleOrder(int o) {
         BattleOrder = o; // 화면상 sorting order 처리를 위함. 
 

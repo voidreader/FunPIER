@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class Boss : MonoBehaviour
 {
-    public long HP = 0;
+    public long HP = 0, MaxHP = 0;
     public BossDataRow row;
     public SpriteRenderer body, leg, head;
 
@@ -24,6 +24,7 @@ public class Boss : MonoBehaviour
 
         row = Stock.GetBossData(id);
         HP = hp;
+        MaxHP = hp;
 
         body.sprite = Stock.GetBossBody(row._spriteBody);
         head.sprite = Stock.GetBossHead(row._spriteHead);
@@ -63,6 +64,9 @@ public class Boss : MonoBehaviour
     public void SetDamage(long d) {
         HP -= d;
 
+        // 보스는 HP가 개체마다 종속되지 않아서 게임매니저한테 전달.
+        GameManager.main.SetValueBossHP(HP, MaxHP);
+
         if (HP <= 0) {
             GameManager.main.CurrentEnemy = null;
             BreakUnit();
@@ -74,6 +78,9 @@ public class Boss : MonoBehaviour
     /// 파괴 처리 
     /// </summary>
     public void BreakUnit() {
+
+        GameManager.main.ClearBoss();
+
         Destroy(this.gameObject);
     }
 }

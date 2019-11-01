@@ -12,7 +12,7 @@ public class ViewUnlock : MonoBehaviour
     public Transform Title;
     public Text TextUnitName, TextDPS;
 
-    public GameObject BigAura, SmallAura, ButtonBack;
+    public GameObject ButtonBack;
     public Progressor PowerBar, RPMBar;
 
     public GameObject Next;
@@ -20,20 +20,20 @@ public class ViewUnlock : MonoBehaviour
     public Image SpriteUnlockUnit, SpriteNextUnit;
     TweWeapon EquipWeapon;
 
+    public BigAura Aura;
+
 
 
     public static UnitDataRow unlockUnit = null;
 
     public void OnView() {
 
-        BigAura.transform.DOKill();
-        SmallAura.transform.DOKill();
+        
 
         // 연출 준비 
         // 크기 연출
         Title.localScale = Vector3.zero;
-        BigAura.transform.localScale = Vector3.zero;
-        SmallAura.transform.localScale = Vector3.zero;
+        
         SpriteUnlockUnit.transform.localScale = Vector3.zero;
 
 
@@ -54,11 +54,8 @@ public class ViewUnlock : MonoBehaviour
 
         // 연출 시작 
         Title.DOScale(1, 0.3f).SetEase(Ease.OutBack);
-        BigAura.transform.DOScale(1, 0.45f).SetEase(Ease.OutBack);
-        SmallAura.transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
-        // 회전 
-        BigAura.transform.DOLocalRotate(new Vector3(0, 0, 720), 4, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
-        SmallAura.transform.DOLocalRotate(new Vector3(0, 0, -720), 4, RotateMode.FastBeyond360).SetEase(Ease.Linear).SetLoops(-1, LoopType.Restart);
+        Aura.PlayAura();
+
 
         SpriteUnlockUnit.transform.DOScale(2, 0.4f).SetEase(Ease.OutBack).SetDelay(0.1f);
 
@@ -68,6 +65,7 @@ public class ViewUnlock : MonoBehaviour
 
 
         Next.transform.DOLocalMoveY(-280, 0.4f);
+
     }
 
 

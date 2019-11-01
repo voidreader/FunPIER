@@ -19,7 +19,6 @@ public class PIER : MonoBehaviour
     /// </summary>
     public int UserLevel, EXP, DamageLevel, DiscountLevel;
     public int HighestUnitLevel; // 개방한 최고 레벨 유닛 
-    public int StageNum = 1; // 스테이지 
     public List<int> ListUnitPurchaseStep = new List<int>();
     // public List<int> ListMergeSpotMemory = new List<int>();
     public int[] ArrSpotMemory = new int[16];
@@ -45,8 +44,7 @@ public class PIER : MonoBehaviour
         PlayerPrefs.SetInt("DamageLevel", DamageLevel);
         PlayerPrefs.SetInt("DiscountLevel", DiscountLevel);
         PlayerPrefs.SetInt("HighestUnitLevel", HighestUnitLevel);
-        PlayerPrefs.SetInt("Stage", StageNum);
-
+        
         PlayerPrefs.Save();
 
         if(refresh)
@@ -63,7 +61,7 @@ public class PIER : MonoBehaviour
         DamageLevel = PlayerPrefs.GetInt("DamageLevel", 1);
         DiscountLevel = PlayerPrefs.GetInt("DiscountLevel", 1);
         HighestUnitLevel = PlayerPrefs.GetInt("HighestUnitLevel", 1);
-        StageNum = PlayerPrefs.GetInt("Stage", 1);
+        
 
         LoadUnitPurchaseStep();
         LoadMergeSpotMemory();
