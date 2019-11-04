@@ -52,6 +52,10 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
     }
 
 
+    /// <summary>
+    /// 슬롯에 새로운 Item이 드래그 되어 Drop 된 경우
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnDrop(PointerEventData eventData) {
 
         Debug.Log(">> OnDrop :: " + this.name);
@@ -89,6 +93,9 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
         u2.Slot.mergeItem = null;
 
         MergeItem.IsMerging = true; // Merge 연출을 위한 거였는데.. 필요없어진듯..?
+
+        GameManager.main.CallbackBattleUnit(u1); // 혹시 전투 중이라면 불러들임
+
 
         OnMergeLevelUp(u1);
         OnMergeDestroy(u2);

@@ -223,6 +223,9 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (IsPacked)
             return;
 
+        if (IsBattle) // 전투 중에 드래그 되지 않음
+            return; 
+
         MergeSystem.DraggingItem = this;
         StartDragPosition = this.transform.position;
         StartDragParent = this.transform.parent;
