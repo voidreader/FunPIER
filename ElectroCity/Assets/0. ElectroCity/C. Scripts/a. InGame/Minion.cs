@@ -61,6 +61,11 @@ public class Minion : MonoBehaviour
     /// 파괴 처리 
     /// </summary>
     public void BreakUnit() {
+
+        if(GameManager.main != null) {
+            GameManager.main.GetMinionKillCoin();
+        }
+
         Destroy(this.gameObject);
     }
 

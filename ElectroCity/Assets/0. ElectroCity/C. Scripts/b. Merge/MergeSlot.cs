@@ -10,10 +10,15 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
 
 
 
+    /// <summary>
+    /// 신규 아이템 생성
+    /// </summary>
+    /// <returns></returns>
     MergeItem GetNewMergeItem() {
         MergeItem item = GameObject.Instantiate(Stock.main.ObjectMergeItem, this.transform, true).GetComponent<MergeItem>();
         item.GetComponent<RectTransform>().anchorMin = new Vector2(0.5f, 0.5f);
         item.GetComponent<RectTransform>().anchorMax = new Vector2(0.5f, 0.5f);
+        item.SetMergeIncrementalID(MergeSystem.GetMergeIncrementalID()); // ID 할당 필수. 
 
         return item;
     }

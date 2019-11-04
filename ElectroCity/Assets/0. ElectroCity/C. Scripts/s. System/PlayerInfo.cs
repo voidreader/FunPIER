@@ -25,6 +25,14 @@ public class PlayerInfo : MonoBehaviour
     float levelValue;
     LevelDataRow currentLevelRow;
 
+    [Header("Coin Bar")]
+    public Text _textCoin;
+    public long Coin;
+
+    [Header("Gem Bar")]
+    public Text _textGem;
+    public int Gem;
+
     private void Awake() {
         main = this;
         PIER.OnRefreshPlayerInfo += RefreshPlayerInfo;
@@ -43,10 +51,40 @@ public class PlayerInfo : MonoBehaviour
     /// </summary>
     void RefreshPlayerInfo() {
 
-
         SetLevelProgressor(true);
+        SetCoinBar();
+        SetGemBar();
 
     }
+
+    void SetCoinBar() {
+        Coin = PIER.main.Coin;
+
+        if (Coin <= 0)
+            _textCoin.text = "0";
+        else 
+            _textCoin.text = PIER.GetBigNumber(Coin);
+    }
+
+    void SetGemBar() {
+        Gem = PIER.main.Gem;
+        _textGem.text = Gem.ToString();
+    }
+
+    public void AddCoin(long c) {
+        Coin += c;
+        PIER.main.Coin = Coin;
+        PIER.main.SaveData();
+    }
+
+    public void AddGem(int g) {
+        Gem += g;
+        PIER.main.Gem = Gem;
+        PIER.main.SaveData();
+    }
+
+
+
 
     /// <summary>
     /// 레벨 게이지 처리하기. 

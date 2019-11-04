@@ -8,6 +8,9 @@ using Google2u;
 public class MergeSystem : MonoBehaviour
 {
     public static MergeSystem main = null;
+    public static int MergeIncrementalID = 0; // 머지 유닛 생성때마다 발급 ID, BattlePosition - MergeItem 간의 연결고리! 너와 나의! 연결... :(
+
+    const string KeyMergeID = "KeyMergeID";
 
     [Header(" - Drag Item - ")]
     public static MergeItem DraggingItem;
@@ -30,8 +33,27 @@ public class MergeSystem : MonoBehaviour
     public Text TextInstantPrice;
     public long PriceInstantPurchase;
 
+    
 
     #region static method GetNewUnitLevel
+
+    /// <summary>
+    /// Merge ID  가져오기 
+    /// </summary>
+    /// <returns></returns>
+    public static int GetMergeIncrementalID() {
+
+        MergeIncrementalID = PlayerPrefs.GetInt(KeyMergeID, 0);
+
+        if (MergeIncrementalID > 60000)
+            MergeIncrementalID = 0;
+
+        MergeIncrementalID++;
+        PlayerPrefs.SetInt(KeyMergeID, MergeIncrementalID); // 가장 마지막에 사용된 ID를 저장.
+        PlayerPrefs.Save();
+
+        return MergeIncrementalID;
+    }
 
     /// <summary>
     /// 랜덤박스 유닛 레벨 가져오기 
@@ -125,15 +147,19 @@ public class MergeSystem : MonoBehaviour
     /// 저장된 머지 공간 정보 세팅 
     /// </summary>
     public void SetMergeSpotMemory() {
+
+
         for (int i = 0; i < ListSlots.Count; i++) {
 
             // Spot 정보는 -2 : 스페셜 박스, -1 : 걍 박스, 0 : 비었음. 
             switch (PIER.main.ArrSpotMemory[i]) {
                 case -2:
                     ListSlots[i].SpawnBox(true);
+                    ListSlots[i].mergeItem.SetMergeIncrementalID(PIER.main.ArrSpotIncrementalIDMemory[i]);
                     break;
                 case -1:
                     ListSlots[i].SpawnBox(false);
+                    ListSlots[i].mergeItem.SetMergeIncrementalID(PIER.main.ArrSpotIncrementalIDMemory[i]);
                     break;
 
                 case 0:
@@ -141,6 +167,7 @@ public class MergeSystem : MonoBehaviour
 
                 default:
                     ListSlots[i].SpawnMergeUnitInstantly(PIER.main.ArrSpotMemory[i]);
+                    ListSlots[i].mergeItem.SetMergeIncrementalID(PIER.main.ArrSpotIncrementalIDMemory[i]);
                     break;
 
                    
@@ -189,6 +216,31 @@ public class MergeSystem : MonoBehaviour
         }
     }
 
+
+
+    /// <summary>
+    /// MergeIncremental ID로 MergeItem 찾기!
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public MergeItem FindMergeItemByIncrementalID(int id) {
+
+        for(int i=0; i<ListSlots.Count;i++) {
+
+            if (!ListSlots[i].gameObject.activeSelf)
+                continue;
+
+            if (ListSlots[i].mergeItem == null)
+                continue;
+
+            if (ListSlots[i].mergeItem.MergeIncrementalID == id)
+                return ListSlots[i].mergeItem;
+
+        }
+
+        return null;
+
+    }
 
     /// <summary>
     /// 랜덤 빈 슬롯 

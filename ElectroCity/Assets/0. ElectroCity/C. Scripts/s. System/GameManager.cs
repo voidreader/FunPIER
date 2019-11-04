@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     // public Vector2[,] arrBattlePosition = new Vector2[4, 2];
     //{ new Vector2(-0.319f, 1.869f), new Vector2(-0.263f, 1.239f), new Vector2(-1.082f, 1.712f), new Vector2(-0.932f, 1.05f) },  {new Vector2(-1.951f, 1.689f), new Vector2(-1.711f, 1.183f), new Vector2(-2.719f, 1.869f), new Vector2(-2.569f, 1.05f) }};
 
-    const string KeyEquipSlot = "EquipSlot";
+    const string KeyBattlePosition = "BattlePosition";
     const string KeyStage = "CurrentStage";
     const string KeyKillCountg = "CurrentKillCount";
 
@@ -95,17 +95,23 @@ public class GameManager : MonoBehaviour
     }
 
 
-    void Start() {
+    IEnumerator Start() {
 
         for (int i = 0; i < ListEquipSlot.Count; i++) {
             ListEquipSlot[i].InitEquipSlot(i);
         }
 
-        LoadStageMemory();
-        
+        LoadStageMemory(); // 스테이지 정보(스테이지번호, 킬 카운트)
+
+        yield return null;
+        yield return null;
+
+        LoadEquipUnitPosition();
 
         // 스테이지 진행 시작 
         StartCoroutine(PlayRoutine());
+
+        
 
     }
 
@@ -136,6 +142,14 @@ public class GameManager : MonoBehaviour
         TotalEarningCoin = (long)(EarningCoin * 0.5f);
     }
 
+    /// <summary>
+    /// 미니언 킬 코인 받기 
+    /// </summary>
+    public void GetMinionKillCoin() {
+        PlayerInfo.main.AddCoin(TotalEarningCoin);
+        TotalEarningCoin = 0;
+    }
+
 
     /// <summary>
     /// 획득 코인 계산 및 UI 처리 
@@ -151,7 +165,12 @@ public class GameManager : MonoBehaviour
             EarningCoin += long.Parse(ListBP[i].unitData._earning);
         }
 
-        TextEarningCoin.text = PIER.GetBigNumber(EarningCoin) + " / sec";
+        if (EarningCoin == 0)
+            TextEarningCoin.text = string.Empty;
+        else
+            TextEarningCoin.text = PIER.GetBigNumber(EarningCoin) + " / sec";
+
+        
 
     }
 
@@ -388,18 +407,55 @@ public class GameManager : MonoBehaviour
 
     #region Equip Slot, Battle Position Data Save & Load
 
+    /// <summary>
+    /// BattlePosition 위치 로드 
+    /// </summary>
     public void LoadEquipUnitPosition() {
+        int id;
+        MergeItem item;
+
+        for(int i=0; i<ListBP.Count;i++) {
+            id = PlayerPrefs.GetInt(KeyBattlePosition + i.ToString(), -1);
+
+            if (id < 0)
+                continue;
+
+            // id값이 존재하는 경우 Equip 처리를 해야한다.
+            item = MergeSystem.main.FindMergeItemByIncrementalID(id);
+
+            if(item != null) {
+                SetEquipUnit(item);
+            }
+        }
+
 
         RefreshEarningCoin();
     }
 
+    /// <summary>
+    /// BattlePosition 저장
+    /// </summary>
     public void SaveEquipUnitPosition() {
+        for(int i=0; i < ListBP.Count; i++) {
 
+            if (!ListBP[i].gameObject.activeSelf) {
+                PlayerPrefs.SetInt(KeyBattlePosition + i.ToString(), -1);
+                continue;
+            }
+
+
+            if (ListBP[i].isOccufied)
+                PlayerPrefs.SetInt(KeyBattlePosition + i.ToString(), ListBP[i].MergeIncrementalID); //!! level을 저장하는게 아니고 MergeIncrementalID를 저장한다!
+            else
+                PlayerPrefs.SetInt(KeyBattlePosition + i.ToString(), -1);
+        }
+
+        PlayerPrefs.Save();
     }
 
 
     /// <summary>
-    /// 유닛 장착
+    /// 유닛 전투위치로!
     /// </summary>
     /// <param name="u"></param>
     public void SetEquipUnit(MergeItem item) {
@@ -427,6 +483,13 @@ public class GameManager : MonoBehaviour
     void RefreshEquipSlot() {
         int equipUnitCount = 0;
         equipUnitCount = GetEquipUnitCount();
+
+        // 먼저 다 초기화하고
+        for(int i=0; i<ListEquipSlot.Count; i++) {
+            ListEquipSlot[i].UnEquipUnit();
+        }
+
+        // 장착 처리 
         for (int i = 0; i < equipUnitCount; i++) {
             ListEquipSlot[i].EquipUnit(); // 슬롯 처리 
         }
@@ -532,11 +595,13 @@ public class GameManager : MonoBehaviour
         if (pause) {
    
             SaveStageMemory();
+            SaveEquipUnitPosition();
         }
     }
 
     private void OnApplicationQuit() {
-        
+        SaveStageMemory();
+        SaveEquipUnitPosition();
     }
 
 }

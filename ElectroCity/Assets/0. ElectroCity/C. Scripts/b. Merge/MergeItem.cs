@@ -11,8 +11,10 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public static bool IsMerging = false;
 
+    [Header("Properties")]
     public bool IsSpecialBox = false;
     public int Level = 0;
+    public int MergeIncrementalID = 0;
     
     public UnitDataRow unitRow;
 
@@ -37,6 +39,10 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     
     void Awake() {
         OffBackLight();
+    }
+
+    public void SetMergeIncrementalID(int i) {
+        MergeIncrementalID = i;
     }
 
     /// <summary>

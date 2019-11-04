@@ -19,12 +19,16 @@ public class PIER : MonoBehaviour
     /// </summary>
     public int UserLevel, EXP, DamageLevel, DiscountLevel;
     public int HighestUnitLevel; // 개방한 최고 레벨 유닛 
+    public long Coin = 0;
+    public int Gem = 0;
     public List<int> ListUnitPurchaseStep = new List<int>();
     // public List<int> ListMergeSpotMemory = new List<int>();
     public int[] ArrSpotMemory = new int[16];
+    public int[] ArrSpotIncrementalIDMemory = new int[16];
 
     const string KeyUnitPurchaseStep = "UnitPurchaseStep";
     const string KeySpot = "Spot";
+    const string KeySpotIncrementalID = "SpotID";
 
     void Awake() {
         main = this;
@@ -44,6 +48,10 @@ public class PIER : MonoBehaviour
         PlayerPrefs.SetInt("DamageLevel", DamageLevel);
         PlayerPrefs.SetInt("DiscountLevel", DiscountLevel);
         PlayerPrefs.SetInt("HighestUnitLevel", HighestUnitLevel);
+
+        PlayerPrefs.SetString("Coin", Coin.ToString());
+        PlayerPrefs.SetInt("Gem", Gem);
+
         
         PlayerPrefs.Save();
 
@@ -61,6 +69,9 @@ public class PIER : MonoBehaviour
         DamageLevel = PlayerPrefs.GetInt("DamageLevel", 1);
         DiscountLevel = PlayerPrefs.GetInt("DiscountLevel", 1);
         HighestUnitLevel = PlayerPrefs.GetInt("HighestUnitLevel", 1);
+
+        Gem = PlayerPrefs.GetInt("Gem", 0);
+        Coin = long.Parse(PlayerPrefs.GetString("Coin", "0"));
         
 
         LoadUnitPurchaseStep();
@@ -76,12 +87,16 @@ public class PIER : MonoBehaviour
     public void LoadMergeSpotMemory() {
         
         int l;
+        int id;
 
         // Spot 정보는 -2 : 스페셜 박스, -1 : 걍 박스, 0 : 비었음. 
         for (int i =0; i< 16; i++) { // 최대 16자리라고 가정 한다.
 
             l = PlayerPrefs.GetInt(KeySpot + i.ToString(), 0);
+            id = PlayerPrefs.GetInt(KeySpotIncrementalID + i.ToString(), -1);
+
             ArrSpotMemory[i] = l; // 배열로 저장 
+            ArrSpotIncrementalIDMemory[i] = id;
 
         }
     }
@@ -92,8 +107,9 @@ public class PIER : MonoBehaviour
     public void SaveMergeSpotMemory() {
 
         MergeItem current;
-
         for (int i = 0; i < MergeSystem.main.ListSlots.Count; i++) {
+
+            PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), -1); // 일단 -1로 초기화 하고 진행
 
             current = MergeSystem.main.ListSlots[i].mergeItem;
 
@@ -109,6 +125,9 @@ public class PIER : MonoBehaviour
             }
             else 
                 PlayerPrefs.SetInt(KeySpot + i.ToString(), current.Level);
+
+            PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), current.MergeIncrementalID); //ID도 저장한다.
+
         }
 
         PlayerPrefs.Save();
@@ -143,7 +162,7 @@ public class PIER : MonoBehaviour
     #endregion
 
 
-
+    
 
     public void SetDamageLevel(int l) {
         DamageLevel = l + 1;
@@ -157,6 +176,8 @@ public class PIER : MonoBehaviour
 
     #endregion
 
+
+    #region BigNumber To String 
 
 
     /// <summary>
@@ -214,6 +235,7 @@ public class PIER : MonoBehaviour
         return long.Parse(r.Substring(0, r.Length - cut));
     }
 
+    #endregion
 
 
     /// <summary>
