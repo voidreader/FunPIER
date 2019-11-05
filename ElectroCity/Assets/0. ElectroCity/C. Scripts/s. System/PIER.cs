@@ -109,7 +109,7 @@ public class PIER : MonoBehaviour
         MergeItem current;
         for (int i = 0; i < MergeSystem.main.ListSlots.Count; i++) {
 
-            PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), -1); // 일단 -1로 초기화 하고 진행
+            // PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), -1); // 일단 -1로 초기화 하고 진행
 
             current = MergeSystem.main.ListSlots[i].mergeItem;
 

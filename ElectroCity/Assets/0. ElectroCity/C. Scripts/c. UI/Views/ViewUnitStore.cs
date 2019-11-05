@@ -47,5 +47,8 @@ public class ViewUnitStore : MonoBehaviour
             ListColumns[row._adlimit - 1].InitUnitStoreColumn(ListUnitData[row._adlimit - 1], StoreColumnType.AD);
         }
 
+        // HighestColumn 처리
+        // ListColumns[PIER.main.HighestUnitLevel-1].InitUnitStoreColumn(listunitdata)
+
     }
 }

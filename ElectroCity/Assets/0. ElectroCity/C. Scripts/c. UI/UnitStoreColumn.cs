@@ -10,7 +10,8 @@ public enum StoreColumnType {
     Available,
     Locked,
     Special,
-    AD
+    AD,
+    Highest // 개방은 되었지만 구매할 수 없음 
 }
 
 public class UnitStoreColumn : MonoBehaviour
@@ -86,6 +87,10 @@ public class UnitStoreColumn : MonoBehaviour
             case StoreColumnType.Special:
                 SetSpecialColumn();
                 break;
+
+            case StoreColumnType.Highest:
+                SetHighestColumn();
+                break;
         }
 
     }
@@ -156,6 +161,16 @@ public class UnitStoreColumn : MonoBehaviour
         GroupSpecial.SetActive(true);
 
         SetGemPrice();
+    }
+
+
+    void SetHighestColumn() {
+        spriteFrame.sprite = Stock.main.SpriteStoreSpecial;
+        spriteLevelSign.sprite = Stock.main.SpriteLevelSignSpecial;
+        SetDPS();
+
+        btnPurchase.sprite = Stock.main.SpriteStoreButtonSpecial;
+        GroupLock.SetActive(true);
     }
 
 

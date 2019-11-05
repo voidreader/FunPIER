@@ -13,7 +13,7 @@ public class BattlePosition : MonoBehaviour
     public MergeItem mergeItem = null;
     public UnitDataRow unitData = null;
     public Unit unit = null;
-    public int MergeIncrementalID = 0;
+    public int MergeIncrementalID = -1;
 
     public void SetUnit(Unit u, MergeItem m) {
         unit = u;
@@ -36,7 +36,10 @@ public class BattlePosition : MonoBehaviour
         unitData = null;
         isOccufied = false;
 
-        
+        MergeIncrementalID = -1;
+
+
+
 
     }
 

@@ -59,6 +59,15 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
     public void OnDrop(PointerEventData eventData) {
 
         Debug.Log(">> OnDrop :: " + this.name);
+
+
+        if (MergeSystem.DraggingItem == null)
+            return;
+
+
+        if (MergeSystem.DraggingItem && MergeSystem.DraggingItem.IsBattle)
+            return;
+
         
 
         // 아이템 존재하는 경우 
@@ -70,8 +79,6 @@ public class MergeSlot : MonoBehaviour, IDropHandler {
                 // 머지!
                 MergeUnit(mergeItem, MergeSystem.DraggingItem);
             }
-            
-
         }
         else { // 빈 슬롯 
             Debug.Log("OnDrop Empty! :: + " + this.gameObject.name);

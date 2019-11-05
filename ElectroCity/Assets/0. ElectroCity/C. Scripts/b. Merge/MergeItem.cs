@@ -242,6 +242,10 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData) {
 
+        if (IsBattle) // 전투 중에 드래그 되지 않음
+            return;
+
+
         if (IsPacked)
             return;
 
@@ -267,8 +271,6 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (IsMerging)
             return;
 
-
-
         
         // 올바르지 않은 위치, 같은 슬롯이면 원상 복구 
         if (MergeSystem.main.TargetSlot == null || StartDragParent == MergeSystem.main.TargetSlot.transform) {
@@ -277,21 +279,24 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             this.transform.SetParent(StartDragParent);
             this.transform.localPosition = Vector3.zero;
+
         }
         else { // 빈 공간으로의 이동 
 
-            Debug.Log("Move Position");
+            if (!IsBattle) {
+                Debug.Log("Move Position");
 
-            // MergeItem 처리 
-            StartDragParent.GetComponent<MergeSlot>().mergeItem = null;
-            MergeSystem.main.TargetSlot.mergeItem = this; 
+                // MergeItem 처리 
+                StartDragParent.GetComponent<MergeSlot>().mergeItem = null;
+                MergeSystem.main.TargetSlot.mergeItem = this;
 
-            this.transform.SetParent(MergeSystem.main.TargetSlot.transform); 
-            this.transform.localPosition = Vector3.zero;
+                this.transform.SetParent(MergeSystem.main.TargetSlot.transform);
+                this.transform.localPosition = Vector3.zero;
 
-            this.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-            this.transform.DOKill();
-            this.transform.DOScale(1, 0.25f).SetEase(Ease.OutBack);
+                this.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                this.transform.DOKill();
+                this.transform.DOScale(1, 0.25f).SetEase(Ease.OutBack);
+            }
         }
         
         MergeSystem.main.SetTargetSlot(null);

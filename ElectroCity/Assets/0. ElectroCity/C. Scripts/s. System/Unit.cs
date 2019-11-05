@@ -26,10 +26,18 @@ public class Unit : MonoBehaviour
     public static long GetUnitCurrentPrice(int level) {
         UnitDataRow r = Stock.GetMergeItemData(level);
         long price = 0;
+        double pow = 0;
 
         try {
             price = long.Parse(r._price);
-            price = System.Convert.ToInt64(price * GetPricePow(GetUnitPurchaseStep(level)));
+            // price = System.Convert.ToInt64(price * GetPricePow(GetUnitPurchaseStep(level)));
+            pow = GetPricePow(GetUnitPurchaseStep(level));
+
+            Debug.Log("GetUnitCurrentPrice Pow :: " + pow.ToString());
+                
+
+            price = (long)(price * GetPricePow(GetUnitPurchaseStep(level)));
+
         }
         catch(System.Exception e) {
 
@@ -38,7 +46,7 @@ public class Unit : MonoBehaviour
                 return 0;
             }
 
-            Debug.Log("Exception in GetUnitCurrentPrice :: " + level + "/" + r._price);
+            Debug.Log("Exception in GetUnitCurrentPrice :: " + e.StackTrace);
         }
         return price;
     }
@@ -60,11 +68,14 @@ public class Unit : MonoBehaviour
     /// </summary>
     /// <param name="step"></param>
     /// <returns></returns>
-    public static decimal GetPricePow(int step) {
-        decimal r = 1.05M;
+    public static double GetPricePow(int step) {
+        double r = 1f;
         for (int i = 0; i < step; i++) {
-            r *= r;
+            r *= 1.05f;
+            r = System.Math.Round(r, 4);
         }
+
+        
 
         return r;
     }

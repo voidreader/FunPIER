@@ -116,17 +116,17 @@ namespace Google2u
 		private StageData()
 		{
 			Rows.Add( new StageDataRow("Stage1", "1", "1", "1"));
-			Rows.Add( new StageDataRow("Stage2", "2", "3", "2"));
-			Rows.Add( new StageDataRow("Stage3", "3", "5", "3"));
-			Rows.Add( new StageDataRow("Stage4", "4", "10", "4"));
-			Rows.Add( new StageDataRow("Stage5", "5", "15", "5"));
-			Rows.Add( new StageDataRow("Stage6", "6", "21", "6"));
-			Rows.Add( new StageDataRow("Stage7", "7", "25", "7"));
-			Rows.Add( new StageDataRow("Stage8", "8", "30", "8"));
-			Rows.Add( new StageDataRow("Stage9", "9", "45", "9"));
-			Rows.Add( new StageDataRow("Stage10", "10", "50", "10"));
-			Rows.Add( new StageDataRow("Stage11", "11", "60", "11"));
-			Rows.Add( new StageDataRow("Stage12", "12", "80", "12"));
+			Rows.Add( new StageDataRow("Stage2", "2", "5", "2"));
+			Rows.Add( new StageDataRow("Stage3", "3", "20", "3"));
+			Rows.Add( new StageDataRow("Stage4", "4", "60", "4"));
+			Rows.Add( new StageDataRow("Stage5", "5", "150", "5"));
+			Rows.Add( new StageDataRow("Stage6", "6", "500", "6"));
+			Rows.Add( new StageDataRow("Stage7", "7", "1000", "7"));
+			Rows.Add( new StageDataRow("Stage8", "8", "1800", "8"));
+			Rows.Add( new StageDataRow("Stage9", "9", "5000", "9"));
+			Rows.Add( new StageDataRow("Stage10", "10", "12000", "10"));
+			Rows.Add( new StageDataRow("Stage11", "11", "40000", "11"));
+			Rows.Add( new StageDataRow("Stage12", "12", "150000", "12"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

@@ -15,6 +15,10 @@ public class Minion : MonoBehaviour
     public Doozy.Engine.Progress.Progressor progressorHP;
     decimal hpvalue;
 
+    public Animator anim;
+
+    bool isReady = false;
+
     /// <summary>
     /// 미니언 설정!
     /// </summary>
@@ -22,6 +26,9 @@ public class Minion : MonoBehaviour
     /// <param name="hp"></param>
     public void InitMinion(int id, long hp) {
 
+        Debug.Log(">> InitMinion hp :: " + hp.ToString());
+
+        // anim.SetBool("isAlive", true);
         row = Stock.GetMinionData(id);
         HP = hp;
         MaxHP = hp;
@@ -35,25 +42,40 @@ public class Minion : MonoBehaviour
         col.size = new Vector2(row._boxsizex, row._boxsizey);
 
         info.IsBoss = false;
+        isReady = false;
 
-        this.transform.DOMoveY(1.77f, 0.1f);
+        this.transform.DOMoveY(1.77f, 0.1f).OnComplete(OnReady);
     }
 
+    void OnReady() {
+        isReady = true;
+    }
+
+
     void SetProgressorHP() {
+
+        
+
         hpvalue = (decimal)HP / (decimal)MaxHP;
         progressorHP.SetValue((float)hpvalue);
     }
 
 
     public void SetDamage(long d) {
+
+        if (!isReady)
+            return;
+
         HP -= d;
-        SetProgressorHP();
+        
 
         if(HP <= 0) {
-            GameManager.main.DecreaseKillCount();
-            GameManager.main.CurrentEnemy = null;
+            progressorHP.SetValue(0);
             BreakUnit();
+            return;
         }
+
+        SetProgressorHP();
     }
 
 
@@ -61,11 +83,36 @@ public class Minion : MonoBehaviour
     /// 파괴 처리 
     /// </summary>
     public void BreakUnit() {
+        
 
-        if(GameManager.main != null) {
+        if (GameManager.main != null) {
             GameManager.main.GetMinionKillCoin();
+            GameManager.main.DecreaseKillCount();
+            
         }
 
+        anim.SetBool("isAlive", false);
+        ReadyToDestroy();
+
+        // Destroy(this.gameObject);
+    }
+
+
+    void ReadyToDestroy() {
+        // progressorHP.transform.DOScale(Vector3.zero, 0.2f);
+        progressorHP.gameObject.SetActive(false);
+        col.enabled = false;
+
+        this.transform.DOLocalMoveX(3, 0.6f);
+    }
+
+    public void DestroyMinion() {
+
+        Debug.Log("<< DestroyMinion >>");
+        anim.SetBool("isAlive", true);
+        GameManager.main.CurrentEnemy = null;
+
+        this.gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
 

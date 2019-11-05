@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Stage")]
     public int Stage = 1;
-    public int KillCount = 200;
+    public int KillCount = 75;
     public long EarningCoin = 0; // 1초에 획득하는 코인 (유닛의 Earning 값)
     public long TotalEarningCoin; // 누적된 획득 코인 - 적이 죽어야 획득함. 
     public Text TextEarningCoin;
@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     public Doozy.Engine.UI.UIButton ButtonCallBoss; // 보스 콜 버튼
     decimal bosshpvalue; 
-    float bossTimer = 90;
+    float bossTimer = 60;
     float progressorValue;
 
 
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         // 0.5초마다 한번씩?
         // EarningCoin의 10분의 1씩 누적 계산
 
-        TotalEarningCoin = (long)(EarningCoin * 0.5f);
+        TotalEarningCoin += (long)(EarningCoin * 0.5f);
     }
 
     /// <summary>
@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
             }
 
 
-            if(!CurrentEnemy || CurrentEnemy.IsDestroy()) {
+            if(CurrentEnemy == null) {
                 CurrentEnemy = GetNewEnemy(false);
 
             }
@@ -272,6 +272,11 @@ public class GameManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 보스 HP 바 설정 
+    /// </summary>
+    /// <param name="hp"></param>
+    /// <param name="maxhp"></param>
     public void SetValueBossHP(long hp, long maxhp) {
 
         if(hp <= 0) {
@@ -296,6 +301,10 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
     public void OnCompleteBossClearEvent() {
 
         Debug.Log(">> OnCompleteBossClearEvent <<");
@@ -309,6 +318,18 @@ public class GameManager : MonoBehaviour
         // 2스테이지 진입
         Stage++;
         SaveStageMemory();
+
+        CleanBossPhase();
+
+    }
+
+
+    /// <summary>
+    /// 보스 페이즈 끝나고 원상복구 
+    /// </summary>
+    public void CleanBossPhase() {
+        BossGroup.SetActive(false);
+        RestoreKillCount();
 
     }
 
@@ -411,6 +432,9 @@ public class GameManager : MonoBehaviour
     /// BattlePosition 위치 로드 
     /// </summary>
     public void LoadEquipUnitPosition() {
+
+        Debug.Log(">> LoadEquipUnitPosition :: " + ListBP.Count);
+
         int id;
         MergeItem item;
 
@@ -600,6 +624,9 @@ public class GameManager : MonoBehaviour
     }
 
     private void OnApplicationQuit() {
+
+        Debug.Log("OnApplicationQuit in GameManager");
+
         SaveStageMemory();
         SaveEquipUnitPosition();
     }
