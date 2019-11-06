@@ -24,6 +24,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public bool IsPacked = false; // 상자 상태여부 
     public bool IsBattle = false; // 전투 중 여부 
+    public bool IsAlive = true; // 쓰레기통 가면 false.
 
 
     // 드래그 시작시 정보 
@@ -256,7 +257,14 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.position = Input.mousePosition;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="eventData"></param>
     public void OnEndDrag(PointerEventData eventData) {
+
+
+        // BeginDrag - OnDrag - OnDrop - OnEndDrag 순서로 호출된다.
 
         if (IsPacked)
             return;
@@ -267,6 +275,13 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         LevelSign.SetActive(true);
 
+
+        if(!IsAlive) { // 쓰레기통으로 이동한 경우 
+            MergeSystem.main.SetTargetSlot(null);
+            Slot.EmptyOutSlot();
+            Destroy(this.gameObject);
+            return;
+        }
 
         if (IsMerging)
             return;

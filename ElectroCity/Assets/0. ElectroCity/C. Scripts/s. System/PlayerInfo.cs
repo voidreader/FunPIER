@@ -14,6 +14,9 @@ public class PlayerInfo : MonoBehaviour
 
     public static PlayerInfo main = null;
 
+    
+    public BottomButtonCtrl HomeButton;
+
     public Text _textLevel;
     public Text _textEXP;
 
@@ -42,7 +45,7 @@ public class PlayerInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        HomeButton.SetActive(true);
     }
 
 
@@ -149,5 +152,33 @@ public class PlayerInfo : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 플레어이가 사용 가능한 머지공간 개수 
+    /// </summary>
+    /// <returns></returns>
+    public static int GetAvailableMergeSpot() {
+
+        int v = 0;
+
+        for(int i=0; i<main.PlayerLevel; i++) {
+            v += LevelData.Instance.Rows[i]._mergespot;
+        }
+
+        return v;
+    }
+
+    /// <summary>
+    /// 플레이어가 사용 가능한 전투포지션 개수 
+    /// </summary>
+    /// <returns></returns>
+    public static int GetAvailableBattleSpot() {
+        int v = 0;
+
+        for (int i = 0; i < main.PlayerLevel; i++) {
+            v += LevelData.Instance.Rows[i]._battlespot;
+        }
+
+        return v;
+    }
 
 }

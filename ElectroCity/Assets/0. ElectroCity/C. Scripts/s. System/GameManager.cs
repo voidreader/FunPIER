@@ -103,8 +103,8 @@ public class GameManager : MonoBehaviour
 
         LoadStageMemory(); // 스테이지 정보(스테이지번호, 킬 카운트)
 
-        yield return null;
-        yield return null;
+        while (!MergeSystem.isInitialized)
+            yield return null;
 
         LoadEquipUnitPosition();
 

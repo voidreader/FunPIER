@@ -9,14 +9,18 @@ public class MergeSystem : MonoBehaviour
 {
     public static MergeSystem main = null;
     public static int MergeIncrementalID = 0; // 머지 유닛 생성때마다 발급 ID, BattlePosition - MergeItem 간의 연결고리! 너와 나의! 연결... :(
+    public static bool isInitialized = false; // 초기화 여부 - GameManager에서 참조
 
     const string KeyMergeID = "KeyMergeID";
 
     [Header(" - Drag Item - ")]
     public static MergeItem DraggingItem;
 
+
+    [Header( "- Slots - ")]
     public List<MergeSlot> ListSlots;
     public List<MergeSlot> ListEmptySlots;
+    public int AvailableMergeSlotCount = 0;
 
     public float SecondSpawnBox;
 
@@ -117,12 +121,20 @@ public class MergeSystem : MonoBehaviour
         main = this;
     }
 
-    void Start() {
-        ListEmptySlots = new List<MergeSlot>();
+    IEnumerator Start() {
 
-        //StartCoroutine(MergeRoutine());
-        SetMergeSpotMemory();
-        SetInstantPurchaseUnit();
+
+        while (!PIER.isInitialized)
+            yield return null;
+
+        // Start 메소드의 경우 순서가 필요하다.
+        // MergeSystem 먼저, 그다음이 GameManager
+        ListEmptySlots = new List<MergeSlot>();
+        SetAvailableMergeSpot(); // 레벨에 따른 사용가능 머지 공간 
+        SetMergeSpotMemory(); // 포지션 불러오기 
+        SetInstantPurchaseUnit(); // 빠른구매 설정 
+
+        isInitialized = true;
 
     }
 
@@ -142,6 +154,24 @@ public class MergeSystem : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 플레이어 레벨에 따른 머지 공간 개수 설정
+    /// </summary>
+    public void SetAvailableMergeSpot() {
+        AvailableMergeSlotCount = PlayerInfo.GetAvailableMergeSpot();
+
+        // 초기화 후 
+        for(int i =0; i<ListSlots.Count;i++) {
+            ListSlots[i].IsAvailable = false;
+        }
+
+
+        // 사용 가능 개수만큼 불러오기 
+        for(int i=0; i<AvailableMergeSlotCount;i++) {
+            ListSlots[i].IsAvailable = true;
+        }
+    }
+
 
     /// <summary>
     /// 저장된 머지 공간 정보 세팅 
@@ -149,7 +179,7 @@ public class MergeSystem : MonoBehaviour
     public void SetMergeSpotMemory() {
 
 
-        for (int i = 0; i < ListSlots.Count; i++) {
+        for (int i = 0; i < AvailableMergeSlotCount; i++) {
 
             // Spot 정보는 -2 : 스페셜 박스, -1 : 걍 박스, 0 : 비었음. 
             switch (PIER.main.ArrSpotMemory[i]) {
@@ -227,7 +257,7 @@ public class MergeSystem : MonoBehaviour
 
         for(int i=0; i<ListSlots.Count;i++) {
 
-            if (!ListSlots[i].gameObject.activeSelf)
+            if (!ListSlots[i].IsAvailable)
                 continue;
 
             if (ListSlots[i].mergeItem == null)
@@ -251,7 +281,7 @@ public class MergeSystem : MonoBehaviour
         ListEmptySlots.Clear();
 
         // 비어있는 모든 슬롯 수집
-        for(int i =0;i <ListSlots.Count;i++) {
+        for(int i =0;i <AvailableMergeSlotCount;i++) {
 
 
             if (ListSlots[i].mergeItem == null)
@@ -280,7 +310,7 @@ public class MergeSystem : MonoBehaviour
         MergeSlot slot = null;
         float distance = 0;
 
-        for(int i=0; i<ListSlots.Count;i++) {
+        for(int i=0; i<AvailableMergeSlotCount;i++) {
             
             if (i == 0) {
                 slot = ListSlots[i];

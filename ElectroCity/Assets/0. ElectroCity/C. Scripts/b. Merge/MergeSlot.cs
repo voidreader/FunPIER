@@ -7,7 +7,18 @@ using DG.Tweening;
 public class MergeSlot : MonoBehaviour, IDropHandler {
 
     public MergeItem mergeItem = null;
+    bool isAvailable = false; // 사용 가능 여부 
 
+    public bool IsAvailable {
+        get {
+            return isAvailable;
+        }
+        set {
+            isAvailable = value;
+            this.gameObject.SetActive(value);
+
+        }
+    }
 
 
     /// <summary>

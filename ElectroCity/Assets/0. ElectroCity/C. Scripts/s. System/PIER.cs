@@ -7,6 +7,8 @@ using Google2u;
 public class PIER : MonoBehaviour
 {
     public static PIER main = null;
+    public static bool isInitialized = false;
+
     public string[] numberSymbol = { "K", "M", "G", "T", "P", "E", "Z" };
 
     /// <summary>
@@ -38,6 +40,7 @@ public class PIER : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         OnRefreshPlayerInfo();
+        isInitialized = true;
     }
 
     #region 데이터 Save & Load 
@@ -107,7 +110,7 @@ public class PIER : MonoBehaviour
     public void SaveMergeSpotMemory() {
 
         MergeItem current;
-        for (int i = 0; i < MergeSystem.main.ListSlots.Count; i++) {
+        for (int i = 0; i < MergeSystem.main.AvailableMergeSlotCount; i++) {
 
             // PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), -1); // 일단 -1로 초기화 하고 진행
 

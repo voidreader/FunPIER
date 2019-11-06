@@ -34,6 +34,10 @@ public class BottomButtonCtrl : MonoBehaviour
 
         // 버튼 활성화시 
         if(flag) {
+
+            if (_button.sprite == Stock.main.SpriteBottomButtonActive)
+                return;
+
             _button.sprite = Stock.main.SpriteBottomButtonActive;
             _button.SetNativeSize();
 

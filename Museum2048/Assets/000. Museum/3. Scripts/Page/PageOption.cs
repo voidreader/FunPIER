@@ -10,6 +10,8 @@ public class PageOption : UILayer {
 
     public GameObject _btnRestore;
 
+    public int lockCount = 0;
+
 
     public override UILayer Init(UILayerEnum type, Transform parent, Action pOpen, Action pClose) {
 
@@ -21,6 +23,8 @@ public class PageOption : UILayer {
 
 
         CheckVolumeState();
+
+        lockCount = 0;
 
         return base.Init(type, parent, pOpen, pClose);
     }
@@ -61,6 +65,11 @@ public class PageOption : UILayer {
     public void OnClickTutorial() {
         AudioAssistant.Shot("Possitive");
         PageManager.main.OpenTutorial();
+
+        if(lockCount == 7) {
+            UnlockContents();
+        }
+
     }
 
 
@@ -91,5 +100,33 @@ public class PageOption : UILayer {
     public void OnClickPolicy() {
         AdsControl.main.IsCoolingPauseAds = true;
         Application.OpenURL("http://pier-showcase.com/policy/m2048_privacy_policy.html");
+    }
+
+
+    public void OnClickTitle() {
+        lockCount++;
+
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void UnlockContents() {
+        Debug.Log(">> UnlockContents <<");
+
+        /*
+        carMuseumStep = node["carstep"].AsInt;
+        wineMuseumStep = node["winestep"].AsInt;
+        vikingMuseumStep = node["vikingstep"].AsInt;
+        iceMuseumStep = node["icestep"].AsInt;
+        */
+
+        PierSystem.main.carMuseumStep = PierSystem.main.MaxCarMuseumStep;
+        PierSystem.main.wineMuseumStep = PierSystem.main.MaxWineMuseumStep;
+        PierSystem.main.vikingMuseumStep = PierSystem.main.MaxVikingMuseumStep;
+        PierSystem.main.iceMuseumStep = PierSystem.main.MaxIceMuseumStep;
+
+        PierSystem.main.SaveProfile();
     }
 }
