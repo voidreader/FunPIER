@@ -115,6 +115,9 @@ public class GameManager : MonoBehaviour
 
     }
 
+    
+
+
     private void Update() {
         if(Input.GetKeyDown(KeyCode.K) && CurrentEnemy) {
             CurrentEnemy.SetDamage(1000);
@@ -428,12 +431,30 @@ public class GameManager : MonoBehaviour
 
     #region Equip Slot, Battle Position Data Save & Load
 
+
+    /// <summary>
+    /// 배틀포지션 초기화
+    /// </summary>
+    public void InitEquipUnitPosition() {
+
+        // Battle과 관련된 변수는 ListEqiupSlot과 ListBP 두가지가 있다. 
+        for(int i=0; i<6; i++) {
+            ListEquipSlot[i].gameObject.SetActive(false);
+        }
+
+        // 활성가능 개수만큼만 활성화 
+        for(int i=0; i<PlayerInfo.GetAvailableBattleSpot();i++) {
+            ListEquipSlot[i].gameObject.SetActive(true);
+        }
+    }
+
     /// <summary>
     /// BattlePosition 위치 로드 
     /// </summary>
     public void LoadEquipUnitPosition() {
 
-        Debug.Log(">> LoadEquipUnitPosition :: " + ListBP.Count);
+        // Debug.Log(">> LoadEquipUnitPosition :: " + ListBP.Count);
+        InitEquipUnitPosition();
 
         int id;
         MergeItem item;
@@ -441,14 +462,13 @@ public class GameManager : MonoBehaviour
         for(int i=0; i<ListBP.Count;i++) {
             id = PlayerPrefs.GetInt(KeyBattlePosition + i.ToString(), -1);
 
-            if (id < 0)
+            if (id <= 0)
                 continue;
 
             // id값이 존재하는 경우 Equip 처리를 해야한다.
             item = MergeSystem.main.FindMergeItemByIncrementalID(id);
-
             if(item != null) {
-                SetEquipUnit(item);
+                SetEquipUnit(item, false);
             }
         }
 
@@ -462,13 +482,7 @@ public class GameManager : MonoBehaviour
     public void SaveEquipUnitPosition() {
         for(int i=0; i < ListBP.Count; i++) {
 
-            if (!ListBP[i].gameObject.activeSelf) {
-                PlayerPrefs.SetInt(KeyBattlePosition + i.ToString(), -1);
-                continue;
-            }
-
-
-            if (ListBP[i].isOccufied)
+            if (ListBP[i].isOccufied) // 점유되었는지 여부만 판단.
                 PlayerPrefs.SetInt(KeyBattlePosition + i.ToString(), ListBP[i].MergeIncrementalID); //!! level을 저장하는게 아니고 MergeIncrementalID를 저장한다!
             else
                 PlayerPrefs.SetInt(KeyBattlePosition + i.ToString(), -1);
@@ -482,7 +496,7 @@ public class GameManager : MonoBehaviour
     /// 유닛 전투위치로!
     /// </summary>
     /// <param name="u"></param>
-    public void SetEquipUnit(MergeItem item) {
+    public void SetEquipUnit(MergeItem item, bool autoSave = true) {
         BattlePosition bp = GetBattlePosition(item.unitRow);
         item.SetBattle(true);
 
@@ -497,6 +511,9 @@ public class GameManager : MonoBehaviour
 
         RefreshEquipSlot();
         RefreshEarningCoin();
+
+        if(autoSave)
+            PIER.SaveAll();
 
     }
 
@@ -543,10 +560,15 @@ public class GameManager : MonoBehaviour
     public void CallbackBattleUnit(MergeItem item) {
 
         for(int i=0; i<ListBP.Count;i++) {
-            if(ListBP[i].mergeItem == item) {
-                item.SetBattle(false);
-                ListBP[i].CleanUnit();
+            if(ListBP[i].MergeIncrementalID == item.MergeIncrementalID) {
+
+                item.SetBattle(false); // 전투중 아님!
+
+                ListBP[i].CleanUnit(); // 포지션에서 제거!
+
                 RefreshEquipSlot();
+
+                PIER.SaveAll();
                 return;
             }
         }
@@ -606,7 +628,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 스테이지 진행도 저장 
     /// </summary>
-    void SaveStageMemory() {
+    public void SaveStageMemory() {
         PlayerPrefs.SetInt(KeyStage, Stage);
         PlayerPrefs.SetInt(KeyKillCountg, KillCount);
         PlayerPrefs.Save();
@@ -614,21 +636,5 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-
-    private void OnApplicationPause(bool pause) {
-        if (pause) {
-   
-            SaveStageMemory();
-            SaveEquipUnitPosition();
-        }
-    }
-
-    private void OnApplicationQuit() {
-
-        Debug.Log("OnApplicationQuit in GameManager");
-
-        SaveStageMemory();
-        SaveEquipUnitPosition();
-    }
 
 }

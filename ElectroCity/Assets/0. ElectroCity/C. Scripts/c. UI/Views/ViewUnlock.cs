@@ -69,7 +69,10 @@ public class ViewUnlock : MonoBehaviour
     }
 
 
-
+    public void OnClose() {
+        Debug.Log(">> ViewUnlock OnClose <<");
+        MergeSystem.isUnlocking = false;
+    }
 
 
 }

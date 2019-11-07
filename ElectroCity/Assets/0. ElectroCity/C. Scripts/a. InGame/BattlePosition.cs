@@ -37,10 +37,6 @@ public class BattlePosition : MonoBehaviour
         isOccufied = false;
 
         MergeIncrementalID = -1;
-
-
-
-
     }
 
 

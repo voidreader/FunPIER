@@ -234,7 +234,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
         // 화면상 순서때문에 다른 Parent를 Set 
-        transform.SetParent(MergeSystem.main.DragParent);
+        this.transform.SetParent(MergeSystem.main.DragParent);
         LevelSign.SetActive(false);
 
         SetDragDim(true);
@@ -269,7 +269,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (IsPacked)
             return;
 
-        Debug.Log(">> MergeItem OnEndDrop :: " + this.name);
+        Debug.Log(">> MergeItem OnEndDrag :: " + this.name);
 
         MergeSystem.DraggingItem = null;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -280,6 +280,7 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             MergeSystem.main.SetTargetSlot(null);
             Slot.EmptyOutSlot();
             Destroy(this.gameObject);
+            PIER.SaveAll();
             return;
         }
 
@@ -316,6 +317,8 @@ public class MergeItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         
         MergeSystem.main.SetTargetSlot(null);
         SetDragDim(false);
+
+        PIER.SaveAll();
         
     }
 

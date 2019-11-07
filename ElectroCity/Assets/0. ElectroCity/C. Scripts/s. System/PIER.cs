@@ -82,6 +82,14 @@ public class PIER : MonoBehaviour
     }
 
 
+    public static void SaveAll() {
+        main.SaveData(false);
+        main.SaveMergeSpotMemory();
+        GameManager.main.SaveStageMemory();
+        GameManager.main.SaveEquipUnitPosition();
+    }
+
+
     #region 머지 스팟 위치 기억 LoadMergeSpotMemory & SaveMergeSpotMemory
 
     /// <summary>
@@ -110,30 +118,44 @@ public class PIER : MonoBehaviour
     public void SaveMergeSpotMemory() {
 
         MergeItem current;
-        for (int i = 0; i < MergeSystem.main.AvailableMergeSlotCount; i++) {
+        string debugS = string.Empty;
 
-            // PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), -1); // 일단 -1로 초기화 하고 진행
+        Debug.Log("SaveMergeSpotMemory >>>>>>>>>>>>>> " + PlayerInfo.GetAvailableMergeSpot());
+
+        for (int i = 0; i < PlayerInfo.GetAvailableMergeSpot(); i++) {
+
+
+            // 초기화 하고 시작..
+            PlayerPrefs.SetInt(KeySpot + i.ToString(), 0); 
+            PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), -1); 
 
             current = MergeSystem.main.ListSlots[i].mergeItem;
 
             if (current == null)
                 continue;
 
-            if(current.IsPacked) {
-                if(current.IsSpecialBox)
+            if (current.IsPacked) {
+                if (current.IsSpecialBox) {
                     PlayerPrefs.SetInt(KeySpot + i.ToString(), -2);
-                else
+                    debugS += KeySpot + i.ToString() + " : Special Box " + "\n";
+                }
+                else {
                     PlayerPrefs.SetInt(KeySpot + i.ToString(), -1);
+                    debugS += KeySpot + i.ToString() + " : Normal Box " + "\n";
+                }
 
             }
-            else 
+            else {
                 PlayerPrefs.SetInt(KeySpot + i.ToString(), current.Level);
+                debugS += KeySpot + i.ToString() + " : " + current.Level + "\n";
+            }
 
             PlayerPrefs.SetInt(KeySpotIncrementalID + i.ToString(), current.MergeIncrementalID); //ID도 저장한다.
 
         }
 
         PlayerPrefs.Save();
+        Debug.Log("SaveMergeSpotMemory Result ::\n" + debugS);
     }
 
     #endregion
@@ -289,6 +311,15 @@ public class PIER : MonoBehaviour
 
         return "0%";
 
+    }
+
+    private void OnApplicationPause(bool pause) {
+        if (pause)
+            SaveAll();
+    }
+
+    private void OnApplicationQuit() {
+        SaveAll();
     }
 
 }

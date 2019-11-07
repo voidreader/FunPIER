@@ -11,6 +11,8 @@ public class MergeSystem : MonoBehaviour
     public static int MergeIncrementalID = 0; // 머지 유닛 생성때마다 발급 ID, BattlePosition - MergeItem 간의 연결고리! 너와 나의! 연결... :(
     public static bool isInitialized = false; // 초기화 여부 - GameManager에서 참조
 
+    public static bool isUnlocking = false; // 언락 이벤트 호출 여부 
+
     const string KeyMergeID = "KeyMergeID";
 
     [Header(" - Drag Item - ")]
@@ -50,7 +52,7 @@ public class MergeSystem : MonoBehaviour
         MergeIncrementalID = PlayerPrefs.GetInt(KeyMergeID, 0);
 
         if (MergeIncrementalID > 60000)
-            MergeIncrementalID = 0;
+            MergeIncrementalID = 1;
 
         MergeIncrementalID++;
         PlayerPrefs.SetInt(KeyMergeID, MergeIncrementalID); // 가장 마지막에 사용된 ID를 저장.
@@ -179,7 +181,7 @@ public class MergeSystem : MonoBehaviour
     public void SetMergeSpotMemory() {
 
 
-        for (int i = 0; i < AvailableMergeSlotCount; i++) {
+        for (int i = 0; i < PlayerInfo.GetAvailableMergeSpot(); i++) {
 
             // Spot 정보는 -2 : 스페셜 박스, -1 : 걍 박스, 0 : 비었음. 
             switch (PIER.main.ArrSpotMemory[i]) {
@@ -193,7 +195,7 @@ public class MergeSystem : MonoBehaviour
                     break;
 
                 case 0:
-                    break;
+                    continue;
 
                 default:
                     ListSlots[i].SpawnMergeUnitInstantly(PIER.main.ArrSpotMemory[i]);
@@ -340,16 +342,29 @@ public class MergeSystem : MonoBehaviour
             PIER.main.HighestUnitLevel = unit._level;
             PIER.main.SaveData(false);
 
-            ViewUnlock.unlockUnit = unit;
+            ViewUnlock.unlockUnit = unit; // unlock 대상 유닛 전달
+            isUnlocking = true;
 
-            Doozy.Engine.GameEventMessage.SendEvent("UnlockEvent");
+            
             CurrentUnlockData = UnlockData.Instance.Rows[PIER.main.HighestUnitLevel - 1];
             SetInstantPurchaseUnit();
+
+            StartCoroutine(UnlockRoutine());
         }
 
     }
 
+    IEnumerator UnlockRoutine() {
 
+
+        yield return new WaitForSeconds(0.5f);
+
+        // LevelUp 이 동시에 열리는 경우를 대비해서 대기.. (PlayerInfo)
+        while (PlayerInfo.isOnLevelUp)
+            yield return new WaitForSeconds(0.1f); // 레벨업 창 닫힐때까지 대기 
+
+        Doozy.Engine.GameEventMessage.SendEvent("UnlockEvent");
+    }
 
 
     #endregion
@@ -391,18 +406,10 @@ public class MergeSystem : MonoBehaviour
         PIER.main.SaveUnitPurchaseStep(CurrentUnlockData._quick);
         SetInstantPurchaseUnit();
 
+        PIER.SaveAll();
 
     }
 
     #endregion
-
-    private void OnApplicationPause(bool pause) {
-        if (pause)
-            PIER.main.SaveMergeSpotMemory();
-    }
-
-    private void OnApplicationQuit() {
-        PIER.main.SaveMergeSpotMemory();
-    }
 
 }

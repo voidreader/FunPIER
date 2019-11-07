@@ -19693,6 +19693,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 530831283}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &530831285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3812837110531583397, guid: f1b79eeff1156c34da51daba427349b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 530831283}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0256d9dde4e9f6f4c89c600fd637da56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &531389709
 GameObject:
   m_ObjectHideFlags: 0
@@ -23783,7 +23795,18 @@ MonoBehaviour:
         CustomSortingLayer: Default
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 567265595}
+            m_MethodName: OnClose
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -24249,7 +24272,7 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 0}
+          - m_Target: {fileID: 567265595}
             m_MethodName: OnView
             m_Mode: 1
             m_Arguments:
@@ -24339,7 +24362,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RewardCount: 0
-  ListRewards: []
+  ListRewards:
+  - {fileID: 4874357600563132452}
+  - {fileID: 1262676717}
+  - {fileID: 530831285}
+  btnBack: {fileID: 1324671483}
   CountMergeSpot: 0
   CountBattleSpot: 0
   CountGem: 0
@@ -28133,7 +28160,18 @@ MonoBehaviour:
         CustomSortingLayer: Default
       Event:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 784502655}
+            m_MethodName: OnClose
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -44653,6 +44691,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1262676715}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1262676717 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3812837110531583397, guid: f1b79eeff1156c34da51daba427349b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1262676715}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0256d9dde4e9f6f4c89c600fd637da56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1266183448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78935,6 +78985,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1b79eeff1156c34da51daba427349b7, type: 3}
+--- !u!114 &4874357600563132452 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3812837110531583397, guid: f1b79eeff1156c34da51daba427349b7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4874357600563132451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0256d9dde4e9f6f4c89c600fd637da56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5394992158682222869
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ public class PlayerInfo : MonoBehaviour
 {
 
     public static PlayerInfo main = null;
+    public static bool isOnLevelUp = false; // 레벨업중..? 
 
     
     public BottomButtonCtrl HomeButton;
@@ -132,7 +133,7 @@ public class PlayerInfo : MonoBehaviour
             PIER.main.SaveData(false);
             _levelBar.SetValue(1);
 
-            
+            isOnLevelUp = true; // Unlock 과 동시에 열리는 상황을 방지한다. 
             StartCoroutine(DelaySetLevelProgressor());
 
         }
@@ -146,8 +147,11 @@ public class PlayerInfo : MonoBehaviour
     }
 
     IEnumerator DelaySetLevelProgressor() {
-        yield return new WaitForSeconds(0.5f);
+        // 게이지가 줄어드는 시간을 준다. 
+        yield return new WaitForSeconds(0.2f);
         SetLevelProgressor(false);
+        Debug.Log(">> LevelUpEvent <<");
+        Doozy.Engine.GameEventMessage.SendEvent("LevelUpEvent"); // 창 오픈!
 
     }
 
