@@ -80,6 +80,16 @@ public class Item_StageInfo_Main : MonoBehaviour
 			}
 			else
 			{
+                objClear.gameObject.SetActive(false);
+                objLoked.gameObject.SetActive(false);
+                textState.gameObject.SetActive(true);
+                textState.Text = "CHALLENGE";
+                spriteStage.SetSprite("ui_frm_slot_stage_challenge_js");
+                spriteStageInfo.SetSprite("ui_frm_slot_stageinfo_challenge_js");
+                button.enabled = true;
+                BlockManager.Instance.loadCustom(_info, tranBlock);
+
+                /*
 				dic = DataSaveManager.Instance.GetStageClearInfo( stageNum );
 				if ( dic != null )
 				{
@@ -102,7 +112,8 @@ public class Item_StageInfo_Main : MonoBehaviour
 					spriteStage.SetSprite( "ui_frm_slot_stage_locked_js" );
 					spriteStageInfo.SetSprite( "ui_frm_slot_stageinfo_locked_js" );
 				}
-			}
+                */
+            }
 		}
 		else
 		{

@@ -90,6 +90,7 @@ public class Stock : MonoBehaviour
     public List<Sprite> ListBossParts;
     public List<Sprite> ListBossBrokenSprite;
     public List<Sprite> ListBossUI_Sprite;
+    public List<Sprite> ListBossFrame_Sprite;
 
 
 
@@ -212,6 +213,16 @@ public class Stock : MonoBehaviour
     /// <returns></returns>
     public static BossDataRow GetBossData(int id) {
         return BossData.Instance.Rows[id - 1];
+    }
+
+
+    public static Sprite GetBossFrame_Sprite(string n) {
+        for (int i = 0; i < main.ListBossFrame_Sprite.Count; i++) {
+            if (main.ListBossFrame_Sprite[i].name == n) {
+                return main.ListBossFrame_Sprite[i];
+            }
+        }
+        return null;
     }
 
 

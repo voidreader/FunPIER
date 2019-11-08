@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: EmptyMaterial
   m_Shader: {fileID: 4800000, guid: a36b7719ff0465b42ab1407d67672c5f, type: 3}
-  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA GLOW_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -87,7 +87,7 @@ Material:
     - _GhostColorBoost: 1
     - _GhostTransparency: 0
     - _GlitchAmount: 3
-    - _Glow: 0
+    - _Glow: 0.4
     - _GlowTexUsed: 0
     - _GradBlend: 1
     - _GrassManualAnim: 1
