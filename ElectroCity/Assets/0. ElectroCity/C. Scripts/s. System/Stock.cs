@@ -93,6 +93,11 @@ public class Stock : MonoBehaviour
     public List<Sprite> ListBossFrame_Sprite;
 
 
+    [Header("- Boss Call Sprites -")]
+    public List<Sprite> ListBossCallBGSprite;
+    public List<Sprite> ListBossCallPanelSprite;
+    public List<Sprite> ListBossCallNameTagSprite;
+
 
 
     [Header("- Weapon List -")]
