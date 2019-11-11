@@ -55,13 +55,25 @@ public class ViewBossCall : MonoBehaviour
         // LightOn.gameObject.SetActive(false);
         LightOn.DOKill();
         LightOn.color = new Color(1, 1, 1, 0);
-        MommyHead.localRotation = Quaternion.identity;
+
+        MommyHead.DOKill();
+        MommyHead.localEulerAngles = new Vector3(0, 0, -10);
+        MommyHead.transform.DOLocalRotate(new Vector3(0, 0, 10), 1.5f).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo);
+            
+        
 
         TextBossName.text = string.Empty;
         GradeTag.gameObject.SetActive(false);
+
+
+
     }
 
 
+    /// <summary>
+    /// 보스 굴리기!
+    /// </summary>
+    /// <returns></returns>
     IEnumerator Rolling() {
         int rollIndex = 0;
         int order = 0;
@@ -99,6 +111,12 @@ public class ViewBossCall : MonoBehaviour
     }
 
 
+    
+
+
+    /// <summary>
+    /// Stop 버튼 누르기 
+    /// </summary>
     public void OnClickStop() {
 
         isStopped = true;
@@ -109,13 +127,19 @@ public class ViewBossCall : MonoBehaviour
             ListNomineeSprite[i].transform.DOKill(); // 다 멈추고. 
         }
 
-        ListNomineeSprite[SelectedIndex].transform.DOLocalMoveX(0, 1f).SetDelay(0.5f);
+        ListNomineeSprite[SelectedIndex].transform.DOLocalMoveX(0, 1f).SetDelay(0.5f).OnComplete(OnCompletedStop);
 
         if (SelectedIndex - 1 < 0)
             ListNomineeSprite[ListNomineeSprite.Count - 1].transform.DOLocalMoveX(-500, 0.5f).SetDelay(0.5f);
         else
             ListNomineeSprite[SelectedIndex - 1].transform.DOLocalMoveX(-500, 0.5f).SetDelay(0.5f);
     }
+
+    void OnCompletedStop() {
+        ViewBossCallResult.row = SelectedBossData;
+        Doozy.Engine.GameEventMessage.SendEvent("BossCallResultEvent");
+    }
+
 
     /// <summary>
     /// 버튼 및 불 활성화
@@ -182,6 +206,7 @@ public class ViewBossCall : MonoBehaviour
         ListNomineeSprite[i].transform.localPosition = new Vector2(500, row._beltPosY); // 포지션 (Y값만 달라진다)
         ListNomineeSprite[i].transform.DOLocalMoveX(-500, speed).SetEase(Ease.Linear);
 
+        // Stop 버튼을 눌러야 하기 때문에, 누르는 순간의 보스 정보를 정해놓는다.
         SelectedIndex = i;
         SelectedBossData = row;
     }

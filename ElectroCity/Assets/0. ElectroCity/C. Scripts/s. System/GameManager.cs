@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     public bool IsBossMode = false;
     // public bool 
     public GameObject BossGroup;
-    public GameObject BossWarningView;
+    public GameObject BossCallView;
 
     public Progressor progressorBossHP, progressorBossTimer; // 게이지들 
     public GameObject BossSkull, ButtonSurrender; // 보스 HP 게이지 좌우 
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.B) && CurrentEnemy) {
-            CallBoss();
+            OnClickCallBoss();
         }
     }
 
@@ -208,13 +208,13 @@ public class GameManager : MonoBehaviour
     #region 보스 처리 
 
     /// <summary>
-    /// 보스 모드 진입 
+    /// 보스 소환 과정이 끝나고 실제 보스 생성 
     /// </summary>
-    public void CallBoss() {
+    public void CallFieldBoss() {
 
         // CurrentEnemy.de
-        ViewBossWarning.warningBossID = 1;
-        Doozy.Engine.GameEventMessage.SendEvent("BossWarningEvent"); // 보스 등장 UI 처리 
+        // ViewBossWarning.warningBossID = 1;
+        // Doozy.Engine.GameEventMessage.SendEvent("BossWarningEvent"); // 보스 등장 UI 처리 
 
         IsBossMode = true; // 보스모드 진입 
 
@@ -224,10 +224,12 @@ public class GameManager : MonoBehaviour
     IEnumerator BossRoutine() {
 
         float timervalue = 0;
-
-        while (BossWarningView.activeSelf) {
+        yield return new WaitForSeconds(1);
+        
+        while (BossCallView.activeSelf) {
             yield return null;
         }
+        
 
         yield return null;
 
@@ -352,7 +354,24 @@ public class GameManager : MonoBehaviour
 
         if (isBoss) {
             e = Instantiate(Stock.main.ObjectBoss, new Vector3(2.6f, 2.4f, 0), Quaternion.identity).GetComponent<EnemyInfo>();
-            e.InitBoss(1, 100 * StageData.Instance.Rows[Stage - 1]._factor * 10); // 보스 10배.
+
+            // CallResult의 bid 값을 가져온다. 
+            BossDataRow boss = ViewBossCallResult.row;
+            int bid = boss._bid;
+
+            long hp = 100 * StageData.Instance.Rows[Stage - 1]._factor * 20;
+
+            // 보스 등급에 따른 HP 조정 
+            if (boss._grade == "Rare")
+                hp =  (long)(hp * 1.5f);
+            else if (boss._grade == "Unique")
+                hp = (long)(hp * 2);
+            else if (boss._grade == "Legendary")
+                hp = (long)(hp * 3);
+
+
+            //e.InitBoss(ViewBossCallResult.row._bid, hp); 
+            e.InitBoss(1, hp);
         }
         else {
             // 미니언 생성 
@@ -420,11 +439,14 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// 만땅된 게이지 터치
     /// </summary>
     public void OnClickCallBoss() {
-        CallBoss();
+
+        Doozy.Engine.GameEventMessage.SendEvent("BossCallEvent");
         ButtonCallBoss.enabled = false;
+
+        CallFieldBoss();
 
     }
 

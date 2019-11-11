@@ -46,8 +46,8 @@ public class Stock : MonoBehaviour
 
     [Header("- Map Sprite Resources -")]
     public Sprite SpriteMapCurrent;
-    public Sprite SpriteMapNext;
-    public Sprite SpriteMapEnd;
+    public Sprite SpriteMapLock;
+    public Sprite SpriteMapUnlock;
 
     [Header("- UnitStore Sprite Resources -")]
     public Sprite SpriteStoreAvailable;

@@ -16,8 +16,10 @@ namespace Google2u
 	{
 		public string _stage;
 		public int _factor;
-		public int _bid;
-		public StageDataRow(string __ID, string __stage, string __factor, string __bid) 
+		public string _displayname;
+		public string _needcoin;
+		public int _coinfactor;
+		public StageDataRow(string __ID, string __stage, string __factor, string __displayname, string __needcoin, string __coinfactor) 
 		{
 			_stage = __stage.Trim();
 			{
@@ -27,16 +29,18 @@ namespace Google2u
 				else
 					Debug.LogError("Failed To Convert _factor string: "+ __factor +" to int");
 			}
+			_displayname = __displayname.Trim();
+			_needcoin = __needcoin.Trim();
 			{
 			int res;
-				if(int.TryParse(__bid, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
-					_bid = res;
+				if(int.TryParse(__coinfactor, NumberStyles.Any, CultureInfo.InvariantCulture, out res))
+					_coinfactor = res;
 				else
-					Debug.LogError("Failed To Convert _bid string: "+ __bid +" to int");
+					Debug.LogError("Failed To Convert _coinfactor string: "+ __coinfactor +" to int");
 			}
 		}
 
-		public int Length { get { return 3; } }
+		public int Length { get { return 5; } }
 
 		public string this[int i]
 		{
@@ -58,7 +62,13 @@ namespace Google2u
 					ret = _factor.ToString();
 					break;
 				case 2:
-					ret = _bid.ToString();
+					ret = _displayname.ToString();
+					break;
+				case 3:
+					ret = _needcoin.ToString();
+					break;
+				case 4:
+					ret = _coinfactor.ToString();
 					break;
 			}
 
@@ -76,8 +86,14 @@ namespace Google2u
 				case "factor":
 					ret = _factor.ToString();
 					break;
-				case "bid":
-					ret = _bid.ToString();
+				case "displayname":
+					ret = _displayname.ToString();
+					break;
+				case "needcoin":
+					ret = _needcoin.ToString();
+					break;
+				case "coinfactor":
+					ret = _coinfactor.ToString();
 					break;
 			}
 
@@ -88,7 +104,9 @@ namespace Google2u
 			string ret = System.String.Empty;
 			ret += "{" + "stage" + " : " + _stage.ToString() + "} ";
 			ret += "{" + "factor" + " : " + _factor.ToString() + "} ";
-			ret += "{" + "bid" + " : " + _bid.ToString() + "} ";
+			ret += "{" + "displayname" + " : " + _displayname.ToString() + "} ";
+			ret += "{" + "needcoin" + " : " + _needcoin.ToString() + "} ";
+			ret += "{" + "coinfactor" + " : " + _coinfactor.ToString() + "} ";
 			return ret;
 		}
 	}
@@ -115,18 +133,18 @@ namespace Google2u
 
 		private StageData()
 		{
-			Rows.Add( new StageDataRow("Stage1", "1", "1", "1"));
-			Rows.Add( new StageDataRow("Stage2", "2", "5", "2"));
-			Rows.Add( new StageDataRow("Stage3", "3", "20", "3"));
-			Rows.Add( new StageDataRow("Stage4", "4", "60", "4"));
-			Rows.Add( new StageDataRow("Stage5", "5", "150", "5"));
-			Rows.Add( new StageDataRow("Stage6", "6", "500", "6"));
-			Rows.Add( new StageDataRow("Stage7", "7", "1000", "7"));
-			Rows.Add( new StageDataRow("Stage8", "8", "1800", "8"));
-			Rows.Add( new StageDataRow("Stage9", "9", "5000", "9"));
-			Rows.Add( new StageDataRow("Stage10", "10", "12000", "10"));
-			Rows.Add( new StageDataRow("Stage11", "11", "40000", "11"));
-			Rows.Add( new StageDataRow("Stage12", "12", "150000", "12"));
+			Rows.Add( new StageDataRow("Stage1", "1", "1", "AREA #1", "50000", "2"));
+			Rows.Add( new StageDataRow("Stage2", "2", "5", "AREA #2", "250000", "4"));
+			Rows.Add( new StageDataRow("Stage3", "3", "20", "AREA #3", "800000", "8"));
+			Rows.Add( new StageDataRow("Stage4", "4", "60", "AREA #4", "2500000", "16"));
+			Rows.Add( new StageDataRow("Stage5", "5", "150", "AREA #5", "12000000", "32"));
+			Rows.Add( new StageDataRow("Stage6", "6", "500", "AREA #6", "80000000", "64"));
+			Rows.Add( new StageDataRow("Stage7", "7", "1000", "AREA #7", "500000000", "128"));
+			Rows.Add( new StageDataRow("Stage8", "8", "1800", "AREA #8", "5000000000", "256"));
+			Rows.Add( new StageDataRow("Stage9", "9", "5000", "AREA #9", "50000000000", "512"));
+			Rows.Add( new StageDataRow("Stage10", "10", "12000", "AREA #10", "120000000000", "1024"));
+			Rows.Add( new StageDataRow("Stage11", "11", "40000", "AREA #11", "250000000000", "2048"));
+			Rows.Add( new StageDataRow("Stage12", "12", "150000", "AREA #12", "950000000000", "4196"));
 		}
 		public IGoogle2uRow GetGenRow(string in_RowString)
 		{

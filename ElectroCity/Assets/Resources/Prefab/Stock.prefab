@@ -61,9 +61,9 @@ MonoBehaviour:
   SpriteButtonCoin: {fileID: 21300000, guid: 382eca27eca1e7a42826a4061dbf023c, type: 3}
   SpriteButtonLock: {fileID: 21300000, guid: f06a930f2a3761a409882bb3ccdcfe08, type: 3}
   SpriteButtonAD: {fileID: 21300000, guid: 362b34a8f0c5a75469a85d76260bd2c5, type: 3}
-  SpriteMapCurrent: {fileID: 21300000, guid: b1b320f7175c7f140bf1f9a30b8fe6c1, type: 3}
-  SpriteMapNext: {fileID: 21300000, guid: 9025a02673dad8140833d5583f15c20b, type: 3}
-  SpriteMapEnd: {fileID: 21300000, guid: b71a352b2b5207e43a0aa64a35c40a3d, type: 3}
+  SpriteMapCurrent: {fileID: 21300000, guid: 6ad5c85acbd039144ad48e3ebfad1218, type: 3}
+  SpriteMapLock: {fileID: 21300000, guid: df5571c431de0fd469757655dd39eafb, type: 3}
+  SpriteMapUnlock: {fileID: 21300000, guid: 059f165cee929fa478416388cb3c04dd, type: 3}
   SpriteStoreAvailable: {fileID: 21300000, guid: 840508a0861b8064d88cd3030e67bfde,
     type: 3}
   SpriteStoreLocked: {fileID: 21300000, guid: e1fcc0032eea89a46a295456f73df0dd, type: 3}
@@ -443,6 +443,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cb46e8756a1405e48893dd799916a38c, type: 3}
   - {fileID: 21300000, guid: d184821238366d94381867512d6ef703, type: 3}
   - {fileID: 21300000, guid: bd8a2e076e8db0d48b258b7d2c6434ce, type: 3}
+  ListBossCallBGSprite:
+  - {fileID: 21300000, guid: d7fde3849f870974db9a7c4889a429eb, type: 3}
+  - {fileID: 21300000, guid: 65dec9f1d2acc504a9889723d335d35c, type: 3}
+  - {fileID: 21300000, guid: 11a6c3e08a49e2446aa2e82f8833d346, type: 3}
+  - {fileID: 21300000, guid: 038fdcafe1f12aa4180030f9371250ef, type: 3}
+  ListBossCallPanelSprite:
+  - {fileID: 21300000, guid: a3b3fae96624008408a00649ab76eb03, type: 3}
+  - {fileID: 21300000, guid: 0a93459e7c761a64eb17c0a01a1749c6, type: 3}
+  - {fileID: 21300000, guid: 431e1c2a09919d74bb28b5e03f1f47ca, type: 3}
+  - {fileID: 21300000, guid: 6be077eb9a375d54e97fa65b6ae0df9a, type: 3}
+  ListBossCallNameTagSprite:
+  - {fileID: 21300000, guid: d7fdc3c21a3187b4dadb43a9328b12b4, type: 3}
+  - {fileID: 21300000, guid: c0b2a843c63428c4e957ffa70d5129c0, type: 3}
+  - {fileID: 21300000, guid: 1735c9981d1ebf24d8681e31b63907d0, type: 3}
+  - {fileID: 21300000, guid: c9ceb8af317be314792ce7897850cc9b, type: 3}
   ListWeapon:
   - {fileID: 11400000, guid: 8224b0d9762cfcf4c907298c772f4cb7, type: 2}
   - {fileID: 11400000, guid: 5433148adbdbdca41901bbd6b52636db, type: 2}

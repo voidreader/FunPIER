@@ -7,44 +7,79 @@ using Google2u;
 
 public class MapColumn : MonoBehaviour
 {
-    public Image Frame, BossImage, BrokenImage;
-    public GameObject Cover, UnderFrame;
+    public Image Frame;
+    public GameObject GroupLock, GroupUnlock, GroupAvailable;
+    public Text TextLockAreaName, TextAvailableAreaName;
+    public Text TextUnlockValue, TextAvailableValue, TextLockValue;
+    public Text TextAvailableNeedCoin, TextLockNeedCoin;
 
     public int StageNum = 0; // 스테이지 번호 
+
     StageDataRow row;
+    long bignumber;
+
+
     
+    void InitGroup() {
+        GroupLock.SetActive(false);
+        GroupUnlock.SetActive(false);
+        GroupAvailable.SetActive(false);
+    }
+
+    /// <summary>
+    /// 맵 초기화
+    /// </summary>
+    /// <param name="index"></param>
     public void InitMap(int index) {
+
+        InitGroup();
+
         StageNum = index + 1;
 
         Frame.gameObject.SetActive(true);
-        Frame.sprite = Stock.main.SpriteMapNext;
-
-        Cover.SetActive(false);
-        BossImage.gameObject.SetActive(false);
-        BrokenImage.gameObject.SetActive(false);
-
+        Frame.sprite = Stock.main.SpriteMapLock;
         row = StageData.Instance.Rows[index];
+
+        GroupLock.SetActive(true);
+
+        SetInfo();
     }
 
+    /// <summary>
+    /// Available 처리
+    /// </summary>
     public void SetCurrentMap() {
-
+        
         Frame.sprite = Stock.main.SpriteMapCurrent;
-        BrokenImage.gameObject.SetActive(false);
-        Cover.SetActive(false);
-
-        BossImage.gameObject.SetActive(true);
-        BossImage.sprite = Stock.GetBossUI_Sprite(BossData.Instance.Rows[row._bid - 1]._spriteUI); // 보스 이미지 처리 
-        BossImage.SetNativeSize();
+        InitGroup();
+        GroupAvailable.SetActive(true);
     }
 
+    /// <summary>
+    /// Unlock 처리
+    /// </summary>
     public void SetClearMap() {
-        BossImage.gameObject.SetActive(false);
-        BrokenImage.gameObject.SetActive(true); // 브로큰 이미지
-        BrokenImage.sprite = Stock.GetBossBrokenSprite(BossData.Instance.Rows[row._bid - 1]._spriteBroken);
-        BrokenImage.SetNativeSize();
+        InitGroup();
+        GroupUnlock.SetActive(true);
+        Frame.sprite = Stock.main.SpriteMapUnlock;
 
-        Cover.SetActive(true);
-        Frame.gameObject.SetActive(false);
+    }
+
+    void SetInfo() {
+
+        // 지역 이름 
+        TextAvailableAreaName.text = row._displayname;
+        TextLockAreaName.text = row._displayname;
+
+        // 필요 코인 
+        TextAvailableNeedCoin.text = PIER.GetBigNumber(long.Parse(row._needcoin));
+        TextLockNeedCoin.text = PIER.GetBigNumber(long.Parse(row._needcoin));
+
+
+        TextLockValue.text = "x" + row._coinfactor.ToString();
+        TextUnlockValue.text = "x" + row._coinfactor.ToString();
+        TextAvailableValue.text = "x" + row._coinfactor.ToString();
+
 
     }
 
