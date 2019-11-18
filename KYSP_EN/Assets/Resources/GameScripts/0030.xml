@@ -9,7 +9,7 @@
   <beginSound name="jg_date"/>
 
   <!-- 本編 -->
-  <frame count ="240"/>
+  <frame count ="120"/>
   <unuse id="all"/>
   <beginTimer id ="timer0" duration="600"/>
   <beginIf id="timeout0" target="animend" name ="timer0" goto="6000" priority="1"/>
