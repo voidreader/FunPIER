@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using SA.Android.Manifest;
-using SA.Android.Content.Pm;
+
 
 
 /// <summary>

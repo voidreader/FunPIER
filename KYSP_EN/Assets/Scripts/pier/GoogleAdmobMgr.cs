@@ -183,6 +183,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
         // Load the banner with the request.
         bannerView.LoadAd(request);
 
+
     }
 
     public void HandleOnAdLoaded(object sender, EventArgs args) {
