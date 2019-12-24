@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GoogleMobileAds.Api;
+// using UnityEngine.Advertisements;
 using System;
 
 
@@ -10,6 +11,13 @@ public class GoogleAdmobMgr : MonoBehaviour {
     static GoogleAdmobMgr _instance = null;
     public CrossPlayer _cross;
 
+
+    [Header("Unity ads")]
+    public string unityads_GameID = string.Empty; // rewardedVideo
+    string myPlacementId = "rewardedVideo";
+
+    [Space]
+    [Header("Googld Admob")]
     public string appID = string.Empty;
     public string bannerUnitID = string.Empty;
     public string interstitialID = string.Empty;
@@ -18,7 +26,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
 
 
     // 광고 사용여부 
-    [SerializeField] bool _isAdsOn = true;
+    [SerializeField] bool _isAdsOn = true; // pro 에서 false 로 처리 
 
     private BannerView bannerView = null; // 배너
     InterstitialAd interstitial = null; // 전면광고 
@@ -39,8 +47,12 @@ public class GoogleAdmobMgr : MonoBehaviour {
         
         DontDestroyOnLoad(this.gameObject);
 
-        if(!_isAdsOn)
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
+        /*
+        if (!_isAdsOn)
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        */
 
     }
 
@@ -53,14 +65,20 @@ public class GoogleAdmobMgr : MonoBehaviour {
 
 #if UNITY_ANDROID
         appID = EnvManagerCtrl.Instance.AOS_appID;
+        unityads_GameID = EnvManagerCtrl.Instance.AOS_UnityADS;
 #elif UNITY_IOS
         appID = EnvManagerCtrl.Instance.IOS_appID;
+        unityads_GameID = EnvManagerCtrl.Instance.IOS_UnityADS;
 #endif
 
         Debug.Log("Google admob appID :: " + appID);
 
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appID);
+
+        // Advertisement.AddListener(this);
+        // Advertisement.Initialize(unityads_GameID, false);
+        
     }
 
 
@@ -365,6 +383,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
             return;
         }
 
+        
         if (!this.rewardedAd.IsLoaded()) {
             Debug.Log("admob rewarded ad is not ready");
             OnWatchedAd();
@@ -372,6 +391,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
             CreateAndLoadRewardedAd();
             return;
         }
+        
 
         Debug.Log(">> ShowWatchAd << ");
 
@@ -421,6 +441,39 @@ public class GoogleAdmobMgr : MonoBehaviour {
         this.rewardedAd.LoadAd(request);
     }
 
+    #endregion
+
+    #region 유니티 애즈
+    // Implement IUnityAdsListener interface methods:
+    /*
+    public void OnUnityAdsDidFinish(string placementId, ShowResult showResult) {
+        // Define conditional logic for each ad completion status:
+        if (showResult == ShowResult.Finished) {
+            // Reward the user for watching the ad to completion.
+            Debug.Log("The ad finished.");
+        }
+        else if (showResult == ShowResult.Skipped) {
+            // Do not reward the user for skipping the ad.
+        }
+        else if (showResult == ShowResult.Failed) {
+            Debug.Log("The ad did not finish due to an error.");
+        }
+    }
+
+    public void OnUnityAdsReady(string placementId) {
+
+        Debug.Log(">> OnUnityAdsReady :: " + placementId);
+        
+    }
+
+    public void OnUnityAdsDidError(string message) {
+        // Log the error.
+    }
+
+    public void OnUnityAdsDidStart(string placementId) {
+        // Optional actions to take when the end-users triggers an ad.
+    }
+    */
     #endregion
 
 

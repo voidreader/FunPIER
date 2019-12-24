@@ -524,8 +524,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &32180803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -544,8 +542,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 6f0ed36d160f85147b753b0d4fc109ad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -619,8 +615,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 6f0ed36d160f85147b753b0d4fc109ad, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -700,8 +694,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Texture: {fileID: 0}
   m_UVRect:
     serializedVersion: 2
@@ -791,8 +783,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9c2d70717d02c3f4fba9838a28350554, type: 3}
     m_FontSize: 28
@@ -943,8 +933,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: ad391c11eae6ad045b7a81eba4ca44fe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -1012,6 +1000,8 @@ MonoBehaviour:
   IOS_bannerID: ca-app-pub-8118299571958162/2211544539
   IOS_InterstitialID: ca-app-pub-8118299571958162/8445425173
   IOS_RewardID: ca-app-pub-8118299571958162/8473700557
+  AOS_UnityADS: 3408374
+  IOS_UnityADS: 3408375
 --- !u!4 &682048333
 Transform:
   m_ObjectHideFlags: 0
@@ -1081,8 +1071,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9c2d70717d02c3f4fba9838a28350554, type: 3}
     m_FontSize: 30
@@ -1260,8 +1248,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1066181562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1280,8 +1266,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 16f36c2dc48580348adba16c09326754, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -1388,8 +1372,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1528860884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1408,8 +1390,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -1458,11 +1438,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cross: {fileID: 636654574}
+  unityads_GameID: 
   appID: 
   bannerUnitID: 
   interstitialID: 
   rewardUnitID: 
-  _isAdsOn: 0
+  _isAdsOn: 1
 --- !u!4 &1715098742
 Transform:
   m_ObjectHideFlags: 0
@@ -1544,8 +1525,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9c2d70717d02c3f4fba9838a28350554, type: 3}
     m_FontSize: 28

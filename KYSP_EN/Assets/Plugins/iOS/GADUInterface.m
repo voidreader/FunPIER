@@ -10,6 +10,7 @@
 #import "GADURequest.h"
 #import "GADURewardBasedVideoAd.h"
 #import "GADURewardedAd.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 #import "GADUTypes.h"
 
@@ -52,6 +53,53 @@ void GADUInitialize(const char *appId) {
   [GADMobileAds configureWithApplicationID:GADUStringFromUTF8String(appId)];
 }
 
+void GADUInitializeWithCallback(GADUTypeMobileAdsClientRef *mobileAdsClientRef,
+                                GADUInitializationCompleteCallback callback) {
+  [[GADMobileAds sharedInstance]
+      startWithCompletionHandler:^(GADInitializationStatus *_Nonnull status) {
+        GADUObjectCache *cache = [GADUObjectCache sharedInstance];
+        [cache.references setObject:status forKey:[status gadu_referenceKey]];
+        callback(mobileAdsClientRef, (__bridge GADUTypeInitializationStatusRef)status);
+      }];
+}
+
+const char *GADUGetInitDescription(GADUTypeInitializationStatusRef statusRef,
+                                   const char *className) {
+  GADInitializationStatus *status = (__bridge GADInitializationStatus *)statusRef;
+
+  GADAdapterStatus *adapterStatus =
+      status.adapterStatusesByClassName[GADUStringFromUTF8String(className)];
+  return cStringCopy(adapterStatus.description.UTF8String);
+}
+
+int GADUGetInitLatency(GADUTypeInitializationStatusRef statusRef, const char *className) {
+  GADInitializationStatus *status = (__bridge GADInitializationStatus *)statusRef;
+  GADAdapterStatus *adapterStatus =
+      status.adapterStatusesByClassName[GADUStringFromUTF8String(className)];
+  return adapterStatus.latency;
+}
+
+int GADUGetInitState(GADUTypeInitializationStatusRef statusRef, const char *className) {
+  GADInitializationStatus *status = (__bridge GADInitializationStatus *)statusRef;
+  GADAdapterStatus *adapterStatus =
+      status.adapterStatusesByClassName[GADUStringFromUTF8String(className)];
+  return (int)adapterStatus.state;
+}
+
+const char **GADUGetInitAdapterClasses(GADUTypeInitializationStatusRef statusRef) {
+  GADInitializationStatus *status = (__bridge GADInitializationStatus *)statusRef;
+  NSDictionary<NSString *, GADAdapterStatus *> *map = status.adapterStatusesByClassName;
+  NSArray<NSString *> *classes = map.allKeys;
+  return cStringArrayCopy(classes);
+}
+
+int GADUGetInitNumberOfAdapterClasses(GADUTypeInitializationStatusRef statusRef) {
+  GADInitializationStatus *status = (__bridge GADInitializationStatus *)statusRef;
+  NSDictionary<NSString *, GADAdapterStatus *> *map = status.adapterStatusesByClassName;
+  NSArray<NSString *> *classes = map.allKeys;
+  return (int)classes.count;
+}
+
 // The application’s audio volume. Affects audio volumes of all ads relative to
 // other audio output. Valid ad volume values range from 0.0 (silent) to 1.0
 // (current device volume). Use this method only if your application has its own
@@ -71,6 +119,10 @@ void GADUSetApplicationMuted(BOOL muted) {
 // Indicates if the Unity app should be paused when a full screen ad (interstitial
 // or rewarded video ad) is displayed.
 void GADUSetiOSAppPauseOnBackground(BOOL pause) { [GADUPluginUtil setPauseOnBackground:pause]; }
+
+float GADUDeviceScale() {
+  return UIScreen.mainScreen.scale;
+}
 
 /// Creates a GADBannerView with the specified width, height, and position. Returns a reference to
 /// the GADUBannerView.
@@ -129,6 +181,40 @@ GADUTypeBannerRef GADUCreateSmartBannerViewWithCustomPosition(GADUTypeBannerClie
       initWithSmartBannerSizeAndBannerClientReference:bannerClient
                                              adUnitID:GADUStringFromUTF8String(adUnitID)
                                      customAdPosition:adPosition];
+  GADUObjectCache *cache = [GADUObjectCache sharedInstance];
+  [cache.references setObject:banner forKey:[banner gadu_referenceKey]];
+  return (__bridge GADUTypeBannerRef)banner;
+}
+
+/// Creates a an adaptive sized GADBannerView with the specified width, orientation, and position.
+/// Returns a reference to the GADUBannerView.
+GADUTypeBannerRef GADUCreateAnchoredAdaptiveBannerView(GADUTypeBannerClientRef *bannerClient,
+                                               const char *adUnitID, NSInteger width,
+                                               GADUBannerOrientation orientation,
+                                               GADAdPosition adPosition) {
+  GADUBanner *banner = [[GADUBanner alloc]
+      initWithAdaptiveBannerSizeAndBannerClientReference:bannerClient
+                                                adUnitID:GADUStringFromUTF8String(adUnitID)
+                                                   width:(int)width
+                                             orientation:orientation
+                                              adPosition:adPosition];
+  GADUObjectCache *cache = [GADUObjectCache sharedInstance];
+  [cache.references setObject:banner forKey:[banner gadu_referenceKey]];
+  return (__bridge GADUTypeBannerRef)banner;
+}
+
+/// Creates a an adaptive sized GADBannerView with the specified width, orientation, and position.
+/// Returns a reference to the GADUBannerView.
+GADUTypeBannerRef GADUCreateAnchoredAdaptiveBannerViewWithCustomPosition(
+    GADUTypeBannerClientRef *bannerClient, const char *adUnitID, NSInteger width,
+    GADUBannerOrientation orientation, NSInteger x, NSInteger y) {
+  CGPoint adPosition = CGPointMake(x, y);
+  GADUBanner *banner = [[GADUBanner alloc]
+      initWithAdaptiveBannerSizeAndBannerClientReference:bannerClient
+                                                adUnitID:GADUStringFromUTF8String(adUnitID)
+                                                   width:(int)width
+                                             orientation:orientation
+                                        customAdPosition:adPosition];
   GADUObjectCache *cache = [GADUObjectCache sharedInstance];
   [cache.references setObject:banner forKey:[banner gadu_referenceKey]];
   return (__bridge GADUTypeBannerRef)banner;

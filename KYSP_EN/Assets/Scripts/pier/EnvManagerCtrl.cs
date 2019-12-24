@@ -19,6 +19,8 @@ public class EnvManagerCtrl : MonoBehaviour {
 
 
 
+    public string AOS_UnityADS = string.Empty;
+    public string IOS_UnityADS = string.Empty;
 
 
     void Awake() {

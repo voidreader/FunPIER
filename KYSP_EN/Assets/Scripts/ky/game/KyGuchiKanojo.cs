@@ -47,6 +47,7 @@ public class KyGuchiKanojo : KyScriptObject {
         {
 
             case 1003:
+            case 1027:
                 pos = new Vector3(273, 130, -1f);
                 break;
 
@@ -82,7 +83,7 @@ public class KyGuchiKanojo : KyScriptObject {
             case 1018:
             case 1020:
             
-            case 1027:
+            
             case 1028:
             case 1035:
             case 1036:
