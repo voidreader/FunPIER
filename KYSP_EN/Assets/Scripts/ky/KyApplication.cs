@@ -61,7 +61,8 @@ public class KyApplication : KyScene {
             return;
         }
 
-        if (GoogleAdmobMgr.Instance.IsCoolingPauseAds) {
+
+        if (GoogleAdmobMgr.Instance != null && GoogleAdmobMgr.Instance.IsCoolingPauseAds) {
             GoogleAdmobMgr.Instance.Cooling();
             return;
         }

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using GoogleMobileAds.Api;
-// using UnityEngine.Advertisements;
+using UnityEngine.Advertisements;
 using System;
 
 
-public class GoogleAdmobMgr : MonoBehaviour {
+public class GoogleAdmobMgr : MonoBehaviour, IUnityAdsListener {
 
 
     static GoogleAdmobMgr _instance = null;
@@ -76,8 +76,8 @@ public class GoogleAdmobMgr : MonoBehaviour {
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(appID);
 
-        // Advertisement.AddListener(this);
-        // Advertisement.Initialize(unityads_GameID, false);
+        Advertisement.AddListener(this);
+        Advertisement.Initialize(unityads_GameID, false);
         
     }
 
@@ -135,7 +135,7 @@ public class GoogleAdmobMgr : MonoBehaviour {
             return;
 
         int number = UnityEngine.Random.Range(0, 100);
-        if(number < 10) {
+        if(number < 20) {
             ShowWatchAd(delegate { });
         }
         else {
@@ -384,6 +384,13 @@ public class GoogleAdmobMgr : MonoBehaviour {
             return;
         }
 
+        // 유니티 애즈 먼저! 
+        if (Advertisement.IsReady(myPlacementId)) {
+            IsCoolingPauseAds = true;
+            Advertisement.Show(myPlacementId);
+            return;
+        }
+
         
         if (!this.rewardedAd.IsLoaded()) {
             Debug.Log("admob rewarded ad is not ready");
@@ -446,12 +453,14 @@ public class GoogleAdmobMgr : MonoBehaviour {
 
     #region 유니티 애즈
     // Implement IUnityAdsListener interface methods:
-    /*
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult) {
         // Define conditional logic for each ad completion status:
         if (showResult == ShowResult.Finished) {
             // Reward the user for watching the ad to completion.
             Debug.Log("The ad finished.");
+
+            OnWatchedAd();
+            OnWatchedAd = delegate { };
         }
         else if (showResult == ShowResult.Skipped) {
             // Do not reward the user for skipping the ad.
@@ -468,13 +477,14 @@ public class GoogleAdmobMgr : MonoBehaviour {
     }
 
     public void OnUnityAdsDidError(string message) {
-        // Log the error.
+        Debug.Log(">> OnUnityAdsDidError :: " + message);
     }
 
     public void OnUnityAdsDidStart(string placementId) {
         // Optional actions to take when the end-users triggers an ad.
+        Debug.Log(">> OnUnityAdsDidStart :: " + placementId);
     }
-    */
+    
     #endregion
 
 

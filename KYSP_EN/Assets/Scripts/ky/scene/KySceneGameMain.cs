@@ -209,18 +209,19 @@ public class KySceneGameMain : KyScene {
 
             Debug.Log(">>> Stage [" + mStageIndex + "] End! <<< ");
 
-            // 10 스테이지마다 광고 오픈 
+            // 5 스테이지마다 광고 오픈 
             if (mStageIndex > 1 && mStageIndex % 5 == 0) {
 
                 Debug.Log(">>> Internal ad start <<< ");
 
                 if (mStageIndex < 95) {
-
-
+                    GoogleAdmobMgr.Instance.OpenFrontAD();
+                    /*
                     if (mStageIndex == 50)
                         GoogleAdmobMgr.Instance.ShowWatchAd(delegate { });
                     else 
                         GoogleAdmobMgr.Instance.OpenFrontAD();
+                    */
 
                 }
             }
