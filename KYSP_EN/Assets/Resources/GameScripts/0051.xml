@@ -52,9 +52,9 @@
   <beginSound name ="se_catch" pitch="1.0"/>
   <frame count ="330"/>
   <!-- <beginIf id ="goal0" target="touch" crange="0,0,417,314" goto="5000"/> -->
-  <beginIf id ="goal1" target="touch" crange="95,91,180,80" goto="2000"/>
+  <beginIf id ="goal1" target="touch" crange="95,91,180,100" goto="2000"/>
   <beginIf id ="goal2" target="touch" crange="95,-120,180,48" goto="3000"/>
-  <beginIf id ="goal3" target="touch" crange="-117,-30,180,48" goto="4000"/>
+  <beginIf id ="goal3" target="touch" crange="-117,-30,180,160" goto="4000"/>
 
   <!-- 時間切れ -->
   <frame count ="1000"/>
