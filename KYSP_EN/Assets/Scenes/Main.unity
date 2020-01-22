@@ -161,10 +161,6 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 11400000, guid: 970126f61e4f0cd409613913f987bcae, type: 3}
-      propertyPath: InitialFade
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: 970126f61e4f0cd409613913f987bcae, type: 3}
       propertyPath: m_Depth
       value: -2
@@ -179,6 +175,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: 970126f61e4f0cd409613913f987bcae, type: 3}
       propertyPath: m_BackGroundColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 970126f61e4f0cd409613913f987bcae, type: 3}
+      propertyPath: InitialFade
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -239,17 +239,17 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 13100000, guid: f155ab6d0de6249e9b5dbda2626ba5b4, type: 3}
-      propertyPath: m_Enabled
-      value: 1
+    - target: {fileID: 400000, guid: f155ab6d0de6249e9b5dbda2626ba5b4, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: f155ab6d0de6249e9b5dbda2626ba5b4, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: f155ab6d0de6249e9b5dbda2626ba5b4, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
+    - target: {fileID: 13100000, guid: f155ab6d0de6249e9b5dbda2626ba5b4, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f155ab6d0de6249e9b5dbda2626ba5b4, type: 3}
@@ -1443,7 +1443,7 @@ MonoBehaviour:
   bannerUnitID: 
   interstitialID: 
   rewardUnitID: 
-  _isAdsOn: 1
+  _isAdsOn: 0
 --- !u!4 &1715098742
 Transform:
   m_ObjectHideFlags: 0
