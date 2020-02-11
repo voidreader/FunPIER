@@ -60,39 +60,6 @@ public class Chip : MonoBehaviour {
 
     void OnSpawned() {
         this.transform.localScale = Vector3.zero;
-
-
-
-        if (InGame.currentTheme == Theme.Prototype) {
-
-            // 임시로직인데.. 
-            if (id == 2)
-                originScale = Vector3.one * 0.5f;
-            else if (id == 4)
-                originScale = Vector3.one * 0.6f;
-            else if (id == 8)
-                originScale = Vector3.one * 0.7f;
-            else if (id == 16)
-                originScale = Vector3.one * 0.8f;
-            else if (id == 32)
-                originScale = Vector3.one * 0.9f;
-            else if (id == 64)
-                originScale = Vector3.one * 1f;
-            else if (id == 128)
-                originScale = Vector3.one * 1f;
-            else if (id == 256)
-                originScale = Vector3.one * 1.2f;
-            else if (id == 512)
-                originScale = Vector3.one * 1.3f;
-            else if (id == 1024)
-                originScale = Vector3.one * 1.4f;
-            else if (id == 2048)
-                originScale = Vector3.one * 1.5f;
-        }
-        else {
-            originScale = Vector3.one;
-        }
-
         this.transform.DOScale(originScale, 0.2f).SetEase(Ease.OutBack);
     }
 
