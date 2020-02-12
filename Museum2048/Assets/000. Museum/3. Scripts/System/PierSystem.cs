@@ -112,7 +112,7 @@ public class PierSystem : MonoBehaviour {
         ES2.Save<string>(currentLang.ToString(), ConstBox.KeySavedLang);
     }
 
-    public SystemLanguage LoadLanguage() {
+    public static SystemLanguage LoadLanguage() {
         return (SystemLanguage)System.Enum.Parse(typeof(SystemLanguage), ES2.Load<string>(ConstBox.KeySavedLang));
     }
 
