@@ -21,13 +21,53 @@ allprojects {
     }
 }
 
+// Android Resolver Repos Start
+([rootProject] + (rootProject.subprojects as List)).each {
+    ext {
+        it.setProperty("android.useAndroidX", true)
+        it.setProperty("android.enableJetifier", true)
+    }
+}
+([rootProject] + (rootProject.subprojects as List)).each { project ->
+    project.repositories {
+        def unityProjectPath = $/file:///**DIR_UNITYPROJECT**/$.replace("\\", "/")
+        maven {
+            url "https://maven.google.com"
+        }
+        maven {
+            url "https://maven.google.com/" // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
+        }
+        mavenLocal()
+        jcenter()
+        mavenCentral()
+    }
+}
+// Android Resolver Repos End
 apply plugin: 'com.android.application'
 **APPLY_PLUGINS**
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+// Android Resolver Dependencies Start
+    implementation 'com.android.support:support-v4:27.1.1' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:4
+    implementation 'com.google.android.gms:play-services-ads:18.3.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
+    implementation 'com.google.android.gms:play-services-auth:16.0.1' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:5
+    implementation 'com.google.android.gms:play-services-games:16.0.0' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:6
+    implementation 'com.google.code.gson:gson:2.8.5' // Assets/Plugins/StansAssets/NativePlugins/AndroidNativePro/Editor/Dependencies/AN_Dependencies.xml:3
+// Android Resolver Dependencies End
 **DEPS**}
 
+// Android Resolver Exclusions Start
+android {
+  packagingOptions {
+      exclude ('/lib/armeabi/*' + '*')
+      exclude ('/lib/mips/*' + '*')
+      exclude ('/lib/mips64/*' + '*')
+      exclude ('/lib/x86/*' + '*')
+      exclude ('/lib/x86_64/*' + '*')
+  }
+}
+// Android Resolver Exclusions End
 android {
     compileSdkVersion **APIVERSION**
     buildToolsVersion '**BUILDTOOLS**'
