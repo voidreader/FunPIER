@@ -1,4 +1,4 @@
-﻿using SA.Foundation.Editor;
+using SA.Foundation.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -134,7 +134,7 @@ namespace SA.Android {
                     m_setResource.Content.text = setResourceName;
                     bool click = m_setResource.DrawWithCalcSize();
                     if (click) {
-                        AN_GoolgePlayRersourcesWindow.ShowModal();
+                        AN_GoolgePlayRersourcesWindow.ShowAsModal();
                     }
                 }
 

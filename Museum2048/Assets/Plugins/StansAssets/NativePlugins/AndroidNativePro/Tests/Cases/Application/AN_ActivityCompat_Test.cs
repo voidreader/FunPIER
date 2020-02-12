@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using SA.Android.Utilities;
 using SA.Foundation.Tests;
 

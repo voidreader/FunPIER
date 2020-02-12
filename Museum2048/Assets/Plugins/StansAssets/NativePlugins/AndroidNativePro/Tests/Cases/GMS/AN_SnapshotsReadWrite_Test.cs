@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-
+using System;
 using SA.Android.Utilities;
 using SA.Foundation.Utility;
 using SA.Foundation.Tests;
-using SA.Android.App;
 using SA.Android.GMS.Games;
 
 namespace SA.Android.Tests.GMS.Snapshots
@@ -31,7 +27,7 @@ namespace SA.Android.Tests.GMS.Snapshots
             client.Open(name, m_createIfNotFound, m_conflictPolicy, (result) => {
                 if (result.IsSucceeded) {
                     AN_Logger.Log("We have snapshot, reading data...");
-                    AN_Snapshot snapshot = result.Data;
+                    AN_Snapshot snapshot = result.Data.GetSnapshot();
 
                     byte[] data = snapshot.ReadFully();
 
@@ -85,7 +81,7 @@ namespace SA.Android.Tests.GMS.Snapshots
             var client = AN_Games.GetSnapshotsClient();
             client.Open(name, m_createIfNotFound, m_conflictPolicy, (result) => {
                 if (result.IsSucceeded) {
-                    AN_Snapshot snapshot = result.Data;
+                    AN_Snapshot snapshot = result.Data.GetSnapshot();
                     byte[] data = snapshot.ReadFully();
                     var meta = snapshot.GetMetadata();
 

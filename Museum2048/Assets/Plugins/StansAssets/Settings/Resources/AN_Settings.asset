@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c58705f215734483496dce8c227ce840, type: 3}
   m_Name: AN_Settings
   m_EditorClassIdentifier: 
-  LastVersionCode: 2019.4.13
+  LastVersionCode: 2020.2
   UseUnityJarResolver: 1
+  UnityJarResolverVersion: v1.2.135.0
   ManifestManagement: 1
   LogLevel:
     Info: 1
@@ -24,7 +25,7 @@ MonoBehaviour:
   Vending: 0
   Contacts: 0
   Social: 0
-  GooglePlay: 1
+  GooglePlay: 0
   CameraAndGallery: 0
   MediaPlayer: 0
   LocalNotifications: 0
@@ -33,4 +34,5 @@ MonoBehaviour:
     any spaces.
   InAppProducts: []
   Licensing: 0
+  GooglePlayBilling: 0
   GooglePlayGamesAPI: 1

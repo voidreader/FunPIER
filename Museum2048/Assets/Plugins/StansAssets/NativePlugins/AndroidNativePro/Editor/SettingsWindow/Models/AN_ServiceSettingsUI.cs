@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-
-
 using SA.Android.Manifest;
 using SA.Foundation.Editor;
 using SA.Foundation.Utility;
-
-
 
 namespace SA.Android
 {
@@ -34,8 +29,7 @@ namespace SA.Android
         }
 
         public static void DrawRequirementsUI(AN_AndroidBuildRequirements buildRequirements) {
-
-
+            
             if (buildRequirements.Activities.Count > 0) {
                 using (new SA_H2WindowBlockWithSpace(new GUIContent("ACTIVITIES"))) {
                     foreach (var activity in buildRequirements.Activities) {
@@ -46,7 +40,6 @@ namespace SA.Android
                     }
                 }
             }
-
 
             if (buildRequirements.ApplicationProperties.Count > 0) {
                 using (new SA_H2WindowBlockWithSpace(new GUIContent("APP PROPERTIES"))) {
@@ -93,13 +86,6 @@ namespace SA.Android
                     }
                 }
             }
-
-
-
-            
         }
-
-
-
     }
 }

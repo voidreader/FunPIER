@@ -1,32 +1,35 @@
-﻿using System;
+using System;
 
 namespace SA.Foundation.Config {
+    
     [Serializable]
-    public class PluginVersion {
+    public class PluginVersion 
+    {
         public int MajorVersion;
         public int MinorVersion;
 
-        public PluginVersion() {
-            
-        }
-
         public Action SaveDelegate;
 
-        public override string ToString() {
+        public override string ToString() 
+        {
             var minorVersionString = MinorVersion > 0 ? "b"+MinorVersion:string.Empty;
             return string.Format("{0}{1}", MajorVersion, minorVersionString);;
         }
 
-        public void UpgradeMinorVersion() {
+        public void UpgradeMinorVersion() 
+        {
+            if(MinorVersion == 0)
+                MajorVersion++;
+            
             MinorVersion++;
         }
-        
 
-        public void UpgradeMajorVersion() {
-            if (MinorVersion > 0) {
+        public void UpgradeMajorVersion() 
+        {
+            if (MinorVersion == 0) 
                 MajorVersion++;
-                MinorVersion = 0;
-            }
+            
+            MinorVersion = 0;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using SA.Android.Utilities;
 using SA.Foundation.Tests;
@@ -16,7 +16,7 @@ namespace SA.Android.Tests.GMS
                 if (result.IsSucceeded) {
                     AN_Player player = result.Data;
                     //Printing player info:
-                    AN_Logger.Log("player.Id: " + player.Id);
+                    AN_Logger.Log("player.Id: " + player.PlayerId);
                     AN_Logger.Log("player.Title: " + player.Title);
                     AN_Logger.Log("player.DisplayName: " + player.DisplayName);
                     AN_Logger.Log("player.HiResImageUri: " + player.HiResImageUri);

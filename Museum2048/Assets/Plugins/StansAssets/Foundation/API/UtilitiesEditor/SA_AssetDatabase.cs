@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using SA.Foundation.Utility;
@@ -78,9 +78,10 @@ namespace SA.Foundation.UtilitiesEditor
 
 
         /// <summary>
-        /// Returnes true if given asset is located inside the provided folder path
+        /// Returns true if given asset is located inside the provided folder path
         /// </summary>
-        public static bool IsAssetInsideFolder(Object assetObject, string folderPath) {
+        public static bool IsAssetInsideFolder(Object assetObject, string folderPath) 
+        {
             var assetPath = GetAssetPath(assetObject);
             var assetFolder = SA_PathUtil.GetDirectoryPath(assetPath) + SA_PathUtil.FOLDER_SEPARATOR;
 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -13,7 +13,7 @@ namespace SA.Android
         [SerializeField] string m_rawData;
         [SerializeField] bool m_isDirty = false;
 
-        public static void ShowModal() {
+        public static void ShowAsModal() {
             var window = EditorWindow.GetWindow<AN_GoolgePlayRersourcesWindow>(true);
             window.maxSize = new Vector2(700f, 545);
             window.minSize = window.maxSize;

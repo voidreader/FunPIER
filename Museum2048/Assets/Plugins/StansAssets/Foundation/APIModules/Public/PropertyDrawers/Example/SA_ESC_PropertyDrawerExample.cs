@@ -1,4 +1,4 @@
-﻿using SA.Foundation.PropertyDrawers.Attributes;
+using SA.Foundation.PropertyDrawers.Attributes;
 using UnityEngine;
 
 namespace SA.Foundation.EditorStylesCollection

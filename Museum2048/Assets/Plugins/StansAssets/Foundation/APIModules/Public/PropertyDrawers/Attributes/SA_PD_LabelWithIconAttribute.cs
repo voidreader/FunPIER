@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 namespace SA.Foundation.PropertyDrawers.Attributes

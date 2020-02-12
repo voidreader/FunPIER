@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using SA.Foundation.Config;
-
 
 namespace SA.Foundation.Patterns
 {
     public abstract class SA_ScriptableSettings : ScriptableObject
     {
+        private const int k_ReleaseYear = 2020;
         public string LastVersionCode = string.Empty;
         protected abstract string BasePath { get; }
 
@@ -17,8 +17,9 @@ namespace SA.Foundation.Patterns
             return s_pluginVersion;
         }
 
-        public string GetFormattedVersion() {
-            return string.Format("2019.{0}.{1}", SA_Config.FoundationVersion.GetVersion(), GetPluginVersion().GetVersion());
+        public string GetFormattedVersion() 
+        {
+            return string.Format("{0}.{1}", k_ReleaseYear, GetPluginVersion().GetVersion());
         }
 
         public abstract string PluginName { get; }

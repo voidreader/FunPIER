@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using SA.Foundation.Editor;
 using UnityEditor;
 

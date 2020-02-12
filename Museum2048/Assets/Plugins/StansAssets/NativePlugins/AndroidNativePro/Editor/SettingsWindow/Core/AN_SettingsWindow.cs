@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 
 using SA.Foundation.Editor;
@@ -79,7 +79,6 @@ namespace SA.Android
 
         public static void SaveSettins() {
             AN_Settings.Save();
-            AN_Preprocessor.Refresh();
         }
 
     }

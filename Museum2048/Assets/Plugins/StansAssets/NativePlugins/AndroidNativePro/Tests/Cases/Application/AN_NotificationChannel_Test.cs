@@ -1,10 +1,6 @@
-﻿using UnityEngine;
-using System;
 using System.Collections.Generic;
 using SA.Android.Utilities;
-using SA.Android.Vending.Licensing;
 using SA.Foundation.Tests;
-using SA.Foundation.Async;
 using SA.Android.OS;
 using SA.Android.App;
 
@@ -16,16 +12,16 @@ namespace SA.Android.Tests.Application
 
         public override void Test() {
 
-            if (AN_Build.VERSION.SDK_INT >= AN_Build.VERSION_CODES.O) {
-
-                string channelId = "my_channel_id";
-                string name = "My Channel Name";
-                string description = "My Channel Description";
+            if (AN_Build.VERSION.SDK_INT >= AN_Build.VERSION_CODES.O) 
+            {
+                var channelId = "my_channel_id";
+                var name = "My Channel Name";
+                var description = "My Channel Description";
                 var importance = AN_NotificationManager.Importance.DEFAULT;
-
-
+                
                 AN_NotificationChannel channel = new AN_NotificationChannel(channelId, name, importance);
                 channel.Description = description;
+                channel.SetShowBadge(false);
 
                 // Register the channel with the system; you can't change the importance
                 // or other notification behaviors after this

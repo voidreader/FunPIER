@@ -1,4 +1,4 @@
-﻿#if !UNITY_5
+#if !UNITY_5
 
 using SA.Foundation.PropertyDrawers.Attributes;
 using UnityEditor;

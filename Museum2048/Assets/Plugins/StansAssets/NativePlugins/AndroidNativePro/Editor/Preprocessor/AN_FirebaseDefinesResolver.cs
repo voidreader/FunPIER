@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
 using System.Collections.Generic;
@@ -11,8 +11,7 @@ using SA.Foundation.UtilitiesEditor;
 
 namespace SA.Android {
 
-    [InitializeOnLoad]
-    public class AN_FirebaseDefinesResolver : SA_PluginInstallationProcessor<AN_Settings>
+    public class AN_FirebaseDefinesResolver
     {
 
         private const string AN_FIREBASE_MESSAGING_DEFINE = "AN_FIREBASE_MESSAGING";
@@ -21,71 +20,59 @@ namespace SA.Android {
         private const string FIREBASE_MESSAGING_LIB_NAME = "Firebase.Messaging.dll";
         private const string FIREBASE_ANALYTICS_LIB_NAME = "Firebase.Analytics.dll";
 
-
-
-        static AN_FirebaseDefinesResolver() {
-            var instalation = new AN_FirebaseDefinesResolver();
-            instalation.Init();
-        }
-
-
-        //--------------------------------------
-        //  SA_PluginInstallationProcessor
-        //--------------------------------------
-
-        protected override void OnInstall() {
-
-            //Let's check if we have FB SKD in the project
-            ProcessAssets();
-        }
-
-
-
         //--------------------------------------
         //  Public Methods
         //--------------------------------------
 
-        public static void ProcessAssets() {
+        public static void ProcessAssets() 
+        {
             List<string> projectLibs = SA_AssetDatabase.FindAssetsWithExtentions("Assets", ".dll");
-            foreach (var lib in projectLibs) {
+            foreach (var lib in projectLibs) 
+            {
                 ProcessAssetImport(lib);
             }
         }
 
-        public static void ProcessAssetImport(string assetPath) {
+        public static void ProcessAssetImport(string assetPath) 
+        {
             bool detected = IsPathEqualsSDKName(assetPath, FIREBASE_MESSAGING_LIB_NAME);
-            if (detected) {
+            if (detected) 
+            {
                 UpdateMessagingLibState(true);
             }
 
             detected = IsPathEqualsSDKName(assetPath, FIREBASE_ANALYTICS_LIB_NAME);
-            if (detected) {
+            if (detected) 
+            {
                 UpdateAnalyticsLibState(true);
             }
 
-
         }
 
-        public static void ProcessAssetDelete(string assetPath) {
+        public static void ProcessAssetDelete(string assetPath) 
+        {
             bool detected = IsPathEqualsSDKName(assetPath, FIREBASE_MESSAGING_LIB_NAME);
-            if (detected) {
+            if (detected) 
+            {
                 UpdateMessagingLibState(false);
             }
 
             detected = IsPathEqualsSDKName(assetPath, FIREBASE_ANALYTICS_LIB_NAME);
-            if (detected) {
+            if (detected) 
+            {
                 UpdateAnalyticsLibState(false);
             }
         }
-
 
         //--------------------------------------
         //  Get / Set
         //--------------------------------------
 
 
-        public static bool IsMessagingSDKInstalled {
-            get {
+        public static bool IsMessagingSDKInstalled 
+        {
+            get 
+            {
 #if AN_FIREBASE_MESSAGING
                 return true;
 #else
@@ -95,8 +82,10 @@ namespace SA.Android {
         }
 
 
-        public static bool IsAnalyticsSDKInstalled {
-            get {
+        public static bool IsAnalyticsSDKInstalled 
+        {
+            get 
+            {
 #if AN_FIREBASE_ANALYTICS
                 return true;
 #else
@@ -105,46 +94,59 @@ namespace SA.Android {
             }
         }
 
-
         //--------------------------------------
         //  Private Methods
         //--------------------------------------
 
 
-        private static bool IsPathEqualsSDKName(string assetPath, string SDKName) {
+        private static bool IsPathEqualsSDKName(string assetPath, string SDKName) 
+        {
             string fileName = SA_PathUtil.GetFileName(assetPath);
-            if (fileName.Equals(SDKName)) {
+            if (fileName.Equals(SDKName)) 
+            {
                 return true;
-            } else {
+            } 
+            else 
+            {
                 return false;
             }
 
         }
 
-        private static void UpdateMessagingLibState(bool enabled) {
-            if (enabled) {
-                if (!SA_EditorDefines.HasCompileDefine(AN_FIREBASE_MESSAGING_DEFINE)) {
+        private static void UpdateMessagingLibState(bool enabled) 
+        {
+            if (enabled) 
+            {
+                if (!SA_EditorDefines.HasCompileDefine(AN_FIREBASE_MESSAGING_DEFINE)) 
+                {
                     SA_EditorDefines.AddCompileDefine(AN_FIREBASE_MESSAGING_DEFINE);
                 }
 
-                AN_Preprocessor.ActicateJarResolver();
-            } else {
-                if (SA_EditorDefines.HasCompileDefine(AN_FIREBASE_MESSAGING_DEFINE)) {
+            } 
+            else 
+            {
+                if (SA_EditorDefines.HasCompileDefine(AN_FIREBASE_MESSAGING_DEFINE)) 
+                {
                     SA_EditorDefines.RemoveCompileDefine(AN_FIREBASE_MESSAGING_DEFINE);
                 }
             }
         }
 
 
-        private static void UpdateAnalyticsLibState(bool enabled) {
-            if (enabled) {
-                if (!SA_EditorDefines.HasCompileDefine(AN_FIREBASE_ANALYTICS_DEFINE)) {
+        private static void UpdateAnalyticsLibState(bool enabled) 
+        {
+            if (enabled) 
+            {
+                if (!SA_EditorDefines.HasCompileDefine(AN_FIREBASE_ANALYTICS_DEFINE)) 
+                {
                     SA_EditorDefines.AddCompileDefine(AN_FIREBASE_ANALYTICS_DEFINE);
                 }
 
-                AN_Preprocessor.ActicateJarResolver();
-            } else {
-                if (SA_EditorDefines.HasCompileDefine(AN_FIREBASE_ANALYTICS_DEFINE)) {
+            } 
+            else 
+            {
+                if (SA_EditorDefines.HasCompileDefine(AN_FIREBASE_ANALYTICS_DEFINE)) 
+                {
                     SA_EditorDefines.RemoveCompileDefine(AN_FIREBASE_ANALYTICS_DEFINE);
                 }
             }

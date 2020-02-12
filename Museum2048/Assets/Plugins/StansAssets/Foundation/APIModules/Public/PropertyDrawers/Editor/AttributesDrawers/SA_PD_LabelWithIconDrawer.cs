@@ -1,4 +1,4 @@
-﻿using SA.Foundation.Editor;
+using SA.Foundation.Editor;
 using SA.Foundation.PropertyDrawers.Attributes;
 using UnityEditor;
 using UnityEngine;

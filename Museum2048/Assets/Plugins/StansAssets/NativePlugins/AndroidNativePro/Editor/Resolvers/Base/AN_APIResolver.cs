@@ -1,5 +1,4 @@
-﻿using SA.Foundation.Editor;
-
+using SA.Foundation.Editor;
 
 namespace SA.Android
 {
@@ -7,42 +6,46 @@ namespace SA.Android
     {
         //We only using it for ui, when the new build is coming
         //the requirements will be gathered from the build pre process
-        private AN_AndroidBuildRequirements m_cachedRequirements = null;
+        private AN_AndroidBuildRequirements m_CachedRequirements;
         
         //--------------------------------------
         // Abstract
         //--------------------------------------
 
         public abstract bool IsSettingsEnabled { get; set; }
-        public abstract void AppendBuildRequirements(AN_AndroidBuildRequirements buildRequirements);
+        public void ResetRequirementsCache()
+        {
+            m_CachedRequirements = null;
+        }
+
+        protected abstract void AppendBuildRequirements(AN_AndroidBuildRequirements buildRequirements);
 
         //--------------------------------------
         // Public Methods
         //--------------------------------------
 
-        public void Run(AN_AndroidBuildRequirements buildRequirements) {
-            if(IsSettingsEnabled) {
+        public void Run(AN_AndroidBuildRequirements buildRequirements) 
+        {
+            if(IsSettingsEnabled) 
                 AppendBuildRequirements(buildRequirements);
-            }
         }
-
-
+        
         //--------------------------------------
         // Get / Set
         //--------------------------------------
 
-        public AN_AndroidBuildRequirements BuildRequirements  {
-            get {
-                if(m_cachedRequirements == null) {
-                
-                    m_cachedRequirements = new AN_AndroidBuildRequirements();
-                    AppendBuildRequirements(m_cachedRequirements);
+        public AN_AndroidBuildRequirements BuildRequirements 
+        {
+            get 
+            {
+                if(m_CachedRequirements == null) 
+                {
+                    m_CachedRequirements = new AN_AndroidBuildRequirements();
+                    AppendBuildRequirements(m_CachedRequirements);
                 }
 
-                return m_cachedRequirements;
+                return m_CachedRequirements;
             }
         }
-
-
     }
 }

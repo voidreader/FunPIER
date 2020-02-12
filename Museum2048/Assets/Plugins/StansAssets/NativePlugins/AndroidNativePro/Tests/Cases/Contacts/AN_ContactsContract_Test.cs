@@ -1,4 +1,4 @@
-﻿
+
 using UnityEngine;
 using System.Collections;
 
@@ -14,7 +14,7 @@ namespace SA.Android.Tests.Contacts
 
         public override void Test() {
 
-            AN_ContactsContract.Retrieve((result) => {
+            AN_ContactsContract.RetrieveAllAsync((result) => {
                 if (result.IsSucceeded) {
                     Debug.Log("Loaded: " + result.Contacts.Count + " Contacts.");
                     foreach (var contact in result.Contacts) {

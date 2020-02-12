@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using SA.Foundation.Tests;
 using SA.Foundation.Utility;

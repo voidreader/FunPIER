@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -110,7 +110,7 @@ namespace SA.Foundation.Utility
         /// </summary>
         /// <param name="path">The path of a file or directory.</param>
         public static string GetDirectoryPath(string path) {
-            return Path.GetDirectoryName(path);
+            return Path.GetDirectoryName(path).Replace("\\", "/");
         }
 
         public static List<string> GetDirectoriesOutOfPath(string path) {

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using SA.Android.Utilities;
 using SA.Android.Vending.Licensing;

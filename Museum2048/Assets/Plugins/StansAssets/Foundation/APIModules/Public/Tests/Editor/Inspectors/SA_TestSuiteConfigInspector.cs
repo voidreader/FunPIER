@@ -1,12 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
-using TypeReferences;
 using SA.Foundation.Editor;
-using Rotorz.ReorderableList;
-
 
 namespace SA.Foundation.Tests
 {
@@ -14,16 +8,14 @@ namespace SA.Foundation.Tests
     [CustomEditor(typeof(SA_TestSuiteConfig))]
     public class SA_TestSuiteConfigInspector : UnityEditor.Editor {
 
-        private int GroupIndex = 0;
-        private int ListIndex = 0;
-
+ //       private int GroupIndex = 0;
+//        private int ListIndex = 0;
         private SerializedObject TestSuiteConfigSerialized = null;
 
         private void OnEnable() {
             if(target != null) {
                 TestSuiteConfigSerialized = new SerializedObject(target);
             }
-            
         }
 
         public override void OnInspectorGUI() {
@@ -48,9 +40,7 @@ namespace SA.Foundation.Tests
                 TestSuiteConfigSerialized = new SerializedObject(target);
             }
 
-
             EditorGUILayout.Space();
-
         }
 
         private string GroupTitle(SA_TestGroupConfig group) {
@@ -69,9 +59,9 @@ namespace SA.Foundation.Tests
                 group.Name = EditorGUILayout.TextField("Name:", group.Name);
                 group.Texture = (Texture2D) EditorGUILayout.ObjectField("Group Icon:", group.Texture, typeof(Texture2D),  false, GUILayout.Height(16));
 
-                GroupIndex = Config.TestGroups.IndexOf(group);
-                ListIndex = 0;
-                ReorderableListGUI.ListField(group.Tests, DrawTestListItem, DrawEmpty);
+           //     GroupIndex = Config.TestGroups.IndexOf(group);
+               // ListIndex = 0;
+              //  ReorderableListGUI.ListField(group.Tests, DrawTestListItem, DrawEmpty);
             }
 
         }
@@ -102,6 +92,7 @@ namespace SA.Foundation.Tests
             classRect.x += toggleWidth;
             */
 
+            /*
             string path = GetTestReferencePropertyPath(itemValue.TestReference);
             if(!string.IsNullOrEmpty(path)) {
                 SerializedProperty p = TestSuiteConfigSerialized.FindProperty(path);
@@ -110,33 +101,9 @@ namespace SA.Foundation.Tests
                 }
             }
 
-            ListIndex++;
+            ListIndex++;*/
             return itemValue;
         }
-
-        private string GetTestReferencePropertyPath(ClassTypeReference testReference) {
-
-          
-            return string.Format("TestGroups.Array.data[{0}].Tests.Array.data[{1}].TestReference", GroupIndex, ListIndex);
-            /*
-
-            TestSuiteConfig config = (TestSuiteConfig)target;
-            for (int i = 0; i < config.TestGroups.Count; i++) {
-                var groups = config.TestGroups[i];
-
-                for (int j = 0; j < groups.Tests.Count; j++) {
-                    var testRef = groups.Tests[j];
-                    Debug.Log(testReference.GetHashCode() + " / " + testRef.GetHashCode());
-                    if (testRef.Equals(testReference)) {
-                       string path = string.Format("TestGroups.Array.data[{0}].Tests.Array.data[{1}].TestReference", i, j);
-                       return path;
-                    }
-                }
-            }
-
-            return string.Empty;*/
-        }
-
 
         private void DrawEmpty() {
             GUILayout.Label("Add a test", EditorStyles.miniLabel);
@@ -147,7 +114,5 @@ namespace SA.Foundation.Tests
                 return (SA_TestSuiteConfig)target;
             }
         }
-
-
     }
 }

@@ -1,4 +1,4 @@
-﻿////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 //  
 // @module Assets Common Lib
 // @author Osipov Stanislav (Stan's Assets) 
@@ -10,57 +10,56 @@
 using UnityEngine;
 using System;
 using System.Collections;
-
 using SA.Foundation.Async;
 
-namespace SA.Foundation.Utility {
-
+namespace SA.Foundation.Utility 
+{
     /// <summary>
     /// Utility class for a screen manipulations
     /// </summary>
-	public static class SA_ScreenUtil  {
-
+	public static class SA_ScreenUtil  
+    {
         /// <summary>
-        /// Takes a screenshot with no size restirctions
+        /// Takes a screenshots with no size restrictions
         /// </summary>
         /// <param name="callback"> Result callback.</param> 
-		public static void TakeScreenshot( Action<Texture2D> callback) {
+		public static void TakeScreenshot(Action<Texture2D> callback) 
+        {
             SA_Coroutine.Start(TakeScreenshotCoroutine(0, callback));
 		}
-
-
+        
         /// <summary>
-        /// Takes a screenshot
+        /// Take a screenshot
         /// </summary>
         /// <param name="maxSize">Max size of picture result</param>
         /// <param name="callback">Result callback.</param> 
-        public static void TakeScreenshot(int maxSize, Action<Texture2D> callback) {
+        public static void TakeScreenshot(int maxSize, Action<Texture2D> callback) 
+        {
             SA_Coroutine.Start(TakeScreenshotCoroutine(maxSize, callback));
         }
 
-
         /// <summary>
-        /// Takes the screenshot from a spesific camera
+        /// Takes the screenshot from a specific camera
         /// </summary>
         /// <param name="camera">Camera to take screenshot from</param>
         /// <param name="callback">Result callback.</param>
-        public static void TakeScreenshot(Camera camera, Action<Texture2D> callback) {
+        public static void TakeScreenshot(Camera camera, Action<Texture2D> callback) 
+        {
             var capturer = new GameObject("SA_Screenshot").AddComponent<CameraScreenshot>();
             capturer.m_camera = camera;
             capturer.m_callback = callback;
             capturer.resWidth = Screen.width;
             capturer.resHeight = Screen.height;
-
         }
-
-
-        private static IEnumerator TakeScreenshotCoroutine(int maxSize, Action<Texture2D> callback) {
+        
+        private static IEnumerator TakeScreenshotCoroutine(int maxSize, Action<Texture2D> callback) 
+        {
 
             yield return new WaitForEndOfFrame();
             // Create a texture the size of the screen, RGB24 format
-            int width =  Screen.width;
-            int height = Screen.height;
-            Texture2D tex = new Texture2D(width, height, TextureFormat.RGB24, false);
+            var width =  Screen.width;
+            var height = Screen.height;
+            var tex = new Texture2D(width, height, TextureFormat.RGB24, false);
 
             // Read screen contents into the texture
             tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);

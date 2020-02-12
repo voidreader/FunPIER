@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.IO;
 using UnityEngine;
 
-namespace SA.Foundation.Config {
-    public class PluginVersionHandler {
+namespace SA.Foundation.Config 
+{
+    public class PluginVersionHandler 
+    {
         private string m_filename;
         private PluginVersion m_pluginVersion;
 
