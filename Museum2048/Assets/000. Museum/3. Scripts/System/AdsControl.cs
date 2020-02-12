@@ -34,9 +34,9 @@ public class AdsControl : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
 #if UNITY_ANDROID
-        appID = "ca-app-pub-8118299571958162~4158615289";
+        appID = "ca-app-pub-4267813218499125~2522519468";
 #elif UNITY_IOS
-        appID = "ca-app-pub-8118299571958162~8667218810";
+        appID = "ca-app-pub-4267813218499125~1373089321";
 #endif
 
         Debug.Log("Google admob appID :: " + appID);
@@ -56,9 +56,9 @@ public class AdsControl : MonoBehaviour
         
 
 #if UNITY_ANDROID
-        bannerUnitID = "ca-app-pub-8118299571958162/2257897175";
+        bannerUnitID = "ca-app-pub-4267813218499125/4829952751";
 #elif UNITY_IOS
-        bannerUnitID = "ca-app-pub-8118299571958162/4907103050";
+        bannerUnitID = "ca-app-pub-4267813218499125/7631661327";
 #endif
 
         // Create a 320x50 banner at the top of the screen.
@@ -114,9 +114,9 @@ public class AdsControl : MonoBehaviour
 
     public void RequestInterstitial() {
 #if UNITY_ANDROID
-        interstitialID = "ca-app-pub-8118299571958162/4433947459";
+        interstitialID = "ca-app-pub-4267813218499125/2762478023";
 #else
-        interstitialID = "ca-app-pub-8118299571958162/2101810460";
+        interstitialID = "ca-app-pub-4267813218499125/2451201421";
 #endif
 
         // Initialize an InterstitialAd.
@@ -198,9 +198,9 @@ public class AdsControl : MonoBehaviour
 
     public void RequestRewardAd() {
 #if UNITY_ANDROID
-        rewardUnitID = "ca-app-pub-8118299571958162/2090376217";
+        rewardUnitID = "ca-app-pub-4267813218499125/6497708908";
 #else
-        rewardUnitID = "ca-app-pub-8118299571958162/6137382102";
+        rewardUnitID = "ca-app-pub-4267813218499125/6433844317";
 #endif
 
         this.rewardedAd = new RewardedAd(rewardUnitID);
@@ -307,9 +307,9 @@ public class AdsControl : MonoBehaviour
 
     public void CreateAndLoadRewardedAd() {
 #if UNITY_ANDROID
-        rewardUnitID = "ca-app-pub-8118299571958162/2090376217";
+        rewardUnitID = "ca-app-pub-4267813218499125/6497708908";
 #else
-        rewardUnitID = "ca-app-pub-8118299571958162/6137382102";
+        rewardUnitID = "ca-app-pub-4267813218499125/6433844317";
 #endif
 
         this.rewardedAd = new RewardedAd(rewardUnitID);

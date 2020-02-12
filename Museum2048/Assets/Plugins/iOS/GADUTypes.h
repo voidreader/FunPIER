@@ -12,6 +12,13 @@ typedef NS_ENUM(NSUInteger, GADAdPosition) {
   kGADAdPositionCenterOfScreen = 6        ///< Bottom right of screen.
 };
 
+/// Orientation for an adaptive banner.
+typedef NS_ENUM(NSUInteger, GADUBannerOrientation) {
+  kGADUBannerOrientationCurrent = 0,    ///< Current Orientation.
+  kGADUBannerOrientationLandscape = 1,  ///< Landscape.
+  kGADUBannerOrientationPortrait = 2,   ///< Portrait.
+};
+
 typedef NS_ENUM(NSInteger, GADUAdSize) { kGADUAdSizeUseFullWidth = -1 };
 
 /// Base type representing a GADU* pointer.
@@ -19,7 +26,10 @@ typedef const void *GADUTypeRef;
 
 typedef const void *GADUTypeMobileAdsClientRef;
 
+typedef const void *GADUTypeInitializationStatusRef;
 
+typedef void (*GADUInitializationCompleteCallback)(GADUTypeMobileAdsClientRef *clientRef,
+                                                   GADUTypeInitializationStatusRef statusRef);
 
 /// Type representing a Unity banner client.
 typedef const void *GADUTypeBannerClientRef;
@@ -65,6 +75,9 @@ typedef const void *GADUTypeMutableDictionaryRef;
 
 /// Type representing a GADUAdNetworkExtras.
 typedef const void *GADUTypeAdNetworkExtrasRef;
+
+/// Type representing a GADUServerSideVerificationOptions.
+typedef const void *GADUTypeServerSideVerificationOptionsRef;
 
 /// Callback for when a banner ad request was successfully loaded.
 typedef void (*GADUAdViewDidReceiveAdCallback)(GADUTypeBannerClientRef *bannerClient);

@@ -27,6 +27,25 @@ namespace GoogleMobileAds.iOS
         [DllImport("__Internal")]
         internal static extern void GADUInitialize(string key);
 
+        [DllImport("__Internal")]
+        internal static extern void GADUInitializeWithCallback(
+            IntPtr mobileAdsClient, MobileAdsClient.GADUInitializationCompleteCallback callback);
+
+        [DllImport("__Internal")]
+        internal static extern IntPtr GADUGetInitDescription(IntPtr status, string className);
+
+        [DllImport("__Internal")]
+        internal static extern int GADUGetInitLatency(IntPtr status, string className);
+
+        [DllImport("__Internal")]
+        internal static extern int GADUGetInitState(IntPtr status, string className);
+
+        [DllImport("__Internal")]
+        internal static extern IntPtr GADUGetInitAdapterClasses(IntPtr status);
+
+        [DllImport("__Internal")]
+        internal static extern int GADUGetInitNumberOfAdapterClasses(IntPtr status);
+
 
         [DllImport("__Internal")]
         internal static extern void GADUSetApplicationVolume(float volume);
@@ -36,6 +55,12 @@ namespace GoogleMobileAds.iOS
 
         [DllImport("__Internal")]
         internal static extern void GADUSetiOSAppPauseOnBackground(bool pause);
+
+        [DllImport("__Internal")]
+        internal static extern float GADUDeviceScale();
+
+        [DllImport("__Internal")]
+        internal static extern int GADUDeviceSafeWidth();
 
         [DllImport("__Internal")]
         internal static extern IntPtr GADUCreateRequest();
@@ -104,6 +129,23 @@ namespace GoogleMobileAds.iOS
         [DllImport("__Internal")]
         internal static extern IntPtr GADUCreateSmartBannerViewWithCustomPosition(
             IntPtr bannerClient, string adUnitId, int x, int y);
+
+        [DllImport("__Internal")]
+        internal static extern IntPtr GADUCreateAnchoredAdaptiveBannerView(
+                    IntPtr bannerClient,
+                    string adUnitId,
+                    int width,
+                    int orientation,
+                    int positionAtTop);
+
+        [DllImport("__Internal")]
+        internal static extern IntPtr GADUCreateAnchoredAdaptiveBannerViewWithCustomPosition(
+                    IntPtr bannerClient,
+                    string adUnitId,
+                    int width,
+                    int orientation,
+                    int x,
+                    int y);
 
         [DllImport("__Internal")]
         internal static extern void GADUSetBannerCallbacks(
@@ -234,11 +276,29 @@ namespace GoogleMobileAds.iOS
                     adReceivedCallback,
             RewardedAdClient.GADURewardedAdDidFailToReceiveAdWithErrorCallback
                     adFailedToLoadCallback,
-            RewardedAdClient.GADURewardedAdDidFailToReceiveAdWithErrorCallback
+            RewardedAdClient.GADURewardedAdDidFailToShowAdWithErrorCallback
                     adFailedToShowCallback,
             RewardedAdClient.GADURewardedAdDidOpenCallback didOpenCallback,
             RewardedAdClient.GADURewardedAdDidCloseCallback didCloseCallback,
             RewardedAdClient.GADUUserEarnedRewardCallback userEarnedRewardCallback);
+
+        [DllImport("__Internal")]
+        internal static extern IntPtr GADUCreateServerSideVerificationOptions();
+
+        [DllImport("__Internal")]
+        internal static extern void GADUServerSideVerificationOptionsSetUserId(IntPtr options, string userId);
+
+        [DllImport("__Internal")]
+        internal static extern void GADUServerSideVerificationOptionsSetCustomRewardString(IntPtr options, string customRewardString);
+
+        [DllImport("__Internal")]
+        internal static extern void GADURewardedAdSetServerSideVerificationOptions(IntPtr rewardedAd, IntPtr options);
+
+        [DllImport("__Internal")]
+        internal static extern string GADURewardedAdGetRewardType(IntPtr rewardedAd);
+
+        [DllImport("__Internal")]
+        internal static extern double GADURewardedAdGetRewardAmount(IntPtr rewardedAd);
 
         [DllImport("__Internal")]
         internal static extern IntPtr GADUMediationAdapterClassNameForRewardedAd(IntPtr rewardedVideo);
@@ -308,7 +368,6 @@ namespace GoogleMobileAds.iOS
                     adClickedCallback);
 
         #endregion
-
     }
 }
 

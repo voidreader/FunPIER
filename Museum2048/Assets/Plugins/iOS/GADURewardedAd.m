@@ -60,7 +60,7 @@
 }
 
 - (NSString *)mediationAdapterClassName {
-  return [self.rewardedAd adNetworkClassName];
+  return self.rewardedAd.responseInfo.adNetworkClassName;
 }
 
 - (void)rewardedAd:(nonnull GADRewardedAd *)rewardedAd
@@ -101,6 +101,10 @@
   if (self.didCloseCallback) {
     self.didCloseCallback(self.rewardedAdClient);
   }
+}
+
+- (void)setServerSideVerificationOptions:(GADServerSideVerificationOptions *)options {
+  self.rewardedAd.serverSideVerificationOptions = options;
 }
 
 @end

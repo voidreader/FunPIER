@@ -598,10 +598,15 @@ public class LobbyManager : MonoBehaviour {
 
 
     public void RefreshFacebookShareButton() {
+
+        facebookButton.SetActive(false);
+
+        /*
         if (PlatformManager.main.CheckFacebookShareToday())
             facebookButton.SetActive(false);
         else
             facebookButton.SetActive(true);
+        */
     }
 
     public void RefreshNoAdsButton() {

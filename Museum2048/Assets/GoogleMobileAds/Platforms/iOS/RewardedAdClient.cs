@@ -111,9 +111,29 @@ namespace GoogleMobileAds.iOS
             Externs.GADUShowRewardedAd(this.RewardedAdPtr);
         }
 
+        // Sets the server side verification options
+        public void SetServerSideVerificationOptions(ServerSideVerificationOptions serverSideVerificationOptions)
+        {
+            IntPtr optionsPtr = Utils.BuildServerSideVerificationOptions(serverSideVerificationOptions);
+            Externs.GADURewardedAdSetServerSideVerificationOptions(this.RewardedAdPtr, optionsPtr);
+            Externs.GADURelease(optionsPtr);
+        }
+
         public bool IsLoaded()
         {
             return Externs.GADURewardedAdReady(this.RewardedAdPtr);
+        }
+
+        // Returns the reward item for the loaded rewarded ad.
+        public Reward GetRewardItem()
+        {
+          string type = Externs.GADURewardedAdGetRewardType(this.RewardedAdPtr);
+          double amount = Externs.GADURewardedAdGetRewardAmount(this.RewardedAdPtr);;
+          return new Reward()
+          {
+              Type = type,
+              Amount = amount
+          };
         }
 
         // Returns the mediation adapter class name.
@@ -180,7 +200,7 @@ namespace GoogleMobileAds.iOS
                 {
                     Message = error
                 };
-                client.OnAdFailedToLoad(client, args);
+                client.OnAdFailedToShow(client, args);
             }
         }
 

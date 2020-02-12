@@ -70,6 +70,11 @@ namespace GoogleMobileAds.Common
             Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
         }
 
+        public void Initialize(Action<InitializationStatus> initCompleteAction)
+        {
+            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+        }
+
         public void SetApplicationMuted(bool muted)
         {
             Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
@@ -83,6 +88,18 @@ namespace GoogleMobileAds.Common
         public void SetiOSAppPauseOnBackground(bool pause)
         {
             Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+        }
+
+        public float GetDeviceScale()
+        {
+            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            return 0;
+        }
+
+        public int GetDeviceSafeWidth()
+        {
+            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            return 0;
         }
 
         public void CreateBannerView(string adUnitId, AdSize adSize, AdPosition position)

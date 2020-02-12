@@ -52,6 +52,11 @@ namespace GoogleMobileAds.Common
         public void LoadAd(AdRequest request)
         {
             Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+
+            if (OnAdLoaded != null)
+            {
+                OnAdLoaded(this, EventArgs.Empty);
+            }
         }
 
         public bool IsLoaded()
@@ -70,6 +75,16 @@ namespace GoogleMobileAds.Common
             Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
             return null;
         }
+
+        public Reward GetRewardItem()
+        {
+            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            return null;
+        }
+
+        public void SetServerSideVerificationOptions(ServerSideVerificationOptions serverSideVerificationOptions)
+        {
+            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+        }
     }
 }
-

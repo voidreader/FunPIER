@@ -15,7 +15,7 @@ using SA.Android.App;
 #endif
 
 
-using Facebook.Unity;
+// using Facebook.Unity;
 
 /// <summary>
 /// 업적 종류
@@ -73,7 +73,7 @@ public class PlatformManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()    {
 
-        InitFacebook(); // 페이스북 초기화
+        // InitFacebook(); // 페이스북 초기화
 
     }
 
@@ -701,6 +701,7 @@ public class PlatformManager : MonoBehaviour
 
     #region Facebook 
 
+    /*
     /// <summary>
     /// true :: 오늘 공유했음, false :: 오늘 공유 안했음
     /// </summary>
@@ -885,6 +886,7 @@ public class PlatformManager : MonoBehaviour
         LobbyManager.main.RefreshFacebookShareButton();
 
     }
+    */
 
 
 
