@@ -39,5 +39,12 @@ public class PageLang : UILayer {
         GoTitle();
     }
 
+    public void OnClickJapanese()
+    {
+        PierSystem.main.currentLang = SystemLanguage.Japanese;
+        PierSystem.main.SaveLanguage();
+        GoTitle();
+    }
+
 
 }

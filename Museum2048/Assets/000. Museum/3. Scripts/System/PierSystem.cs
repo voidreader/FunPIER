@@ -12,7 +12,9 @@ public class PierSystem : MonoBehaviour {
     // 레드문 관련 
     public static string currentRedMoonItem = string.Empty;
     public static int currentRedMoonValue = 0;
-        
+
+    public Font JPFont;
+    public Font GeneralFont;
 
     readonly string SaveData = "SaveData";
     public bool AdminPlay = false;
@@ -100,6 +102,8 @@ public class PierSystem : MonoBehaviour {
 
             if (Application.systemLanguage == SystemLanguage.Korean)
                 currentLang = SystemLanguage.Korean;
+            else if (Application.systemLanguage == SystemLanguage.Japanese)
+                currentLang = SystemLanguage.Japanese;
             else
                 currentLang = SystemLanguage.English;
         }
@@ -265,11 +269,30 @@ public class PierSystem : MonoBehaviour {
 
         if (main.currentLang == SystemLanguage.Korean)
             return MLocal.Instance.GetRow(rowid)._Korean;
+        else if (main.currentLang == SystemLanguage.Japanese)
+            return MLocal.Instance.GetRow(rowid)._Japanese;
         else
             return MLocal.Instance.GetRow(rowid)._English;
 
 
     }
+
+    /// <summary>
+    /// 폰트!
+    /// </summary>
+    /// <returns></returns>
+    public static Font GetGeneralFont()
+    {
+
+        if (main == null)
+            return null;
+
+        if (main.currentLang == SystemLanguage.Japanese)
+            return PierSystem.main.JPFont;
+        else
+            return PierSystem.main.GeneralFont;
+    }
+
 
     public static string GetThemeName(Theme t) {
         switch (t) {

@@ -1385,6 +1385,13 @@ public class UILabel : UIWidget
 
 		// Request the text within the font
 		ProcessAndRequest();
+
+
+		if (bitmapFont == null)
+		{
+			if(PierSystem.GetGeneralFont() != null)
+				this.trueTypeFont = PierSystem.GetGeneralFont();
+		}
 	}
 
 	/// <summary>
