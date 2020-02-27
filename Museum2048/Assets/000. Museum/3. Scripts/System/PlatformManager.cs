@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 #if UNITY_ANDROID
 using GooglePlayGames;
@@ -41,13 +42,15 @@ public class PlatformManager : MonoBehaviour
     string leaderboardCarID = "CgkIgYf6gpcYEAIQCg";
     string leaderboardWineID = "CgkIgYf6gpcYEAIQCw";
     string leaderboardVikingID = "CgkIgYf6gpcYEAIQDA";
-    string leaderboardIceID = " CgkIgYf6gpcYEAIQDg";
+    string leaderboardIceID = "CgkIgYf6gpcYEAIQDg";
 
     // 업적리스트 
     string ah_completeCarID = "CgkIgYf6gpcYEAIQAQ";
     string ah_completeWineID = "CgkIgYf6gpcYEAIQAg";
     string ah_completeVikingID = "CgkIgYf6gpcYEAIQAw";
-    string ah_completeIceID = " CgkIgYf6gpcYEAIQDQ";
+    string ah_completeIceID = "CgkIgYf6gpcYEAIQDQ";
+
+
 
     string ah_move100 = "CgkIgYf6gpcYEAIQBA";
     string ah_move500 = "CgkIgYf6gpcYEAIQBQ";
@@ -56,6 +59,8 @@ public class PlatformManager : MonoBehaviour
     string ah_make10 = "CgkIgYf6gpcYEAIQBw";
     string ah_make11 = "CgkIgYf6gpcYEAIQCA";
     string ah_make12 = "CgkIgYf6gpcYEAIQCQ";
+
+
 
 
 
@@ -102,6 +107,27 @@ public class PlatformManager : MonoBehaviour
                 if (bSuccess)
                 {
                     Debug.Log("Success : " + Social.localUser.userName);
+
+
+                    Social.LoadAchievements(achievements => {
+                        if (achievements.Length > 0)
+                        {
+                            Debug.Log("Got " + achievements.Length + " achievement instances");
+                            string myAchievements = "My achievements:\n";
+                            foreach (IAchievement achievement in achievements)
+                            {
+                                myAchievements += "\t" +
+                                    achievement.id + " " +
+                                    achievement.percentCompleted + " " +
+                                    achievement.completed + " " +
+                                    achievement.lastReportedDate + "\n";
+                            }
+                            Debug.Log(myAchievements);
+                        }
+                        else
+                            Debug.Log("No achievements returned");
+                    });
+
                 }
                 else
                 {

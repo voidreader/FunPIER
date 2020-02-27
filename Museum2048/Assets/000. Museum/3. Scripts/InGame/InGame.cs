@@ -664,7 +664,7 @@ public class InGame : MonoBehaviour {
             PlatformManager.main.UnlockAchievements(MIMAchievement.Make10);
         else if (step == 11)
             PlatformManager.main.UnlockAchievements(MIMAchievement.Make11);
-        else if (step == 11)
+        else if (step == 12)
             PlatformManager.main.UnlockAchievements(MIMAchievement.Make12);
 
         // 마지막 오브젝트 오픈!
@@ -676,6 +676,7 @@ public class InGame : MonoBehaviour {
     }
 
     IEnumerator ClearRoutine() {
+
         yield return null;
 
         AudioAssistant.main.PlayMusic("Final");

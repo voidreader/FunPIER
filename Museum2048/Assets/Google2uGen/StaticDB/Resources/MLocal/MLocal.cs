@@ -158,7 +158,7 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT54", "이미 구입했습니다.", "Purchase has been made."));
 			Rows.Add( new MLocalRow("TEXT55", "상품을 구입 하였습니다.", "Purchae has been completed."));
 			Rows.Add( new MLocalRow("TEXT56", "블록 정렬하기", "Align exhibits"));
-			Rows.Add( new MLocalRow("TEXT57", "게임 계속하기", "Conniue game"));
+			Rows.Add( new MLocalRow("TEXT57", "게임 계속하기", "Continue game"));
 			Rows.Add( new MLocalRow("TEXT58", "결제 서비스를 초기화하고 있습니다.", "Initializing payment service."));
 			Rows.Add( new MLocalRow("TEXT59", "구매 복원", "Restore Purchase"));
 			Rows.Add( new MLocalRow("TEXT60", "구매 복원이 완료되었습니다.", "Restore process is completed"));
