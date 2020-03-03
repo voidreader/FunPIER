@@ -46,6 +46,7 @@ ModelImporter:
     400038: decor_9
     400040: empty_museum
     2100000: TEXTURE_car
+    2100002: TEXTURE_car.001
     2300000: _1
     2300002: _2
     2300004: _3
@@ -66,6 +67,7 @@ ModelImporter:
     2300034: decor_8
     2300036: decor_9
     2300038: empty_museum
+    2300040: //RootNode
     3300000: _1
     3300002: _2
     3300004: _3
@@ -86,6 +88,7 @@ ModelImporter:
     3300034: decor_8
     3300036: decor_9
     3300038: empty_museum
+    3300040: //RootNode
     4300000: decor_1.001
     4300002: decor_3
     4300004: decor_2
@@ -111,6 +114,11 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: TEXTURE_car
+    second: {fileID: 2100000, guid: 3537332914d27a44aaabca7e43f14737, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TEXTURE_car.001
     second: {fileID: 2100000, guid: 3537332914d27a44aaabca7e43f14737, type: 2}
   materials:
     importMaterials: 1

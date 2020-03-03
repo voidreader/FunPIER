@@ -1159,7 +1159,7 @@ Transform:
   m_GameObject: {fileID: 73631489}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0013513514, y: 0.0013513514, z: 0.0013513514}
+  m_LocalScale: {x: 0.0015612802, y: 0.0015612802, z: 0.0015612802}
   m_Children:
   - {fileID: 1602290306}
   - {fileID: 1384485020}
@@ -6725,6 +6725,7 @@ MonoBehaviour:
   _langButtonList:
   - {fileID: 376996283}
   - {fileID: 1097621219}
+  - {fileID: 1146951942}
 --- !u!1 &424353910
 GameObject:
   m_ObjectHideFlags: 0
@@ -16889,7 +16890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274842f39be3ca746b934f4871d9b8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lang: 23
+  _lang: 22
   _activeSign: {fileID: 1860826949}
 --- !u!114 &1146951943
 MonoBehaviour:
@@ -17003,7 +17004,7 @@ MonoBehaviour:
   bottomType: 1
   topType: 1
   mAtlas: {fileID: 11400000, guid: 3fb9a16d3af91124480ec8f40c7bb9e5, type: 2}
-  mSpriteName: korean
+  mSpriteName: japan
   mFixedAspect: 0
   mFillCenter: 1
 --- !u!1 &1160056778
@@ -30396,7 +30397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1860826950
 Transform:
   m_ObjectHideFlags: 0
@@ -35068,6 +35069,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2883056723555825589, guid: a04b29cb7a9293a4eb7d285430cef648,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2883056723555825621, guid: a04b29cb7a9293a4eb7d285430cef648,
         type: 3}
       propertyPath: m_Name
@@ -37330,7 +37336,7 @@ PrefabInstance:
     - target: {fileID: 6264981663835699424, guid: 684cc7f187aa9af41b12e332843b06a5,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6264981663835699427, guid: 684cc7f187aa9af41b12e332843b06a5,
         type: 3}

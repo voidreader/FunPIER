@@ -110,9 +110,10 @@ public class GameOverCtrl : MonoBehaviour {
         Debug.Log(" >> GameOverRoutine Start , highscore :: " + PierSystem.main.GetHighScore(InGame.currentTheme));
         Debug.Log(" >> GameOverRoutine Start , currentScore :: " + InGame.main.currentScore);
 
+        PlatformManager.main.SubmitScore(InGame.currentTheme, InGame.main.currentScore);
+
         // 하이스코어 처리
         if (PierSystem.main.GetHighScore(InGame.currentTheme) < InGame.main.currentScore) {
-            PlatformManager.main.SubmitScore(InGame.currentTheme, InGame.main.currentScore);
             PierSystem.main.SetHighScore(InGame.currentTheme, InGame.main.currentScore);
         }
         

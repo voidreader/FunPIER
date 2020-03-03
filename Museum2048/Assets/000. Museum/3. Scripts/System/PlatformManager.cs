@@ -167,6 +167,7 @@ public class PlatformManager : MonoBehaviour
 
             case Theme.Ice:
                 lbid = leaderboardIceID;
+                Debug.Log("submit leaderboard is ICE!!");
                  break;
 
                 // 추가!!
