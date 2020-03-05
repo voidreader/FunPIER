@@ -132,7 +132,7 @@ namespace Google2u
 			Rows.Add( new MLocalRow("TEXT21", "다시하기", "Retry", "やり直す"));
 			Rows.Add( new MLocalRow("TEXT22", "게임 끝내기", "Finish", "終了"));
 			Rows.Add( new MLocalRow("TEXT23", "별점주기", "Rate me", "評価する"));
-			Rows.Add( new MLocalRow("TEXT24", "『Midnight in Museum』을 즐기고 계신가요?", "Are you enjoying 『Midnight in Museum』?", "楽しんでる？"));
+			Rows.Add( new MLocalRow("TEXT24", "『2048 머지 뮤지엄』을 즐기고 계신가요?", "Are you enjoying 『2048 Merge Museum』?", "楽しんでる？"));
 			Rows.Add( new MLocalRow("TEXT25", "움직일 수 있는 블록이 없어요!", "No more exhibits to move.", "移動できるブロックがないよ。"));
 			Rows.Add( new MLocalRow("TEXT26", "아이템을 사용하여 게임을 계속하거나\n새로운 게임을 시작하세요.", "Use items to make higher exhibits or\nFinish this game.", "移動回数を追加して、\\nプレーを続行しますか？"));
 			Rows.Add( new MLocalRow("TEXT27", "Game Over!", "Game Over!", "Game Over!"));
