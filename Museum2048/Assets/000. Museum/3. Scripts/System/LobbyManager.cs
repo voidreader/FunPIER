@@ -225,7 +225,7 @@ public class LobbyManager : MonoBehaviour {
         if (PierSystem.main.NoAds > 0)
             return;
 
-        if (!IAPControl.IsInitialized)
+        if (!IAPControl.main.IsInitialized)
             return;
 
         int dayofyear = 0;

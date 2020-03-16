@@ -81,7 +81,7 @@ public class PageManager : MonoBehaviour
 
     public void OpenShop() {
 
-        if(!IAPControl.IsInitialized) {
+        if(!IAPControl.main.IsInitialized) {
             OpenMessage(Message.NotInitBilling, delegate { });
             return;
         }

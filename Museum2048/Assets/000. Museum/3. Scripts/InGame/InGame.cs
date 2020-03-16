@@ -113,6 +113,14 @@ public class InGame : MonoBehaviour {
 
     void Update() {
 
+        /*
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            StartCoroutine(ClearRoutine(true));
+        }
+        */
+
+
         if (!PierSystem.main.AdminPlay)
             return;
 
@@ -123,9 +131,6 @@ public class InGame : MonoBehaviour {
             AskWhenNoMove();
         }
 
-        if (Input.GetKeyDown(KeyCode.Z)) {
-            StartZoom(tiles[2, 3].transform);
-        }
 
         if(Input.GetKeyDown(KeyCode.R)) {
             AppearRedMoon();
@@ -675,17 +680,47 @@ public class InGame : MonoBehaviour {
         }
     }
 
-    IEnumerator ClearRoutine() {
+    IEnumerator ClearRoutine(bool isTest = false) {
+
+        bool targetCheck = false;
 
         yield return null;
 
         AudioAssistant.main.PlayMusic("Final");
+
+        #region TEST
+        if (isTest)
+        {
+            Debug.Log(">> Clear Check TEST");
+
+            for (int h = 0; h < HEIGHT; h++)
+            {
+                for (int w = 0; w < WIDTH; w++)
+                {
+                    if (tiles[h, w].chip != null && !targetCheck)
+                    {
+                        StartZoom(tiles[h, w].transform);
+                        targetCheck = true;
+                        break;
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(3);
+            GameClear();
+            yield break;
+        }
+        #endregion
+
+
+        Debug.Log(">> Clear Check Play");
 
         for (int h = 0; h < HEIGHT; h++) {
             for (int w = 0; w < WIDTH; w++) {
 
                 if(tiles[h,w].chip != null && GetStepByID(tiles[h,w].chip.id) == currentThemeMaxStep) {
                     StartZoom(tiles[h, w].transform);
+                    break;
                     // 회전 처리 
                     // tiles[h, w].RotateChip();
                 }
@@ -1689,12 +1724,27 @@ public class InGame : MonoBehaviour {
 
     IEnumerator Zooming() {
 
-        
+        int maxFrameCount = 100;
         int frameCount = 0;
+
         Zoom = 2f;
         ZoomSize = 0.01f;
 
-        while(frameCount < 100) {
+        float zoomOffset = 1.011f;
+        float zoomSizeOffset = 1.011f;
+
+        float screenRatio = (float)Screen.width / (float)Screen.height;
+
+        if (screenRatio > 0.57)
+        {
+            Debug.Log("<color=white>Tablet Radio</color>");
+            zoomOffset = 1.0003f;
+            zoomSizeOffset = 1.0003f;
+        }
+
+
+
+        while(frameCount < maxFrameCount) {
             Vector3 dist_position = (_mainCamera.transform.position) - (_zoomTarget.position);
 
             //정규화
@@ -1706,8 +1756,8 @@ public class InGame : MonoBehaviour {
             _mainCamera.transform.position -= (dist_position * Time.deltaTime * Zoom);     // 마우스 휠로 화면확대 축소
             _mainCamera.orthographicSize -= ZoomSize;
 
-            Zoom *= 1.011f;
-            ZoomSize *= 1.011f;
+            Zoom *= zoomOffset;
+            ZoomSize *= zoomSizeOffset;
 
             frameCount++;
             yield return null;

@@ -10,7 +10,7 @@ public class IAPControl : MonoBehaviour, IStoreListener {
 
 
     public static IAPControl main = null;
-    public static bool IsInitialized = false;
+    public bool IsInitialized = false;
     public static string noadsID = string.Empty;
 
     IStoreController controller = null;

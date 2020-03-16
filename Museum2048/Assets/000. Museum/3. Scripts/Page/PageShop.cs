@@ -24,7 +24,7 @@ public class PageShop : UILayer {
     /// </summary>
     void InitStorePrices() {
 
-        if (!IAPControl.IsInitialized) {
+        if (!IAPControl.main.IsInitialized) {
             Debug.Log("IAPControl is not init yet.");
         }
 
