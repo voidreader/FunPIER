@@ -66,16 +66,6 @@ public class TitleManager : MonoBehaviour {
 
     void SetAppsFlyer() {
 
-        #if UNITY_IOS
-
-        /* Mandatory - set your AppsFlyer’s Developer key. */
-        AppsFlyer.setAppsFlyerKey("zcKrZYJWnrWWctCxcLNnyT");
-        /* For detailed logging */
-        /* AppsFlyer.setIsDebug (true); */
-        AppsFlyer.setAppID("1460681288");
-        AppsFlyer.trackAppLaunch();
-
-        #endif
 
 
     }
