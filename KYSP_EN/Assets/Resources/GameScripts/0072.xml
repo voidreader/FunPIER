@@ -17,7 +17,7 @@
   <unuse id ="cut1" />
   <useAndShow id ="bg" res ="nettou/nettousonogoBG" pos ="0,-100,5"/>
   <useAndShow id ="omae" res ="nettou/nettouSonogoOmae" pos ="0,0,0"/>
-  <useAndShow id ="text" res ="nettou/nettouSonogoText" pos ="0,0,0"/>
+  <!-- <useAndShow id ="text" res ="nettou/nettouSonogoText" pos ="0,0,0"/> -->
 
   <beginTimer id ="timer0" duration="600"/>
   <beginIf id="timeout0" target="animend" name ="timer0" goto="9000" priority="1"/>
@@ -32,7 +32,7 @@
   <unuse id ="goal1"/>
   <endIf id ="goal2" />
   <beginAnim id ="omae" anim ="1" />
-  <beginAnim id ="text" anim ="1" />
+  <!-- <beginAnim id ="text" anim ="1" /> -->
   <frame count ="1005" />
   <beginSound name="se_laugh" />
   <frame count ="1060" />
@@ -46,7 +46,7 @@
   <unuse id ="goal1"/>
   <endIf id ="goal2" />
   <beginAnim id ="omae" anim ="2" />
-  <beginAnim id ="text" anim ="2" />
+  <!-- <beginAnim id ="text" anim ="2" /> -->
   <frame count ="2005" />
   <beginSound name="se_laugh" />
   <frame count ="2060" />
@@ -58,7 +58,7 @@
   <frame count ="3000" />
   <unuse id ="timeout0"/>
   <endIf id ="all"/>
-  <unuse id ="text"/>
+  <!-- <unuse id ="text"/> -->
   <beginAnim id ="omae" anim ="3" />
   <beginSound name="se_splash" />
   <frame count ="3240" />

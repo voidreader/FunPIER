@@ -45,6 +45,10 @@ public class KyGuchiKanojo : KyScriptObject {
 
         switch (textId)
         {
+            case 1008:
+            case 1025:
+                pos = new Vector3(210, 130, -1f);
+                break;
 
             case 1003:
             case 1027:
@@ -64,7 +68,7 @@ public class KyGuchiKanojo : KyScriptObject {
             case 1017:
             case 1021:
             case 1022:
-            case 1025:
+            
             case 1026:
             case 1030:
             case 1031:
@@ -77,7 +81,7 @@ public class KyGuchiKanojo : KyScriptObject {
             case 1001:
             case 1005:
             case 1006:
-            case 1008:
+            
             case 1011:
             case 1014:
             case 1018:

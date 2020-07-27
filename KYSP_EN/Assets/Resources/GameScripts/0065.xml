@@ -6,10 +6,10 @@
   <beginSound name="jg_brother" loop="false"/>
   <useAndShow id ="cut1" res ="quiz/quizCut1" pos ="0,0,0"/>
   <frame count ="30"/>
-  <drawText id="text0" textId="100" size="32" color="0,0,0,0" pos="168, 75, -1" vertical="true"/>
+  <drawText id="text0" textId="100" size="24" color="0,0,0,0" pos="145, 20, -1" vertical="true"/>
   <beginMoveEx id="text0" color="0,0,0,1" duration="30"/>
   <frame count ="90"/>
-  <drawText id="text1" textId="103" size="32" color="0,0,0,0" pos="-176, 58, -1" vertical="true"/>
+  <drawText id="text1" textId="103" size="24" color="0,0,0,0" pos="120, 190, -1" vertical="true"/>
   <beginMoveEx id="text1" color="0,0,0,1" duration="30"/>
   <frame count ="240"/>
   <fadeScreen kind="fadeout" duration="30"/>
@@ -38,9 +38,9 @@
   <beginSound name="bgm_kikou" loop="true"/>
 
   <frame count ="600"/>
-  <drawText id="text4" textId="104" font="1" size="32" pos="180, 60, -1" vertical="true"/>
+  <drawText id="text4" textId="104" font="1" size="24" pos="110, -150, -1" vertical="true"/>
   <frame count ="660"/>
-  <drawText id="text5" textId="105" font="1" size="32" pos="60, 160, -1" vertical="true"/>
+  <drawText id="text5" textId="105" font="1" size="22" pos="220, 160, -1" vertical="true"/>
   <frame count ="720"/>
   <fadeScreen kind="fadeout" duration="30"/>
   <frame count ="810"/>
