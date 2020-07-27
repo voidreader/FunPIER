@@ -14,6 +14,7 @@
 
 using System;
 
+using GoogleMobileAds;
 using GoogleMobileAds.Common;
 
 namespace GoogleMobileAds.Api
@@ -25,7 +26,7 @@ namespace GoogleMobileAds.Api
         // Creates a BannerView and adds it to the view hierarchy.
         public BannerView(string adUnitId, AdSize adSize, AdPosition position)
         {
-            this.client = GoogleMobileAdsClientFactory.BuildBannerClient();
+            this.client = MobileAds.GetClientFactory().BuildBannerClient();
             client.CreateBannerView(adUnitId, adSize, position);
 
             ConfigureBannerEvents();
@@ -34,7 +35,7 @@ namespace GoogleMobileAds.Api
         // Creates a BannerView with a custom position.
         public BannerView(string adUnitId, AdSize adSize, int x, int y)
         {
-            this.client = GoogleMobileAdsClientFactory.BuildBannerClient();
+            this.client = MobileAds.GetClientFactory().BuildBannerClient();
             client.CreateBannerView(adUnitId, adSize, x, y);
 
             ConfigureBannerEvents();
@@ -50,6 +51,9 @@ namespace GoogleMobileAds.Api
         public event EventHandler<EventArgs> OnAdClosed;
 
         public event EventHandler<EventArgs> OnAdLeavingApplication;
+
+        // Called when an ad is estimated to have earned money.
+        public event EventHandler<AdValueEventArgs> OnPaidEvent;
 
         // Loads an ad into the BannerView.
         public void LoadAd(AdRequest request)
@@ -140,12 +144,29 @@ namespace GoogleMobileAds.Api
                     this.OnAdLeavingApplication(this, args);
                 }
             };
+
+            this.client.OnPaidEvent += (sender, args) =>
+            {
+                if (this.OnPaidEvent != null)
+                {
+                    this.OnPaidEvent(this, args);
+                }
+            };
+
         }
 
         // Returns the mediation adapter class name.
+        [Obsolete("MediationAdapterClassName() is deprecated, use GetResponseInfo.MediationAdapterClassName() instead.")]
         public string MediationAdapterClassName()
         {
             return this.client.MediationAdapterClassName();
+        }
+
+        // Returns ad request response info.
+        public ResponseInfo GetResponseInfo()
+        {
+            return new ResponseInfo(this.client.GetResponseInfoClient());
+
         }
     }
 }

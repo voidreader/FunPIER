@@ -5,11 +5,11 @@
   <frame count ="0"/>
   <useAndShow id ="kare1" res ="date/dateOmaeIntro" pos ="50,-10,0"/>
   <useAndShow id ="kano1" res="date/dateRoboIntro" pos ="-60,-10,1"/>
-  <drawText id="text" textId ="2" size ="32" pos="83,180,2" />
+  <drawText id="text" textId ="2" size ="32" pos="100,180,2" />
   <beginSound name="jg_date"/>
 
   <!-- 本編 -->
-  <frame count ="120"/>
+  <frame count ="240"/>
   <unuse id="all"/>
   <beginTimer id ="timer0" duration="600"/>
   <beginIf id="timeout0" target="animend" name ="timer0" goto="6000" priority="1"/>

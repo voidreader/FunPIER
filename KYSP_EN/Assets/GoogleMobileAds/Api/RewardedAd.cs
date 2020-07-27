@@ -14,6 +14,7 @@
 
 using System;
 
+using GoogleMobileAds;
 using GoogleMobileAds.Common;
 
 namespace GoogleMobileAds.Api
@@ -24,7 +25,7 @@ namespace GoogleMobileAds.Api
 
         public RewardedAd(string adUnitId)
         {
-            this.client = GoogleMobileAdsClientFactory.BuildRewardedAdClient();
+            this.client = MobileAds.GetClientFactory().BuildRewardedAdClient();
             client.CreateRewardedAd(adUnitId);
 
             this.client.OnAdLoaded += (sender, args) =>
@@ -74,6 +75,15 @@ namespace GoogleMobileAds.Api
                     this.OnUserEarnedReward(this, args);
                 }
             };
+
+            this.client.OnPaidEvent += (sender, args) =>
+            {
+                if (this.OnPaidEvent != null)
+                {
+                    this.OnPaidEvent(this, args);
+                }
+            };
+
         }
 
         // These are the ad callback events that can be hooked into.
@@ -88,6 +98,9 @@ namespace GoogleMobileAds.Api
         public event EventHandler<EventArgs> OnAdClosed;
 
         public event EventHandler<Reward> OnUserEarnedReward;
+
+        // Called when the ad is estimated to have earned money.
+        public event EventHandler<AdValueEventArgs> OnPaidEvent;
 
         // Loads a new rewarded ad.
         public void LoadAd(AdRequest request)
@@ -113,10 +126,28 @@ namespace GoogleMobileAds.Api
             client.SetServerSideVerificationOptions(serverSideVerificationOptions);
         }
 
+        // Returns the reward item for the loaded rewarded ad.
+        public Reward GetRewardItem()
+        {
+            if (client.IsLoaded())
+            {
+                return client.GetRewardItem();
+            }
+            return null;
+        }
+
         // Returns the mediation adapter class name.
+        [Obsolete("MediationAdapterClassName() is deprecated, use GetResponseInfo.MediationAdapterClassName() instead.")]
         public string MediationAdapterClassName()
         {
             return this.client.MediationAdapterClassName();
         }
+
+        // Returns ad request response info.
+        public ResponseInfo GetResponseInfo()
+        {
+            return new ResponseInfo(this.client.GetResponseInfoClient());
+        }
+
     }
 }

@@ -120,8 +120,10 @@ public class GuiButton : GuiComponent {
 
 	public override bool HitTest(Vector3 pos) {
 
+		/*
         if (Application.isEditor) {
-            if (EventSystem.current.IsPointerOverGameObject()) {
+			
+            if (EventSystem.current.IsPointerOverGameObject(0)) {
                 return false;
             }
         }
@@ -129,6 +131,7 @@ public class GuiButton : GuiComponent {
             if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(0))
                 return false;
         }
+		*/
 
 
 

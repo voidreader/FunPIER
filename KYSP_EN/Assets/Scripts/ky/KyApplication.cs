@@ -79,7 +79,9 @@ public class KyApplication : KyScene {
 			button.ChangeState(GuiButton.ButtonState.Selected);
 		}
 
-        GoogleAdmobMgr.Instance.ShowInterstitial();
+
+		if(GoogleAdmobMgr.Instance != null)
+			GoogleAdmobMgr.Instance.ShowInterstitial();
 
         
 	}

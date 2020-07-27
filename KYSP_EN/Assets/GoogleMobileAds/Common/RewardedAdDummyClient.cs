@@ -42,6 +42,9 @@ namespace GoogleMobileAds.Common
 
         public event EventHandler<Reward> OnUserEarnedReward;
 
+        public event EventHandler<AdValueEventArgs> OnPaidEvent;
+
+
 #pragma warning restore 67
 
         public void CreateRewardedAd(string adUnitId)
@@ -76,10 +79,21 @@ namespace GoogleMobileAds.Common
             return null;
         }
 
+        public Reward GetRewardItem()
+        {
+            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            return null;
+        }
+
         public void SetServerSideVerificationOptions(ServerSideVerificationOptions serverSideVerificationOptions)
         {
             Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
         }
+
+        public IResponseInfoClient GetResponseInfoClient()
+        {
+            Debug.Log("Dummy " + MethodBase.GetCurrentMethod().Name);
+            return null;
+        }
     }
 }
-

@@ -292,6 +292,9 @@ public class GoogleAdmobMgr : MonoBehaviour, IUnityAdsListener {
 
         Debug.Log("Called ShowInterstitial");
 
+        if (Application.isEditor)
+            return;
+
         if (!_isAdsOn)
             return;
 

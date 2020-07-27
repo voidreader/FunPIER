@@ -5,11 +5,11 @@
   <frame count ="0"/>
   <useAndShow id ="kare1" res ="date/dateOmaeIntro" pos ="50,-10,0"/>
   <useAndShow id ="kano1" res="date/dateUsiIntro" pos ="-60,-10,1"/>
-  <drawText id="text" textId ="2" size ="32" pos="85,180,2" />
+  <drawText id="text" textId ="2" size ="32" pos="100,180,2" />
   <beginSound name="jg_date"/>
 
   <!-- 本編 -->
-  <frame count ="120"/>
+  <frame count ="240"/>
   <unuse id="all"/>
   <useAndShow id ="robot" res ="date/dateYakiniku" pos ="-120,150,2"/>
   <useAndShow id ="renai" res ="date/dateSusi" pos ="120,150,2"/>
