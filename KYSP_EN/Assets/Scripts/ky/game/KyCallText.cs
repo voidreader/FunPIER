@@ -67,69 +67,39 @@ public class KyCallText : KyScriptObject {
     Vector3 SetPosition(int textId)
     {
         Vector3 pos = new Vector3();
+        int xpos = 0;
+        RandomTextSprite.CharacterSize = new Vector2(20, 20);
 
         switch (textId)
         {
-            case 1100:
-            case 1110:
-            case 1111:
-            case 1103:
-                pos = new Vector3(70, 174,0);
-                break;
-            case 1104:
-            case 1108:
-                pos = new Vector3(50, 174, 0);
-                break;
-            case 1105:
-                pos = new Vector3(115, 174, 0);
-                break;
-
-            case 1102:
-                pos = new Vector3(175, 182, 0);
-                break;
-
-            case 1101:
-            case 1107:
-            case 1210:
-                pos = new Vector3(103, 174, 0);
-                break;
-
-            case 1205:
-            case 1207:
-            case 1211:
-                pos = new Vector3(103, 174, 0);
-                break;
-
-            case 1106:
-            case 1206:
-                pos = new Vector3(121, 174, -1f);
-                break;
 
 
             
+
+
+            case 1100:
+            case 1101:
+            case 1104:
+            case 1105:
+            case 1108:
             case 1109:
-            case 1200:
-                pos = new Vector3(85, 174, -1f);
+                xpos = 70;
                 break;
-            case 1201:
-            case 1203:
-            case 1204:
-                pos = new Vector3(60, 174, 0);
-                break;
-            case 1202:
-                RandomTextSprite.CharacterSize = new Vector2(20, 20);
-                pos = new Vector3(161, 165, 0);
-                break;
+
+            case 1102:
             case 1208:
-                RandomTextSprite.CharacterSize = new Vector2(20, 20);
-                pos = new Vector3(140, 165, 0);
-                break;
             case 1209:
-                RandomTextSprite.CharacterSize = new Vector2(20, 20);
-                pos = new Vector3(151, 165, 0);
+                xpos = 165;
+                break;
+
+            default:
+                xpos = 100;
                 break;
 
         }
+
+        pos = new Vector3(xpos, 165, 0);
+
         return pos;
     }
 

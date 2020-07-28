@@ -138,7 +138,7 @@ public class GoogleAdmobMgr : MonoBehaviour, IUnityAdsListener {
 
         Debug.Log(">> OpenFrontAD rolling.. : " + number);
 
-        if (number < 20) {
+        if (number < 30) {
             ShowWatchAd(delegate { });
         }
         else {

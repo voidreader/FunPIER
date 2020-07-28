@@ -30,6 +30,7 @@ public class KyGuchiKanojo : KyScriptObject {
 			return;
 		}
 		int textId = mTextIds[mTextIndex];
+        
 		RandomTextSprite.Text = KyText.GetText(textId);
         RandomTextSprite.transform.localPosition = SetPosition(textId);
         RandomTextSprite.UpdateAll();
@@ -42,81 +43,99 @@ public class KyGuchiKanojo : KyScriptObject {
     Vector3 SetPosition(int textId)
     {
         Vector3 pos = new Vector3();
+        int xpos = 0;
 
         switch (textId)
         {
-            case 1008:
-            case 1025:
-                pos = new Vector3(210, 130, -1f);
-                break;
-
-            case 1003:
-            case 1027:
-                pos = new Vector3(273, 130, -1f);
-                break;
-
-            case 1024:
-                pos = new Vector3(322, 130, -1f);
-                break;
-
-
-
-
-            case 1004:
-            case 1015:
+            case 1012:
             case 1016:
-            case 1017:
-            case 1021:
-            case 1022:
+            case 1028:
+            case 1033:
+                xpos = 145;
+                break;
+
+
+            case 1019:
+                xpos = 165;
+                break;
+
+
             
-            case 1026:
+            
             case 1030:
             case 1031:
             case 1032:
             case 1034:
-            case 1037:
-                pos = new Vector3(135, 130, -1f);
-                break;
-
-            case 1001:
-            case 1005:
-            case 1006:
             
-            case 1011:
-            case 1014:
-            case 1018:
-            case 1020:
-            
-            
-            case 1028:
-            case 1035:
             case 1036:
-                pos = new Vector3(122, 130, -1f);
-                break;
+            case 1037:
 
+
+            case 1004:
+            
+            
+            
+            case 1026:
+            case 1001:
+            
+            case 1014:
+            case 1020:
             case 1007:
             case 1009:
-            case 1012:
+            
             case 1013:
-            case 1019:
-                pos = new Vector3(85, 130, -1f);
-                break;
+            
             case 1010:
-                pos = new Vector3(100, 130, -1f);
-                break;
             case 1002:
-                pos = new Vector3(190, 130, -1f);
+            
+                xpos = 200;
                 break;
-            case 1023:
-            case 1033:
-                pos = new Vector3(149, 130, -1f);
+
+
+            case 1018:
+                xpos = 225;
                 break;
+
+            case 1008:
+            case 1025:
+            
+            case 1021:
+                xpos = 210;
+                break;
+
+            case 1015:
+            case 1035:
+            case 1017:
             case 1029:
-                pos = new Vector3(174, 130, -1f);
+                xpos = 255;
+                break;
+
+            case 1005:
+            case 1011:
+                xpos = 280;
+                break;
+
+            case 1003:
+            
+            case 1027:
+            case 1006:
+            case 1022:
+            case 1023:
+                xpos = 273;
+                break;
+
+
+
+            case 1024:
+                xpos = 322;
                 break;
         }
+
+        pos = new Vector3(xpos, 130, -1);
         return pos;
     }
+
+    
 
 	public int RandomTextIdMin = 1001;
 	public int RandomTextIdMax = 1037;

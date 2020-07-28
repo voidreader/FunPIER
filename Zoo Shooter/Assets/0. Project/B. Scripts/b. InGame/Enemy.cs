@@ -85,7 +85,14 @@ public class Enemy : MonoBehaviour {
             sp.sprite = Stocks.GetEnemySprite(id);
         else {
             if(PIER.main == null) {
-                HP = BossData.Instance.Rows[PIER.CurrentLevel]._hp;
+                try
+                {
+                    HP = BossData.Instance.Rows[PIER.CurrentLevel]._hp;
+                }
+                catch(System.Exception e)
+                {
+                    HP = 100;
+                }
             }
             else {
                 // HP 따로 처리

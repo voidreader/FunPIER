@@ -5,8 +5,8 @@
   <frame count ="0"/>
   <!--<beginIf target="always" goto="900"/>-->
   <useAndShow id ="cut01" res ="tukiau/tukiauCut1" pos ="0,0,0"/>
-  <drawText id="text1" textId="140" size="27" pos="105, 205, -1" vertical="true"/>
-  <drawText id="text2" textId="141" size="27" pos="175, -201, -1" vertical="true"/>
+  <drawText id="text1" textId="140" size="24" pos="105, 205, -1" vertical="true"/>
+  <drawText id="text2" textId="141" size="24" pos="175, -201, -1" vertical="true"/>
   <beginSound name="jg_date"/>
   <frame count ="60"/>
   <beginIf id ="touch" target="touch" goto="240"/>
@@ -54,12 +54,12 @@
   <fadeScreen kind="fadein" duration="60"/>
   
   <frame count ="630"/>
-  <drawText id ="text3" textId="144" size="32" pos="60,150,0" color="0,0,0,0" vertical="true"/>
+  <drawText id ="text3" textId="144" size="24" pos="60,150,0" color="0,0,0,0" vertical="true"/>
   <!--<drawRect id ="rect3" color ="1,1,1,0" pos="240,240,1" size ="130,280" anchory="max" anchorx="max"/>-->
   <beginMoveEx id="text3" color="255,255,255,1" duration="60"/>
   <!--<beginMoveEx id="rect3" color="1,1,1,0.9" duration="60"/>-->
   <frame count ="720"/>
-  <drawText id ="text4" textId="145" size="32" pos="97,-196,0" color="0,0,0,0" vertical="true"/>
+  <drawText id ="text4" textId="145" size="24" pos="97,-196,0" color="0,0,0,0" vertical="true"/>
   <!--<drawRect id ="rect4" color ="1,1,1,0" pos="-240,-240,1" size ="120,280" anchory="min" anchorx="min"/>-->
   <beginMoveEx id="text4" color="255,255,255,1" duration="60"/>
   <!-- <beginMoveEx id="rect4" color="1,1,1,0.9" duration="60"/>-->

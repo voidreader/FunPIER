@@ -55,6 +55,8 @@ public class KyApplication : KyScene {
     #region Methods
 
     public void OnApplicationPause(bool pause) {
+
+
 		//	アプリケーション復帰時に、
 		//	左ソフトキーが「中断」ならば中断キーを押したことにする。
 		if (pause) {
@@ -254,7 +256,7 @@ public static class KyDebugPrefs {
 	public const bool MainSkipIntermit = false;
 	public const bool MainRandomScore = false;
 	public const bool StageResultSound = true;
-	public const bool OpenFullMainMenu = true; // Pro
+	public const bool OpenFullMainMenu = false; // Pro
 	public const bool OpenDevelopMenu = false;
 	public const bool OpenAllSecrets = false;
 	public const bool DontPauseWhenResume = false;
