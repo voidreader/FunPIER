@@ -1,16 +1,11 @@
-
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-
 using SA.Foundation.Editor;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-    public class AN_ServicesTab : SA_ServicesTab
+    class AN_ServicesTab : SA_ServicesTab
     {
-        protected override void OnCreateServices() {
+        protected override void OnCreateServices()
+        {
             RegisterService(CreateInstance<AN_AppFeaturesUI>());
             RegisterService(CreateInstance<AN_VendingFeaturesUI>());
 
@@ -19,6 +14,7 @@ namespace SA.Android
             RegisterService(CreateInstance<AN_CameraAndGalleryFeaturesUI>());
             RegisterService(CreateInstance<AN_LocalNotificationsFeaturesUI>());
             RegisterService(CreateInstance<AN_ContactsFeaturesUI>());
+            
             RegisterService(CreateInstance<AN_FirebaseFeaturesUI>());
         }
     }

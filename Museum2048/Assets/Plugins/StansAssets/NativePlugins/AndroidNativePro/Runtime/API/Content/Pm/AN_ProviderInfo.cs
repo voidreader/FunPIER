@@ -1,8 +1,6 @@
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 namespace SA.Android.Content.Pm
 {
@@ -11,8 +9,5 @@ namespace SA.Android.Content.Pm
     /// This is returned by <see cref="AN_PackageManager.ResolveContentProvider()"/>.
     /// </summary>
     [Serializable]
-    public class AN_ProviderInfo : AN_PackageItemInfo
-    {
-
-    }
+    public class AN_ProviderInfo : AN_PackageItemInfo { }
 }

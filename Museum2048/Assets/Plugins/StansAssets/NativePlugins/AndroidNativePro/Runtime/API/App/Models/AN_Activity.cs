@@ -1,14 +1,12 @@
 using System;
 using UnityEngine;
-
 using SA.Android.Content;
 using SA.Android.Utilities;
 using SA.Android.Content.Pm;
+using StansAssets.Foundation.Async;
 
-using SA.Foundation.Async;
-
-namespace SA.Android.App {
-
+namespace SA.Android.App
+{
     /// <summary>
     /// An activity is a single, focused thing that the user can do. 
     /// Almost all activities interact with the user, 
@@ -28,19 +26,18 @@ namespace SA.Android.App {
 
 #pragma warning disable 414
 
-        [SerializeField] protected AN_ActivityId m_classId = AN_ActivityId.Undefined;
-        [SerializeField] protected string m_instanceId = string.Empty;
+        [SerializeField]
+        protected AN_ActivityId m_classId = AN_ActivityId.Undefined;
+        [SerializeField]
+        protected string m_instanceId = string.Empty;
 
 #pragma warning restore 414
 
-
-        private static string ANDROID_CLASS = "com.stansassets.android.app.AN_Activity";
-
+        static string ANDROID_CLASS = "com.stansassets.android.app.AN_Activity";
 
         //--------------------------------------
         // Public Methods
         //--------------------------------------
-
 
         /// <summary>
         /// Launch a new activity. 
@@ -50,10 +47,10 @@ namespace SA.Android.App {
         /// if not specified, the new activity will be added to the task of the caller.
         /// </summary>
         /// <param name="intent">The intent to start.</param>
-        public bool StartActivity(AN_Intent intent) {
+        public bool StartActivity(AN_Intent intent)
+        {
             return AN_Java.Bridge.CallStatic<bool>(ANDROID_CLASS, "StartActivity", this, intent);
         }
-
 
         /// <summary>
         /// Launch an activity for which you would like a result when it finished. 
@@ -61,10 +58,12 @@ namespace SA.Android.App {
         /// </summary>
         /// <param name="intent">The intent to start.</param>
         /// <param name="callback">Activity result callback</param>
-        public bool StartActivityForResult(AN_Intent intent, Action<AN_ActivityResult> callback) {
-
-            if (Application.isEditor) {
-                SA_Coroutine.WaitForSeconds(1, () => {
+        public bool StartActivityForResult(AN_Intent intent, Action<AN_ActivityResult> callback)
+        {
+            if (Application.isEditor)
+            {
+                 CoroutineUtility.WaitForSeconds(1, () =>
+                {
                     callback.Invoke(new AN_ActivityResult());
                 });
                 return true;
@@ -77,7 +76,8 @@ namespace SA.Android.App {
         /// Call this when your activity is done and should be closed. 
         /// The ActivityResult is propagated back to whoever launched the activity.
         /// </summary>
-        public bool Finish() {
+        public bool Finish()
+        {
             return AN_Java.Bridge.CallStatic<bool>(ANDROID_CLASS, "Finish", this);
         }
 
@@ -98,18 +98,13 @@ namespace SA.Android.App {
         /// <summary>
         /// Return PackageManager instance to find global package information.
         /// </summary>
-        public override AN_PackageManager GetPackageManager() {
+        public override AN_PackageManager GetPackageManager()
+        {
             return new AN_PackageManager(this);
         }
-
-
 
         //--------------------------------------
         // Protected Methods
         //--------------------------------------
-
-
     }
-
 }
-

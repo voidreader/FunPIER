@@ -1,77 +1,69 @@
 ////////////////////////////////////////////////////////////////////////////////
-//  
+//
 // @module Assets Common Lib
-// @author Osipov Stanislav (Stan's Assets) 
+// @author Osipov Stanislav (Stan's Assets)
 // @support support@stansassets.com
 // @website https://stansassets.com
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-namespace SA.Foundation.Config 
+namespace SA.Foundation.Config
 {
-	public class SA_Config  
+    public class SA_Config
     {
+        public const string StansAssetsSupportEmail = "support@stansassets.com";
+        public const string StansAssetsCeoEMail = "ceo@stansassets.com";
+        public const string StansAssetsWebsiteRootUrl = "https://stansassets.com/";
 
-		public const string k_StansAssetsSupportEmail 				= "support@stansassets.com";
-        public const string k_StansAssetsCeoEMail                  = "ceo@stansassets.com";
-        public const string k_StansAssetsWebsiteRootUrl           = "https://stansassets.com/";
+        public const string StansAssetsPluginsPath = "Assets/Plugins/StansAssets/";
+        public const string StansAssetsThirdPartyNotices = StansAssetsPluginsPath + "Third-PartyNotices.txt";
 
-        public const string STANS_ASSETS_PLUGINS_PATH          = "Assets/Plugins/StansAssets/";
-        public const string STANS_ASSETS_THIRD_PARTY_NOTICES = STANS_ASSETS_PLUGINS_PATH + "Third-PartyNotices.txt";
+        public const string StansAssetsCrossPlatformPluginsPath = StansAssetsPluginsPath + "CrossPlatform/";
+        public const string StansAssetsNativePluginsPath = StansAssetsPluginsPath + "NativePlugins/";
+        public const string StansAssetsProductivityPluginsPath = StansAssetsPluginsPath + "Productivity/";
+        public const string StansAssetsServicesPluginsPath = StansAssetsPluginsPath + "Services/";
 
-        public const string STANS_ASSETS_CROSS_PLATFORM_PLUGINS_PATH = STANS_ASSETS_PLUGINS_PATH + "CrossPlatform/";
-        public const string STANS_ASSETS_NATIVE_PLUGINS_PATH = STANS_ASSETS_PLUGINS_PATH + "NativePlugins/";
-        public const string STANS_ASSETS_PRODUCTIVITY_PLUGINS_PATH = STANS_ASSETS_PLUGINS_PATH + "Productivity/";
-        public const string STANS_ASSETS_SERVICES_PLUGINS_PATH = STANS_ASSETS_PLUGINS_PATH + "Services/";
+        public const string StansAssetsFoundationPath = StansAssetsPluginsPath + "Foundation/";
+        public const string StansAssetsFoundationPackagePath = StansAssetsPluginsPath + "com.stansassets.foundation/";
 
-        public const string STANS_ASSETS_FOUNDATION_PATH       = STANS_ASSETS_PLUGINS_PATH + "Foundation/";
-        public const string STANS_ASSETS_FOUNDATION_API_PATH = STANS_ASSETS_FOUNDATION_PATH + "API/";
+        public const string StansAssetsFoundationApiPath = StansAssetsFoundationPath + "API/";
 
-        public const string STANS_ASSETS_FOUNDATION_API_MODULES_PATH = STANS_ASSETS_FOUNDATION_PATH + "APIModules/";
-        public const string STANS_ASSETS_FOUNDATION_API_MODULES_PATH_PUBLIC = STANS_ASSETS_FOUNDATION_API_MODULES_PATH + "Public/";
-        public const string STANS_ASSETS_FOUNDATION_API_MODULES_PATH_PRIVATE = STANS_ASSETS_FOUNDATION_API_MODULES_PATH + "Private/";
-        public const string STANS_ASSETS_FOUNDATION_API_MODULES_PATH_THIRD_PARTY = STANS_ASSETS_FOUNDATION_API_MODULES_PATH + "ThirdParty/";
+        public const string StansAssetsFoundationApiModulesPath = StansAssetsFoundationPath + "APIModules/";
+        public const string StansAssetsFoundationApiModulesPathPublic = StansAssetsFoundationApiModulesPath + "Public/";
+        public const string StansAssetsFoundationApiModulesPathPrivate = StansAssetsFoundationApiModulesPath + "Private/";
+        public const string StansAssetsFoundationApiModulesPathThirdParty = StansAssetsFoundationApiModulesPath + "ThirdParty/";
 
-        public const string STANS_ASSETS_SETTINGS_ROOT_PATH = STANS_ASSETS_PLUGINS_PATH + "Settings/";
+        public const string StansAssetsSettingsRootPath = StansAssetsPluginsPath + "Settings/";
 
-        public const string STANS_ASSETS_CACHE_PATH             = STANS_ASSETS_SETTINGS_ROOT_PATH + "Cache/Resources/";
-		public const string STANS_ASSETS_SETTINGS_PATH          = STANS_ASSETS_SETTINGS_ROOT_PATH + "Resources/";
+        public const string StansAssetsCachePath = StansAssetsSettingsRootPath + "Cache/Resources/";
+        public const string StansAssetsSettingsPath = StansAssetsSettingsRootPath + "Resources/";
 
-        public const string STANS_ASSETS_EDITOR_SETTINGS_PATH = STANS_ASSETS_SETTINGS_ROOT_PATH + "Editor/";
-        public const string STANS_ASSETS_EDITOR_SETTINGS_RESOURCES_PATH  = STANS_ASSETS_EDITOR_SETTINGS_PATH + "Resources/";
+        public const string StansAssetsEditorSettingsPath = StansAssetsSettingsRootPath + "Editor/";
+        public const string StansAssetsEditorSettingsResourcesPath = StansAssetsEditorSettingsPath + "Resources/";
 
-        public const string UNITY_IOS_PLUGINS_PATH 	 = "Assets/Plugins/IOS/";
-        public const string UNITY_ANDROID_PLUGINS_PATH = "Assets/Plugins/Android/";
+        public const string UnityIOSPluginsPath = "Assets/Plugins/IOS/";
+        public const string UnityAndroidPluginsPath = "Assets/Plugins/Android/";
 
-        public const string EDITOR_MENU_ROOT = "Stan's Assets/";
-        public const string k_EditorFoundationLibMenuRoot = EDITOR_MENU_ROOT + "Foundation/";
-        public const string EDITOR_ANALYTICS_MENU_ROOT = EDITOR_MENU_ROOT + "Analytics/";
-        public const string EDITOR_PRODUCTIVITY_MENU_ROOT = EDITOR_MENU_ROOT + "Productivity/";
-        public const string EDITOR_PRODUCTIVITY_NATIVE_UTILITY_MENU_ROOT = EDITOR_PRODUCTIVITY_MENU_ROOT + "Native Utility/";
+        public const string EditorMenuRoot = "Stan's Assets/";
+        public const string EditorFoundationLibMenuRoot = EditorMenuRoot + "Foundation/";
+        public const string EditorAnalyticsMenuRoot = EditorMenuRoot + "Analytics/";
+        public const string EditorProductivityMenuRoot = EditorMenuRoot + "Productivity/";
+        public const string EditorProductivityNativeUtilityMenuRoot = EditorProductivityMenuRoot + "Native Utility/";
 
-        public const int PRODUCTIVITY_MENU_INDEX = 500;
-        public const int PRODUCTIVITY_NATIVE_UTILITY_MENU_INDEX = 600;
+        public const int ProductivityMenuIndex = 500;
+        public const int ProductivityNativeUtilityMenuIndex = 600;
 
-        public const int k_FoundationMenuIndex = 1000;
+        public const int FoundationMenuIndex = 1000;
 
-		public const string STANS_ASSETS_EDITOR_ART = STANS_ASSETS_FOUNDATION_PATH + "Editor/Art/";
-		public const string STANS_ASSETS_EDITOR_ICONS = STANS_ASSETS_EDITOR_ART + "Icons/";
-        public const string STANS_ASSETS_EDITOR_FONTS = STANS_ASSETS_EDITOR_ART + "Fonts/";
+        public const string StansAssetsEditorArt = StansAssetsFoundationPath + "Editor/Art/";
+        public const string StansAssetsEditorIcons = StansAssetsEditorArt + "Icons/";
+        public const string StansAssetsEditorFonts = StansAssetsEditorArt + "Fonts/";
 
-        public const string STANS_ASSETS_EDITOR_CONTENT = STANS_ASSETS_FOUNDATION_PATH + "EditorContent/";
-        public const string STANS_ASSETS_EDITOR_GRAPHIC = STANS_ASSETS_EDITOR_CONTENT + "SAGraphic/";
+        public const string StansAssetsEditorContent = StansAssetsFoundationPath + "EditorContent/";
+        public const string StansAssetsEditorGraphic = StansAssetsEditorContent + "SAGraphic/";
 
-		private static PluginVersionHandler s_foundationVersion;
-		public static PluginVersionHandler FoundationVersion 
-        {
-			get 
-            {
-				if (s_foundationVersion == null) 
-                {
-					s_foundationVersion = new PluginVersionHandler(STANS_ASSETS_FOUNDATION_PATH);
-				}
-				return s_foundationVersion;
-			}
-		}
-	}
+        static PluginVersionHandler s_FoundationVersion;
+
+        public static PluginVersionHandler FoundationVersion => s_FoundationVersion ?? (s_FoundationVersion = new PluginVersionHandler(StansAssetsFoundationPath));
+    }
 }

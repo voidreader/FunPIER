@@ -10,96 +10,85 @@ using UnityEngine;
 using System.Xml;
 using System.Collections.Generic;
 
+namespace SA.Android.Manifest
+{
+    public class AMM_ActivityTemplate : AMM_BaseTemplate
+    {
+        public bool IsOpen = false;
 
-namespace SA.Android.Manifest {
+        readonly int _id = 0;
+        bool _isLauncher = false;
+        string _name = string.Empty;
 
-	public class AMM_ActivityTemplate : AMM_BaseTemplate {
-		public bool IsOpen = false;
+        public AMM_ActivityTemplate(bool isLauncher, string name)
+            : base()
+        {
+            _isLauncher = isLauncher;
+            _name = name;
+            _id = GetHashCode();
 
-		private int _id = 0;
-		private bool _isLauncher = false;
-		private string _name = string.Empty;
+            m_values = new Dictionary<string, string>();
+            m_properties = new Dictionary<string, List<AMM_PropertyTemplate>>();
+            SetValue("android:name", name);
+        }
 
-		public AMM_ActivityTemplate(bool isLauncher, string name) : base() {
-			_isLauncher = isLauncher;
-			_name = name;
-			_id = GetHashCode ();
+        public void SetName(string name)
+        {
+            _name = name;
+            SetValue("android:name", name);
+        }
 
-			m_values = new Dictionary<string, string> ();
-			m_properties = new Dictionary<string, List<AMM_PropertyTemplate>> ();
-			SetValue("android:name", name);
-		}
+        public void SetAsLauncher(bool isLauncher)
+        {
+            _isLauncher = isLauncher;
+        }
 
-		public void SetName(string name) {
-			_name = name;
-			SetValue ("android:name", name);
-		}
+        public static AMM_PropertyTemplate GetLauncherPropertyTemplate()
+        {
+            var launcher = new AMM_PropertyTemplate("intent-filter");
 
-		public void SetAsLauncher(bool isLauncher) {
-			_isLauncher = isLauncher;
-		}
+            var prop = new AMM_PropertyTemplate("action");
+            prop.SetValue("android:name", "android.intent.action.MAIN");
+            launcher.AddProperty("action", prop);
 
-		public static AMM_PropertyTemplate GetLauncherPropertyTemplate() {
-			AMM_PropertyTemplate launcher = new AMM_PropertyTemplate ("intent-filter");
+            prop = new AMM_PropertyTemplate("category");
+            prop.SetValue("android:name", "android.intent.category.LAUNCHER");
+            launcher.AddProperty("category", prop);
 
-			AMM_PropertyTemplate prop = new AMM_PropertyTemplate ("action");
-			prop.SetValue ("android:name", "android.intent.action.MAIN");
-			launcher.AddProperty ("action", prop);
+            return launcher;
+        }
 
-			prop = new AMM_PropertyTemplate ("category");
-			prop.SetValue ("android:name", "android.intent.category.LAUNCHER");
-			launcher.AddProperty ("category", prop);
+        public bool IsLauncherProperty(AMM_PropertyTemplate property)
+        {
+            if (property.Tag.Equals("intent-filter"))
+                if (property.Properties.ContainsKey("category"))
+                    foreach (var p in property.Properties["category"])
+                        if (p.Values.ContainsKey("android:name"))
+                            if (p.Values["android:name"].Equals("android.intent.category.LAUNCHER"))
+                                return true;
 
-			return launcher;
-		}
+            return false;
+        }
 
-		public bool IsLauncherProperty(AMM_PropertyTemplate property) {
-			if (property.Tag.Equals ("intent-filter")) {
-				if (property.Properties.ContainsKey ("category")) {
-					foreach (AMM_PropertyTemplate p in property.Properties["category"]) {
-						if (p.Values.ContainsKey ("android:name")) {
-							if (p.Values ["android:name"].Equals ("android.intent.category.LAUNCHER")) {
-								return true;
-							}
-						}
-					}
-				}
-			}
+        public override void ToXmlElement(XmlDocument doc, XmlElement parent)
+        {
+            AddAttributesToXml(doc, parent, this);
 
-			return false;
-		}
+            AMM_PropertyTemplate launcher = null;
+            if (_isLauncher)
+            {
+                launcher = GetLauncherPropertyTemplate();
+                AddProperty(launcher.Tag, launcher);
+            }
 
-		public override void ToXmlElement (XmlDocument doc, XmlElement parent)
-		{
-			AddAttributesToXml (doc, parent, this);
+            AddPropertiesToXml(doc, parent, this);
+            if (_isLauncher) m_properties["intent-filter"].Remove(launcher);
+        }
 
-			AMM_PropertyTemplate launcher = null;
-			if (_isLauncher) {
-				launcher = GetLauncherPropertyTemplate();
-				AddProperty(launcher.Tag, launcher);
-			}
-			AddPropertiesToXml (doc, parent, this);
-			if (_isLauncher) {
-				m_properties["intent-filter"].Remove(launcher);
-			}
-		}
+        public bool IsLauncher => _isLauncher;
 
-		public bool IsLauncher {
-			get {
-				return _isLauncher;
-			}
-		}
+        public string Name => _name;
 
-		public string Name {
-			get {
-				return _name;
-			}
-		}
-
-		public int Id {
-			get {
-				return _id;
-			}
-		}
-	}
+        public int Id => _id;
+    }
 }

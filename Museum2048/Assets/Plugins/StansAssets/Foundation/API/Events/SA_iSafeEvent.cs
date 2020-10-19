@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace SA.Foundation.Events
 {
-
     public interface SA_iSafeEvent<T>
     {
         /// <summary>
@@ -21,7 +20,6 @@ namespace SA.Foundation.Events
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
         void RemoveListener(Action<T> listner);
-
     }
 
     public interface SA_iSafeEvent<T, T1>
@@ -40,7 +38,6 @@ namespace SA.Foundation.Events
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
         void RemoveListener(Action<T, T1> listner);
-
     }
 
     public interface SA_iSafeEvent
@@ -59,6 +56,5 @@ namespace SA.Foundation.Events
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
         void RemoveListener(Action listner);
-
     }
 }

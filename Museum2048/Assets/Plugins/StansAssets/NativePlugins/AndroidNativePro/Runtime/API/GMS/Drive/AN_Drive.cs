@@ -1,13 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Android.GMS.Common;
-
 
 namespace SA.Android.GMS.Drive
 {
-
     /// <summary>
     /// The Drive API provides easy access to users' Google Drive contents. 
     /// This API includes Activities to open or create files in users' Drives, 
@@ -16,7 +13,6 @@ namespace SA.Android.GMS.Drive
     /// </summary>
     public class AN_Drive
     {
-
         /// <summary>
         /// A Scope that gives 'drive.file' access to a user's drive.
         /// </summary>
@@ -26,6 +22,5 @@ namespace SA.Android.GMS.Drive
         /// A Scope that gives 'drive.appfolder' access to a user's drive.
         /// </summary>
         public static AN_Scope SCOPE_APPFOLDER = new AN_Scope("https://www.googleapis.com/auth/drive.appdata");
-
     }
 }

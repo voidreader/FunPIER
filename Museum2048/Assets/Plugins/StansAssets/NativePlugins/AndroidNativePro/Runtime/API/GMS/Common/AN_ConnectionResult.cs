@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-namespace SA.Android.GMS.Common {
-
+namespace SA.Android.GMS.Common
+{
     /// <summary>
     /// Contains all possible error codes for when a client fails to connect to Google Play services.
     /// </summary>
-    public class AN_ConnectionResult 
+    public class AN_ConnectionResult
     {
-
         public const int UNKNOWN = -1;
         public const int SUCCESS = 0;
         public const int SERVICE_MISSING = 1;
@@ -37,7 +34,5 @@ namespace SA.Android.GMS.Common {
         public const int UNFINISHED = 99;
 
         public const int DRIVE_EXTERNAL_STORAGE_REQUIRED = 1500;
-
-      
     }
 }

@@ -3,9 +3,8 @@ using SA.Android.GMS.Games.Multiplayer;
 
 namespace SA.Android.GMS.Internal
 {
-    internal interface AN_iGMS_GamesAPI
+    interface AN_iGMS_GamesAPI
     {
-
         AN_GamesClient GetGamesClient();
         AN_PlayersClient GetPlayersClient();
         AN_AchievementsClient GetAchievementsClient();
@@ -14,4 +13,3 @@ namespace SA.Android.GMS.Internal
         AN_RealTimeMultiplayerClient GetRealTimeMultiplayerClient();
     }
 }
-

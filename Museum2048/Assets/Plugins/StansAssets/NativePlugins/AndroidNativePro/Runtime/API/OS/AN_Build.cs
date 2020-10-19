@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Android.Utilities;
 
-
-namespace SA.Android.OS {
-
+namespace SA.Android.OS
+{
     /// <summary>
     /// Information about the current build, extracted from system properties.
     /// </summary>
-    public class AN_Build {
-
-        private static string ANDROID_CLASS = "com.stansassets.android.os.AN_Build";
-
+    public class AN_Build
+    {
+        static readonly string ANDROID_CLASS = "com.stansassets.android.os.AN_Build";
 
         /// <summary>
         /// Enumeration of the currently known SDK version codes. 
@@ -51,7 +48,6 @@ namespace SA.Android.OS {
             public const int O_MR1 = 27;
             public const int P = 28;
         }
-
 
         /// <summary>
         /// Various version strings.
@@ -95,18 +91,20 @@ namespace SA.Android.OS {
             public string SECURITY_PATCH = "";
         }
 
+        static AN_BuildVersion s_version;
 
-        private static AN_BuildVersion s_version;
-        public static AN_BuildVersion VERSION {
-            get {
-                if (s_version == null) {
-                    string json = AN_Java.Bridge.CallStatic<string>(ANDROID_CLASS, "GetBuildVerion");
+        public static AN_BuildVersion VERSION
+        {
+            get
+            {
+                if (s_version == null)
+                {
+                    var json = AN_Java.Bridge.CallStatic<string>(ANDROID_CLASS, "GetBuildVerion");
                     s_version = JsonUtility.FromJson<AN_BuildVersion>(json);
                 }
 
                 return s_version;
             }
         }
-
     }
 }

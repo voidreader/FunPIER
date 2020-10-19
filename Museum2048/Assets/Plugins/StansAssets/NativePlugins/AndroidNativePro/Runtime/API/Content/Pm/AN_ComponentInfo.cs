@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace SA.Android.Content.Pm
 {
     /// <summary>
@@ -14,8 +13,5 @@ namespace SA.Android.Content.Pm
     /// but does provide convenience methods to assist in the implementation of Parcelable in subclasses.
     /// </summary>
     [Serializable]
-    public class AN_ComponentInfo : AN_PackageItemInfo
-    {
-
-    }
+    public class AN_ComponentInfo : AN_PackageItemInfo { }
 }

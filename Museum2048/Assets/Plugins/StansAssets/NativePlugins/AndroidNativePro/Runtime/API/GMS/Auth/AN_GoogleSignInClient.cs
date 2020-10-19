@@ -14,17 +14,17 @@ namespace SA.Android.GMS.Auth
         /// Start the Google Sign In flow
         /// </summary>
         /// <param name="callback">Sign In flow callback.</param>
-        public void SignIn(Action<AN_GoogleSignInResult> callback) 
+        public void SignIn(Action<AN_GoogleSignInResult> callback)
         {
             AN_GMS_Lib.Auth.GoogleSignInClient_SignIn(this, callback);
         }
-        
+
         /// <summary>
         /// Returns the <see cref="AN_GoogleSignInAccount"/> information for the user who is signed in to this app. 
         /// If no user is signed in, try to sign the user in without displaying any user interface.
         /// </summary>
         /// <param name="callback">Sign In flow callback.</param>
-        public void SilentSignIn(Action<AN_GoogleSignInResult> callback) 
+        public void SilentSignIn(Action<AN_GoogleSignInResult> callback)
         {
             AN_GMS_Lib.Auth.GoogleSignInClient_SilentSignIn(this, callback);
         }
@@ -34,9 +34,9 @@ namespace SA.Android.GMS.Auth
         /// It also clears the account previously selected by the user and a future sign in attempt will require the user pick an account again.
         /// </summary>
         /// <param name="callback">Sign out flow callback.</param>
-        public void SignOut(Action callback) 
+        public void SignOut(Action callback)
         {
-            AN_GMS_Lib.Auth.GoogleSignInClient_SignOut(this, result => 
+            AN_GMS_Lib.Auth.GoogleSignInClient_SignOut(this, result =>
             {
                 callback.Invoke();
             });
@@ -49,9 +49,9 @@ namespace SA.Android.GMS.Auth
         /// If the user deletes their account, you must delete the information that your app obtained from the Google APIs.
         /// </summary>
         /// <param name="callback">Sign out flow callback.</param>
-        public void RevokeAccess(Action callback) 
+        public void RevokeAccess(Action callback)
         {
-            AN_GMS_Lib.Auth.GoogleSignInClient_RevokeAccess(this, result => 
+            AN_GMS_Lib.Auth.GoogleSignInClient_RevokeAccess(this, result =>
             {
                 callback.Invoke();
             });

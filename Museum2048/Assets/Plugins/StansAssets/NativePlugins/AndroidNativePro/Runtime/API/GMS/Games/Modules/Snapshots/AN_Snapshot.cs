@@ -14,7 +14,7 @@ namespace SA.Android.GMS.Games
         /// <summary>
         /// Retrieves the metadata for this snapshot.
         /// </summary>
-        public AN_SnapshotMetadata GetMetadata() 
+        public AN_SnapshotMetadata GetMetadata()
         {
             return AN_GMS_Lib.Snapshots.Snapshot_GetMetadata(this);
         }
@@ -29,7 +29,7 @@ namespace SA.Android.GMS.Games
         /// this method will throw an exception.
         /// </summary>
         /// <returns></returns>
-        public byte[] ReadFully() 
+        public byte[] ReadFully()
         {
             return AN_GMS_Lib.Snapshots.Snapshot_ReadFully(this);
         }
@@ -47,7 +47,7 @@ namespace SA.Android.GMS.Games
         /// this method will throw an exception.
         /// </summary>
         /// <param name="content">The data to write.</param>
-        public void WriteBytes(byte[] content) 
+        public void WriteBytes(byte[] content)
         {
             AN_GMS_Lib.Snapshots.Snapshot_WriteBytes(this, content);
         }

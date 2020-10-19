@@ -6,7 +6,7 @@ using SA.Android.Utilities;
 namespace SA.Android.Content
 {
     /// <summary>
-    /// An intent is an abstract description of an operation to be performed. 
+    /// An intent is an abstract description of an operation to be performed.
     /// It can be used with startActivity to launch an Activity, broadcastIntent to send it to any interested BroadcastReceiver components, and Context.startService(Intent) or Context.bindService(Intent, ServiceConnection, int) to communicate with a background Service.
     /// </summary>
     [Serializable]
@@ -14,23 +14,32 @@ namespace SA.Android.Content
     {
 #pragma warning disable 414
 
-        [SerializeField] string m_Action;
-        [SerializeField] string m_Type;
-        [SerializeField] string m_PackageName;
+        [SerializeField]
+        string m_Action;
+        [SerializeField]
+        string m_Type;
+        [SerializeField]
+        string m_PackageName;
 
-        [SerializeField] string m_Uri;
+        [SerializeField]
+        string m_Uri;
 
-        [SerializeField] bool m_IsChooser = false;
-        [SerializeField] AN_IntentChooserInfo m_ChooserInfo;
+        [SerializeField]
+        bool m_IsChooser = false;
+        [SerializeField]
+        AN_IntentChooserInfo m_ChooserInfo;
 
-        [SerializeField] List<int> m_Flags = new List<int>();
-        [SerializeField] List<string> m_Categories = new List<string>();
+        [SerializeField]
+        List<int> m_Flags = new List<int>();
+        [SerializeField]
+        List<string> m_Categories = new List<string>();
 
-        [SerializeField] List<string> m_ExtraKeys = new List<string>();
-        [SerializeField] List<AN_IntentExtraValue> m_ExtraValues = new List<AN_IntentExtraValue>();
+        [SerializeField]
+        List<string> m_ExtraKeys = new List<string>();
+        [SerializeField]
+        List<AN_IntentExtraValue> m_ExtraValues = new List<AN_IntentExtraValue>();
 
 #pragma warning restore 414
-
 
         //--------------------------------------
         // Initialization
@@ -45,7 +54,7 @@ namespace SA.Android.Content
         /// For plugin internal use only.
         /// This constructor will link C# Intent with Intent class that was created with Java native side
         /// </summary>
-        public AN_Intent(int hashCode) 
+        public AN_Intent(int hashCode)
         {
             m_HashCode = hashCode;
         }
@@ -54,41 +63,41 @@ namespace SA.Android.Content
         /// Copy constructor.
         /// </summary>
         /// <param name="o">AN_Intent</param>
-        public AN_Intent(AN_Intent o) 
+        public AN_Intent(AN_Intent o)
         {
             var json = JsonUtility.ToJson(o);
             JsonUtility.FromJsonOverwrite(json, this);
         }
 
         /// <summary>
-        /// Create an intent with a given action. 
-        /// All other fields (data, type, class) are null. 
-        /// Note that the action must be in a namespace because Intents are used globally in the system. 
-        /// For example the system VIEW action is <see cref="ACTION_VIEW"/>; 
+        /// Create an intent with a given action.
+        /// All other fields (data, type, class) are null.
+        /// Note that the action must be in a namespace because Intents are used globally in the system.
+        /// For example the system VIEW action is <see cref="ACTION_VIEW"/>;
         /// an application's custom action would be something like com.google.app.myapp.CUSTOM_ACTION.
         /// </summary>
         /// <param name="action">
         /// An action name, such as <see cref="ACTION_VIEW"/>. Application-specific actions should be prefixed with the vendor's package name.
         /// </param>
-        public AN_Intent(string action) 
+        public AN_Intent(string action)
         {
             SetAction(action);
         }
 
         /// <summary>
         /// Create an intent with a given action and for a given data url.
-        /// Note that the action must be in a namespace because Intents are used globally in the system 
-        /// for example the system VIEW action is <see cref="ACTION_VIEW"/> an application's custom action 
+        /// Note that the action must be in a namespace because Intents are used globally in the system
+        /// for example the system VIEW action is <see cref="ACTION_VIEW"/> an application's custom action
         /// would be something like com.google.app.myapp.CUSTOM_ACTION.
         ///
-        /// Note: scheme and host name matching in the Android framework is case-sensitive, 
-        /// unlike the formal RFC.As a result, you should always ensure that you write your Uri with these elements using lower case letters, 
+        /// Note: scheme and host name matching in the Android framework is case-sensitive,
+        /// unlike the formal RFC.As a result, you should always ensure that you write your Uri with these elements using lower case letters,
         /// and normalize any Uris you receive from outside of Android to ensure the scheme and host is lower case.
         /// </summary>
         /// <param name="action">
         /// An action name, such as <see cref="ACTION_VIEW"/>. Application-specific actions should be prefixed with the vendor's package name.
         /// </param>
-        public AN_Intent(string action, Uri uri) 
+        public AN_Intent(string action, Uri uri)
         {
             SetAction(action);
             m_Uri = uri.AbsoluteUri;
@@ -104,7 +113,7 @@ namespace SA.Android.Content
         /// <param name="action">
         ///  An action name, such as <see cref="ACTION_VIEW"/>. Application-specific actions should be prefixed with the vendor's package name.
         /// </param>
-        public void SetAction(string action) 
+        public void SetAction(string action)
         {
             m_Action = action;
         }
@@ -114,37 +123,37 @@ namespace SA.Android.Content
         /// When resolving an intent, only activities that provide all of the requested categories will be used.
         /// </summary>
         /// <param name="category">
-        /// The desired category. 
+        /// The desired category.
         /// This can be either one of the predefined Intent categories, or a custom category in your own namespace.
         /// </param>
-        public void AddCategory(string category) 
+        public void AddCategory(string category)
         {
             m_Categories.Add(category);
         }
 
         /// <summary>
-        /// (Usually optional) Set an explicit application package name that limits the components this Intent will resolve to. 
-        /// If left to the default value of null, all components in all applications will considered. 
+        /// (Usually optional) Set an explicit application package name that limits the components this Intent will resolve to.
+        /// If left to the default value of null, all components in all applications will considered.
         /// If non-null, the Intent can only match the components in the given application package.
         /// </summary>
         /// <param name="packageName">The name of the application package to handle the intent, or null to allow any application package.</param>
-        public void SetPackage(string packageName) 
+        public void SetPackage(string packageName)
         {
             m_PackageName = packageName;
         }
 
         /// <summary>
         /// Set an explicit MIME data type.
-        /// This is used to create intents that only specify a type and not data, 
+        /// This is used to create intents that only specify a type and not data,
         /// for example to indicate the type of data to return.
-        /// 
-        /// This method automatically clears any data that was previously set 
-        /// 
-        /// Note: MIME type matching in the Android framework is case-sensitive, unlike formal RFC MIME types. 
-        /// As a result, you should always write your MIME types with lower case letters, 
+        ///
+        /// This method automatically clears any data that was previously set
+        ///
+        /// Note: MIME type matching in the Android framework is case-sensitive, unlike formal RFC MIME types.
+        /// As a result, you should always write your MIME types with lower case letters,
         /// </summary>
-        /// <param name="type"></param>
-        public void SetType(string type) 
+        /// <param name="type"> MIME data type.</param>
+        public void SetType(string type)
         {
             m_Type = type;
         }
@@ -153,88 +162,84 @@ namespace SA.Android.Content
         /// Add additional flags to the intent (or with existing flags value).
         /// </summary>
         /// <param name="flags">
-        /// Value is either 0 or combination of 
-        /// FLAG_GRANT_READ_URI_PERMISSION, FLAG_GRANT_WRITE_URI_PERMISSION, FLAG_FROM_BACKGROUND, 
-        /// FLAG_DEBUG_LOG_RESOLUTION, FLAG_EXCLUDE_STOPPED_PACKAGES, FLAG_INCLUDE_STOPPED_PACKAGES, 
-        /// FLAG_GRANT_PERSISTABLE_URI_PERMISSION, FLAG_GRANT_PREFIX_URI_PERMISSION, FLAG_ACTIVITY_MATCH_EXTERNAL, 
-        /// FLAG_RECEIVER_REGISTERED_ONLY, FLAG_RECEIVER_REPLACE_PENDING, FLAG_RECEIVER_FOREGROUND, FLAG_RECEIVER_NO_ABORT, 
-        /// FLAG_ACTIVITY_CLEAR_TOP, FLAG_ACTIVITY_FORWARD_RESULT, FLAG_ACTIVITY_PREVIOUS_IS_TOP, FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS, 
-        /// FLAG_ACTIVITY_BROUGHT_TO_FRONT, FLAG_RECEIVER_VISIBLE_TO_INSTANT_APPS, FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY, 
-        /// FLAG_ACTIVITY_NEW_DOCUMENT, FLAG_ACTIVITY_NO_USER_ACTION, FLAG_ACTIVITY_REORDER_TO_FRONT, FLAG_ACTIVITY_NO_ANIMATION, 
+        /// Value is either 0 or combination of
+        /// FLAG_GRANT_READ_URI_PERMISSION, FLAG_GRANT_WRITE_URI_PERMISSION, FLAG_FROM_BACKGROUND,
+        /// FLAG_DEBUG_LOG_RESOLUTION, FLAG_EXCLUDE_STOPPED_PACKAGES, FLAG_INCLUDE_STOPPED_PACKAGES,
+        /// FLAG_GRANT_PERSISTABLE_URI_PERMISSION, FLAG_GRANT_PREFIX_URI_PERMISSION, FLAG_ACTIVITY_MATCH_EXTERNAL,
+        /// FLAG_RECEIVER_REGISTERED_ONLY, FLAG_RECEIVER_REPLACE_PENDING, FLAG_RECEIVER_FOREGROUND, FLAG_RECEIVER_NO_ABORT,
+        /// FLAG_ACTIVITY_CLEAR_TOP, FLAG_ACTIVITY_FORWARD_RESULT, FLAG_ACTIVITY_PREVIOUS_IS_TOP, FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS,
+        /// FLAG_ACTIVITY_BROUGHT_TO_FRONT, FLAG_RECEIVER_VISIBLE_TO_INSTANT_APPS, FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY,
+        /// FLAG_ACTIVITY_NEW_DOCUMENT, FLAG_ACTIVITY_NO_USER_ACTION, FLAG_ACTIVITY_REORDER_TO_FRONT, FLAG_ACTIVITY_NO_ANIMATION,
         /// FLAG_ACTIVITY_CLEAR_TASK, FLAG_ACTIVITY_TASK_ON_HOME, FLAG_ACTIVITY_RETAIN_IN_RECENTS or FLAG_ACTIVITY_LAUNCH_ADJACENT.
         /// </param>
-        public void AddFlags(int flags) 
+        public void AddFlags(int flags)
         {
             m_Flags.Add(flags);
         }
 
         /// <summary>
-        /// Add extended data to the intent. The name must include a package prefix, 
+        /// Add extended data to the intent. The name must include a package prefix,
         /// for example the app com.android.contacts would use names like "com.android.contacts.ShowAll".
         /// </summary>
         /// <param name="name"> The name of the extra data, with package prefix.</param>
         /// <param name="value">The string data value.</param>
-        public void PutExtra(string name, string value) 
+        public void PutExtra(string name, string value)
         {
             var extra = new AN_IntentExtraValue(AN_IntentExtraValueType.String);
             extra.SetValue(value);
 
             PutExtra(name, extra);
         }
-        
+
         /// <summary>
-        /// Add extended data to the intent. The name must include a package prefix, 
+        /// Add extended data to the intent. The name must include a package prefix,
         /// for example the app com.android.contacts would use names like "com.android.contacts.ShowAll".
         /// </summary>
         /// <param name="name"> The name of the extra data, with package prefix.</param>
-        /// <param name="value">The string data value.</param>
-        public void PutExtra(string name, params string[] values) 
+        /// <param name="values">The string data value.</param>
+        public void PutExtra(string name, params string[] values)
         {
             var extra = new AN_IntentExtraValue(AN_IntentExtraValueType.StringsArray);
-            foreach(var str in values) {
-                extra.AddValue(str);
-            }
+            foreach (var str in values) extra.AddValue(str);
 
             PutExtra(name, extra);
         }
-        
+
         /// <summary>
-        /// Add extended data to the intent. The name must include a package prefix, 
+        /// Add extended data to the intent. The name must include a package prefix,
         /// for example the app com.android.contacts would use names like "com.android.contacts.ShowAll".
         /// </summary>
         /// <param name="name"> The name of the extra data, with package prefix.</param>
         /// <param name="value">The Texture2D data value.</param>
-        public void PutExtra(string name, Texture2D value) 
+        public void PutExtra(string name, Texture2D value)
         {
             var extra = new AN_IntentExtraValue(AN_IntentExtraValueType.Texture);
-            extra.SetValue( new AN_Image(value).ToJson() );
+            extra.SetValue(new AN_Image(value).ToJson());
 
             PutExtra(name, extra);
         }
 
         /// <summary>
-        /// Add extended data to the intent. The name must include a package prefix, 
+        /// Add extended data to the intent. The name must include a package prefix,
         /// for example the app com.android.contacts would use names like "com.android.contacts.ShowAll".
         /// </summary>
         /// <param name="name"> The name of the extra data, with package prefix.</param>
-        /// <param name="values">The  List<Texture2D> data value.</param>
-        public void PutExtra(string name, params Texture2D[] values) 
+        /// <param name="values">The list of <see cref="Texture2D"/>.</param>
+        public void PutExtra(string name, params Texture2D[] values)
         {
             var extra = new AN_IntentExtraValue(AN_IntentExtraValueType.TexturesArray);
-            foreach (var tex in values) {
-                extra.AddValue(new AN_Image(tex).ToJson());
-            }
+            foreach (var tex in values) extra.AddValue(new AN_Image(tex).ToJson());
 
             PutExtra(name, extra);
         }
-        
+
         /// <summary>
-        /// Add extended data to the intent. The name must include a package prefix, 
+        /// Add extended data to the intent. The name must include a package prefix,
         /// for example the app com.android.contacts would use names like "com.android.contacts.ShowAll".
         /// </summary>
         /// <param name="name"> The name of the extra data, with package prefix.</param>
         /// <param name="uri">The Uri data value.</param>
-        public void PutExtra(string name, Uri uri) 
+        public void PutExtra(string name, Uri uri)
         {
             var extra = new AN_IntentExtraValue(AN_IntentExtraValueType.Uri);
             extra.SetValue(uri.AbsoluteUri);
@@ -243,18 +248,15 @@ namespace SA.Android.Content
         }
 
         /// <summary>
-        /// Add extended data to the intent. The name must include a package prefix, 
+        /// Add extended data to the intent. The name must include a package prefix,
         /// for example the app com.android.contacts would use names like "com.android.contacts.ShowAll".
         /// </summary>
         /// <param name="name"> The name of the extra data, with package prefix.</param>
-        /// <param name="values">The List<Uri> data value.</param>
-        public void PutExtra(string name, params Uri[] values) 
+        /// <param name="values">The List of <see cref="Uri"/>.</param>
+        public void PutExtra(string name, params Uri[] values)
         {
-
             var extra = new AN_IntentExtraValue(AN_IntentExtraValueType.Uri);
-            foreach (var uri in values) {
-                extra.AddValue(uri.AbsoluteUri);
-            }
+            foreach (var uri in values) extra.AddValue(uri.AbsoluteUri);
 
             PutExtra(name, extra);
         }
@@ -263,13 +265,13 @@ namespace SA.Android.Content
         // Private Methods
         //--------------------------------------
 
-        private void PutExtra(string name, AN_IntentExtraValue extra) 
+        void PutExtra(string name, AN_IntentExtraValue extra)
         {
             m_ExtraKeys.Add(name);
             m_ExtraValues.Add(extra);
         }
 
-        private void SetChooserParams(AN_IntentChooserInfo chooserInfo) 
+        void SetChooserParams(AN_IntentChooserInfo chooserInfo)
         {
             m_IsChooser = true;
             m_ChooserInfo = chooserInfo;
@@ -279,77 +281,82 @@ namespace SA.Android.Content
         // Public Static Methods
         //--------------------------------------
 
-
         /// <summary>
         /// Convenience function for creating a ACTION_CHOOSER Intent.
-        /// 
-        /// Builds a new ACTION_CHOOSER Intent that wraps the given target intent, 
-        /// also optionally supplying a title. 
-        /// If the target intent has specified FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_WRITE_URI_PERMISSION, 
+        ///
+        /// Builds a new ACTION_CHOOSER Intent that wraps the given target intent,
+        /// also optionally supplying a title.
+        /// If the target intent has specified FLAG_GRANT_READ_URI_PERMISSION or FLAG_GRANT_WRITE_URI_PERMISSION,
         /// then these flags will also be set in the returned chooser intent
         /// </summary>
         /// <param name="intent">The Intent that the user will be selecting an activity to perform.</param>
         /// <param name="title">Title that will be displayed in the chooser.</param>
         /// <param name="extraInitialIntents">Optional, additional activities to place a the front of the list of choices, when shown to the user with a ACTION_CHOOSER.</param>
         /// <returns></returns>
-        public static AN_Intent CreateChooser(AN_Intent intent, string title, params AN_Intent[] extraInitialIntents) 
+        public static AN_Intent CreateChooser(AN_Intent intent, string title, params AN_Intent[] extraInitialIntents)
         {
             var chooser = new AN_IntentChooserInfo(title);
-            foreach(var extraIntent in extraInitialIntents) {
-                chooser.AddExtraIntent(extraIntent);
-            }
+            foreach (var extraIntent in extraInitialIntents) chooser.AddExtraIntent(extraIntent);
 
             intent.SetChooserParams(chooser);
             return intent;
         }
-        
+
         //--------------------------------------
         // Private Classes
         //--------------------------------------
 
         [Serializable]
-        private class AN_IntentChooserInfo
+        class AN_IntentChooserInfo
         {
-			#pragma warning disable 414
-            [SerializeField] string m_title;
-            [SerializeField] List<string> m_extra_initial_intents = new List<string>();
-			#pragma warning restore 414
+#pragma warning disable 414
+            [SerializeField]
+            string m_title;
+            [SerializeField]
+            List<string> m_extra_initial_intents = new List<string>();
+#pragma warning restore 414
 
-            public AN_IntentChooserInfo(string title) {
+            public AN_IntentChooserInfo(string title)
+            {
                 m_title = title;
             }
 
-            public void AddExtraIntent(AN_Intent intent) {
+            public void AddExtraIntent(AN_Intent intent)
+            {
                 m_extra_initial_intents.Add(JsonUtility.ToJson(intent));
             }
         }
 
         [Serializable]
-        private class AN_IntentExtraValue
+        class AN_IntentExtraValue
         {
-			#pragma warning disable 414
-            [SerializeField] string m_value = string.Empty;
-            [SerializeField] List<string> m_values = new List<string>();
-            [SerializeField] AN_IntentExtraValueType m_type;
-			#pragma warning restore 414
+#pragma warning disable 414
+            [SerializeField]
+            string m_value = string.Empty;
+            [SerializeField]
+            List<string> m_values = new List<string>();
+            [SerializeField]
+            AN_IntentExtraValueType m_type;
+#pragma warning restore 414
 
-
-            public AN_IntentExtraValue(AN_IntentExtraValueType type) {
+            public AN_IntentExtraValue(AN_IntentExtraValueType type)
+            {
                 m_type = type;
             }
 
-            public void SetValue(string value) {
+            public void SetValue(string value)
+            {
                 m_value = value;
             }
 
-            public void AddValue(string value) {
+            public void AddValue(string value)
+            {
                 m_values.Add(value);
             }
         }
 
-        private enum AN_IntentExtraValueType
+        enum AN_IntentExtraValueType
         {
-          
             String = 0,
             StringsArray = 1,
             Texture = 2,
@@ -357,12 +364,9 @@ namespace SA.Android.Content
             Uri = 4
         }
 
-
-
         //--------------------------------------
         // Constants
         //--------------------------------------
-
 
         public const string ACTION_AIRPLANE_MODE_CHANGED = "android.intent.action.AIRPLANE_MODE";
         public const string ACTION_ALL_APPS = "android.intent.action.ALL_APPS";
@@ -389,7 +393,7 @@ namespace SA.Android.Content
         public const string ACTION_DATE_CHANGED = "android.intent.action.DATE_CHANGED";
         public const string ACTION_DEFAULT = "android.intent.action.VIEW";
         public const string ACTION_DELETE = "android.intent.action.DELETE";
-  
+
         public const string ACTION_DIAL = "android.intent.action.DIAL";
         public const string ACTION_DOCK_EVENT = "android.intent.action.DOCK_EVENT";
         public const string ACTION_DREAMING_STARTED = "android.intent.action.DREAMING_STARTED";
@@ -441,7 +445,7 @@ namespace SA.Android.Content
         public const string ACTION_PACKAGE_DATA_CLEARED = "android.intent.action.PACKAGE_DATA_CLEARED";
         public const string ACTION_PACKAGE_FIRST_LAUNCH = "android.intent.action.PACKAGE_FIRST_LAUNCH";
         public const string ACTION_PACKAGE_FULLY_REMOVED = "android.intent.action.PACKAGE_FULLY_REMOVED";
-    
+
         public const string ACTION_PACKAGE_INSTALL = "android.intent.action.PACKAGE_INSTALL";
         public const string ACTION_PACKAGE_NEEDS_VERIFICATION = "android.intent.action.PACKAGE_NEEDS_VERIFICATION";
         public const string ACTION_PACKAGE_REMOVED = "android.intent.action.PACKAGE_REMOVED";
@@ -476,8 +480,7 @@ namespace SA.Android.Content
         public const string ACTION_TIME_CHANGED = "android.intent.action.TIME_SET";
         public const string ACTION_TIME_TICK = "android.intent.action.TIME_TICK";
         public const string ACTION_UID_REMOVED = "android.intent.action.UID_REMOVED";
-  
-  
+
         public const string ACTION_UNINSTALL_PACKAGE = "android.intent.action.UNINSTALL_PACKAGE";
         public const string ACTION_USER_BACKGROUND = "android.intent.action.USER_BACKGROUND";
         public const string ACTION_USER_FOREGROUND = "android.intent.action.USER_FOREGROUND";
@@ -486,7 +489,7 @@ namespace SA.Android.Content
         public const string ACTION_USER_UNLOCKED = "android.intent.action.USER_UNLOCKED";
         public const string ACTION_VIEW = "android.intent.action.VIEW";
         public const string ACTION_VOICE_COMMAND = "android.intent.action.VOICE_COMMAND";
-   
+
         public const string ACTION_WEB_SEARCH = "android.intent.action.WEB_SEARCH";
         public const string CATEGORY_ALTERNATIVE = "android.intent.category.ALTERNATIVE";
         public const string CATEGORY_APP_BROWSER = "android.intent.category.APP_BROWSER";
@@ -526,7 +529,7 @@ namespace SA.Android.Content
         public const string CATEGORY_VR_HOME = "android.intent.category.VR_HOME";
         public const string EXTRA_ALARM_COUNT = "android.intent.extra.ALARM_COUNT";
         public const string EXTRA_ALLOW_MULTIPLE = "android.intent.extra.ALLOW_MULTIPLE";
-   
+
         public const string EXTRA_ALTERNATE_INTENTS = "android.intent.extra.ALTERNATE_INTENTS";
         public const string EXTRA_ASSIST_CONTEXT = "android.intent.extra.ASSIST_CONTEXT";
         public const string EXTRA_ASSIST_INPUT_DEVICE_ID = "android.intent.extra.ASSIST_INPUT_DEVICE_ID";
@@ -536,7 +539,7 @@ namespace SA.Android.Content
         public const string EXTRA_BCC = "android.intent.extra.BCC";
         public const string EXTRA_BUG_REPORT = "android.intent.extra.BUG_REPORT";
         public const string EXTRA_CC = "android.intent.extra.CC";
-   
+
         public const string EXTRA_CHANGED_COMPONENT_NAME_LIST = "android.intent.extra.changed_component_name_list";
         public const string EXTRA_CHANGED_PACKAGE_LIST = "android.intent.extra.changed_package_list";
         public const string EXTRA_CHANGED_UID_LIST = "android.intent.extra.changed_uid_list";
@@ -583,10 +586,7 @@ namespace SA.Android.Content
         public const string EXTRA_RESTRICTIONS_LIST = "android.intent.extra.restrictions_list";
         public const string EXTRA_RESULT_RECEIVER = "android.intent.extra.RESULT_RECEIVER";
         public const string EXTRA_RETURN_RESULT = "android.intent.extra.RETURN_RESULT";
-  
 
- 
-   
         public const string EXTRA_SHUTDOWN_USERSPACE_ONLY = "android.intent.extra.SHUTDOWN_USERSPACE_ONLY";
         public const string EXTRA_STREAM = "android.intent.extra.STREAM";
         public const string EXTRA_SUBJECT = "android.intent.extra.SUBJECT";
@@ -606,7 +606,7 @@ namespace SA.Android.Content
         public const int FLAG_ACTIVITY_BROUGHT_TO_FRONT = 4194304;
         public const int FLAG_ACTIVITY_CLEAR_TASK = 32768;
         public const int FLAG_ACTIVITY_CLEAR_TOP = 67108864;
-      
+
         public const int FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS = 8388608;
         public const int FLAG_ACTIVITY_FORWARD_RESULT = 33554432;
         public const int FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY = 1048576;
@@ -640,6 +640,5 @@ namespace SA.Android.Content
         public const int URI_ALLOW_UNSAFE = 4;
         public const int URI_ANDROID_APP_SCHEME = 2;
         public const int URI_INTENT_SCHEME = 1;
-
     }
 }

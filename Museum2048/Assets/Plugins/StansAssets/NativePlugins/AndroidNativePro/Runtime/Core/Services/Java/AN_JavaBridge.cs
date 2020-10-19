@@ -1,59 +1,52 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Foundation.Utility;
+using StansAssets.Foundation.Extensions;
 
 namespace SA.Android.Utilities
 {
-    public class AN_JavaBridge
+    class AN_JavaBridge
     {
-
-        private readonly Dictionary<string, AndroidJavaClass> m_classes = new Dictionary<string, AndroidJavaClass>();
-
+        readonly Dictionary<string, AndroidJavaClass> m_classes = new Dictionary<string, AndroidJavaClass>();
 
         //--------------------------------------
         //  Initialization
         //--------------------------------------
 
-        public AN_JavaBridge() {
+        public AN_JavaBridge()
+        {
             //Registering the message handler
             CallStatic("com.stansassets.core.utility.AN_UnityBridge", "RegisterMessageHandler");
         }
-
 
         //--------------------------------------
         //  Public Methods
         //--------------------------------------
 
-
-        public void CallStatic(string javaClassName, string methodName, params object[] args) {
-            var javaClass = GetJavaClass(javaClassName);
-
-            List<object> arguments = new List<object>();
-            foreach (object p in args) {
-                arguments.Add(ConvertObjectData(p));
-            }
-
-            LogCommunication(javaClassName, methodName, arguments);
-
-            if (Application.isEditor) { return; }
-            javaClass.CallStatic(methodName, arguments.ToArray());
-        }
-
-        public T CallStatic<T>(string javaClassName, string methodName, params object[] args) {
+        public void CallStatic(string javaClassName, string methodName, params object[] args)
+        {
             var javaClass = GetJavaClass(javaClassName);
 
             var arguments = new List<object>();
-            foreach (object p in args) 
-            {
-                arguments.Add(ConvertObjectData(p));
-            }
-
+            foreach (var p in args) arguments.Add(ConvertObjectData(p));
 
             LogCommunication(javaClassName, methodName, arguments);
 
-            if (Application.isEditor) { return default(T);}
+            if (Application.isEditor) return;
+            javaClass.CallStatic(methodName, arguments.ToArray());
+        }
+
+        public T CallStatic<T>(string javaClassName, string methodName, params object[] args)
+        {
+            var javaClass = GetJavaClass(javaClassName);
+
+            var arguments = new List<object>();
+            foreach (var p in args) arguments.Add(ConvertObjectData(p));
+
+            LogCommunication(javaClassName, methodName, arguments);
+
+            if (Application.isEditor) return default(T);
 
             if (IsPrimitive(typeof(T)))
             {
@@ -66,91 +59,82 @@ namespace SA.Android.Utilities
             AN_Logger.LogCommunication("[Sync] Sent to Unity ->: " + json);
             if (string.IsNullOrEmpty(json))
                 return default(T);
-            
+
             return JsonUtility.FromJson<T>(json);
         }
 
-        public R CallStaticWithCallback<R,T>(string javaClassName, string methodName, Action<T> callback, params object[] args) {
+        public R CallStaticWithCallback<R, T>(string javaClassName, string methodName, Action<T> callback, params object[] args)
+        {
             var javaClass = GetJavaClass(javaClassName);
             var arguments = new List<object>();
 
-            foreach (var p in args) {
-                arguments.Add(ConvertObjectData(p));
-            }
+            foreach (var p in args) arguments.Add(ConvertObjectData(p));
 
             LogCommunication(javaClassName, methodName, arguments);
             arguments.Add(AN_MonoJavaCallback.ActionToJavaObject(callback));
 
-            if (Application.isEditor) { return default(R); }
+            if (Application.isEditor) return default(R);
             return javaClass.CallStatic<R>(methodName, arguments.ToArray());
         }
 
-        public void CallStaticWithCallback<T>(string javaClassName, string methodName, Action<T> callback, params object[] args) {
+        public void CallStaticWithCallback<T>(string javaClassName, string methodName, Action<T> callback, params object[] args)
+        {
             var javaClass = GetJavaClass(javaClassName);
             var arguments = new List<object>();
-            foreach(var p in args) {
-                arguments.Add(ConvertObjectData(p));
-            }
+            foreach (var p in args) arguments.Add(ConvertObjectData(p));
 
             LogCommunication(javaClassName, methodName, arguments);
             arguments.Add(AN_MonoJavaCallback.ActionToJavaObject(callback));
 
-            if (Application.isEditor) { return; }
+            if (Application.isEditor) return;
             javaClass.CallStatic(methodName, arguments.ToArray());
         }
-
 
         //--------------------------------------
         //  Private Methods
         //--------------------------------------
 
-        private static string LogArguments(List<object> arguments) 
+        static string LogArguments(List<object> arguments)
         {
             var log = string.Empty;
-            foreach(var p in arguments) 
+            foreach (var p in arguments)
             {
                 if (p == null) continue;
-                
-                if(log != string.Empty) 
-                {
-                    log += " | ";
-                }
+
+                if (log != string.Empty) log += " | ";
                 log += p.ToString();
             }
 
             return log;
         }
 
-        public void LogCommunication(string className, string methodName, List<object> arguments) {
-
+        public void LogCommunication(string className, string methodName, List<object> arguments)
+        {
             var strippedClassName = SA_PathUtil.GetExtension(className);
             strippedClassName = strippedClassName.Substring(1);
             var argumentsLog = LogArguments(arguments);
-            if(!string.IsNullOrEmpty(argumentsLog)) {
-                argumentsLog = " :: " + argumentsLog;
-            }
+            if (!string.IsNullOrEmpty(argumentsLog)) argumentsLog = " :: " + argumentsLog;
             AN_Logger.LogCommunication("Sent to Java -> " + strippedClassName + "." + methodName + argumentsLog);
         }
 
-
-        public object ConvertObjectData(object param) {
-            if (param is string) {
+        public object ConvertObjectData(object param)
+        {
+            if (param is string)
                 return param.ToString();
-            } else if (param is Enum) {
+            else if (param is Enum)
                 return param.ToString();
-            } else if (param is bool) {
+            else if (param is bool)
                 return param;
-            } else if (param is int) {
+            else if (param is int)
                 return param;
-            } else if (param is long) {
+            else if (param is long)
                 return param;
-            } else if (param is float) {
+            else if (param is float)
                 return param;
-            } else if (param is Texture2D) {
-                return (param as Texture2D).ToBase64String();
-            } else {
+            else if (param is Texture2D)
+                return (param as Texture2D).ToBase64();
+            else
                 return JsonUtility.ToJson(param);
-            }
         }
 
         public bool IsPrimitive(Type type)
@@ -166,25 +150,18 @@ namespace SA.Android.Utilities
                 type == typeof(double) ||
                 type == typeof(bool) ||
                 type == typeof(string) ||
-                type == typeof(char) 
-
-                )
-            {
+                type == typeof(char)
+            )
                 return true;
-            }
 
             return false;
         }
-        
-        public AndroidJavaClass GetJavaClass(string javaClassName) {
 
-            if (Application.isEditor) {
-                return null;
-            }
+        public AndroidJavaClass GetJavaClass(string javaClassName)
+        {
+            if (Application.isEditor) return null;
 
-            if (m_classes.ContainsKey(javaClassName)) {
-                return m_classes[javaClassName];
-            }
+            if (m_classes.ContainsKey(javaClassName)) return m_classes[javaClassName];
 
             var javaClass = new AndroidJavaClass(javaClassName);
             m_classes.Add(javaClassName, javaClass);

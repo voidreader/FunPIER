@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace SA.Android.GMS.Common
 {
     /// <summary>
@@ -13,19 +12,17 @@ namespace SA.Android.GMS.Common
     [Serializable]
     public class AN_Scope
     {
-
 #pragma warning disable 414
-        [SerializeField] string m_scopeUri;
+        [SerializeField]
+        string m_scopeUri;
 #pragma warning restore 414
-
-
 
         /// <summary>
         /// Creates a new scope with the given URI.
         /// </summary>
-        public AN_Scope(string scopeUri) {
+        public AN_Scope(string scopeUri)
+        {
             m_scopeUri = scopeUri;
         }
-
     }
 }

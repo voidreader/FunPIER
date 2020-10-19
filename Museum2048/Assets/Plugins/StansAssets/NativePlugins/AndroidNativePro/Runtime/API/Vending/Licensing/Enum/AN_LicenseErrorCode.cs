@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace SA.Android.Vending.Licensing
 {
     public enum AN_LicenseErrorCode

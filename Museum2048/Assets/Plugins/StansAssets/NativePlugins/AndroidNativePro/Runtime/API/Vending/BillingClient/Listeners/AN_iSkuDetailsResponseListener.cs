@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using SA.Android.Vending.Billing;
 using SA.Foundation.Templates;
 
 namespace SA.Android.Vending.BillingClient

@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Android.Utilities;
 using SA.Android.GMS.Games;
 using SA.Android.GMS.Common;
 
 namespace SA.Android.GMS.Internal
 {
-    internal interface AN_iGMS_LeaderboardsAPI
+    interface AN_iGMS_LeaderboardsAPI
     {
-
-
         //--------------------------------------
         // AN_LeaderboardsClient
         //--------------------------------------
@@ -29,7 +26,6 @@ namespace SA.Android.GMS.Internal
         void SubmitScore(AN_LeaderboardsClient client, string leaderboardId, long score, string scoreTag);
         void SubmitScoreImmediate(AN_LeaderboardsClient client, string leaderboardId, long score, string scoreTag, Action<AN_LinkedObjectResult<AN_ScoreSubmissionData>> callback);
 
-
         //--------------------------------------
         // AN_LeaderboardScore
         //--------------------------------------
@@ -46,14 +42,11 @@ namespace SA.Android.GMS.Internal
         string LeaderboardScore_GetScoreTag(AN_LeaderboardScore score);
         long LeaderboardScore_GetTimestampMillis(AN_LeaderboardScore score);
 
-
-
         //--------------------------------------
         // AN_LeaderboardScoreBuffer
         //--------------------------------------
 
         AN_LeaderboardScoreBuffer.ScoresList LeaderboardScoreBuffer_GetScores(AN_LeaderboardScoreBuffer buffer);
-
 
         //--------------------------------------
         // AN_LeaderboardScores
@@ -62,18 +55,13 @@ namespace SA.Android.GMS.Internal
         AN_Leaderboard LeaderboardScores_GetLeaderboard(AN_LeaderboardScores scores);
         AN_LeaderboardScoreBuffer LeaderboardScores_GetScores(AN_LeaderboardScores scores);
 
-
-
         //--------------------------------------
         // AN_ScoreSubmissionData
         //--------------------------------------
 
-
         string ScoreSubmissionData_GetLeaderboardId(AN_ScoreSubmissionData data);
         string ScoreSubmissionData_GetPlayerId(AN_ScoreSubmissionData data);
         AN_ScoreSubmissionData.Result ScoreSubmissionData_GetScoreResult(AN_ScoreSubmissionData data, int timeSpan);
-
-
 
         //--------------------------------------
         // AN_ScoreSubmissionDataResult
@@ -83,6 +71,5 @@ namespace SA.Android.GMS.Internal
         bool ScoreSubmissionDataResult_GetNewBest(AN_ScoreSubmissionData.Result data);
         long ScoreSubmissionDataResult_GetRawScore(AN_ScoreSubmissionData.Result data);
         string ScoreSubmissionDataResult_GetScoreTag(AN_ScoreSubmissionData.Result data);
-
     }
 }

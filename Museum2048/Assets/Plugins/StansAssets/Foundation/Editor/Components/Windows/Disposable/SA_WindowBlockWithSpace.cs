@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-
 namespace SA.Foundation.Editor
 {
     [Serializable]
     public class SA_WindowBlockWithSpace : IDisposable
     {
-        private int m_indentLevel;
+        int m_indentLevel;
 
-        public SA_WindowBlockWithSpace(string header, int space = 15):this(new GUIContent(header), space)  { }
-        public SA_WindowBlockWithSpace(GUIContent header, int space = 15) {
-            if (header.image != null) {
-                header.text = " " + header.text;
-            }
+        public SA_WindowBlockWithSpace(string header, int space = 15)
+            : this(new GUIContent(header), space) { }
+
+        public SA_WindowBlockWithSpace(GUIContent header, int space = 15)
+        {
+            if (header.image != null) header.text = " " + header.text;
             GUILayout.Space(10);
-            using (new SA_GuiBeginHorizontal()) {
+            using (new SA_GuiBeginHorizontal())
+            {
                 GUILayout.Space(10);
                 EditorGUILayout.LabelField(header, SA_PluginSettingsWindowStyles.ServiceBlockHeader);
             }
+
             GUILayout.Space(5);
 
             m_indentLevel = EditorGUI.indentLevel;
@@ -30,8 +32,8 @@ namespace SA.Foundation.Editor
             EditorGUILayout.BeginVertical();
         }
 
-        public void Dispose() {
-
+        public void Dispose()
+        {
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndHorizontal();
 
@@ -44,6 +46,3 @@ namespace SA.Foundation.Editor
         }
     }
 }
-
-
-

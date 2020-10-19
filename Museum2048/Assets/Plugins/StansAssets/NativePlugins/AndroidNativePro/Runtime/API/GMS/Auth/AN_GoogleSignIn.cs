@@ -13,7 +13,7 @@ namespace SA.Android.GMS.Auth
         /// <param name="options">
         /// A <see cref="AN_GoogleSignInOptions"/> used to configure the GoogleSignInClient. 
         /// It is recommended to build out a DEFAULT_SIGN_IN.</param>
-        public static AN_GoogleSignInClient GetClient(AN_GoogleSignInOptions options) 
+        public static AN_GoogleSignInClient GetClient(AN_GoogleSignInOptions options)
         {
             return AN_GMS_Lib.Auth.GoogleSignIn_GetClient(options);
         }
@@ -25,7 +25,7 @@ namespace SA.Android.GMS.Auth
         /// <see cref="AN_GoogleSignInAccount"/> from last known successful sign-in. 
         /// If user has never signed in before or has signed out / revoked access, null is returned.
         /// </returns>
-        public static AN_GoogleSignInAccount GetLastSignedInAccount() 
+        public static AN_GoogleSignInAccount GetLastSignedInAccount()
         {
             return AN_GMS_Lib.Auth.GoogleSignIn_GetLastSignedInAccount();
         }

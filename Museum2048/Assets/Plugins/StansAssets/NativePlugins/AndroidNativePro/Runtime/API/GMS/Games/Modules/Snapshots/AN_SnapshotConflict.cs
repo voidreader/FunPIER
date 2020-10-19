@@ -9,10 +9,7 @@ namespace SA.Android.GMS.Games
         /// Returns the ID of the conflict to resolve,
         /// if any. Pass this to<see cref="AN_SnapshotsClient.ResolveConflict"/> when resolving the conflict.
         /// </summary>
-        public string ConflictId
-        {
-            get { return AN_GMS_Lib.Snapshots.SnapshotConflict_GetConflictId(this); }
-        }
+        public string ConflictId => AN_GMS_Lib.Snapshots.SnapshotConflict_GetConflictId(this);
 
         /// <summary>
         /// The server's version of the Snapshot that was opened.
@@ -22,7 +19,7 @@ namespace SA.Android.GMS.Games
         {
             return AN_GMS_Lib.Snapshots.SnapshotConflict_GetSnapshot(this).Data;
         }
-        
+
         /// <summary>
         /// The modified version of the Snapshot in the case of a conflict.
         /// </summary>

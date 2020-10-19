@@ -1,16 +1,16 @@
 using SA.Android.Manifest;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-    public class AN_ContactsResolver : AN_APIResolver
+    class AN_ContactsResolver : AN_APIResolver
     {
-        public override bool IsSettingsEnabled 
+        public override bool IsSettingsEnabled
         {
-            get { return AN_Settings.Instance.Contacts; }
-            set { AN_Settings.Instance.Contacts = value; }
+            get => AN_Settings.Instance.Contacts;
+            set => AN_Settings.Instance.Contacts = value;
         }
 
-        protected override void AppendBuildRequirements(AN_AndroidBuildRequirements buildRequirements) 
+        protected override void AppendBuildRequirements(AN_AndroidBuildRequirements buildRequirements)
         {
             buildRequirements.AddPermission(AMM_ManifestPermission.READ_CONTACTS);
         }

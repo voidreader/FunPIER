@@ -7,8 +7,5 @@ namespace SA.Android.OS
     /// A mapping from String keys to various Parcelable values.
     /// </summary>
     [Serializable]
-    public class AN_Bundle : AN_LinkedObject
-    {
-        
-    }
+    public class AN_Bundle : AN_LinkedObject { }
 }

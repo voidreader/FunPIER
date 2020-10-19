@@ -6,9 +6,9 @@
         "SA.Foundation.Editor",
         "SA.Foundation.ThirdParty.Editor",
         "SA.Android.Manifest",
-        "SA.Android.Manifest.Editor"
+        "SA.Android.Manifest.Editor",
+        "StansAssets.Foundation.Editor"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
@@ -18,5 +18,17 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [
+        {
+            "name": "com.google.firebase.analytics",
+            "expression": "1.0.0",
+            "define": "AN_FIREBASE_ANALYTICS"
+        },
+        {
+            "name": "com.google.firebase.messaging",
+            "expression": "1.0.0",
+            "define": "AN_FIREBASE_MESSAGING"
+        }
+    ],
+    "noEngineReferences": false
 }

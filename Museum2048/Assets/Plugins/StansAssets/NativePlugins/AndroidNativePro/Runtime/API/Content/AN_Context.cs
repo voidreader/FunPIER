@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-
 using SA.Android.Content.Pm;
 
 namespace SA.Android.Content
@@ -16,11 +14,9 @@ namespace SA.Android.Content
     [Serializable]
     public abstract class AN_Context
     {
-
         /// <summary>
         /// Return PackageManager instance to find global package information.
         /// </summary>
         public abstract AN_PackageManager GetPackageManager();
-
     }
 }

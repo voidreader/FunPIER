@@ -1,12 +1,8 @@
 namespace SA.Android.Utilities
 {
-    public static class AN_Java
+    static class AN_Java
     {
-        private static AN_JavaBridge s_bridge = null;
-        public static AN_JavaBridge Bridge 
-        {
-            get { return s_bridge ?? (s_bridge = new AN_JavaBridge()); }
-        }
-
+        static AN_JavaBridge s_Bridge;
+        public static AN_JavaBridge Bridge => s_Bridge ?? (s_Bridge = new AN_JavaBridge());
     }
 }

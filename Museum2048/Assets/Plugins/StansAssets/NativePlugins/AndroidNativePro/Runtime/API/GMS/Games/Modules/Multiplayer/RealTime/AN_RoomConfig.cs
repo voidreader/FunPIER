@@ -13,54 +13,48 @@ namespace SA.Android.GMS.Games.Multiplayer
         /// Builder class for <see cref="AN_RoomConfig"/>.
         /// </summary>
         [Serializable]
-        public class Builder 
+        public class Builder
         {
             [Serializable]
-            private class RoomUpdate
+            class RoomUpdate
             {
-                [SerializeField] private int m_StatusCode = 0;
-                [SerializeField] private int m_RoomHashCode = 0;
-                [SerializeField] private string m_RoomId = string.Empty;
-                
-                [SerializeField] public string m_ParticipantId = string.Empty;
-                [SerializeField] public List<string> m_ParticipantIds = null;
+                [SerializeField]
+                int m_StatusCode = 0;
+                [SerializeField]
+                int m_RoomHashCode = 0;
+                [SerializeField]
+                string m_RoomId = string.Empty;
 
-                public int StatusCode
-                {
-                    get { return m_StatusCode; }
-                }
-                public AN_Room Room
-                {
-                    get { return m_RoomHashCode != k_NullObjectHash ? new AN_Room(m_RoomHashCode) : null;; }
-                }
+                [SerializeField]
+                public string m_ParticipantId = string.Empty;
+                [SerializeField]
+                public List<string> m_ParticipantIds = null;
 
-                public string ParticipantId
-                {
-                    get { return m_ParticipantId; }
-                }
+                public int StatusCode => m_StatusCode;
 
-                public List<string> ParticipantIds
-                {
-                    get { return m_ParticipantIds; }
-                }
+                public AN_Room Room => m_RoomHashCode != k_NullObjectHash ? new AN_Room(m_RoomHashCode) : null;
 
-                public string RoomId
-                {
-                    get { return m_RoomId; }
-                }
+                public string ParticipantId => m_ParticipantId;
+
+                public List<string> ParticipantIds => m_ParticipantIds;
+
+                public string RoomId => m_RoomId;
             }
-            
-#pragma warning disable 414
-            [SerializeField] private List<string> m_PlayersToInvite = null;
-            [SerializeField] private string m_InvitationIdToAccept = string.Empty;
-            [SerializeField] private int m_Variant = AN_Room.ROOM_VARIANT_DEFAULT;
-            [SerializeField] private int m_BundleHashCode = 0;
-#pragma warning restore 414
-          
 
-            private AN_iOnRealTimeMessageReceivedListener m_RealTimeMessageReceivedListener;
-            private AN_iRoomStatusUpdateCallback m_RoomStatusUpdateCallback;
-            private AN_iRoomUpdateCallback m_RoomUpdateCallback;
+#pragma warning disable 414
+            [SerializeField]
+            List<string> m_PlayersToInvite = null;
+            [SerializeField]
+            string m_InvitationIdToAccept = string.Empty;
+            [SerializeField]
+            int m_Variant = AN_Room.ROOM_VARIANT_DEFAULT;
+            [SerializeField]
+            int m_BundleHashCode = 0;
+#pragma warning restore 414
+
+            AN_iOnRealTimeMessageReceivedListener m_RealTimeMessageReceivedListener;
+            AN_iRoomStatusUpdateCallback m_RoomStatusUpdateCallback;
+            AN_iRoomUpdateCallback m_RoomUpdateCallback;
 
             internal Builder(AN_iRoomUpdateCallback roomUpdateCallback)
             {
@@ -76,7 +70,7 @@ namespace SA.Android.GMS.Games.Multiplayer
             {
                 m_BundleHashCode = autoMatchCriteria.HashCode;
             }
-            
+
             /// <summary>
             /// Add one or more player IDs to invite to the room.
             /// This should be set only when calling <see cref="AN_RealTimeMultiplayerClient.Create"/>
@@ -136,7 +130,7 @@ namespace SA.Android.GMS.Games.Multiplayer
             {
                 m_Variant = variant;
             }
-            
+
             /// <summary>
             /// Builds a new <see cref="AN_RoomConfig"/> object.
             /// </summary>
@@ -149,22 +143,22 @@ namespace SA.Android.GMS.Games.Multiplayer
                 {
                     m_RoomUpdateCallback.OnRoomCreated(result.StatusCode, result.Room);
                 });
-       
+
                 javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                 {
                     m_RoomUpdateCallback.OnJoinedRoom(result.StatusCode, result.Room);
                 });
-                
+
                 javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                 {
                     m_RoomUpdateCallback.OnLeftRoom(result.StatusCode, result.RoomId);
                 });
-                
+
                 javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                 {
                     m_RoomUpdateCallback.OnRoomConnected(result.StatusCode, result.Room);
                 });
-       
+
                 var builderHashCode = javaRequestBuilder.Invoke<int>();
 
                 //SetRealTimeMessageReceivedListener
@@ -172,12 +166,12 @@ namespace SA.Android.GMS.Games.Multiplayer
                 {
                     javaRequestBuilder = new AN_JavaRequestBuilder(k_RoomConfigJavaClass, "SetRealTimeMessageReceivedListener");
                     javaRequestBuilder.AddArgument(builderHashCode);
-                    
+
                     javaRequestBuilder.AddCallback<AN_RealTimeMessage>(message =>
                     {
                         m_RealTimeMessageReceivedListener.OnRealTimeMessageReceived(message);
                     });
-                    
+
                     javaRequestBuilder.Invoke();
                 }
 
@@ -186,83 +180,83 @@ namespace SA.Android.GMS.Games.Multiplayer
                 {
                     javaRequestBuilder = new AN_JavaRequestBuilder(k_RoomConfigJavaClass, "RoomStatusUpdateCallback");
                     javaRequestBuilder.AddArgument(builderHashCode);
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnRoomConnecting(result.Room);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnRoomAutoMatching(result.Room);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnPeerInvitedToRoom(result.Room, result.ParticipantIds);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnPeerDeclined(result.Room, result.ParticipantIds);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnPeerJoined(result.Room, result.ParticipantIds);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnPeerLeft(result.Room, result.ParticipantIds);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnConnectedToRoom(result.Room);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnDisconnectedFromRoom(result.Room);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnPeersConnected(result.Room, result.ParticipantIds);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnPeersDisconnected(result.Room, result.ParticipantIds);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnP2PConnected(result.ParticipantId);
                     });
-                    
+
                     javaRequestBuilder.AddCallback<RoomUpdate>(result =>
                     {
                         m_RoomStatusUpdateCallback.OnP2PDisconnected(result.ParticipantId);
                     });
-                    
+
                     javaRequestBuilder.Invoke();
                 }
-                
+
                 //Builder Data
                 javaRequestBuilder = new AN_JavaRequestBuilder(k_RoomConfigJavaClass, "BuildRoomConfig");
                 javaRequestBuilder.AddArgument(builderHashCode);
                 javaRequestBuilder.AddArgument(JsonUtility.ToJson(this));
-               
+
                 var configHashCode = javaRequestBuilder.Invoke<int>();
-                
+
                 return new AN_RoomConfig(configHashCode);
             }
         }
 
-        private const string k_RoomConfigJavaClass = "com.stansassets.gms.games.multiplayer.realtime.AN_RoomConfig";
-       
+        const string k_RoomConfigJavaClass = "com.stansassets.gms.games.multiplayer.realtime.AN_RoomConfig";
+
         /// <summary>
         /// Creates a builder for assembling a <see cref="AN_RoomConfig"/>.
         /// The provided listener is required, and must not be null.
@@ -297,7 +291,8 @@ namespace SA.Android.GMS.Games.Multiplayer
 
             return JsonUtility.FromJson<AN_Bundle>(json);
         }
-        
-        private AN_RoomConfig(int hasCode):base(hasCode) {}
+
+        AN_RoomConfig(int hasCode)
+            : base(hasCode) { }
     }
 }

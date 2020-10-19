@@ -1,5 +1,4 @@
 using System;
-using SA.Android.Vending.Billing;
 using UnityEngine;
 
 namespace SA.Android.Vending.BillingClient
@@ -13,31 +12,31 @@ namespace SA.Android.Vending.BillingClient
             /// Unknown subscription upgrade / downgrade policy.
             /// </summary>
             Unknown = 0,
-            
+
             /// <summary>
             /// Replacement takes effect immediately,
             /// and the remaining time will be prorated and credited to the user. This is the current default behavior.
             /// </summary>
             ImmediateAndChangeProratedPrice = 1,
-            
+
             /// <summary>
             /// Replacement takes effect immediately, and the billing cycle remains the same.
             /// The price for the remaining period will be charged. This option is only available for subscription upgrade.
             /// </summary>
             ImmediateWithTimeProration = 2,
-            
+
             /// <summary>
             /// Replacement takes effect immediately, and the new price will be charged on next recurrence time. The billing cycle stays the same.
             /// </summary>
             ImmediateWithoutProration = 3,
-            
+
             /// <summary>
             /// Replacement takes effect when the old plan expires,
             /// and the new price will be charged at the same time.
             /// </summary>
             Deferred = 4
         }
-        
+
         /// <summary>
         /// Helps to construct <see cref="AN_BillingFlowParams"/> that are used to initiate a purchase flow.
         /// </summary>
@@ -45,23 +44,29 @@ namespace SA.Android.Vending.BillingClient
         public class Builder
         {
 #pragma warning disable 414
-            [SerializeField] private string m_OldSku = string.Empty;
-            [SerializeField] private string m_AccountId = string.Empty;
-            [SerializeField] private string m_DeveloperId = string.Empty;
-            [SerializeField] private int m_ReplaceSkusProrationMode = 0;
-            [SerializeField] private bool m_IsVrPurchaseFlow = false;
-            [SerializeField] private int m_SkuNativeHashId = 0;
+            [SerializeField]
+            string m_OldSku = string.Empty;
+            [SerializeField]
+            string m_AccountId = string.Empty;
+            [SerializeField]
+            string m_DeveloperId = string.Empty;
+            [SerializeField]
+            int m_ReplaceSkusProrationMode = 0;
+            [SerializeField]
+            bool m_IsVrPurchaseFlow = false;
+            [SerializeField]
+            int m_SkuNativeHashId = 0;
 #pragma warning restore 414
-            
-            internal Builder() { } 
-            
+
+            internal Builder() { }
+
             /// <summary>
             /// Returns <see cref="AN_BillingFlowParams"/> reference to initiate a purchase flow.
             /// </summary>
             /// <returns><see cref="AN_BillingFlowParams"/> reference to initiate a purchase flow.</returns>
             public AN_BillingFlowParams Build()
             {
-               return  new AN_BillingFlowParams(this);
+                return new AN_BillingFlowParams(this);
             }
 
             /// <summary>
@@ -73,7 +78,7 @@ namespace SA.Android.Vending.BillingClient
             /// In addition, this field should not contain the user's ID in cleartext.
             /// We recommend that you use a one-way hash to generate a string from the user's ID
             /// and store the hashed string in this field.
-            /// 
+            ///
             /// Optional:
             ///  * To buy in-app item
             ///  * To create a new subscription
@@ -137,12 +142,12 @@ namespace SA.Android.Vending.BillingClient
             /// <param name="replaceSkusProrationMode">Proration Mode.</param>
             public void SetReplaceSkusProrationMode(ProrationMode replaceSkusProrationMode)
             {
-                m_ReplaceSkusProrationMode = (int) replaceSkusProrationMode;
+                m_ReplaceSkusProrationMode = (int)replaceSkusProrationMode;
             }
 
             /// <summary>
             /// Specify the <see cref="AN_SkuDetails"/> SkuDetails of the item being purchase.
-            /// 
+            ///
             /// Mandatory:
             ///  * To buy in-app item
             ///  * To create a new subscription
@@ -167,14 +172,14 @@ namespace SA.Android.Vending.BillingClient
             {
                 m_IsVrPurchaseFlow = isVrPurchaseFlow;
             }
-             
         }
-        
+
 #pragma warning disable 414
-        [SerializeField] private Builder m_Builder;
+        [SerializeField]
+        Builder m_Builder;
 #pragma warning restore 414
 
-        private AN_BillingFlowParams(Builder builder)
+        AN_BillingFlowParams(Builder builder)
         {
             m_Builder = builder;
         }
@@ -187,6 +192,5 @@ namespace SA.Android.Vending.BillingClient
         {
             return new Builder();
         }
-
     }
 }

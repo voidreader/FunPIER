@@ -5,12 +5,9 @@ using System.IO;
 
 namespace SA.Foundation.Utility
 {
-
-    public static class SA_PathUtil 
+    public static class SA_PathUtil
     {
         public const string FOLDER_SEPARATOR = "/";
-
-
 
         /// <summary>
         /// Use this method to make sure given path is a correct 
@@ -19,51 +16,46 @@ namespace SA.Foundation.Utility
         /// if any issue is found
         /// </summary>
         /// <param name="path"> Filesystem project folder relative path.</param> 
-        public static string FixRelativePath(string path) {
+        public static string FixRelativePath(string path)
+        {
+            if (path.StartsWith(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture)) path = path.Remove(0, 1);
 
-            if (path.StartsWith(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture)) {
-                path = path.Remove(0, 1);
-            }
-
-
-            if (path.EndsWith(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture)) {
-                path = path.Substring(0, path.Length - 1);
-            }
+            if (path.EndsWith(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture)) path = path.Substring(0, path.Length - 1);
 
             return path;
         }
-
 
         /// <summary>
         /// Convert's an application file path to absolute system path.
         /// For Editor application relative path is the root of an Asset folder.
         /// </summary>
         /// <param name="relativePath"> Filesystem project folder relative path.</param> 
-        public static string ConvertRelativeToAbsolutePath(string relativePath) {
-
+        public static string ConvertRelativeToAbsolutePath(string relativePath)
+        {
             relativePath = FixRelativePath(relativePath);
 
             string dataPath;
-            if(Application.isEditor) {
+            if (Application.isEditor)
+            {
                 dataPath = Application.dataPath;
 
                 //Removing the "Assets" folder from path
                 dataPath = dataPath.Substring(0, dataPath.Length - 7);
-            } else {
+            }
+            else
+            {
                 dataPath = Application.persistentDataPath;
             }
-          
-
 
             return dataPath + FOLDER_SEPARATOR + relativePath;
         }
-
 
         /// <summary>
         /// Determines whether the given path refers to an existing directory on disk
         /// </summary>
         /// <param name="path"> Filesystem project folder relative path.</param> 
-        public static bool IsDirectoryExists(string path) {
+        public static bool IsDirectoryExists(string path)
+        {
             return Directory.Exists(ConvertRelativeToAbsolutePath(path));
         }
 
@@ -71,7 +63,8 @@ namespace SA.Foundation.Utility
         /// Determines whether the given path refers to an existing directory on disk
         /// </summary>
         /// <param name="path"> Filesystem project folder relative path.</param> 
-        public static bool IsFileExists(string path) {
+        public static bool IsFileExists(string path)
+        {
             return File.Exists(ConvertRelativeToAbsolutePath(path));
         }
 
@@ -80,27 +73,28 @@ namespace SA.Foundation.Utility
         /// </summary>
         /// <param name="filePath">Filesystem project folder relative file path.</param>
         /// <returns></returns>
-        public static string GetExtension(string filePath) {
+        public static string GetExtension(string filePath)
+        {
             return Path.GetExtension(ConvertRelativeToAbsolutePath(filePath));
         }
-
 
         /// <summary>
         /// Returns the file name and extension of the specified path string.
         /// </summary>
         /// <param name="filePath">Filesystem project folder relative file path.</param>
         /// <returns></returns>
-        public static string GetFileName(string filePath) {
+        public static string GetFileName(string filePath)
+        {
             return Path.GetFileName(ConvertRelativeToAbsolutePath(filePath));
         }
-
 
         /// <summary>
         /// Returns the file name without extension of the specified path string.
         /// </summary>
         /// <param name="filePath">Filesystem project folder relative file path.</param>
         /// <returns></returns>
-        public static string GetFileNameWithoutExtension(string filePath) {
+        public static string GetFileNameWithoutExtension(string filePath)
+        {
             return Path.GetFileNameWithoutExtension(ConvertRelativeToAbsolutePath(filePath));
         }
 
@@ -109,19 +103,20 @@ namespace SA.Foundation.Utility
         /// Returns Empty if path does not contain directory information.
         /// </summary>
         /// <param name="path">The path of a file or directory.</param>
-        public static string GetDirectoryPath(string path) {
+        public static string GetDirectoryPath(string path)
+        {
             return Path.GetDirectoryName(path).Replace("\\", "/");
         }
 
-        public static List<string> GetDirectoriesOutOfPath(string path) {
-
-            List<string> directories = new List<string>();
-            string parentFolder = string.Empty;
-            int separatorIndex = path.IndexOf(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture);
-            while (separatorIndex != -1) {
-
-                int offset = separatorIndex + 1;
-                string testedFolder = string.Concat(parentFolder, path.Substring(0, offset));
+        public static List<string> GetDirectoriesOutOfPath(string path)
+        {
+            var directories = new List<string>();
+            var parentFolder = string.Empty;
+            var separatorIndex = path.IndexOf(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture);
+            while (separatorIndex != -1)
+            {
+                var offset = separatorIndex + 1;
+                var testedFolder = string.Concat(parentFolder, path.Substring(0, offset));
                 directories.Add(testedFolder.Substring(0, testedFolder.Length - 1));
 
                 path = path.Substring(offset, path.Length - offset);
@@ -132,25 +127,25 @@ namespace SA.Foundation.Utility
             return directories;
         }
 
-
         /// <summary>
         /// Methods return's name of the last directory in a path
         /// for example: from /x/y/z/ -> z will be result 
         /// </summary>
-        public static string GetPathDirectoryName(string folderPath) {
-
+        public static string GetPathDirectoryName(string folderPath)
+        {
             folderPath = FixRelativePath(folderPath);
 
-            int separatorIndex = folderPath.LastIndexOf(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture);
+            var separatorIndex = folderPath.LastIndexOf(FOLDER_SEPARATOR, System.StringComparison.CurrentCulture);
 
-            if (separatorIndex == -1) {
+            if (separatorIndex == -1)
+            {
                 return folderPath;
-            } else {
-                int offset = separatorIndex + 1;
+            }
+            else
+            {
+                var offset = separatorIndex + 1;
                 return folderPath.Substring(offset, folderPath.Length - offset);
             }
         }
-
-
     }
 }

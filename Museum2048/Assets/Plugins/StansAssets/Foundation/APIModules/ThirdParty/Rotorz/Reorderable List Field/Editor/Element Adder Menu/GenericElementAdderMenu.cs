@@ -4,35 +4,34 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Rotorz.ReorderableList {
+namespace Rotorz.ReorderableList
+{
+    sealed class GenericElementAdderMenu : IElementAdderMenu
+    {
+        readonly GenericMenu _innerMenu = new GenericMenu();
 
-	internal sealed class GenericElementAdderMenu : IElementAdderMenu {
+        public GenericElementAdderMenu() { }
 
-		private GenericMenu _innerMenu = new GenericMenu();
+        public void AddItem(GUIContent content, GenericMenu.MenuFunction handler)
+        {
+            _innerMenu.AddItem(content, false, handler);
+        }
 
-		public GenericElementAdderMenu() {
-		}
+        public void AddDisabledItem(GUIContent content)
+        {
+            _innerMenu.AddDisabledItem(content);
+        }
 
-		public void AddItem(GUIContent content, GenericMenu.MenuFunction handler) {
-			_innerMenu.AddItem(content, false, handler);
-		}
+        public void AddSeparator(string path = "")
+        {
+            _innerMenu.AddSeparator(path);
+        }
 
-		public void AddDisabledItem(GUIContent content) {
-			_innerMenu.AddDisabledItem(content);
-		}
+        public bool IsEmpty => _innerMenu.GetItemCount() == 0;
 
-		public void AddSeparator(string path = "") {
-			_innerMenu.AddSeparator(path);
-		}
-
-		public bool IsEmpty {
-			get { return _innerMenu.GetItemCount() == 0; }
-		}
-
-		public void DropDown(Rect position) {
-			_innerMenu.DropDown(position);
-		}
-
-	}
-
+        public void DropDown(Rect position)
+        {
+            _innerMenu.DropDown(position);
+        }
+    }
 }

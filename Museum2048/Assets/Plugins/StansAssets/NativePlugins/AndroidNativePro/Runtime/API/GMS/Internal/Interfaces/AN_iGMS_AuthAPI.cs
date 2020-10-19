@@ -1,26 +1,20 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-
 using SA.Android.GMS.Auth;
 using SA.Android.GMS.Common;
-
 using SA.Foundation.Templates;
-
 
 namespace SA.Android.GMS.Internal
 {
-    internal interface AN_iGMS_AuthAPI
+    interface AN_iGMS_AuthAPI
     {
-
         //--------------------------------------
         // AN_GoogleApiAvailability
         //--------------------------------------
 
         int IsGooglePlayServicesAvailable();
         void MakeGooglePlayServicesAvailable(Action<SA_Result> callback);
-
 
         //--------------------------------------
         // AN_GoogleSignInAccount
@@ -34,14 +28,12 @@ namespace SA.Android.GMS.Internal
         string GoogleSignInAccount_GetServerAuthCode(AN_GoogleSignInAccount account);
         string GoogleSignInAccount_GetIdToken(AN_GoogleSignInAccount account);
 
-
         //--------------------------------------
         // AN_GoogleSignIn
         //--------------------------------------
 
         AN_GoogleSignInClient GoogleSignIn_GetClient(AN_GoogleSignInOptions gso);
         AN_GoogleSignInAccount GoogleSignIn_GetLastSignedInAccount();
-
 
         //--------------------------------------
         // AN_GoogleSignInClient
@@ -51,8 +43,6 @@ namespace SA.Android.GMS.Internal
         void GoogleSignInClient_SilentSignIn(AN_GoogleSignInClient client, Action<AN_GoogleSignInResult> callback);
         void GoogleSignInClient_SignOut(AN_GoogleSignInClient client, Action<SA_Result> callback);
         void GoogleSignInClient_RevokeAccess(AN_GoogleSignInClient client, Action<SA_Result> callback);
-
-
 
         //--------------------------------------
         // AN_GoogleSignInOptionsBuilder

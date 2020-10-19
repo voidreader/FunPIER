@@ -3,50 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using SA.Foundation.Editor;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-
-    public class AN_CameraAndGalleryFeaturesUI : AN_ServiceSettingsUI
+    class AN_CameraAndGalleryFeaturesUI : AN_ServiceSettingsUI
     {
-
-        public override void OnAwake() {
+        public override void OnAwake()
+        {
             base.OnAwake();
 
-            AddFeatureUrl("Getting Started", "https://unionassets.com/android-native-pro/getting-started-696");
-            AddFeatureUrl("Save to Gallery", "https://unionassets.com/android-native-pro/save-to-gallery-697");
-            AddFeatureUrl("Get an Image", "https://unionassets.com/android-native-pro/get-image-or-video-698");
-            AddFeatureUrl("Get a Video", "https://unionassets.com/android-native-pro/get-image-or-video-698");
-            AddFeatureUrl("Capture an Image ", "https://unionassets.com/android-native-pro/capture-image-from-camera-699#camera-image-capture");
-            AddFeatureUrl("Capture a Video ", "https://unionassets.com/android-native-pro/capture-image-from-camera-699#camera-video-capture");
-
+            AddFeatureUrl("Getting Started", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Getting-Started-(Camera-&-Gallery)");
+            AddFeatureUrl("Save to Gallery", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Save-to-Gallery");
+            AddFeatureUrl("Get an Image", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Get-Image-or-Video");
+            AddFeatureUrl("Get a Video", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Get-Image-or-Video");
+            AddFeatureUrl("Capture an Image ", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Camera-API#camera-image-capture");
+            AddFeatureUrl("Capture a Video ", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Camera-API#camera-video-capture");
         }
 
-        public override string Title {
-            get {
-                return "Camera & Gallery";
-            }
-        }
+        public override string Title => "Camera & Gallery";
 
-        public override string Description {
-            get {
-                return "A simplifayed way to get images or video from camera or gallery.";
-            }
-        }
+        public override string Description => "A simplifayed way to get images or video from camera or gallery.";
 
+        protected override Texture2D Icon => AN_Skin.GetIcon("android_gallery.png");
 
-        protected override Texture2D Icon {
-            get {
-                return AN_Skin.GetIcon("android_gallery.png");
-            }
-        }
+        public override SA_iAPIResolver Resolver => AN_Preprocessor.GetResolver<AN_CameraAndGalleryResolver>();
 
-        public override SA_iAPIResolver Resolver {
-            get {
-                return AN_Preprocessor.GetResolver<AN_CameraAndGalleryResolver>();
-            }
-        }
-
-        protected override void OnServiceUI() {
+        protected override void OnServiceUI()
+        {
             // throw new System.NotImplementedException();
         }
     }

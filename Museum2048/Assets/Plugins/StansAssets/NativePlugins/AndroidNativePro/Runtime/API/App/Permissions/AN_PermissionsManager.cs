@@ -1,17 +1,16 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Android.Utilities;
 using SA.Android.Manifest;
 using SA.Android.Content.Pm;
 using SA.Android.OS;
 
-namespace SA.Android.App {
-    
-    public static class AN_PermissionsManager 
+namespace SA.Android.App
+{
+    public static class AN_PermissionsManager
     {
-        private static string ANDROID_CLASS = "com.stansassets.android.app.permissions.AN_PermissionsManager";
+        static readonly string ANDROID_CLASS = "com.stansassets.android.app.permissions.AN_PermissionsManager";
 
         //--------------------------------------
         // Public Methods
@@ -21,18 +20,13 @@ namespace SA.Android.App {
         /// Determine whether you have been granted a particular permission.
         /// </summary>
         /// <param name="permission">The name of the permission being checked.</param>
-        public static AN_PackageManager.PermissionState CheckSelfPermission(AMM_ManifestPermission permission) 
+        public static AN_PackageManager.PermissionState CheckSelfPermission(AMM_ManifestPermission permission)
         {
+            if (Application.isEditor || AN_Build.VERSION.SDK_INT < AN_Build.VERSION_CODES.M) return AN_PackageManager.PermissionState.Granted;
 
-            if(Application.isEditor || AN_Build.VERSION.SDK_INT < AN_Build.VERSION_CODES.M) {
-                return AN_PackageManager.PermissionState.Granted;
-            }
-
-            var val =  AN_Java.Bridge.CallStatic<int>(ANDROID_CLASS, "CheckSelfPermission", permission.GetFullName());
+            var val = AN_Java.Bridge.CallStatic<int>(ANDROID_CLASS, "CheckSelfPermission", permission.GetFullName());
             return (AN_PackageManager.PermissionState)val;
         }
-
-
 
         /// <summary>
         /// Gets whether you should show UI with rationale for requesting a permission. 
@@ -45,21 +39,14 @@ namespace SA.Android.App {
         /// In this case you may choose to show UI with rationale of requesting this permission.
         /// </summary>
         /// <param name="permission">A permission your app wants to request.</param>
-        public static bool ShouldShowRequestPermissionRationale(AMM_ManifestPermission permission) 
+        public static bool ShouldShowRequestPermissionRationale(AMM_ManifestPermission permission)
         {
-            if (Application.isEditor) 
-            {
-                return true;
-            }
-            
-            if(AN_Build.VERSION.SDK_INT < AN_Build.VERSION_CODES.M) 
-            {
-                return false;
-            }
+            if (Application.isEditor) return true;
+
+            if (AN_Build.VERSION.SDK_INT < AN_Build.VERSION_CODES.M) return false;
 
             return AN_Java.Bridge.CallStatic<bool>(ANDROID_CLASS, "ShouldShowRequestPermissionRationale", permission.GetFullName());
         }
-
 
         /// <summary>
         /// Requests permissions to be granted to this application. 
@@ -78,11 +65,10 @@ namespace SA.Android.App {
         /// </summary>
         /// <param name="permission">The requested permission. Must me non-null and not empty.</param>
         /// <param name="callback">Results of permission requests will be delivered vai this callback </param>
-        public static void RequestPermission(AMM_ManifestPermission permission, Action<AN_PermissionsRequestResult> callback) 
+        public static void RequestPermission(AMM_ManifestPermission permission, Action<AN_PermissionsRequestResult> callback)
         {
             RequestPermissions(new[] { permission }, callback);
         }
-
 
         /// <summary>
         /// Requests permissions to be granted to this application. 
@@ -101,12 +87,12 @@ namespace SA.Android.App {
         /// </summary>
         /// <param name="permissions">The requested permissions. Must me non-null and not empty.</param>
         /// <param name="callback">Results of permission requests will be delivered vai this callback </param>
-        public static void RequestPermissions(AMM_ManifestPermission[] permissions, Action<AN_PermissionsRequestResult> callback) 
+        public static void RequestPermissions(AMM_ManifestPermission[] permissions, Action<AN_PermissionsRequestResult> callback)
         {
-            if (Application.isEditor) 
+            if (Application.isEditor)
             {
                 var result = new AN_PermissionsRequestResult();
-                foreach (AMM_ManifestPermission perm in permissions) 
+                foreach (var perm in permissions)
                 {
                     var response = new AN_PermissionsRequestResponce(perm, AN_PackageManager.PermissionState.Granted);
                     result.AddResponce(response);
@@ -117,7 +103,7 @@ namespace SA.Android.App {
             }
 
             var request = new AN_PermissionsRequest(permissions);
-            AN_Java.Bridge.CallStaticWithCallback(ANDROID_CLASS,"RequestPermissions", callback, JsonUtility.ToJson(request));
+            AN_Java.Bridge.CallStaticWithCallback(ANDROID_CLASS, "RequestPermissions", callback, JsonUtility.ToJson(request));
         }
 
         //--------------------------------------
@@ -125,20 +111,16 @@ namespace SA.Android.App {
         //--------------------------------------
 
         [Serializable]
-        private class AN_PermissionsRequest
+        class AN_PermissionsRequest
         {
-            [SerializeField] List<string> m_permissions;
+            [SerializeField]
+            List<string> m_permissions;
 
-            public AN_PermissionsRequest(IEnumerable<AMM_ManifestPermission> permissions) 
+            public AN_PermissionsRequest(IEnumerable<AMM_ManifestPermission> permissions)
             {
                 m_permissions = new List<string>();
-                foreach (var perm in permissions) 
-                {
-                    m_permissions.Add(perm.GetFullName());
-                }
+                foreach (var perm in permissions) m_permissions.Add(perm.GetFullName());
             }
         }
-
-
     }
 }

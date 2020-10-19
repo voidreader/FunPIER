@@ -4,24 +4,21 @@ using UnityEngine;
 
 namespace SA.Android
 {
-	internal static class AN_RuntimeConfig  {
-	
-		private static AndroidJavaClass s_ImageWrapper; 
-		private static bool s_IsInitialized = false;
-		
-		[RuntimeInitializeOnLoadMethod]
-		private static void Init() {
-			if (Application.platform != RuntimePlatform.Android) { return; }
+    static class AN_RuntimeConfig
+    {
+        static AndroidJavaClass s_ImageWrapper;
+        static bool s_IsInitialized = false;
 
-			if (s_IsInitialized)
-			{
-				return;
-			}
+        [RuntimeInitializeOnLoadMethod]
+        static void Init()
+        {
+            if (Application.platform != RuntimePlatform.Android) return;
 
-			s_IsInitialized = true;
-			s_ImageWrapper = new AndroidJavaClass("com.stansassets.core.utility.AN_ImageWrapper");
-			s_ImageWrapper.CallStatic("SetStorageOptions", AN_Settings.Instance.PreferredImagesStorage == AN_Settings.StorageType.Internal);
-		}
-	}
+            if (s_IsInitialized) return;
+
+            s_IsInitialized = true;
+            s_ImageWrapper = new AndroidJavaClass("com.stansassets.core.utility.AN_ImageWrapper");
+            s_ImageWrapper.CallStatic("SetStorageOptions", AN_Settings.Instance.PreferredImagesStorage == AN_Settings.StorageType.Internal);
+        }
+    }
 }
-

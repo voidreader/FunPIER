@@ -12,13 +12,13 @@ namespace SA.Android.GMS.Auth
         /// user cancelled some of the sign in resolutions, e.g. account picking or OAuth consent.
         /// </summary>
         SIGN_IN_CANCELLED = 12501,
-        
+
         /// <summary>
         /// A sign in process is currently in progress and the current one cannot continue.
         /// e.g. the user clicks the SignInButton multiple times and more than one sign in intent was launched.
         /// </summary>
         SIGN_IN_CURRENTLY_IN_PROGRESS = 12502,
-        
+
         /// <summary>
         /// The sign in attempt didn't succeed with the current account.
         ///

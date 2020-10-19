@@ -4,25 +4,23 @@ using UnityEngine;
 
 namespace SA.Foundation.Events
 {
-
     public class SA_Event<T> : SA_iEvent<T>
     {
-
-        private class SafeActionInfo
+        class SafeActionInfo
         {
             public Action<T> Action;
             public object Target;
         }
 
-        private List<SafeActionInfo> m_targetedActions = new List<SafeActionInfo>();
+        List<SafeActionInfo> m_targetedActions = new List<SafeActionInfo>();
 
         /// <summary>
         /// Add listener to the SA_Event.
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
-        public void AddListener(Action<T> listner) {
-
-            if (listner == null) { return; }
+        public void AddListener(Action<T> listner)
+        {
+            if (listner == null) return;
 
             var info = new SafeActionInfo();
             info.Target = this;
@@ -38,9 +36,9 @@ namespace SA.Foundation.Events
         /// </summary>
         /// <param name="callbackTarget"> Callback function. </param> 
         /// <param name="listner"> Callback function. </param> 
-        public void AddSafeListener(object callbackTarget, Action<T> listner) {
-
-            if (listner == null) { return; }
+        public void AddSafeListener(object callbackTarget, Action<T> listner)
+        {
+            if (listner == null) return;
 
             var info = new SafeActionInfo();
             info.Target = callbackTarget;
@@ -52,66 +50,59 @@ namespace SA.Foundation.Events
         /// <summary>
         /// Invoke all registered callbacks
         /// </summary>
-        public void Invoke(T obj) {
-            List<SafeActionInfo> validList = new List<SafeActionInfo>();
-            foreach (var info in m_targetedActions) {
-                if (info.Target != null && !info.Target.Equals(null)) {
+        public void Invoke(T obj)
+        {
+            var validList = new List<SafeActionInfo>();
+            foreach (var info in m_targetedActions)
+                if (info.Target != null && !info.Target.Equals(null))
                     validList.Add(info);
-                }
-            }
 
             m_targetedActions = validList;
-            List<SafeActionInfo> invocationList = new List<SafeActionInfo>(m_targetedActions);
+            var invocationList = new List<SafeActionInfo>(m_targetedActions);
 
-            foreach (var info in invocationList) {
-                info.Action.Invoke(obj);
-            }
+            foreach (var info in invocationList) info.Action.Invoke(obj);
         }
-
 
         /// <summary>
         /// Remove listener from the SA_Event.
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
-        public void RemoveListener(Action<T> listner) {
-            foreach (var info in m_targetedActions) {
-                if(listner.Equals(info.Action)) {
+        public void RemoveListener(Action<T> listner)
+        {
+            foreach (var info in m_targetedActions)
+                if (listner.Equals(info.Action))
+                {
                     m_targetedActions.Remove(info);
                     return;
                 }
-            }
         }
 
-        
         /// <summary>
         /// Remove all registered listener from the SA_Event.
         /// </summary>
-        public void RemoveAllListeners() {
+        public void RemoveAllListeners()
+        {
             m_targetedActions.Clear();
         }
     }
 
-
-
-
     public class SA_Event<T, T1> : SA_iEvent<T, T1>
     {
-
-        private class SafeActionInfo
+        class SafeActionInfo
         {
             public Action<T, T1> Action;
             public object Target;
         }
 
-        private List<SafeActionInfo> m_targetedActions = new List<SafeActionInfo>();
+        List<SafeActionInfo> m_targetedActions = new List<SafeActionInfo>();
 
         /// <summary>
         /// Add listener to the SA_Event.
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
-        public void AddListener(Action<T, T1> listner) {
-
-            if (listner == null) { return; }
+        public void AddListener(Action<T, T1> listner)
+        {
+            if (listner == null) return;
 
             var info = new SafeActionInfo();
             info.Target = this;
@@ -127,9 +118,9 @@ namespace SA.Foundation.Events
         /// </summary>
         /// <param name="callbackTarget"> Callback function. </param> 
         /// <param name="listner"> Callback function. </param> 
-        public void AddSafeListener(object callbackTarget, Action<T, T1> listner) {
-
-            if (listner == null) { return; }
+        public void AddSafeListener(object callbackTarget, Action<T, T1> listner)
+        {
+            if (listner == null) return;
 
             var info = new SafeActionInfo();
             info.Target = callbackTarget;
@@ -141,69 +132,59 @@ namespace SA.Foundation.Events
         /// <summary>
         /// Invoke all registered callbacks
         /// </summary>
-        public void Invoke(T obj, T1 obj1) {
-            List<SafeActionInfo> validList = new List<SafeActionInfo>();
-            foreach (var info in m_targetedActions) {
-                if (info.Target != null && !info.Target.Equals(null)) {
+        public void Invoke(T obj, T1 obj1)
+        {
+            var validList = new List<SafeActionInfo>();
+            foreach (var info in m_targetedActions)
+                if (info.Target != null && !info.Target.Equals(null))
                     validList.Add(info);
-                }
-            }
 
             m_targetedActions = validList;
-            List<SafeActionInfo> invocationList = new List<SafeActionInfo>(m_targetedActions);
+            var invocationList = new List<SafeActionInfo>(m_targetedActions);
 
-            foreach (var info in invocationList) {
-                info.Action.Invoke(obj, obj1);
-            }
+            foreach (var info in invocationList) info.Action.Invoke(obj, obj1);
         }
-
 
         /// <summary>
         /// Remove listener from the SA_Event.
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
-        public void RemoveListener(Action<T, T1> listner) {
-            foreach (var info in m_targetedActions) {
-                if (listner.Equals(info.Action)) {
+        public void RemoveListener(Action<T, T1> listner)
+        {
+            foreach (var info in m_targetedActions)
+                if (listner.Equals(info.Action))
+                {
                     m_targetedActions.Remove(info);
                     return;
                 }
-            }
         }
-
 
         /// <summary>
         /// Remove all registered listener from the SA_Event.
         /// </summary>
-        public void RemoveAllListeners() {
+        public void RemoveAllListeners()
+        {
             m_targetedActions.Clear();
         }
     }
 
-
-
-
-
-
-
     public class SA_Event : SA_iEvent
     {
-
-        private class SafeActionInfo
+        class SafeActionInfo
         {
             public Action Action;
             public object Target;
         }
 
-        private List<SafeActionInfo> m_targetedActions = new List<SafeActionInfo>();
+        List<SafeActionInfo> m_targetedActions = new List<SafeActionInfo>();
 
         /// <summary>
         /// Add listener to the SA_Event.
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
-        public void AddListener(Action listner) {
-
-            if (listner == null) { return; }
+        public void AddListener(Action listner)
+        {
+            if (listner == null) return;
 
             var info = new SafeActionInfo();
             info.Target = this;
@@ -219,9 +200,9 @@ namespace SA.Foundation.Events
         /// </summary>
         /// <param name="callbackTarget"> Callback function. </param> 
         /// <param name="listner"> Callback function. </param> 
-        public void AddSafeListener(object callbackTarget, Action listner) {
-
-            if (listner == null) { return; }
+        public void AddSafeListener(object callbackTarget, Action listner)
+        {
+            if (listner == null) return;
 
             var info = new SafeActionInfo();
             info.Target = callbackTarget;
@@ -233,45 +214,38 @@ namespace SA.Foundation.Events
         /// <summary>
         /// Invoke all registered callbacks
         /// </summary>
-        public void Invoke() {
-            List<SafeActionInfo> validList = new List<SafeActionInfo>();
-            foreach (var info in m_targetedActions) {
-                if (info.Target != null && !info.Target.Equals(null)) {
+        public void Invoke()
+        {
+            var validList = new List<SafeActionInfo>();
+            foreach (var info in m_targetedActions)
+                if (info.Target != null && !info.Target.Equals(null))
                     validList.Add(info);
-                }
-            }
 
             m_targetedActions = validList;
-            List<SafeActionInfo> invocationList = new List<SafeActionInfo>(m_targetedActions);
-            foreach (var info in invocationList) {
-                info.Action.Invoke();
-            }
+            var invocationList = new List<SafeActionInfo>(m_targetedActions);
+            foreach (var info in invocationList) info.Action.Invoke();
         }
-
 
         /// <summary>
         /// Remove listener from the SA_Event.
         /// </summary>
         /// <param name="listner"> Callback function. </param> 
-        public void RemoveListener(Action listner) {
-            foreach (var info in m_targetedActions) {
-                if (listner.Equals(info.Action)) {
+        public void RemoveListener(Action listner)
+        {
+            foreach (var info in m_targetedActions)
+                if (listner.Equals(info.Action))
+                {
                     m_targetedActions.Remove(info);
                     return;
                 }
-            }
         }
-
 
         /// <summary>
         /// Remove all registered listener from the SA_Event.
         /// </summary>
-        public void RemoveAllListeners() {
+        public void RemoveAllListeners()
+        {
             m_targetedActions.Clear();
         }
     }
-
-
-
-
 }

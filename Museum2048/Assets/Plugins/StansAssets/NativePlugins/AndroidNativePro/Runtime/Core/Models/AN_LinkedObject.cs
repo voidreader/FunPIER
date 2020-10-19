@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 namespace SA.Android.Utilities
-{ 
+{
     /// <summary>
     /// The class holds link to the native object create on java side.
     /// 
@@ -12,14 +12,15 @@ namespace SA.Android.Utilities
     [Serializable]
     public class AN_LinkedObject : IDisposable
     {
-        private const string k_AndroidHashStorage = "com.stansassets.core.utility.AN_HashStorage";
+        const string k_AndroidHashStorage = "com.stansassets.core.utility.AN_HashStorage";
         public const int k_NullObjectHash = -1;
 
-        [SerializeField] protected int m_HashCode;
+        [SerializeField]
+        protected int m_HashCode;
 
-        public AN_LinkedObject() {}
+        public AN_LinkedObject() { }
 
-        public AN_LinkedObject(int hasCode) 
+        public AN_LinkedObject(int hasCode)
         {
             m_HashCode = hasCode;
         }
@@ -27,23 +28,17 @@ namespace SA.Android.Utilities
         /// <summary>
         /// The object hash code, matched with java object hash on native side.
         /// </summary>
-        public int HashCode 
-        {
-            get { return m_HashCode; }
-        }
+        public int HashCode => m_HashCode;
 
         /// <summary>
         /// Returns true in case native object is null.
         /// </summary>
-        public bool IsNull
-        {
-            get { return m_HashCode.Equals(k_NullObjectHash); }
-        }
+        public bool IsNull => m_HashCode.Equals(k_NullObjectHash);
 
         /// <summary>
         /// Will free native object hard link.
         /// </summary>
-        public void Dispose() 
+        public void Dispose()
         {
             AN_Java.Bridge.CallStatic(k_AndroidHashStorage, "Dispose", m_HashCode);
         }

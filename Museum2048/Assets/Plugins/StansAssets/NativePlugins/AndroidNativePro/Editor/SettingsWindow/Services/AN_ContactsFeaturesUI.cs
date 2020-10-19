@@ -3,46 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using SA.Foundation.Editor;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-
-    public class AN_ContactsFeaturesUI : AN_ServiceSettingsUI
+    class AN_ContactsFeaturesUI : AN_ServiceSettingsUI
     {
-
-        public override void OnAwake() {
+        public override void OnAwake()
+        {
             base.OnAwake();
 
-            AddFeatureUrl("Getting Started", "https://unionassets.com/android-native-pro/getting-started-700");
-            AddFeatureUrl("Retrieving Contacts", "https://unionassets.com/android-native-pro/retrieving-phone-contacts-701");
-
-       }
-
-        public override string Title {
-            get {
-                return "Contacts";
-            }
+            AddFeatureUrl("Getting Started", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Getting-Started-(Contacts)");
+            AddFeatureUrl("Retrieving Contacts", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Retrieving-Phone-Contacts");
         }
 
+        public override string Title => "Contacts";
 
-        public override string Description {
-            get {
-                return "Powerful and flexible Android component that manages the device's central repository of data about people.";
-            }
-        }
+        public override string Description => "Powerful and flexible Android component that manages the device's central repository of data about people.";
 
-        protected override Texture2D Icon {
-            get {
-                return AN_Skin.GetIcon("android_contacts.png");
-            }
-        }
+        protected override Texture2D Icon => AN_Skin.GetIcon("android_contacts.png");
 
-        public override SA_iAPIResolver Resolver {
-            get {
-                return AN_Preprocessor.GetResolver<AN_ContactsResolver>();
-            }
-        }
+        public override SA_iAPIResolver Resolver => AN_Preprocessor.GetResolver<AN_ContactsResolver>();
 
-        protected override void OnServiceUI() {
+        protected override void OnServiceUI()
+        {
             // throw new System.NotImplementedException();
         }
     }

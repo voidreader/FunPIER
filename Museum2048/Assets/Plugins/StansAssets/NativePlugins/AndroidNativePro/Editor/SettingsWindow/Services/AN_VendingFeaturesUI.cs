@@ -3,69 +3,51 @@ using UnityEditor;
 using SA.Foundation.Editor;
 using SA.Android.Vending.BillingClient;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-    public class AN_VendingFeaturesUI : AN_ServiceSettingsUI
+    class AN_VendingFeaturesUI : AN_ServiceSettingsUI
     {
-        private readonly GUIContent ProductIdDLabel = new GUIContent("Product Id[?]:", "A unique identifier that will be used for reporting. It can be composed of letters and numbers.");
-        private readonly GUIContent DisplayNameLabel = new GUIContent("Display Name[?]:", "This is the name of the Google Product that will be seen by customers (if this is their primary language). For automatically renewable subscriptions, don’t include a duration in the display name. The display name can’t be longer than 75 characters.");
-        private readonly GUIContent DescriptionLabel = new GUIContent("Description[?]:", "This is the description of the In-App Purchase that will be used by App Review during the review process. If indicated in your code, this description may also be seen by customers. For automatically renewable subscriptions, do not include a duration in the description. The description cannot be longer than 255 bytes.");
-        private readonly GUIContent ConsumableLabel = new GUIContent("Consumable[?]:", "Indicates if product can be consumed after purchase");
-        private readonly GUIContent ProductType = new GUIContent("ProductType[?]:", "Defines the product type");
-        private readonly GUIContent PriceLabel = new GUIContent("Price[?]:", "The price of the product");
+        readonly GUIContent ProductIdDLabel = new GUIContent("Product Id[?]:", "A unique identifier that will be used for reporting. It can be composed of letters and numbers.");
+        readonly GUIContent DisplayNameLabel = new GUIContent("Display Name[?]:", "This is the name of the Google Product that will be seen by customers (if this is their primary language). For automatically renewable subscriptions, don’t include a duration in the display name. The display name can’t be longer than 75 characters.");
+        readonly GUIContent DescriptionLabel = new GUIContent("Description[?]:", "This is the description of the In-App Purchase that will be used by App Review during the review process. If indicated in your code, this description may also be seen by customers. For automatically renewable subscriptions, do not include a duration in the description. The description cannot be longer than 255 bytes.");
+        readonly GUIContent ConsumableLabel = new GUIContent("Consumable[?]:", "Indicates if product can be consumed after purchase");
+        readonly GUIContent ProductType = new GUIContent("ProductType[?]:", "Defines the product type");
+        readonly GUIContent PriceLabel = new GUIContent("Price[?]:", "The price of the product");
 
-        public override void OnAwake() 
+        public override void OnAwake()
         {
             base.OnAwake();
-            AddFeatureUrl("Console Setup", "https://unionassets.com/android-native-pro/developer-console-setup-673");
-            AddFeatureUrl("Connecting", "https://unionassets.com/android-native-pro/connecting-to-the-service-674");
-            AddFeatureUrl("Define Products", "https://unionassets.com/android-native-pro/connecting-to-the-service-674#define%C2%A0in-app-products-via-editor-ui");
-            AddFeatureUrl("Products Availability", "https://unionassets.com/android-native-pro/connecting-to-the-service-674#products-availability");
-            AddFeatureUrl("Purchase Flow", "https://unionassets.com/android-native-pro/purchase-flow-675");
-            AddFeatureUrl("Subscriptions", "https://unionassets.com/android-native-pro/subscriptions-826");
-            AddFeatureUrl("Upgrade a Subscription", "https://unionassets.com/android-native-pro/subscriptions-826#upgrade-or-downgrade-a-subscription");
-            AddFeatureUrl("User Inventory", "https://unionassets.com/android-native-pro/purchase-flow-675#Query-cached");
-            AddFeatureUrl("Transactions Validation", "https://unionassets.com/android-native-pro/transactions-validation-676");
-            AddFeatureUrl("Licensing", "https://unionassets.com/android-native-pro/licensing-677");
-        }
-        
-        public override string Title 
-        {
-            get { return "Vending"; }
+            AddFeatureUrl("Console Setup", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Developer-Console-Setup");
+            AddFeatureUrl("Connecting", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Connecting-to-The-Service");
+            AddFeatureUrl("Define Products", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Connecting-to-The-Service");
+            AddFeatureUrl("Products Availability", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Connecting-to-The-Service");
+            AddFeatureUrl("Purchase Flow", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Purchase-Flow");
+            AddFeatureUrl("Subscriptions", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Subscriptions");
+            AddFeatureUrl("Upgrade a Subscription", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Subscriptions#upgrade-or-downgrade-a-subscription");
+            AddFeatureUrl("User Inventory", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Purchase-Flow#user-inventory");
+            AddFeatureUrl("Transactions Validation", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Transactions-Validation");
+            AddFeatureUrl("Licensing", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Licensing");
         }
 
-        public override string Description 
-        {
-            get
-            {
-                return
-                    "A service provided by Google Play that lets you sell digital content from inside an Android app or “in-app.”";
-            }
-        }
+        public override string Title => "Vending";
 
-        protected override Texture2D Icon 
-        {
-            get { return AN_Skin.GetIcon("android_vending.png"); }
-        }
+        public override string Description => "A service provided by Google Play that lets you sell digital content from inside an Android app or “in-app.”";
 
-        public override SA_iAPIResolver Resolver 
-        {
-            get { return AN_Preprocessor.GetResolver<AN_VendingResolver>(); }
-        }
+        protected override Texture2D Icon => AN_Skin.GetIcon("android_vending.png");
 
-        protected override void OnServiceUI() 
+        public override SA_iAPIResolver Resolver => AN_Preprocessor.GetResolver<AN_VendingResolver>();
+
+        protected override void OnServiceUI()
         {
             if (!AN_Settings.Instance.Licensing && !AN_Settings.Instance.GooglePlayBilling)
-            {
                 using (new SA_WindowBlockWithSpace(new GUIContent("Notice ")))
                 {
                     EditorGUILayout.HelpBox("Service is enabled, but both Licensing &  Google Play Billing features " +
-                                            "are disabled. Please enable at least of the feature or turn the service off.", 
+                        "are disabled. Please enable at least of the feature or turn the service off.",
                         MessageType.Error);
                 }
-            }
 
-            using (new SA_WindowBlockWithSpace(new GUIContent("Licensing "))) 
+            using (new SA_WindowBlockWithSpace(new GUIContent("Licensing ")))
             {
                 EditorGUILayout.HelpBox("Licensing allows you to prevent unauthorized distribution of your App.", MessageType.Info);
                 AN_Settings.Instance.Licensing = SA_EditorGUILayout.ToggleFiled("API Status", AN_Settings.Instance.Licensing, SA_StyledToggle.ToggleType.EnabledDisabled);
@@ -82,17 +64,17 @@ namespace SA.Android
                 }
             }
 
-            using (new SA_WindowBlockWithSpace(new GUIContent("Google Play Billing "))) 
+            using (new SA_WindowBlockWithSpace(new GUIContent("Google Play Billing ")))
             {
                 EditorGUILayout.HelpBox("Google Play Billing is a service that lets you sell digital content on Android.", MessageType.Info);
                 AN_Settings.Instance.GooglePlayBilling = SA_EditorGUILayout.ToggleFiled("API Status", AN_Settings.Instance.GooglePlayBilling, SA_StyledToggle.ToggleType.EnabledDisabled);
 
                 if (AN_Settings.Instance.GooglePlayBilling)
                 {
-                    if(AN_Settings.Instance.InAppProducts.Count == 0)
+                    if (AN_Settings.Instance.InAppProducts.Count == 0)
                         EditorGUILayout.HelpBox("Use this menu to specify in-app products available for your App.", MessageType.Info);
-                    
-                    SA_EditorGUILayout.ReorderablList(AN_Settings.Instance.InAppProducts, GetProductDisplayName, DrawProductContent, () => 
+
+                    SA_EditorGUILayout.ReorderablList(AN_Settings.Instance.InAppProducts, GetProductDisplayName, DrawProductContent, () =>
                     {
                         AN_Settings.Instance.AddInAppProduct("your.product.sku", AN_BillingClient.SkuType.inapp);
                     });
@@ -100,23 +82,23 @@ namespace SA.Android
             }
         }
 
-        private string GetProductDisplayName(AN_SkuDetails product) 
+        string GetProductDisplayName(AN_SkuDetails product)
         {
             return product.Title + "           " + product.Price + "$";
         }
 
-        private void DrawProductContent(AN_SkuDetails product) 
+        void DrawProductContent(AN_SkuDetails product)
         {
             product.Sku = SA_EditorGUILayout.TextField(ProductIdDLabel, product.Sku);
             product.Title = SA_EditorGUILayout.TextField(DisplayNameLabel, product.Title);
-            product.Type =  (AN_BillingClient.SkuType) SA_EditorGUILayout.EnumPopup(ProductType, product.Type);
+            product.Type = (AN_BillingClient.SkuType)SA_EditorGUILayout.EnumPopup(ProductType, product.Type);
             product.IsConsumable = SA_EditorGUILayout.ToggleFiled(ConsumableLabel, product.IsConsumable, SA_StyledToggle.ToggleType.YesNo);
             product.Price = SA_EditorGUILayout.TextField(PriceLabel, product.Price);
-            
+
             EditorGUILayout.LabelField(DescriptionLabel);
-            using(new SA_GuiBeginHorizontal()) 
+            using (new SA_GuiBeginHorizontal())
             {
-                product.Description = EditorGUILayout.TextArea(product.Description,  GUILayout.Height(60), GUILayout.MinWidth(190));
+                product.Description = EditorGUILayout.TextArea(product.Description, GUILayout.Height(60), GUILayout.MinWidth(190));
                 EditorGUILayout.Space();
                 product.Icon = (Texture2D)EditorGUILayout.ObjectField("", product.Icon, typeof(Texture2D), false, GUILayout.Width(75));
             }

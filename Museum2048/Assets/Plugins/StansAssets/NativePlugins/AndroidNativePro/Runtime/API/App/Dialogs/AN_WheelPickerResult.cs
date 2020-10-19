@@ -9,19 +9,14 @@ namespace SA.Android.App
     /// using the <see cref="AN_WheelPickerDialog"/>
     /// </summary>
     [Serializable]
-    public class AN_WheelPickerResult: SA_Result
+    public class AN_WheelPickerResult : SA_Result
     {
-        [SerializeField]string m_Value = null;
+        [SerializeField]
+        string m_Value = null;
 
         /// <summary>
         /// The value that was picked by user.
         /// </summary>
-        public string Value
-        {
-            get
-            {
-                return m_Value;
-            }
-        }
+        public string Value => m_Value;
     }
 }

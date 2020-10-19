@@ -10,9 +10,10 @@ namespace SA.Android.Vending.BillingClient
     public class AN_ConsumeParams
     {
 #pragma warning disable 414
-        [SerializeField] private Builder m_Builder;
+        [SerializeField]
+        Builder m_Builder;
 #pragma warning restore 414
-        
+
         /// <summary>
         /// Helps construct <see cref="AN_ConsumeParams"/> that are used to consume a purchase.
         /// </summary>
@@ -20,12 +21,14 @@ namespace SA.Android.Vending.BillingClient
         public class Builder
         {
 #pragma warning disable 414
-            [SerializeField] private string m_DeveloperPayload;
-            [SerializeField] private string m_PurchaseToken;
+            [SerializeField]
+            string m_DeveloperPayload;
+            [SerializeField]
+            string m_PurchaseToken;
 #pragma warning restore 414
 
             internal Builder() { }
-            
+
             /// <summary>
             /// Specify developer payload be sent back with the purchase information.
             /// </summary>
@@ -54,7 +57,7 @@ namespace SA.Android.Vending.BillingClient
             }
         }
 
-        private AN_ConsumeParams(Builder builder)
+        AN_ConsumeParams(Builder builder)
         {
             m_Builder = builder;
         }
@@ -65,7 +68,7 @@ namespace SA.Android.Vending.BillingClient
         /// <returns>a new <see cref="Builder"/> instance.</returns>
         public static Builder NewBuilder()
         {
-            return  new Builder();
+            return new Builder();
         }
     }
 }

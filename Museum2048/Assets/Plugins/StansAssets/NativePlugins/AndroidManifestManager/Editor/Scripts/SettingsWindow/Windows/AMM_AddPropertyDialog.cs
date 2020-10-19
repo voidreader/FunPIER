@@ -12,46 +12,50 @@ using UnityEditor;
 using System;
 using System.Collections;
 
-namespace SA.Android.Manifest {
+namespace SA.Android.Manifest
+{
+    public class AMM_AddPropertyDialog : EditorWindow
+    {
+        public event Action<object> onClose = delegate { };
+        public event Action<string> onAddClick = delegate { };
 
-	public class AMM_AddPropertyDialog : EditorWindow {
+        string tag = string.Empty;
 
-		public event Action<object> onClose = delegate { };
-		public event Action<string> onAddClick = delegate { };
-		
-		private string tag = string.Empty;
+        bool _isStarted = false;
 
-		private bool _isStarted = false;
+        void OnGUI()
+        {
+            EditorGUILayout.Space();
 
-		void OnGUI() {
-			EditorGUILayout.Space ();
+            GUI.SetNextControlName("TagField");
+            tag = EditorGUILayout.TextField("Tag", tag);
 
-			GUI.SetNextControlName ("TagField");
-			tag = EditorGUILayout.TextField("Tag", tag);
-			
-			if (GUILayout.Button("Add")) {
-				if (!tag.Equals(string.Empty)) {
-					OnClickAddProperty();
-					GUIUtility.ExitGUI();
-				}
-			}
+            if (GUILayout.Button("Add"))
+                if (!tag.Equals(string.Empty))
+                {
+                    OnClickAddProperty();
+                    GUIUtility.ExitGUI();
+                }
 
-			if (!_isStarted) {
-				_isStarted = true;
-				EditorGUI.FocusTextInControl("TagField");
-			}
+            if (!_isStarted)
+            {
+                _isStarted = true;
+                EditorGUI.FocusTextInControl("TagField");
+            }
 
-			EditorGUILayout.Space ();
-		}
-		
-		void OnClickAddProperty() {
-			onAddClick (tag);
-			Close();
-		}
-		
-		void OnDestroy() {
-			onClose (this);
-		}
-	}
+            EditorGUILayout.Space();
+        }
+
+        void OnClickAddProperty()
+        {
+            onAddClick(tag);
+            Close();
+        }
+
+        void OnDestroy()
+        {
+            onClose(this);
+        }
+    }
 }
 #endif

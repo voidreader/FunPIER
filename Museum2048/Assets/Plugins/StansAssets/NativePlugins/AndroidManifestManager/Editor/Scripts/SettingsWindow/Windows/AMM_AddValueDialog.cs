@@ -12,52 +12,52 @@ using UnityEditor;
 using System;
 using System.Collections;
 
-namespace SA.Android.Manifest {
-		
+namespace SA.Android.Manifest
+{
+    public class AMM_AddValueDialog : EditorWindow
+    {
+        public event Action<object> onClose = delegate { };
+        public event Action<string, string> onAddClick = delegate { };
 
-	public class AMM_AddValueDialog : EditorWindow {
+        string key = string.Empty;
+        string value = string.Empty;
 
-		public event Action<object> onClose = delegate { };
-		public event Action<string, string> onAddClick = delegate { };
+        bool _isStarted = false;
 
-		private string key = string.Empty;
-		private string value = string.Empty;
+        void OnGUI()
+        {
+            EditorGUILayout.Space();
 
-		private bool _isStarted = false;
+            GUI.SetNextControlName("KeyField");
+            key = EditorGUILayout.TextField("Key", key);
+            value = EditorGUILayout.TextField("Value", value);
 
-		
-		void OnGUI() {
-			
+            if (!_isStarted)
+            {
+                _isStarted = true;
+                EditorGUI.FocusTextInControl("KeyField");
+            }
 
-			EditorGUILayout.Space ();
+            if (GUILayout.Button("Add"))
+                if (!key.Equals(string.Empty))
+                {
+                    OnClickAddValue();
+                    GUIUtility.ExitGUI();
+                }
 
-			GUI.SetNextControlName ("KeyField");
-			key = EditorGUILayout.TextField("Key", key);
-			value = EditorGUILayout.TextField ("Value", value);
+            EditorGUILayout.Space();
+        }
 
-			if (!_isStarted) {
-				_isStarted = true;
-				EditorGUI.FocusTextInControl("KeyField");
-			}
-			
-			if (GUILayout.Button("Add")) {
-				if (!key.Equals(string.Empty)) {
-					OnClickAddValue();
-					GUIUtility.ExitGUI();
-				}
-			}
+        void OnClickAddValue()
+        {
+            onAddClick(key, value);
+            Close();
+        }
 
-			EditorGUILayout.Space ();
-		}
-		
-		void OnClickAddValue() {
-			onAddClick (key, value);
-			Close();
-		}
-
-		void OnDestroy() {
-			onClose (this);
-		}
-	}
+        void OnDestroy()
+        {
+            onClose(this);
+        }
+    }
 }
 #endif

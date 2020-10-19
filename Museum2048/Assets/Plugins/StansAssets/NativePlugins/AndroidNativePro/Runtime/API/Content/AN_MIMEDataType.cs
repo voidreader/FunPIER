@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace SA.Android.Content
 {
-    public static class AN_MIMEDataType  {
-
+    public static class AN_MIMEDataType
+    {
         public const string Image = "image/*";
         public const string Text = "text/plain";
     }

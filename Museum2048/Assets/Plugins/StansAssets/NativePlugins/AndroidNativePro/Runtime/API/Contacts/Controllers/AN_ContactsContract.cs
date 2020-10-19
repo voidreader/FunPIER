@@ -3,28 +3,32 @@ using UnityEngine;
 using SA.Android.App;
 using SA.Android.Manifest;
 using SA.Android.Utilities;
-using SA.Foundation.Async;
 using SA.Foundation.Templates;
+using StansAssets.Foundation.Async;
 
 namespace SA.Android.Contacts
 {
+    /// <summary>
+    /// The contract between the contacts provider and applications.
+    /// Contains definitions for the supported URIs and columns.
+    /// </summary>
     public static class AN_ContactsContract
     {
-        private static string ANDROID_CLASS = "com.stansassets.core.features.contacts.AN_ContactsContract";
+        static readonly string ANDROID_CLASS = "com.stansassets.core.features.contacts.AN_ContactsContract";
 
         /// <summary>
         /// Method will retrieve all contacts async from user phone address book.
         /// </summary>
         /// <param name="callback">address book contacts list will be delivered via this callback</param>
         /// <param name="checkForPermission">
-        /// Will automatically check for READ_CONTACTS permissions. 
+        /// Will automatically check for READ_CONTACTS permissions.
         /// Please note That AndroidX lib is required to preform the permission check.
         /// </param>
         public static void RetrieveAllAsync(Action<AN_ContactsResult> callback, bool checkForPermission = true)
         {
-            if(HandleEditorBehaviour(callback))
+            if (HandleEditorBehaviour(callback))
                 return;
-            
+
             if (checkForPermission)
                 TryToResolvePermission(callback, () =>
                 {
@@ -41,14 +45,14 @@ namespace SA.Android.Contacts
         /// <param name="count">count of contacts to load</param>
         /// <param name="callback">address book contacts list will be delivered via this callback</param>
         /// <param name="checkForPermission">
-        /// Will automatically check for READ_CONTACTS permissions. 
+        /// Will automatically check for READ_CONTACTS permissions.
         /// Please note That AndroidX lib is required to preform the permission check.
         /// </param>
         public static void RetrieveAsync(int index, int count, Action<AN_ContactsResult> callback, bool checkForPermission = true)
         {
-            if(HandleEditorBehaviour(callback))
+            if (HandleEditorBehaviour(callback))
                 return;
-            
+
             if (checkForPermission)
                 TryToResolvePermission(callback, () =>
                 {
@@ -68,6 +72,7 @@ namespace SA.Android.Contacts
                 var result = new AN_ContactsResult();
                 return result;
             }
+
             return RetrieveNative(0, GetContactsCountNative());
         }
 
@@ -83,10 +88,10 @@ namespace SA.Android.Contacts
                 var result = new AN_ContactsResult();
                 return result;
             }
+
             return RetrieveNative(index, count);
         }
-        
-        
+
         /// <summary>
         /// Returns amount of records inside user phone book.
         /// </summary>
@@ -95,15 +100,15 @@ namespace SA.Android.Contacts
         {
             if (Application.isEditor)
                 return 0;
-            
+
             return GetContactsCountNative();
         }
 
-        private static bool HandleEditorBehaviour(Action<AN_ContactsResult> callback)
+        static bool HandleEditorBehaviour(Action<AN_ContactsResult> callback)
         {
             if (Application.isEditor)
             {
-                SA_Coroutine.WaitForSeconds(1, () =>
+                 CoroutineUtility.WaitForSeconds(1, () =>
                 {
                     var result = new AN_ContactsResult();
                     callback.Invoke(result);
@@ -115,12 +120,13 @@ namespace SA.Android.Contacts
             return false;
         }
 
-        private static void TryToResolvePermission(Action<AN_ContactsResult> callback, Action OnPermissionGranted)
+        static void TryToResolvePermission(Action<AN_ContactsResult> callback, Action onPermissionGranted)
         {
-            AN_PermissionsUtility.TryToResolvePermission(AMM_ManifestPermission.READ_CONTACTS, granted => {
+            AN_PermissionsUtility.TryToResolvePermission(AMM_ManifestPermission.READ_CONTACTS, granted =>
+            {
                 if (granted)
                 {
-                    OnPermissionGranted.Invoke();
+                    onPermissionGranted.Invoke();
                 }
                 else
                 {
@@ -131,17 +137,17 @@ namespace SA.Android.Contacts
             });
         }
 
-        private static void RetrieveNativeAsync(int index, int count, Action<AN_ContactsResult> callback)
+        static void RetrieveNativeAsync(int index, int count, Action<AN_ContactsResult> callback)
         {
             AN_Java.Bridge.CallStaticWithCallback(ANDROID_CLASS, "RetrieveAsync", callback, index, count);
         }
 
-        private static AN_ContactsResult RetrieveNative(int index, int count)
+        static AN_ContactsResult RetrieveNative(int index, int count)
         {
             return AN_Java.Bridge.CallStatic<AN_ContactsResult>(ANDROID_CLASS, "Retrieve", index, count);
         }
 
-        private static int GetContactsCountNative()
+        static int GetContactsCountNative()
         {
             return AN_Java.Bridge.CallStatic<int>(ANDROID_CLASS, "GetContactsCount");
         }

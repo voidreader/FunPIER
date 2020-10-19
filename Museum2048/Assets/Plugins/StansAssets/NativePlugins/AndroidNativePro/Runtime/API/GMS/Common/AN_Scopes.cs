@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace SA.Android.GMS.Common
 {
     /// <summary>
     /// OAuth 2.0 scopes for use with Google Play services. 
     /// See the specific client methods for details on which scopes are required.
     /// </summary>
-    public static class AN_Scopes {
-
+    public static class AN_Scopes
+    {
         public static string PROFILE = "profile";
         public static string EMAIL = "email";
         public static string OPEN_ID = "openid";
         public static string LEGACY_USERINFO_PROFILE = "https://www.googleapis.com/auth/userinfo.profile";
         public static string LEGACY_USERINFO_EMAIL = "https://www.googleapis.com/auth/userinfo.email";
-   
+
         public static string PLUS_ME = "https://www.googleapis.com/auth/plus.me";
         public static string GAMES = "https://www.googleapis.com/auth/games";
         public static string GAMES_LITE = "https://www.googleapis.com/auth/games_lite";

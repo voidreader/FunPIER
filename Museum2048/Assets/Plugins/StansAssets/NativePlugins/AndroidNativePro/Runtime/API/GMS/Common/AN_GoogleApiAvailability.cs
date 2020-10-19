@@ -1,16 +1,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Android.GMS.Internal;
 using SA.Foundation.Templates;
 
 namespace SA.Android.GMS.Common
 {
-
     public class AN_GoogleApiAvailability
     {
-
         /// <summary>
         /// Verifies that Google Play services is installed and enabled on this device, 
         /// and that the version installed on this device is no older than the one required by this client.
@@ -22,10 +19,10 @@ namespace SA.Android.GMS.Common
         /// <see cref="AN_ConnectionResult.SERVICE_UPDATING"/>, <see cref="AN_ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED"/>
         ///  <see cref="AN_ConnectionResult.SERVICE_DISABLED"/>, <see cref="AN_ConnectionResult.SERVICE_INVALID"/>.
         /// </returns>
-        public static int IsGooglePlayServicesAvailable() {
+        public static int IsGooglePlayServicesAvailable()
+        {
             return AN_GMS_Lib.Auth.IsGooglePlayServicesAvailable();
         }
-
 
         /// <summary>
         /// Attempts to make Google Play services available on this device. 
@@ -40,7 +37,8 @@ namespace SA.Android.GMS.Common
         /// If callback completes with Success result, 
         /// Play Services is available on this device.
         /// </param>
-        public static void MakeGooglePlayServicesAvailable(Action<SA_Result> callback) {
+        public static void MakeGooglePlayServicesAvailable(Action<SA_Result> callback)
+        {
             AN_GMS_Lib.Auth.MakeGooglePlayServicesAvailable(callback);
         }
     }

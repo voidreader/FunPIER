@@ -12,35 +12,29 @@ namespace SA.Android.GMS.Games
     [Serializable]
     public class AN_PlayerLevel
     {
-        [SerializeField] private int m_LevelNumber = 0;
-        [SerializeField] private long m_MaxXp = 0;
-        [SerializeField] private long m_MinXp = 0;
-        
+        [SerializeField]
+        int m_LevelNumber = 0;
+        [SerializeField]
+        long m_MaxXp = 0;
+        [SerializeField]
+        long m_MinXp = 0;
+
         /// <summary>
         ///  Returns the number for this level, e.g. "level 10".
         ///  This is the level that this object represents.
         /// For a player to be considered as being of this level,
         /// the value given by <see cref="AN_PlayerLevelInfo.CurrentXpTotal"/> must fall in the range [<see cref="MinXp"/>, <see cref="MaxXp"/>).
         /// </summary>
-        public int LevelNumber
-        {
-            get { return m_LevelNumber; }
-        }
-        
+        public int LevelNumber => m_LevelNumber;
+
         /// <summary>
         /// The maximum XP value represented by this level, exclusive.
         /// </summary>
-        public long MaxXp
-        {
-            get { return m_MaxXp; }
-        }
-        
+        public long MaxXp => m_MaxXp;
+
         /// <summary>
         /// The minimum XP value needed to attain this level, inclusive.
         /// </summary>
-        public long MinXp
-        {
-            get { return m_MinXp; }
-        }
+        public long MinXp => m_MinXp;
     }
 }

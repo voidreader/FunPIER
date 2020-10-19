@@ -3,19 +3,24 @@ using UnityEngine;
 
 namespace SA.Android.App
 {
-
     /// <summary>
     /// A representation of settings that apply to a collection of similarly themed notifications.
     /// </summary>
     [Serializable]
-    public class AN_NotificationChannel 
+    public class AN_NotificationChannel
     {
-        [SerializeField] private string m_Id;
-        [SerializeField] private string m_Name;
-        [SerializeField] private string m_Description;
-        [SerializeField] private int m_Importance;
-        [SerializeField] private string m_Sound;
-        [SerializeField] private bool m_ShowBadge;
+        [SerializeField]
+        string m_Id;
+        [SerializeField]
+        string m_Name;
+        [SerializeField]
+        string m_Description;
+        [SerializeField]
+        int m_Importance;
+        [SerializeField]
+        string m_Sound;
+        [SerializeField]
+        bool m_ShowBadge;
 
         /// <summary>
         /// The id of the default channel for an app. This id is reserved by the system. 
@@ -25,12 +30,11 @@ namespace SA.Android.App
         /// </summary>
         public static string DEFAULT_CHANNEL_ID = "miscellaneous";
 
-
         /// <summary>
         /// This channel id will be used by plugin in case you havne't spesifayed any channell id with your request.
         /// </summary>
         public static string ANDROID_NATIVE_DEFAULT_CHANNEL_ID = DEFAULT_CHANNEL_ID + "_android_native_pro";
-        
+
         /// <summary>
         /// Creates a notification channel.
         /// </summary>
@@ -48,7 +52,7 @@ namespace SA.Android.App
         /// The importance of the channel. 
         /// This controls how interruptive notifications posted to this channel are.
         /// </param>
-        public AN_NotificationChannel(string id, string name, AN_NotificationManager.Importance importance) 
+        public AN_NotificationChannel(string id, string name, AN_NotificationManager.Importance importance)
         {
             m_Id = id;
             m_Name = name;
@@ -59,55 +63,43 @@ namespace SA.Android.App
         /// <summary>
         /// Description of this channel.
         /// </summary>
-        public string Description 
+        public string Description
         {
-            get { return m_Description; }
-            set { m_Description = value; }
+            get => m_Description;
+            set => m_Description = value;
         }
 
         /// <summary>
         /// The id of this channel.
         /// </summary>
-        public string Id 
-        {
-            get { return m_Id; }
-        }
+        public string Id => m_Id;
 
         /// <summary>
         /// The user visible name of this channel.
         /// </summary>
         public string Name
         {
-            get { return m_Name; }
-            set { m_Name = value; }
+            get => m_Name;
+            set => m_Name = value;
         }
 
         /// <summary>
         /// Returns whether notifications posted to this channel can appear as badges in a Launcher application.
         /// </summary>
-        public bool CanShowBadge
-        {
-            get { return m_ShowBadge; }
-        }
-        
-        public string Sound 
-        {
-            get 
-            {
-                //native part will have a sound URL so we need to only return it's name
-                return m_Sound.Substring(m_Sound.LastIndexOf('/') + 1);
-            }
+        public bool CanShowBadge => m_ShowBadge;
 
-            set { m_Sound = value; }
+        public string Sound
+        {
+            //native part will have a sound URL so we need to only return it's name
+            get => m_Sound.Substring(m_Sound.LastIndexOf('/') + 1);
+
+            set => m_Sound = value;
         }
 
         /// <summary>
         /// The user specified importance
         /// </summary>
-        public AN_NotificationManager.Importance Importance 
-        {
-            get { return (AN_NotificationManager.Importance) m_Importance; }
-        }
+        public AN_NotificationManager.Importance Importance => (AN_NotificationManager.Importance)m_Importance;
 
         /// <summary>
         /// Sets whether notifications posted to this channel can appear as application icon badges in a Launcher.

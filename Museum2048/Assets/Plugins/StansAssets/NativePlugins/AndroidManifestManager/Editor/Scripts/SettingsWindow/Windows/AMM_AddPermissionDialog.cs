@@ -12,47 +12,50 @@ using UnityEditor;
 using System;
 using System.Collections;
 
+namespace SA.Android.Manifest
+{
+    public class AMM_AddPermissionDialog : EditorWindow
+    {
+        public event Action<object> onClose = delegate { };
+        public event Action<string> onAddClick = delegate { };
 
-namespace SA.Android.Manifest {
+        string permission = string.Empty;
 
-	public class AMM_AddPermissionDialog : EditorWindow {
+        bool _isStarted = false;
 
-		public event Action<object> onClose = delegate { };
-		public event Action<string> onAddClick = delegate { };
+        void OnGUI()
+        {
+            EditorGUILayout.Space();
 
-		private string permission = string.Empty;
+            GUI.SetNextControlName("PermissionField");
+            permission = EditorGUILayout.TextField("Name", permission);
 
-		private bool _isStarted = false;
-		
-		void OnGUI() {
-			EditorGUILayout.Space ();
+            if (!_isStarted)
+            {
+                _isStarted = true;
+                EditorGUI.FocusTextInControl("PermissionField");
+            }
 
-			GUI.SetNextControlName ("PermissionField");
-			permission = EditorGUILayout.TextField("Name", permission);
+            if (GUILayout.Button("Add"))
+                if (!permission.Equals(string.Empty))
+                {
+                    OnClickAddValue();
+                    GUIUtility.ExitGUI();
+                }
 
-			if (!_isStarted) {
-				_isStarted = true;
-				EditorGUI.FocusTextInControl("PermissionField");
-			}
-			
-			if (GUILayout.Button("Add")) {
-				if (!permission.Equals(string.Empty)) {
-					OnClickAddValue();
-					GUIUtility.ExitGUI();
-				}
-			}
+            EditorGUILayout.Space();
+        }
 
-			EditorGUILayout.Space ();
-		}
-		
-		void OnClickAddValue() {
-			onAddClick (permission);
-			Close();
-		}
+        void OnClickAddValue()
+        {
+            onAddClick(permission);
+            Close();
+        }
 
-		void OnDestroy() {
-			onClose (this);
-		}
-	}
+        void OnDestroy()
+        {
+            onClose(this);
+        }
+    }
 }
 #endif

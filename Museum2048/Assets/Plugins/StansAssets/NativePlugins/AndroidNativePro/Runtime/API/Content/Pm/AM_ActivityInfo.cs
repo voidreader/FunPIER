@@ -1,18 +1,11 @@
 using System;
-using System.Collections.Generic;
-using UnityEngine;
-
 
 namespace SA.Android.Content.Pm
 {
-
     /// <summary>
-    /// Information you can retrieve about a particular application activity or receiver. 
-    /// This corresponds to information collected from the AndroidManifest.xml's <activity> and <receiver> tags.
+    /// Information you can retrieve about a particular application activity or receiver.
+    /// This corresponds to information collected from the <c>AndroidManifest.xml</c> <c>activity</c> and <c>receiver</c> tags.
     /// </summary>
     [Serializable]
-    public class AM_ActivityInfo : AN_ComponentInfo
-    {
-
-    }
+    public class AM_ActivityInfo : AN_ComponentInfo { }
 }

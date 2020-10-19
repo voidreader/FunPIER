@@ -10,32 +10,32 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using SA.Foundation.Async;
+using StansAssets.Foundation.Async;
 
-namespace SA.Foundation.Utility 
+namespace SA.Foundation.Utility
 {
     /// <summary>
     /// Utility class for a screen manipulations
     /// </summary>
-	public static class SA_ScreenUtil  
+    public static class SA_ScreenUtil
     {
         /// <summary>
         /// Takes a screenshots with no size restrictions
         /// </summary>
         /// <param name="callback"> Result callback.</param> 
-		public static void TakeScreenshot(Action<Texture2D> callback) 
+        public static void TakeScreenshot(Action<Texture2D> callback)
         {
-            SA_Coroutine.Start(TakeScreenshotCoroutine(0, callback));
-		}
-        
+            CoroutineUtility.Start(TakeScreenshotCoroutine(0, callback));
+        }
+
         /// <summary>
         /// Take a screenshot
         /// </summary>
         /// <param name="maxSize">Max size of picture result</param>
         /// <param name="callback">Result callback.</param> 
-        public static void TakeScreenshot(int maxSize, Action<Texture2D> callback) 
+        public static void TakeScreenshot(int maxSize, Action<Texture2D> callback)
         {
-            SA_Coroutine.Start(TakeScreenshotCoroutine(maxSize, callback));
+            CoroutineUtility.Start(TakeScreenshotCoroutine(maxSize, callback));
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SA.Foundation.Utility
         /// </summary>
         /// <param name="camera">Camera to take screenshot from</param>
         /// <param name="callback">Result callback.</param>
-        public static void TakeScreenshot(Camera camera, Action<Texture2D> callback) 
+        public static void TakeScreenshot(Camera camera, Action<Texture2D> callback)
         {
             var capturer = new GameObject("SA_Screenshot").AddComponent<CameraScreenshot>();
             capturer.m_camera = camera;
@@ -51,13 +51,13 @@ namespace SA.Foundation.Utility
             capturer.resWidth = Screen.width;
             capturer.resHeight = Screen.height;
         }
-        
-        private static IEnumerator TakeScreenshotCoroutine(int maxSize, Action<Texture2D> callback) 
-        {
 
+        static IEnumerator TakeScreenshotCoroutine(int maxSize, Action<Texture2D> callback)
+        {
             yield return new WaitForEndOfFrame();
+
             // Create a texture the size of the screen, RGB24 format
-            var width =  Screen.width;
+            var width = Screen.width;
             var height = Screen.height;
             var tex = new Texture2D(width, height, TextureFormat.RGB24, false);
 
@@ -65,26 +65,24 @@ namespace SA.Foundation.Utility
             tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
             tex.Apply();
 
-            if (maxSize > 0) {
-                int biggestSide = width;
-                if (height > width) {
-                    biggestSide = height;
-                }
+            if (maxSize > 0)
+            {
+                var biggestSide = width;
+                if (height > width) biggestSide = height;
 
                 //TODO fix it, looks ugly
-                if (biggestSide > maxSize) {
-                    float scale = (float)maxSize / (float)biggestSide;
-                    Texture2D resized = SA_IconManager.ResizeTexture(tex, SA_IconManager.ImageFilterMode.Nearest, scale);
+                if (biggestSide > maxSize)
+                {
+                    var scale = (float)maxSize / (float)biggestSide;
+                    var resized = SA_IconManager.ResizeTexture(tex, SA_IconManager.ImageFilterMode.Nearest, scale);
                     tex = resized;
                 }
             }
+
             callback.Invoke(tex);
         }
 
-
-
-
-        private class CameraScreenshot : MonoBehaviour
+        class CameraScreenshot : MonoBehaviour
         {
             internal Camera m_camera;
             internal Action<Texture2D> m_callback;
@@ -92,12 +90,11 @@ namespace SA.Foundation.Utility
             internal int resWidth;
             internal int resHeight;
 
-
-            void LateUpdate() {
-
-                RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
+            void LateUpdate()
+            {
+                var rt = new RenderTexture(resWidth, resHeight, 24);
                 m_camera.targetTexture = rt;
-                Texture2D screenShot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
+                var screenShot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
                 m_camera.Render();
                 RenderTexture.active = rt;
                 screenShot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
@@ -108,12 +105,7 @@ namespace SA.Foundation.Utility
 
                 m_callback.Invoke(screenShot);
                 Destroy(gameObject);
-
             }
-
         }
-
     }
-
 }
-

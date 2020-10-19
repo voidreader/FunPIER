@@ -5,166 +5,175 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Rotorz.ReorderableList {
+namespace Rotorz.ReorderableList
+{
+    /// <summary>
+    /// Provides meta information which is useful when creating new implementations of
+    /// the <see cref="IElementAdderMenuBuilder{TContext}"/> interface.
+    /// </summary>
+    public static class ElementAdderMeta
+    {
+        #region Adder Menu Command Types
 
-	/// <summary>
-	/// Provides meta information which is useful when creating new implementations of
-	/// the <see cref="IElementAdderMenuBuilder{TContext}"/> interface.
-	/// </summary>
-	public static class ElementAdderMeta {
+        static readonly Dictionary<Type, Dictionary<Type, List<Type>>> s_ContextMap = new Dictionary<Type, Dictionary<Type, List<Type>>>();
 
-		#region Adder Menu Command Types
+        static IEnumerable<Type> GetMenuCommandTypes<TContext>()
+        {
+            return
+                from a in AppDomain.CurrentDomain.GetAssemblies()
+                from t in a.GetTypes()
+                where t.IsClass && !t.IsAbstract && t.IsDefined(typeof(ElementAdderMenuCommandAttribute), false)
+                where typeof(IElementAdderMenuCommand<TContext>).IsAssignableFrom(t)
+                select t;
+        }
 
-		private static Dictionary<Type, Dictionary<Type, List<Type>>> s_ContextMap = new Dictionary<Type, Dictionary<Type, List<Type>>>();
+        /// <summary>
+        /// Gets an array of the <see cref="IElementAdderMenuCommand{TContext}"/> types
+        /// that are associated with the specified <paramref name="contractType"/>.
+        /// </summary>
+        /// <typeparam name="TContext">Type of the context object that elements can be added to.</typeparam>
+        /// <param name="contractType">Contract type of addable elements.</param>
+        /// <returns>
+        /// An array containing zero or more <see cref="System.Type"/>.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// If <paramref name="contractType"/> is <c>null</c>.
+        /// </exception>
+        /// <seealso cref="GetMenuCommands{TContext}(Type)"/>
+        public static Type[] GetMenuCommandTypes<TContext>(Type contractType)
+        {
+            if (contractType == null)
+                throw new ArgumentNullException("contractType");
 
-		private static IEnumerable<Type> GetMenuCommandTypes<TContext>() {
-			return
-				from a in AppDomain.CurrentDomain.GetAssemblies()
-				from t in a.GetTypes()
-				where t.IsClass && !t.IsAbstract && t.IsDefined(typeof(ElementAdderMenuCommandAttribute), false)
-				where typeof(IElementAdderMenuCommand<TContext>).IsAssignableFrom(t)
-				select t;
-		}
+            Dictionary<Type, List<Type>> contractMap;
+            List<Type> commandTypes;
+            if (s_ContextMap.TryGetValue(typeof(TContext), out contractMap))
+            {
+                if (contractMap.TryGetValue(contractType, out commandTypes))
+                    return commandTypes.ToArray();
+            }
+            else
+            {
+                contractMap = new Dictionary<Type, List<Type>>();
+                s_ContextMap[typeof(TContext)] = contractMap;
+            }
 
-		/// <summary>
-		/// Gets an array of the <see cref="IElementAdderMenuCommand{TContext}"/> types
-		/// that are associated with the specified <paramref name="contractType"/>.
-		/// </summary>
-		/// <typeparam name="TContext">Type of the context object that elements can be added to.</typeparam>
-		/// <param name="contractType">Contract type of addable elements.</param>
-		/// <returns>
-		/// An array containing zero or more <see cref="System.Type"/>.
-		/// </returns>
-		/// <exception cref="System.ArgumentNullException">
-		/// If <paramref name="contractType"/> is <c>null</c>.
-		/// </exception>
-		/// <seealso cref="GetMenuCommands{TContext}(Type)"/>
-		public static Type[] GetMenuCommandTypes<TContext>(Type contractType) {
-			if (contractType == null)
-				throw new ArgumentNullException("contractType");
+            commandTypes = new List<Type>();
 
-			Dictionary<Type, List<Type>> contractMap;
-			List<Type> commandTypes;
-			if (s_ContextMap.TryGetValue(typeof(TContext), out contractMap)) {
-				if (contractMap.TryGetValue(contractType, out commandTypes))
-					return commandTypes.ToArray();
-			}
-			else {
-				contractMap = new Dictionary<Type, List<Type>>();
-				s_ContextMap[typeof(TContext)] = contractMap;
-			}
+            foreach (var commandType in GetMenuCommandTypes<TContext>())
+            {
+                var attributes = (ElementAdderMenuCommandAttribute[])Attribute.GetCustomAttributes(commandType, typeof(ElementAdderMenuCommandAttribute));
+                if (!attributes.Any(a => a.ContractType == contractType))
+                    continue;
 
-			commandTypes = new List<Type>();
+                commandTypes.Add(commandType);
+            }
 
-			foreach (var commandType in GetMenuCommandTypes<TContext>()) {
-				var attributes = (ElementAdderMenuCommandAttribute[])Attribute.GetCustomAttributes(commandType, typeof(ElementAdderMenuCommandAttribute));
-				if (!attributes.Any(a => a.ContractType == contractType))
-					continue;
+            contractMap[contractType] = commandTypes;
+            return commandTypes.ToArray();
+        }
 
-				commandTypes.Add(commandType);
-			}
+        /// <summary>
+        /// Gets an array of <see cref="IElementAdderMenuCommand{TContext}"/> instances
+        /// that are associated with the specified <paramref name="contractType"/>.
+        /// </summary>
+        /// <typeparam name="TContext">Type of the context object that elements can be added to.</typeparam>
+        /// <param name="contractType">Contract type of addable elements.</param>
+        /// <returns>
+        /// An array containing zero or more <see cref="IElementAdderMenuCommand{TContext}"/> instances.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// If <paramref name="contractType"/> is <c>null</c>.
+        /// </exception>
+        /// <seealso cref="GetMenuCommandTypes{TContext}(Type)"/>
+        public static IElementAdderMenuCommand<TContext>[] GetMenuCommands<TContext>(Type contractType)
+        {
+            var commandTypes = GetMenuCommandTypes<TContext>(contractType);
+            var commands = new IElementAdderMenuCommand<TContext>[commandTypes.Length];
+            for (var i = 0; i < commandTypes.Length; ++i)
+                commands[i] = (IElementAdderMenuCommand<TContext>)Activator.CreateInstance(commandTypes[i]);
+            return commands;
+        }
 
-			contractMap[contractType] = commandTypes;
-			return commandTypes.ToArray();
-		}
+        #endregion
 
-		/// <summary>
-		/// Gets an array of <see cref="IElementAdderMenuCommand{TContext}"/> instances
-		/// that are associated with the specified <paramref name="contractType"/>.
-		/// </summary>
-		/// <typeparam name="TContext">Type of the context object that elements can be added to.</typeparam>
-		/// <param name="contractType">Contract type of addable elements.</param>
-		/// <returns>
-		/// An array containing zero or more <see cref="IElementAdderMenuCommand{TContext}"/> instances.
-		/// </returns>
-		/// <exception cref="System.ArgumentNullException">
-		/// If <paramref name="contractType"/> is <c>null</c>.
-		/// </exception>
-		/// <seealso cref="GetMenuCommandTypes{TContext}(Type)"/>
-		public static IElementAdderMenuCommand<TContext>[] GetMenuCommands<TContext>(Type contractType) {
-			var commandTypes = GetMenuCommandTypes<TContext>(contractType);
-			var commands = new IElementAdderMenuCommand<TContext>[commandTypes.Length];
-			for (int i = 0; i < commandTypes.Length; ++i)
-				commands[i] = (IElementAdderMenuCommand<TContext>)Activator.CreateInstance(commandTypes[i]);
-			return commands;
-		}
+        #region Concrete Element Types
 
-		#endregion
+        static readonly Dictionary<Type, Type[]> s_ConcreteElementTypes = new Dictionary<Type, Type[]>();
 
-		#region Concrete Element Types
+        static IEnumerable<Type> GetConcreteElementTypesHelper(Type contractType)
+        {
+            if (contractType == null)
+                throw new ArgumentNullException("contractType");
 
-		private static Dictionary<Type, Type[]> s_ConcreteElementTypes = new Dictionary<Type, Type[]>();
+            Type[] concreteTypes;
+            if (!s_ConcreteElementTypes.TryGetValue(contractType, out concreteTypes))
+            {
+                concreteTypes =
+                    (from a in AppDomain.CurrentDomain.GetAssemblies()
+                        from t in a.GetTypes()
+                        where t.IsClass && !t.IsAbstract && contractType.IsAssignableFrom(t)
+                        orderby t.Name
+                        select t
+                    ).ToArray();
+                s_ConcreteElementTypes[contractType] = concreteTypes;
+            }
 
-		private static IEnumerable<Type> GetConcreteElementTypesHelper(Type contractType) {
-			if (contractType == null)
-				throw new ArgumentNullException("contractType");
+            return concreteTypes;
+        }
 
-			Type[] concreteTypes;
-			if (!s_ConcreteElementTypes.TryGetValue(contractType, out concreteTypes)) {
-				concreteTypes =
-					(from a in AppDomain.CurrentDomain.GetAssemblies()
-					 from t in a.GetTypes()
-					 where t.IsClass && !t.IsAbstract && contractType.IsAssignableFrom(t)
-					 orderby t.Name
-					 select t
-					).ToArray();
-				s_ConcreteElementTypes[contractType] = concreteTypes;
-			}
+        /// <summary>
+        /// Gets a filtered array of the concrete element types that implement the
+        /// specified <paramref name="contractType"/>.
+        /// </summary>
+        /// <remarks>
+        /// <para>A type is excluded from the resulting array when one or more of the
+        /// specified <paramref name="filters"/> returns a value of <c>false</c>.</para>
+        /// </remarks>
+        /// <param name="contractType">Contract type of addable elements.</param>
+        /// <param name="filters">An array of zero or more filters.</param>
+        /// <returns>
+        /// An array of zero or more concrete element types.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// If <paramref name="contractType"/> is <c>null</c>.
+        /// </exception>
+        /// <seealso cref="GetConcreteElementTypes(Type)"/>
+        public static Type[] GetConcreteElementTypes(Type contractType, Func<Type, bool>[] filters)
+        {
+            return
+                (from t in GetConcreteElementTypesHelper(contractType)
+                    where IsTypeIncluded(t, filters)
+                    select t
+                ).ToArray();
+        }
 
-			return concreteTypes;
-		}
+        /// <summary>
+        /// Gets an array of all the concrete element types that implement the specified
+        /// <paramref name="contractType"/>.
+        /// </summary>
+        /// <param name="contractType">Contract type of addable elements.</param>
+        /// <returns>
+        /// An array of zero or more concrete element types.
+        /// </returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// If <paramref name="contractType"/> is <c>null</c>.
+        /// </exception>
+        /// <seealso cref="GetConcreteElementTypes(Type, Func{Type, bool}[])"/>
+        public static Type[] GetConcreteElementTypes(Type contractType)
+        {
+            return GetConcreteElementTypesHelper(contractType).ToArray();
+        }
 
-		/// <summary>
-		/// Gets a filtered array of the concrete element types that implement the
-		/// specified <paramref name="contractType"/>.
-		/// </summary>
-		/// <remarks>
-		/// <para>A type is excluded from the resulting array when one or more of the
-		/// specified <paramref name="filters"/> returns a value of <c>false</c>.</para>
-		/// </remarks>
-		/// <param name="contractType">Contract type of addable elements.</param>
-		/// <param name="filters">An array of zero or more filters.</param>
-		/// <returns>
-		/// An array of zero or more concrete element types.
-		/// </returns>
-		/// <exception cref="System.ArgumentNullException">
-		/// If <paramref name="contractType"/> is <c>null</c>.
-		/// </exception>
-		/// <seealso cref="GetConcreteElementTypes(Type)"/>
-		public static Type[] GetConcreteElementTypes(Type contractType, Func<Type, bool>[] filters) {
-			return
-				(from t in GetConcreteElementTypesHelper(contractType)
-				 where IsTypeIncluded(t, filters)
-				 select t
-				).ToArray();
-		}
+        static bool IsTypeIncluded(Type concreteType, Func<Type, bool>[] filters)
+        {
+            if (filters != null)
+                foreach (var filter in filters)
+                    if (!filter(concreteType))
+                        return false;
+            return true;
+        }
 
-		/// <summary>
-		/// Gets an array of all the concrete element types that implement the specified
-		/// <paramref name="contractType"/>.
-		/// </summary>
-		/// <param name="contractType">Contract type of addable elements.</param>
-		/// <returns>
-		/// An array of zero or more concrete element types.
-		/// </returns>
-		/// <exception cref="System.ArgumentNullException">
-		/// If <paramref name="contractType"/> is <c>null</c>.
-		/// </exception>
-		/// <seealso cref="GetConcreteElementTypes(Type, Func{Type, bool}[])"/>
-		public static Type[] GetConcreteElementTypes(Type contractType) {
-			return GetConcreteElementTypesHelper(contractType).ToArray();
-		}
-
-		private static bool IsTypeIncluded(Type concreteType, Func<Type, bool>[] filters) {
-			if (filters != null)
-				foreach (var filter in filters)
-					if (!filter(concreteType))
-						return false;
-			return true;
-		}
-
-		#endregion
-
-	}
-
+        #endregion
+    }
 }

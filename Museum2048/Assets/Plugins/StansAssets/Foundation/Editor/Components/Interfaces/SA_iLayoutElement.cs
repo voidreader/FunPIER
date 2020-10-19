@@ -11,6 +11,4 @@ namespace SA.Foundation.Editor
         /// </summary>
         void Draw();
     }
-
-   
 }

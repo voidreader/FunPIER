@@ -17,13 +17,13 @@ namespace SA.Android.Vending.BillingClient
         public class Builder
         {
 #pragma warning disable 414
-            [SerializeField] internal string m_DeveloperPayload = string.Empty;
-            [SerializeField] internal string m_PurchaseToken = string.Empty;
+            [SerializeField]
+            internal string m_DeveloperPayload = string.Empty;
+            [SerializeField]
+            internal string m_PurchaseToken = string.Empty;
 #pragma warning restore 414
 
-            internal Builder()
-            {
-            }
+            internal Builder() { }
 
             /// <summary>
             /// Returns <see cref="AN_AcknowledgePurchaseParams"/> reference to initiate a purchase flow.
@@ -44,7 +44,7 @@ namespace SA.Android.Vending.BillingClient
                 m_DeveloperPayload = developerPayload;
                 return this;
             }
-            
+
             /// <summary>
             /// Specify the token that identifies the purchase to be acknowledged.
             /// </summary>
@@ -56,12 +56,13 @@ namespace SA.Android.Vending.BillingClient
                 return this;
             }
         }
-        
+
 #pragma warning disable 414
-        [SerializeField] private Builder m_Builder;
+        [SerializeField]
+        Builder m_Builder;
 #pragma warning restore 414
 
-        private AN_AcknowledgePurchaseParams(Builder builder)
+        AN_AcknowledgePurchaseParams(Builder builder)
         {
             m_Builder = builder;
         }
@@ -78,17 +79,11 @@ namespace SA.Android.Vending.BillingClient
         /// <summary>
         /// Returns developer data associated with the purchase to be acknowledged.
         /// </summary>
-        public string DeveloperPayload
-        {
-            get { return m_Builder.m_DeveloperPayload; }
-        }
-        
+        public string DeveloperPayload => m_Builder.m_DeveloperPayload;
+
         /// <summary>
         /// Returns token that identifies the purchase to be acknowledged
         /// </summary>
-        public string PurchaseToken
-        {
-            get { return m_Builder.m_PurchaseToken; }
-        }
+        public string PurchaseToken => m_Builder.m_PurchaseToken;
     }
 }

@@ -14,7 +14,7 @@ namespace SA.Android.Vending.BillingClient
         /// </summary>
         /// <param name="billingResult"></param>
         void OnBillingSetupFinished(SA_iResult billingResult);
-        
+
         /// <summary>
         /// Called to notify that connection to billing service was lost.
         ///

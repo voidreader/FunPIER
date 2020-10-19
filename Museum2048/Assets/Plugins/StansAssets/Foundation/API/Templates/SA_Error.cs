@@ -10,15 +10,16 @@
 using System;
 using UnityEngine;
 
-namespace SA.Foundation.Templates {
-
-	
-	/// <inheritdoc />
+namespace SA.Foundation.Templates
+{
+    /// <inheritdoc />
     [Serializable]
-	public class SA_Error : SA_iError {
-
-        [SerializeField] int m_code;
-        [SerializeField] string m_message = string.Empty;
+    public class SA_Error : SA_iError
+    {
+        [SerializeField]
+        int m_code;
+        [SerializeField]
+        string m_message = string.Empty;
 
         //--------------------------------------
         // Initialization
@@ -30,39 +31,29 @@ namespace SA.Foundation.Templates {
         /// </summary>
         /// <param name="code">instance error <see cref="Code"/>.</param>
         /// <param name="message">instance error <see cref="Message"/>.</param>
-        public SA_Error(int code, string message = "") 
+        public SA_Error(int code, string message = "")
         {
-			m_code = code;
-			m_message = message;
-		}
+            m_code = code;
+            m_message = message;
+        }
 
+        //--------------------------------------
+        // Get / Set
+        //--------------------------------------
 
-		//--------------------------------------
-		// Get / Set
-		//--------------------------------------
+        public int Code => m_code;
 
-		public int Code {
-			get {
-				return m_code;
-			}
-		}
+        public string Message => m_message;
 
-		public string Message {
-			get {
-				return m_message;
-			}
-		}
-
-        public string FullMessage {
-            get {
-                if(Message.StartsWith(Code.ToString())) {
+        public string FullMessage
+        {
+            get
+            {
+                if (Message.StartsWith(Code.ToString()))
                     return Message;
-                } else {
+                else
                     return Code + "::" + Message;
-                }
             }
         }
-	}
-
-
+    }
 }

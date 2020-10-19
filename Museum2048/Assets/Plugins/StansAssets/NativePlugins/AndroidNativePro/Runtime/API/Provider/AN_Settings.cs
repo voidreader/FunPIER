@@ -1,16 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace SA.Android.Provider
 {
     /// <summary>
     /// The Settings provider contains global system-level device preferences.
     /// https://developer.android.com/reference/android/provider/Settings.html#ACTION_ACCESSIBILITY_SETTINGS
     /// </summary>
-    public static class AN_Settings 
+    public static class AN_Settings
     {
-
         /// <summary>
         /// Activity Action: Show settings for accessibility modules.
         /// </summary>
@@ -55,7 +50,6 @@ namespace SA.Android.Provider
         /// Activity Action: Show battery saver settings.
         /// </summary>
         public const string ACTION_BATTERY_SAVER_SETTINGS = "android.settings.BATTERY_SAVER_SETTINGS";
-
 
         /// <summary>
         /// Activity Action: Show settings to allow configuration of Bluetooth.
@@ -154,5 +148,3 @@ namespace SA.Android.Provider
         public const string METADATA_USAGE_ACCESS_REASON = "android.settings.metadata.USAGE_ACCESS_REASON";
     }
 }
-
-

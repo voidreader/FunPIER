@@ -2,15 +2,14 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-
 namespace SA.Foundation.Editor
 {
     public class SA_GuiHorizontalSpaceIgnoreIndent : IDisposable
     {
+        readonly int m_indentLevel;
 
-        private int m_indentLevel;
-
-        public SA_GuiHorizontalSpaceIgnoreIndent(int space) {
+        public SA_GuiHorizontalSpaceIgnoreIndent(int space)
+        {
             m_indentLevel = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
@@ -19,7 +18,8 @@ namespace SA.Foundation.Editor
             EditorGUILayout.BeginVertical();
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             EditorGUILayout.EndVertical();
             EditorGUILayout.EndHorizontal();
 
@@ -27,6 +27,3 @@ namespace SA.Foundation.Editor
         }
     }
 }
- 
-
-            

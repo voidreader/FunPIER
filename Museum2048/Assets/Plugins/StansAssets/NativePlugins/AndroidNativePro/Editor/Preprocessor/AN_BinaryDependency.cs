@@ -1,4 +1,4 @@
-namespace SA.Android
+namespace SA.Android.Editor
 {
     public enum AN_BinaryDependency
     {
@@ -9,29 +9,11 @@ namespace SA.Android
         BillingClient
     }
 
-    public static class AN_RemoteBinaryDependencyMethods
+    static class AN_RemoteBinaryDependencyMethods
     {
-        public static string GetLocalRepositoryName(this AN_BinaryDependency dependency) 
+        public static string GetRemoteRepositoryName(this AN_BinaryDependency dependency)
         {
-            switch (dependency) 
-            {
-                case AN_BinaryDependency.AndroidX:
-                    return "androidx.appcompat-1.1.0";
-                case AN_BinaryDependency.PlayServicesAuth:
-                    return "play-services-auth-17.0.0";
-                case AN_BinaryDependency.PlayServicesGames:
-                    return "play-services-games-18.0.1";
-                case AN_BinaryDependency.GSON:
-                    return "gson-2.8.5";
-                case AN_BinaryDependency.BillingClient:
-                    return "billingclient-2.0.3";
-            }
-            return string.Empty;
-        }
-
-        public static string GetRemoteRepositoryName(this AN_BinaryDependency dependency) 
-        {
-            switch (dependency) 
+            switch (dependency)
             {
                 case AN_BinaryDependency.AndroidX:
                     return "androidx.appcompat:appcompat:1.1.0";
@@ -42,8 +24,9 @@ namespace SA.Android
                 case AN_BinaryDependency.GSON:
                     return "com.google.code.gson:gson:2.8.5";
                 case AN_BinaryDependency.BillingClient:
-                    return "com.android.billingclient:billing:2.0.3";
+                    return "com.android.billingclient:billing:2.2.1";
             }
+
             return string.Empty;
         }
     }

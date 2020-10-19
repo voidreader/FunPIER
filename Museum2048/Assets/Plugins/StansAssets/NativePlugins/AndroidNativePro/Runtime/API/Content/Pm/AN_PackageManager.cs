@@ -1,84 +1,75 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Android.App;
 using SA.Android.Utilities;
 
 namespace SA.Android.Content.Pm
 {
-
     /// <summary>
-    /// Class for retrieving various kinds of information related to the application packages 
-    /// that are currently installed on the device. 
+    /// Class for retrieving various kinds of information related to the application packages
+    /// that are currently installed on the device.
     /// You can find this class through <see cref="AN_Context.GetPackageManager"/>.
     /// </summary>
-    public class AN_PackageManager 
+    public class AN_PackageManager
     {
-
-        public  enum PermissionState
+        /// <summary>
+        /// Enum depicting all possible states a permission can be in.
+        /// </summary>
+        public enum PermissionState
         {
-
             /// <summary>
-            /// Permission check result: this is returned by <see cref="AN_ContextCompat.CheckSelfPermission"/>
+            /// Permission check result: this is returned by <see cref="AN_PermissionsManager.CheckSelfPermission"/>
             /// if the permission has been granted to the given package.
             /// </summary>
             Granted = 0,
 
             /// <summary>
-            /// Permission check result: this is returned by <see cref="AN_ContextCompat.CheckSelfPermission"/>
+            /// Permission check result: this is returned by <see cref="AN_PermissionsManager.CheckSelfPermission"/>
             /// if the permission has not been granted to the given package.
             /// </summary>
             Denied = -1
-
         }
 
-        private AN_Context m_context;
-        private static string ANDROID_CLASS = "com.stansassets.android.content.pm.AN_PackageManager";
+        readonly AN_Context m_context;
+        static readonly string ANDROID_CLASS = "com.stansassets.android.content.pm.AN_PackageManager";
 
-
-        public AN_PackageManager(AN_Context context) {
+        public AN_PackageManager(AN_Context context)
+        {
             m_context = context;
         }
-
-
-
-
 
         /// <summary>
         /// Find a single content provider by its base path name.
         /// </summary>
-        public AN_ProviderInfo ResolveContentProvider() {
+        public AN_ProviderInfo ResolveContentProvider()
+        {
             return null;
         }
-
 
         /// <summary>
         /// Retrieve all activities that can be performed for the given intent.
         /// </summary>
         /// <param name="intent">The desired intent as per resolveActivity().</param>
         /// <param name="flags">
-        /// Additional option flags to modify the data returned. 
-        /// The most important is MATCH_DEFAULT_ONLY, to limit the resolution to only those activities that support the AN_Intent.CATEGORY_DEFAULT. 
+        /// Additional option flags to modify the data returned.
+        /// The most important is MATCH_DEFAULT_ONLY, to limit the resolution to only those activities that support the AN_Intent.CATEGORY_DEFAULT.
         /// Or, set MATCH_ALL to prevent any filtering of the results.
-        /// Value is either 0 or combination of GET_META_DATA, GET_SIGNATURES, GET_SHARED_LIBRARY_FILES, MATCH_ALL, 
-        /// MATCH_DISABLED_COMPONENTS, MATCH_DISABLED_UNTIL_USED_COMPONENTS, 
-        /// MATCH_DEFAULT_ONLY, MATCH_DIRECT_BOOT_AWARE, MATCH_DIRECT_BOOT_UNAWARE, 
+        /// Value is either 0 or combination of GET_META_DATA, GET_SIGNATURES, GET_SHARED_LIBRARY_FILES, MATCH_ALL,
+        /// MATCH_DISABLED_COMPONENTS, MATCH_DISABLED_UNTIL_USED_COMPONENTS,
+        /// MATCH_DEFAULT_ONLY, MATCH_DIRECT_BOOT_AWARE, MATCH_DIRECT_BOOT_UNAWARE,
         /// MATCH_SYSTEM_ONLY or MATCH_UNINSTALLED_PACKAGES.
         /// </param>
         /// <returns></returns>
-        public List<AN_ResolveInfo> QueryIntentActivities(AN_Intent intent, int flags = 0) {
+        public List<AN_ResolveInfo> QueryIntentActivities(AN_Intent intent, int flags = 0)
+        {
+            if (Application.isEditor) return new List<AN_ResolveInfo>();
 
-           if(Application.isEditor) {
-                return new List<AN_ResolveInfo>();
-           }
-          
-           var json =  AN_Java.Bridge.CallStatic<string>(ANDROID_CLASS, "QueryIntentActivities", m_context, intent, flags);
-           var result = JsonUtility.FromJson<AN_PackageManagerResolveInfoResult>(json);
+            var json = AN_Java.Bridge.CallStatic<string>(ANDROID_CLASS, "QueryIntentActivities", m_context, intent, flags);
+            var result = JsonUtility.FromJson<AN_PackageManagerResolveInfoResult>(json);
 
-           return result.m_list;
+            return result.m_list;
         }
-
 
         /// <summary>
         /// Retrieve overall information about an application package that is installed on the system.
@@ -86,67 +77,57 @@ namespace SA.Android.Content.Pm
         /// <param name="packageName"></param>
         /// <param name="flags"></param>
         /// <returns>
-        /// Returns a List of ResolveInfo objects containing one entry for each matching activity, ordered from best to worst. 
-        /// In other words, the first item is what would be returned by resolveActivity(Intent, int). 
+        /// Returns a List of ResolveInfo objects containing one entry for each matching activity, ordered from best to worst.
+        /// In other words, the first item is what would be returned by resolveActivity(Intent, int).
         /// If there are no matching activities, an empty list is returned.
         /// </returns>
-        public AN_PackageInfo GetPackageInfo(string packageName, int flags) {
-
-            if(Application.isEditor) {
-                string version = "undefined";
-                if (packageName.Equals(Application.identifier)) {
-                    version = Application.version;
-                }
+        public AN_PackageInfo GetPackageInfo(string packageName, int flags)
+        {
+            if (Application.isEditor)
+            {
+                var version = "undefined";
+                if (packageName.Equals(Application.identifier)) version = Application.version;
 
                 return new AN_PackageInfo(packageName, version);
             }
 
             var json = AN_Java.Bridge.CallStatic<string>(ANDROID_CLASS, "GetPackageInfo", m_context, packageName, flags);
-            if(json == null) {
-                return null;
-            }
+            if (json == null) return null;
 
             var result = JsonUtility.FromJson<AN_PackageInfo>(json);
             return result;
         }
 
-
         /// <summary>
-        /// Returns a "good" intent to launch a front-door activity in a package. 
-        /// This is used, for example, to implement an "open" button when browsing through packages. 
-        /// The current implementation looks first for a main activity in the category <see cref="AN_Intent.CATEGORY_INFO"/>, 
-        /// and next for a main activity in the category <see cref="AN_Intent.CATEGORY_LAUNCHER"/>  
+        /// Returns a "good" intent to launch a front-door activity in a package.
+        /// This is used, for example, to implement an "open" button when browsing through packages.
+        /// The current implementation looks first for a main activity in the category <see cref="AN_Intent.CATEGORY_INFO"/>,
+        /// and next for a main activity in the category <see cref="AN_Intent.CATEGORY_LAUNCHER"/>
         /// Returns null if neither are found.
         /// </summary>
         /// <param name="packageName"></param>
         /// <returns></returns>
-        public AN_Intent GetLaunchIntentForPackage(String packageName) {
-            int instanceId = AN_Java.Bridge.CallStatic<int>(ANDROID_CLASS, "GetLaunchIntentForPackage", m_context, packageName);
-            if(instanceId == 0) {
-                return null;
-            }
+        public AN_Intent GetLaunchIntentForPackage(string packageName)
+        {
+            var instanceId = AN_Java.Bridge.CallStatic<int>(ANDROID_CLASS, "GetLaunchIntentForPackage", m_context, packageName);
+            if (instanceId == 0) return null;
 
             return new AN_Intent(instanceId);
         }
-
-
 
         //--------------------------------------
         // Private Classes
         //--------------------------------------
 
         [Serializable]
-        private class AN_PackageManagerResolveInfoResult
+        class AN_PackageManagerResolveInfoResult
         {
             public List<AN_ResolveInfo> m_list = new List<AN_ResolveInfo>();
         }
 
-
-
         //--------------------------------------
         // Constants
         //--------------------------------------
-
 
         public static int CERT_INPUT_RAW_X509 = 0;
         public static int CERT_INPUT_SHA256 = 1;
@@ -237,7 +218,7 @@ namespace SA.Android.Content.Pm
         public static string FEATURE_TELEPHONY_EUICC = "android.hardware.telephony.euicc";
         public static string FEATURE_TELEPHONY_GSM = "android.hardware.telephony.gsm";
         public static string FEATURE_TELEPHONY_MBMS = "android.hardware.telephony.mbms";
-  
+
         public static string FEATURE_TOUCHSCREEN = "android.hardware.touchscreen";
         public static string FEATURE_TOUCHSCREEN_MULTITOUCH = "android.hardware.touchscreen.multitouch";
         public static string FEATURE_TOUCHSCREEN_MULTITOUCH_DISTINCT = "android.hardware.touchscreen.multitouch.distinct";
@@ -246,7 +227,7 @@ namespace SA.Android.Content.Pm
         public static string FEATURE_USB_HOST = "android.hardware.usb.host";
         public static string FEATURE_VERIFIED_BOOT = "android.software.verified_boot";
         public static string FEATURE_VR_HEADTRACKING = "android.hardware.vr.headtracking";
-  
+
         public static string FEATURE_VR_MODE_HIGH_PERFORMANCE = "android.hardware.vr.high_performance";
         public static string FEATURE_VULKAN_HARDWARE_COMPUTE = "android.hardware.vulkan.compute";
         public static string FEATURE_VULKAN_HARDWARE_LEVEL = "android.hardware.vulkan.level";
@@ -260,7 +241,7 @@ namespace SA.Android.Content.Pm
         public static string FEATURE_WIFI_RTT = "android.hardware.wifi.rtt";
         public static int GET_ACTIVITIES = 1;
         public static int GET_CONFIGURATIONS = 16384;
-      
+
         public static int GET_GIDS = 256;
         public static int GET_INSTRUMENTATION = 16;
         public static int GET_INTENT_FILTERS = 32;
@@ -271,9 +252,9 @@ namespace SA.Android.Content.Pm
         public static int GET_RESOLVED_FILTER = 64;
         public static int GET_SERVICES = 4;
         public static int GET_SHARED_LIBRARY_FILES = 1024;
-      
+
         public static int GET_SIGNING_CERTIFICATES = 134217728;
-       
+
         public static int GET_URI_PERMISSION_PATTERNS = 2048;
         public static int INSTALL_REASON_DEVICE_RESTORE = 2;
         public static int INSTALL_REASON_DEVICE_SETUP = 3;
@@ -300,7 +281,5 @@ namespace SA.Android.Content.Pm
         public static int VERIFICATION_ALLOW = 1;
         public static int VERIFICATION_REJECT = -1;
         public static int VERSION_CODE_HIGHEST = -1;
-
     }
 }
-

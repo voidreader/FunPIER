@@ -4,29 +4,29 @@ using SA.Foundation.Utility;
 
 namespace SA.Android.Editor
 {
-    internal static class AN_SettingsManager
+    static class AN_SettingsManager
     {
         public static void Export(string filepath)
         {
             if (filepath.Length != 0)
             {
-                AN_ExportedSettings exportedSettings = new AN_ExportedSettings();
-                string dataJson = JsonUtility.ToJson(exportedSettings);
+                var exportedSettings = new AN_ExportedSettings();
+                var dataJson = JsonUtility.ToJson(exportedSettings);
                 if (dataJson != null)
-                    File.WriteAllBytes(filepath, dataJson.ToBytes());
-            } 
+                    File.WriteAllBytes(filepath, System.Text.Encoding.UTF8.GetBytes(dataJson));
+            }
         }
 
         public static void Import(string filepath)
         {
             if (filepath.Length != 0)
             {
-                string fileContent = File.ReadAllText(filepath);
+                var fileContent = File.ReadAllText(filepath);
                 if (fileContent != null)
                 {
-                    AN_ExportedSettings importedSettings = JsonUtility.FromJson<AN_ExportedSettings>(fileContent);
+                    var importedSettings = JsonUtility.FromJson<AN_ExportedSettings>(fileContent);
                     JsonUtility.FromJsonOverwrite(importedSettings.AndroidSettings, AN_Settings.Instance);
-                    SA_FilesUtil.Write(AN_Settings.ANDROID_GAMES_IDS_FILE_PATH, importedSettings.XmlSettings.GamesIds);               
+                    SA_FilesUtil.Write(AN_Settings.ANDROID_GAMES_IDS_FILE_PATH, importedSettings.XmlSettings.GamesIds);
                 }
             }
         }
@@ -35,6 +35,5 @@ namespace SA.Android.Editor
         {
             return new AN_ExportedSettings();
         }
-
     }
 }

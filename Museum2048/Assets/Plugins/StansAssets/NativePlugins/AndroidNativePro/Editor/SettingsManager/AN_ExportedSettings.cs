@@ -5,29 +5,17 @@ using UnityEditor;
 namespace SA.Android.Editor
 {
     [Serializable]
-    internal class AN_ExportedSettings
+    class AN_ExportedSettings
     {
-        public string AndroidSettings
-        {
-            get
-            {
-                return m_AndroidSettings;
-            }
-        }
+        public string AndroidSettings => m_AndroidSettings;
 
-        public AN_XMLSettings XmlSettings
-        {
-            get
-            {
-                return m_XmlSettings;
-            }
-        }
+        public AN_XMLSettings XmlSettings => m_XmlSettings;
 
         [SerializeField]
-        private string m_AndroidSettings;
+        string m_AndroidSettings;
 
         [SerializeField]
-        private AN_XMLSettings m_XmlSettings;
+        AN_XMLSettings m_XmlSettings;
 
         public AN_ExportedSettings()
         {

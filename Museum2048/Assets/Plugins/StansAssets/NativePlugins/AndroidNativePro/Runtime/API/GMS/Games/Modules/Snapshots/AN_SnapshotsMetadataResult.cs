@@ -11,17 +11,16 @@ namespace SA.Android.GMS.Games
     [Serializable]
     public class AN_SnapshotsMetadataResult : SA_Result
     {
-        [SerializeField] List<AN_SnapshotMetadata> m_metadataList = new List<AN_SnapshotMetadata>();
+        [SerializeField]
+        List<AN_SnapshotMetadata> m_metadataList = new List<AN_SnapshotMetadata>();
 
         //Editor use only
-        public AN_SnapshotsMetadataResult() : base() { }
+        public AN_SnapshotsMetadataResult()
+            : base() { }
 
         /// <summary>
         /// The Metadata Snapshots List
         /// </summary>
-        public List<AN_SnapshotMetadata> Snapshots 
-        {
-            get { return m_metadataList; }
-        }
+        public List<AN_SnapshotMetadata> Snapshots => m_metadataList;
     }
 }

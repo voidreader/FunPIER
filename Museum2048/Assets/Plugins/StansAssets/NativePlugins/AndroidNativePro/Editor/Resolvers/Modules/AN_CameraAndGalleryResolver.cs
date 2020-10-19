@@ -1,17 +1,17 @@
 using SA.Android.Manifest;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-    public class AN_CameraAndGalleryResolver : AN_APIResolver
+    class AN_CameraAndGalleryResolver : AN_APIResolver
     {
-        public override bool IsSettingsEnabled {
-            get { return AN_Settings.Instance.CameraAndGallery; }
-            set { AN_Settings.Instance.CameraAndGallery = value; }
+        public override bool IsSettingsEnabled
+        {
+            get => AN_Settings.Instance.CameraAndGallery;
+            set => AN_Settings.Instance.CameraAndGallery = value;
         }
 
-        protected override void AppendBuildRequirements(AN_AndroidBuildRequirements buildRequirements) 
+        protected override void AppendBuildRequirements(AN_AndroidBuildRequirements buildRequirements)
         {
-
             if (AN_Settings.Instance.PreferredImagesStorage != AN_Settings.StorageType.ForceInternal)
             {
                 buildRequirements.AddPermission(AMM_ManifestPermission.READ_EXTERNAL_STORAGE);
@@ -20,6 +20,5 @@ namespace SA.Android
 
             buildRequirements.AddInternalLib("an_gallery.aar");
         }
-
     }
 }

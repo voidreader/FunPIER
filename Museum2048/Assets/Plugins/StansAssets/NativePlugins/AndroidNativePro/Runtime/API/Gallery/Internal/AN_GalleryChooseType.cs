@@ -1,6 +1,6 @@
 namespace SA.Android.Gallery.Internal
 {
-    internal enum AN_GalleryChooseType
+    enum AN_GalleryChooseType
     {
         PICK_PICTURE = 291,
         CAPTURE_PICTURE = 294,

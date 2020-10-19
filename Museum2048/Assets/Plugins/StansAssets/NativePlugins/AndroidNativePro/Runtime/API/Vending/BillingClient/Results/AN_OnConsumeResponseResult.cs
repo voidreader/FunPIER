@@ -5,13 +5,11 @@ using UnityEngine;
 namespace SA.Android.Vending.BillingClient
 {
     [Serializable]
-    internal class AN_OnConsumeResponseResult : SA_Result
+    class AN_OnConsumeResponseResult : SA_Result
     {
-        [SerializeField] private string m_PurchaseToken = string.Empty;
+        [SerializeField]
+        string m_PurchaseToken = string.Empty;
 
-        public string PurchaseToken
-        {
-            get { return m_PurchaseToken; }
-        }
+        public string PurchaseToken => m_PurchaseToken;
     }
 }

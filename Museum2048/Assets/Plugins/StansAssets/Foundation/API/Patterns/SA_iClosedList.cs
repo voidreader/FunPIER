@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using SA.Foundation.Events;
 
 namespace SA.Foundation.Patterns
@@ -12,6 +11,5 @@ namespace SA.Foundation.Patterns
         SA_iEvent<T> OnItemRemoved { get; }
 
         IEnumerable<T> Items { get; }
-
     }
 }

@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 namespace SA.Android.App.View
 {
-
     /// <summary>
     /// Standard constants and tools for placing an object within a potentially larger container.
     /// </summary>
-    public class AN_Gravity  {
-
-
+    public class AN_Gravity
+    {
         /// <summary>
         /// Raw bit controlling whether the right/bottom edge is clipped to its container, 
         /// based on the gravity direction being applied.

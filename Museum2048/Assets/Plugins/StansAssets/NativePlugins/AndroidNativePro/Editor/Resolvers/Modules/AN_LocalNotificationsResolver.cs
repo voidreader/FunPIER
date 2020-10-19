@@ -1,13 +1,13 @@
 using SA.Android.Manifest;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-    public class AN_LocalNotificationsResolver : AN_APIResolver
+    class AN_LocalNotificationsResolver : AN_APIResolver
     {
-        public override bool IsSettingsEnabled 
+        public override bool IsSettingsEnabled
         {
-            get { return AN_Settings.Instance.LocalNotifications; }
-            set { AN_Settings.Instance.LocalNotifications = value; }
+            get => AN_Settings.Instance.LocalNotifications;
+            set => AN_Settings.Instance.LocalNotifications = value;
         }
 
         protected override void AppendBuildRequirements(AN_AndroidBuildRequirements buildRequirements)
@@ -29,6 +29,7 @@ namespace SA.Android
 
             var notificationLaunchActivity = new AMM_ActivityTemplate(false, "com.stansassets.android.app.notifications.AN_NotificationLaunchActivity");
             notificationLaunchActivity.SetValue("android:launchMode", "singleTask");
+
             //  notificationLaunchActivity.SetValue("android:label", "@string/app_name");
             notificationLaunchActivity.SetValue("android:configChanges", "fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen");
             notificationLaunchActivity.SetValue("android:theme", "@android:style/Theme.Translucent.NoTitleBar");

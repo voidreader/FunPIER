@@ -40,8 +40,9 @@ namespace SA.Android.GMS.Games.Multiplayer
         /// </summary>
         public static int ROOM_VARIANT_DEFAULT = -1;
 
-        internal AN_Room(int hasCode):base(hasCode) {}
-        
+        internal AN_Room(int hasCode)
+            : base(hasCode) { }
+
         /// <summary>
         /// Retrieves the automatch criteria used to create or join this room, if any.
         /// May be null if the room has no automatch properties.
@@ -60,36 +61,24 @@ namespace SA.Android.GMS.Games.Multiplayer
         /// who are not automatched immediately,
         /// as measured from the time that the room entered the automatching pool.
         /// </summary>
-        public int AutoMatchWaitEstimateSeconds 
-        {
-            get { return CallStatic<int>("GetAutoMatchWaitEstimateSeconds"); }
-        }
+        public int AutoMatchWaitEstimateSeconds => CallStatic<int>("GetAutoMatchWaitEstimateSeconds");
 
         /// <summary>
         /// The server timestamp at which the room was created.
         /// </summary>
-        public long CreationTimestamp
-        {
-            get { return CallStatic<long>("GetCreationTimestamp"); }
-        }
-        
+        public long CreationTimestamp => CallStatic<long>("GetCreationTimestamp");
+
         /// <summary>
         /// he ID of the participant who created this Room.
         /// Note that not all participants will see the same value for the creator.
         /// In the case of an automatch, this value may differ for each participant.
         /// </summary>
-        public string CreatorId
-        {
-            get { return CallStatic<string>("GetCreatorId"); }
-        }
+        public string CreatorId => CallStatic<string>("GetCreatorId");
 
         /// <summary>
         /// Description of this room.
         /// </summary>
-        public string Description
-        {
-            get { return CallStatic<string>("GetDescription"); }
-        }
+        public string Description => CallStatic<string>("GetDescription");
 
         /// <summary>
         /// Get a participant in a room by its ID.
@@ -100,7 +89,7 @@ namespace SA.Android.GMS.Games.Multiplayer
         /// <returns>The participant corresponding to the given ID.</returns>
         public AN_Participant GetParticipant(string participantId)
         {
-             return CallStatic<AN_Participant>("GetParticipant", participantId);
+            return CallStatic<AN_Participant>("GetParticipant", participantId);
         }
 
         /// <summary>
@@ -121,11 +110,7 @@ namespace SA.Android.GMS.Games.Multiplayer
         /// These are returned in the participant order of the room.
         /// Note that these are not stable across rooms.
         /// </summary>
-        public List<string> ParticipantIds
-        {
-            
-            get { return CallStatic<AN_ParticipantIds>("GetParticipantIds").Ids; }
-        }
+        public List<string> ParticipantIds => CallStatic<AN_ParticipantIds>("GetParticipantIds").Ids;
 
         /// <summary>
         /// Get the status of a participant in a room.
@@ -142,24 +127,18 @@ namespace SA.Android.GMS.Games.Multiplayer
         {
             return CallStatic<int>("GetParticipantIds", participantId);
         }
-        
+
         /// <summary>
         /// The ID of this Room.
         /// </summary>
-        public string RoomId
-        {
-            get { return CallStatic<string>("GetRoomId"); }
-        }
-        
+        public string RoomId => CallStatic<string>("GetRoomId");
+
         /// <summary>
         /// The current status of the room.
         /// One of <see cref="ROOM_STATUS_INVITING"/>, <see cref="ROOM_STATUS_ACTIVE"/>,
         /// <see cref="ROOM_STATUS_AUTO_MATCHING"/>, <see cref="ROOM_STATUS_CONNECTING"/>.
         /// </summary>
-        public int Status
-        {
-            get { return CallStatic<int>("GetStatus"); }
-        }
+        public int Status => CallStatic<int>("GetStatus");
 
         /// <summary>
         /// Variant specified for this room, if any.
@@ -167,19 +146,15 @@ namespace SA.Android.GMS.Games.Multiplayer
         /// If specified, this value will be a positive integer.
         /// If this room had no variant specified, returns <see cref="ROOM_VARIANT_DEFAULT"/>.
         /// </summary>
-        public int Variant
-        {
-            get { return CallStatic<int>("Variant"); }
-        }
+        public int Variant => CallStatic<int>("Variant");
 
-        protected override string JavaClassName
-        {
-            get { return "com.stansassets.gms.games.multiplayer.realtime.AN_Room"; }
-        }
-        
+        protected override string JavaClassName => "com.stansassets.gms.games.multiplayer.realtime.AN_Room";
+
         [Serializable]
-        internal class AN_ParticipantIds  {
-           [SerializeField] public List<string> Ids = new List<string>();
+        internal class AN_ParticipantIds
+        {
+            [SerializeField]
+            public List<string> Ids = new List<string>();
         }
     }
 }

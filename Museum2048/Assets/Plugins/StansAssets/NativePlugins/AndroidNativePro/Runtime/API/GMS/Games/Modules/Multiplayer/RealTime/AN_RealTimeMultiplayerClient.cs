@@ -1,5 +1,5 @@
 using System;
-using  UnityEngine;
+using UnityEngine;
 using SA.Android.Utilities;
 
 namespace SA.Android.GMS.Games.Multiplayer
@@ -18,55 +18,48 @@ namespace SA.Android.GMS.Games.Multiplayer
         [Serializable]
         public class ReliableMessageSentCallback
         {
-        
-            [SerializeField] private int m_StatusCode = 0;
-            [SerializeField] private int m_TokenId = 0;
-            [SerializeField] private string m_RecipientParticipantId = string.Empty;
+            [SerializeField]
+            int m_StatusCode = 0;
+            [SerializeField]
+            int m_TokenId = 0;
+            [SerializeField]
+            string m_RecipientParticipantId = string.Empty;
 
             /// <summary>
             /// A status code indicating the result of the operation.
             /// </summary>
-            public int StatusCode
-            {
-                get { return m_StatusCode; }
-            }
-            
+            public int StatusCode => m_StatusCode;
+
             /// <summary>
             /// The ID of the message which was sent.
             /// </summary>
-            public int TokenId
-            {
-                get { return m_TokenId; }
-            }
-            
+            public int TokenId => m_TokenId;
+
             /// <summary>
             /// The participant ID of the peer to whom the message was sent.
             /// </summary>
-            public string RecipientParticipantId
-            {
-                get { return m_RecipientParticipantId; }
-            }
+            public string RecipientParticipantId => m_RecipientParticipantId;
         }
 
         public void Join(AN_RoomConfig config)
         {
             CallStatic("Join", config.HashCode);
         }
-        
+
         public void Create(AN_RoomConfig config)
         {
             CallStatic("Create", config.HashCode);
         }
-        
+
         public void Leave(AN_RoomConfig config, string roomId)
         {
             CallStatic("Leave", config.HashCode, roomId);
         }
-        
-        public void SendUnreliableMessage (byte[] messageData, string roomId, string recipientParticipantId)
+
+        public void SendUnreliableMessage(byte[] messageData, string roomId, string recipientParticipantId)
         {
-            CallStatic("SendUnreliableMessage", 
-                Convert.ToBase64String(messageData), 
+            CallStatic("SendUnreliableMessage",
+                Convert.ToBase64String(messageData),
                 roomId,
                 recipientParticipantId);
         }
@@ -79,19 +72,13 @@ namespace SA.Android.GMS.Games.Multiplayer
             javaRequestBuilder.AddArgument(roomId);
             javaRequestBuilder.AddArgument(recipientParticipantId);
             javaRequestBuilder.AddCallback(callback);
-            
+
             javaRequestBuilder.Invoke();
         }
 
-        internal AN_RealTimeMultiplayerClient(int hasCode) : base(hasCode)
-        {
-            
-        }
+        internal AN_RealTimeMultiplayerClient(int hasCode)
+            : base(hasCode) { }
 
-        protected override string JavaClassName
-        {
-            get { return "com.stansassets.gms.games.multiplayer.realtime.AN_RealTimeMultiplayerClient"; }
-        }
-        
+        protected override string JavaClassName => "com.stansassets.gms.games.multiplayer.realtime.AN_RealTimeMultiplayerClient";
     }
 }

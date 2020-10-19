@@ -5,8 +5,8 @@ using SA.Android.OS;
 using SA.Android.Utilities;
 using SA.Foundation.Events;
 
-namespace SA.Android.App {
-
+namespace SA.Android.App
+{
     /// <summary>
     /// Class to notify the user of events that happen. 
     /// This is how you tell the user that something has happened in the background.
@@ -58,29 +58,29 @@ namespace SA.Android.App {
             UNSPECIFIED = -1000
         }
 
-        private static SA_Event<AN_NotificationRequest> s_OnNotificationClick;
-        private static SA_Event<AN_NotificationRequest> s_OnNotificationReceived;
+        static SA_Event<AN_NotificationRequest> s_OnNotificationClick;
+        static SA_Event<AN_NotificationRequest> s_OnNotificationReceived;
 
-        private const string k_ScheduledNotificationsListPrefsKey = "SCHEDULED_NOTIFICATIONS_LIST_PREFS_KEY";
-        private const string k_NotificationsManager = "com.stansassets.android.app.notifications.AN_NotificationManager";
-        private const string k_AlarmNotificationService = "com.stansassets.android.app.notifications.AN_AlarmNotificationService";
+        const string k_ScheduledNotificationsListPrefsKey = "SCHEDULED_NOTIFICATIONS_LIST_PREFS_KEY";
+        const string k_NotificationsManager = "com.stansassets.android.app.notifications.AN_NotificationManager";
+        const string k_AlarmNotificationService = "com.stansassets.android.app.notifications.AN_AlarmNotificationService";
 
         static AN_NotificationManager()
         {
-            #if UNITY_2018_1_OR_NEWER
+#if UNITY_2018_1_OR_NEWER
             Application.quitting += () =>
             {
                 AN_Java.Bridge.CallStatic(k_AlarmNotificationService, "Restart");
             };
-            #endif
+#endif
         }
-        
+
         /// <summary>
         /// Cancel a previously shown notification. 
         /// If it's transient, the view will be hidden. If it's persistent, it will be removed from the status bar.
         /// </summary>
         /// <param name="Identifier">Notification request id</param>
-        public static void Cancel(int Identifier) 
+        public static void Cancel(int Identifier)
         {
             AN_Java.Bridge.CallStatic(k_NotificationsManager, "Cancel", Identifier);
         }
@@ -88,7 +88,7 @@ namespace SA.Android.App {
         /// <summary>
         /// Cancel all previously shown notifications.
         /// </summary>
-        public static void CancelAll() 
+        public static void CancelAll()
         {
             AN_Java.Bridge.CallStatic(k_NotificationsManager, "CancelAll");
         }
@@ -98,7 +98,7 @@ namespace SA.Android.App {
         /// See <see cref="Cancel(int)"/> for the detailed behavior.
         /// </summary>
         /// <param name="request">The notification request to schedule.This parameter must not be <c>null</c>.</param>
-        public static void Schedule(AN_NotificationRequest request) 
+        public static void Schedule(AN_NotificationRequest request)
         {
             ValidateRequest(request);
             AN_Java.Bridge.CallStatic(k_NotificationsManager, "Schedule", request);
@@ -108,7 +108,7 @@ namespace SA.Android.App {
         /// Unschedule the specified notification request.
         /// </summary>
         /// <param name="request">request to Unschedule.</param>
-        public static void Unschedule(AN_NotificationRequest request) 
+        public static void Unschedule(AN_NotificationRequest request)
         {
             Unschedule(request.Identifier);
         }
@@ -117,18 +117,15 @@ namespace SA.Android.App {
         /// Unschedule the specified notification request by id
         /// </summary>
         /// <param name="Identifier">notification request id</param>
-        public static void Unschedule(int Identifier) 
+        public static void Unschedule(int Identifier)
         {
             AN_Java.Bridge.CallStatic(k_NotificationsManager, "Unschedule", Identifier);
         }
 
-        public static void UnscheduleAll() 
+        public static void UnscheduleAll()
         {
             var list = GetScheduledList();
-            foreach(var id in list.Ids) 
-            {
-                Unschedule(id);
-            }
+            foreach (var id in list.Ids) Unschedule(id);
             PlayerPrefs.DeleteKey(k_ScheduledNotificationsListPrefsKey);
         }
 
@@ -152,7 +149,7 @@ namespace SA.Android.App {
         /// If the provided channel is malformed, a RemoteException will be thrown.
         /// This value must never be <c>null</c>.
         /// </param>
-        public static void CreateNotificationChannel(AN_NotificationChannel channel) 
+        public static void CreateNotificationChannel(AN_NotificationChannel channel)
         {
             AN_Java.Bridge.CallStatic(k_NotificationsManager, "CreateNotificationChannel", JsonUtility.ToJson(channel));
         }
@@ -160,15 +157,15 @@ namespace SA.Android.App {
         /// <summary>
         /// Returns all notification channels belonging to the calling package.
         /// </summary>
-        public static List<AN_NotificationChannel> GetNotificationChannels() 
+        public static List<AN_NotificationChannel> GetNotificationChannels()
         {
-            if(Application.isEditor)
+            if (Application.isEditor)
                 return new List<AN_NotificationChannel>();
-            
+
             var json = AN_Java.Bridge.CallStatic<string>(k_NotificationsManager, "GetNotificationChannels");
-            if(string.IsNullOrEmpty(json))
+            if (string.IsNullOrEmpty(json))
                 return null;
-            
+
             return JsonUtility.FromJson<AN_NotificationChannelsList>(json).Channels;
         }
 
@@ -177,18 +174,17 @@ namespace SA.Android.App {
         /// he channel must belong to your package, or it will not be returned.
         /// </summary>
         /// <param name="channelId">Channel id</param>
-        public static AN_NotificationChannel GetNotificationChannel(string channelId) 
+        public static AN_NotificationChannel GetNotificationChannel(string channelId)
         {
-            if (Application.isEditor) 
+            if (Application.isEditor)
                 return null;
-            
+
             var json = AN_Java.Bridge.CallStatic<string>(k_NotificationsManager, "GetNotificationChannel", channelId);
             if (string.IsNullOrEmpty(json))
                 return null;
-            
+
             return JsonUtility.FromJson<AN_NotificationChannel>(json);
         }
-
 
         /// <summary>
         /// Deletes the given notification channel.
@@ -196,7 +192,7 @@ namespace SA.Android.App {
         /// the deleted channel will be un-deleted with all of the same settings it had before it was deleted.
         /// </summary>
         /// <param name="channelId">Channel id</param>
-        public static void DeleteNotificationChannel(string channelId) 
+        public static void DeleteNotificationChannel(string channelId)
         {
             AN_Java.Bridge.CallStatic(k_NotificationsManager, "DeleteNotificationChannel", channelId);
         }
@@ -209,35 +205,35 @@ namespace SA.Android.App {
         /// You can analyse the <see cref="AN_NotificationRequest"/> that caused clicked notification to show up, 
         /// for better understanding the context user launched your app in.
         /// </summary>
-        public static AN_NotificationRequest LastOpenedNotificationRequest 
+        public static AN_NotificationRequest LastOpenedNotificationRequest
         {
             get
             {
                 var json = AN_Java.Bridge.CallStatic<string>(k_NotificationsManager, "GetLastOpenNotification");
-                
-                if(string.IsNullOrEmpty(json))
+
+                if (string.IsNullOrEmpty(json))
                     return null;
-                
-                return JsonUtility.FromJson<AN_NotificationRequest>(json);    
+
+                return JsonUtility.FromJson<AN_NotificationRequest>(json);
             }
         }
 
         /// <summary>
         /// The event is fired when user clicked on local notification banner
         /// </summary>
-        public static SA_iEvent<AN_NotificationRequest> OnNotificationClick 
+        public static SA_iEvent<AN_NotificationRequest> OnNotificationClick
         {
-            get 
+            get
             {
-                if(s_OnNotificationClick == null) 
+                if (s_OnNotificationClick == null)
                 {
                     s_OnNotificationClick = new SA_Event<AN_NotificationRequest>();
-                    AN_Java.Bridge.CallStaticWithCallback<AN_NotificationRequest>(k_NotificationsManager, "Subscribe", result => 
+                    AN_Java.Bridge.CallStaticWithCallback<AN_NotificationRequest>(k_NotificationsManager, "Subscribe", result =>
                     {
                         s_OnNotificationClick.Invoke(result);
                     });
                 }
-                
+
                 return s_OnNotificationClick;
             }
         }
@@ -245,15 +241,15 @@ namespace SA.Android.App {
         /// <summary>
         /// Event fired when local notification received 
         /// </summary>
-        public static SA_iEvent<AN_NotificationRequest> OnNotificationReceived 
+        public static SA_iEvent<AN_NotificationRequest> OnNotificationReceived
         {
-            get 
+            get
             {
-                if (s_OnNotificationReceived == null) 
+                if (s_OnNotificationReceived == null)
                 {
                     s_OnNotificationReceived = new SA_Event<AN_NotificationRequest>();
 
-                    AN_Java.Bridge.CallStaticWithCallback<AN_NotificationRequest>(k_NotificationsManager, "SubscribeToNotificationReceived", result => 
+                    AN_Java.Bridge.CallStaticWithCallback<AN_NotificationRequest>(k_NotificationsManager, "SubscribeToNotificationReceived", result =>
                     {
                         s_OnNotificationReceived.Invoke(result);
                     });
@@ -263,32 +259,32 @@ namespace SA.Android.App {
             }
         }
 
-        private static void ValidateRequest(AN_NotificationRequest request) 
+        static void ValidateRequest(AN_NotificationRequest request)
         {
             //Skipping this in the editor
-            if (Application.isEditor) 
+            if (Application.isEditor)
                 return;
-            
-            if(!AN_Settings.Instance.LocalNotifications)
+
+            if (!AN_Settings.Instance.LocalNotifications)
                 throw new InvalidOperationException("Notification can be scheduled when LocalNotification service is disabled. " +
-                                                    "Please enable it using the plugin editor settings.");
+                    "Please enable it using the plugin editor settings.");
 
             var builder = request.Content;
 
             //Saving the request id
             var list = GetScheduledList();
-            if(!list.Ids.Contains(request.Identifier)) 
+            if (!list.Ids.Contains(request.Identifier))
             {
                 list.Ids.Add(request.Identifier);
                 SaveScheduledNotificationsList(list);
             }
 
             //Skipping for the Android versions that does not support notification channels
-            if (AN_Build.VERSION.SDK_INT < AN_Build.VERSION_CODES.O) 
+            if (AN_Build.VERSION.SDK_INT < AN_Build.VERSION_CODES.O)
                 return;
 
             //Let' check if user has provided a custom channel 
-            if (string.IsNullOrEmpty(builder.ChanelId)) 
+            if (string.IsNullOrEmpty(builder.ChanelId))
                 builder.SetChanelId(AN_NotificationChannel.ANDROID_NATIVE_DEFAULT_CHANNEL_ID);
 
             var chanelId = builder.ChanelId;
@@ -297,7 +293,7 @@ namespace SA.Android.App {
             //We will create channel in 2 cases
             //1 if you specified channel that doesn't yet exists
             //2 fall back to default channel, that should always be updated according to a builder settings
-            if(channel == null || chanelId.Equals(AN_NotificationChannel.ANDROID_NATIVE_DEFAULT_CHANNEL_ID)) 
+            if (channel == null || chanelId.Equals(AN_NotificationChannel.ANDROID_NATIVE_DEFAULT_CHANNEL_ID))
             {
                 channel = new AN_NotificationChannel(chanelId, "Default", Importance.DEFAULT);
                 channel.Sound = builder.SoundName;
@@ -305,15 +301,15 @@ namespace SA.Android.App {
             }
         }
 
-        private static ScheduledNotificationsList GetScheduledList() 
+        static ScheduledNotificationsList GetScheduledList()
         {
             ScheduledNotificationsList list;
-            if (PlayerPrefs.HasKey(k_ScheduledNotificationsListPrefsKey)) 
+            if (PlayerPrefs.HasKey(k_ScheduledNotificationsListPrefsKey))
             {
                 var json = PlayerPrefs.GetString(k_ScheduledNotificationsListPrefsKey);
                 list = JsonUtility.FromJson<ScheduledNotificationsList>(json);
-            } 
-            else 
+            }
+            else
             {
                 list = new ScheduledNotificationsList();
             }
@@ -321,15 +317,14 @@ namespace SA.Android.App {
             return list;
         }
 
-        private static void SaveScheduledNotificationsList(ScheduledNotificationsList list) 
+        static void SaveScheduledNotificationsList(ScheduledNotificationsList list)
         {
             var json = JsonUtility.ToJson(list);
             PlayerPrefs.SetString(k_ScheduledNotificationsListPrefsKey, json);
         }
 
-
         [Serializable]
-        private class ScheduledNotificationsList 
+        class ScheduledNotificationsList
         {
             public List<int> Ids = new List<int>();
         }

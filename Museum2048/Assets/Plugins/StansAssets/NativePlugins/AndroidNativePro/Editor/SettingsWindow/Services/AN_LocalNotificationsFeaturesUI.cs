@@ -6,54 +6,42 @@ using SA.Foundation.Utility;
 using SA.Foundation.UtilitiesEditor;
 using Rotorz.ReorderableList;
 
-namespace SA.Android
+namespace SA.Android.Editor
 {
-    public class AN_LocalNotificationsFeaturesUI : AN_ServiceSettingsUI
+    class AN_LocalNotificationsFeaturesUI : AN_ServiceSettingsUI
     {
-        private const string k_RequiredIconExtension = ".png";
-        private const string k_RequiredSoundExtension = ".wav";
+        const string k_RequiredIconExtension = ".png";
+        const string k_RequiredSoundExtension = ".wav";
 
-        public override void OnAwake() 
+        public override void OnAwake()
         {
             base.OnAwake();
 
-            AddFeatureUrl("Getting Started", "https://unionassets.com/android-native-pro/getting-started-769");
-            AddFeatureUrl("Scheduling", "https://unionassets.com/android-native-pro/local-notifications-684");
-            AddFeatureUrl("Canceling Notifications", "https://unionassets.com/android-native-pro/local-notifications-684#canceling-notifications");
-            AddFeatureUrl("Handling Notifications", "https://unionassets.com/android-native-pro/responding-to-notification-772");
-            AddFeatureUrl("Notification Styles", "https://unionassets.com/android-native-pro/notification-styles-717");
-            AddFeatureUrl("Notification Channels", "https://unionassets.com/android-native-pro/notification-channels-716");
-            AddFeatureUrl("Application Badges", "https://unionassets.com/android-native-pro/applicationicon-badge-number-847");
+            AddFeatureUrl("Getting Started", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Getting-Started-(Local-Notifications)");
+            AddFeatureUrl("Scheduling", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Scheduling-Notifications");
+            AddFeatureUrl("Canceling Notifications", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Scheduling-Notifications#canceling-notifications");
+            AddFeatureUrl("Handling Notifications", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Responding-to-Notification");
+            AddFeatureUrl("Notification Styles", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Notification-Styles");
+            AddFeatureUrl("Notification Channels", "https://github.com/StansAssets/com.stansassets.android-native/wiki/Notification-Channels");
+            AddFeatureUrl("Application Badges", "https://github.com/StansAssets/com.stansassets.android-native/wiki/ApplicationIcon-Badge-Number");
         }
 
-        public override string Title 
-        {
-            get { return "Local Notifications"; }
-        }
+        public override string Title => "Local Notifications";
 
-        public override string Description 
-        {
-            get { return "Allows you to display & manage local notifications on the android device."; }
-        }
+        public override string Description => "Allows you to display & manage local notifications on the android device.";
 
-        protected override Texture2D Icon 
-        {
-            get { return AN_Skin.GetIcon("android_notifications.png"); }
-        }
+        protected override Texture2D Icon => AN_Skin.GetIcon("android_notifications.png");
 
-        public override SA_iAPIResolver Resolver 
-        {
-            get { return AN_Preprocessor.GetResolver<AN_LocalNotificationsResolver>(); }
-        }
+        public override SA_iAPIResolver Resolver => AN_Preprocessor.GetResolver<AN_LocalNotificationsResolver>();
 
-        protected override void OnServiceUI() 
+        protected override void OnServiceUI()
         {
             using (new SA_WindowBlockWithSpace(new GUIContent("Customization")))
             {
                 EditorGUILayout.HelpBox("A notification is a message that Android displays outside your app's UI " +
-                             "to provide the user with reminders, communication from other people, or other timely information " +
-                             "from your app. Users can tap the notification to open your app or take an action directly from the notification.",
-                                                 MessageType.Info);
+                    "to provide the user with reminders, communication from other people, or other timely information " +
+                    "from your app. Users can tap the notification to open your app or take an action directly from the notification.",
+                    MessageType.Info);
 
                 ReorderableListGUI.Title("Custom Icons (*" + k_RequiredIconExtension + ")");
                 ReorderableListGUI.ListField(AN_EditorSettings.Instance.NotificationIcons, DrawIconField, DrawEmptyIcons);
@@ -66,49 +54,54 @@ namespace SA.Android
             }
         }
 
-        private void ValidateAssets<T>(List<T> assets, string requiredLocation, string requiredExtension) where T : Object 
+        void ValidateAssets<T>(List<T> assets, string requiredLocation, string requiredExtension) where T : Object
         {
             //Let's make sure we aren't missing assets under requiredLocation
             var assetPaths = SA_AssetDatabase.FindAssetsWithExtentions(requiredLocation, requiredExtension);
-            foreach (var assetPath in assetPaths) {
+            foreach (var assetPath in assetPaths)
+            {
                 var assetExtension = SA_PathUtil.GetExtension(assetPath);
-                if (assetExtension.Equals(requiredExtension)) {
+                if (assetExtension.Equals(requiredExtension))
+                {
                     var file = (T)AssetDatabase.LoadAssetAtPath(assetPath, typeof(T));
-                    if (!assets.Contains(file)) {
+                    if (!assets.Contains(file))
+                    {
                         assets.Add(file);
                         return;
                     }
                 }
             }
 
-            for (var i = 0; i < assets.Count; i++) 
+            for (var i = 0; i < assets.Count; i++)
             {
                 var asset = assets[i];
-                if (asset == null) 
+                if (asset == null)
                 {
                     //We do not allow null element's unless this is a last element
-                    if(i != assets.Count - 1) 
+                    if (i != assets.Count - 1)
                     {
                         assets.RemoveAt(i);
                         return;
                     }
+
                     continue;
                 }
 
-                if(!HasValidExtension(asset, requiredExtension)) 
+                if (!HasValidExtension(asset, requiredExtension))
                 {
-                    EditorGUILayout.HelpBox(asset.name + " need to be in *" + requiredExtension  + " format.", MessageType.Error);
+                    EditorGUILayout.HelpBox(asset.name + " need to be in *" + requiredExtension + " format.", MessageType.Error);
                     continue;
                 }
 
-                if (!SA_AssetDatabase.IsAssetInsideFolder(asset, requiredLocation)) 
+                if (!SA_AssetDatabase.IsAssetInsideFolder(asset, requiredLocation))
                 {
-
                     EditorGUILayout.HelpBox(asset.name + " has to be inside: \n" + requiredLocation, MessageType.Error);
-                    using (new SA_GuiBeginHorizontal()) {
+                    using (new SA_GuiBeginHorizontal())
+                    {
                         GUILayout.FlexibleSpace();
                         var move = GUILayout.Button("Move", EditorStyles.miniButton);
-                        if (move) {
+                        if (move)
+                        {
                             var currentPath = AssetDatabase.GetAssetPath(asset);
                             var assetName = SA_AssetDatabase.GetFileName(currentPath);
                             var newPath = requiredLocation + assetName;
@@ -119,42 +112,43 @@ namespace SA.Android
             }
         }
 
-        private bool HasValidExtension(Object asset, string requiredExtension) 
+        bool HasValidExtension(Object asset, string requiredExtension)
         {
             var assetPath = SA_AssetDatabase.GetAssetPath(asset);
             var assetExtension = SA_PathUtil.GetExtension(assetPath);
-            if (assetExtension.Equals(requiredExtension)) {
+            if (assetExtension.Equals(requiredExtension))
                 return true;
-            } else {
+            else
                 return false;
-            }
         }
 
-        private Object DrawIconField(Rect position, Object asset) 
+        Object DrawIconField(Rect position, Object asset)
         {
             var color = GUI.color;
-            if(asset != null) {
+            if (asset != null)
+            {
                 if (!HasValidExtension(asset, k_RequiredIconExtension))
                     GUI.color = Color.red;
 
                 if (!SA_AssetDatabase.IsAssetInsideFolder(asset, AN_Settings.ANDROID_DRAWABLE_PATH))
                     GUI.color = Color.red;
             }
-            
+
             var result = DrawObjectField(position, asset);
             GUI.color = color;
 
             return result;
         }
 
-        private Object DrawSoundField(Rect position, Object asset)
+        Object DrawSoundField(Rect position, Object asset)
         {
             var color = GUI.color;
-            if (asset != null) {
+            if (asset != null)
+            {
                 if (!HasValidExtension(asset, k_RequiredSoundExtension))
                     GUI.color = Color.red;
-                
-                if (!SA_AssetDatabase.IsAssetInsideFolder(asset, AN_Settings.ANDROID_RAW_PATH)) 
+
+                if (!SA_AssetDatabase.IsAssetInsideFolder(asset, AN_Settings.ANDROID_RAW_PATH))
                     GUI.color = Color.red;
             }
 
@@ -163,7 +157,7 @@ namespace SA.Android
             return result;
         }
 
-        private T DrawObjectField<T>(Rect position, T itemValue) where T : Object 
+        T DrawObjectField<T>(Rect position, T itemValue) where T : Object
         {
             var drawRect = new Rect(position);
             drawRect.y += 2;
@@ -171,12 +165,12 @@ namespace SA.Android
             return (T)EditorGUI.ObjectField(drawRect, itemValue, typeof(T), false);
         }
 
-        private void DrawEmptyIcons() 
+        void DrawEmptyIcons()
         {
             EditorGUILayout.LabelField("Add icons you want to use as custom notification icons. The application icon will be used by default", SA_Skin.MiniLabelWordWrap);
         }
 
-        private void DrawEmptySounds() 
+        void DrawEmptySounds()
         {
             EditorGUILayout.LabelField("Add sound clips you want to use as custom notification alert sound. The phone default alert sound will be used by default", SA_Skin.MiniLabelWordWrap);
         }

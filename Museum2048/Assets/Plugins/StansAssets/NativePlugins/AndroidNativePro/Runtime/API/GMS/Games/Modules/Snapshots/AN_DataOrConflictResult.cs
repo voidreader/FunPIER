@@ -15,14 +15,8 @@ namespace SA.Android.GMS.Games
         /// can be used to access the details. If this method returns false,
         /// <see cref="GetSnapshot"/> can be used to access the requested data.
         /// </summary>
-        public bool IsConflict
-        {
-            get
-            {
-                return AN_GMS_Lib.Snapshots.DataOrConflictResult_IsConflict(this);  
-            }
-        }
-        
+        public bool IsConflict => AN_GMS_Lib.Snapshots.DataOrConflictResult_IsConflict(this);
+
         /// <summary>
         /// Snapshot data if the result was successful.
         /// </summary>
@@ -31,7 +25,7 @@ namespace SA.Android.GMS.Games
         {
             return AN_GMS_Lib.Snapshots.DataOrConflictResult_GetSnapshot(this).Data;
         }
-        
+
         /// <summary>
         /// Snapshot conflict info.
         /// </summary>

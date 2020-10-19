@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 namespace SA.Foundation.Editor
 {
     public abstract class SA_GUILayoutElement : ScriptableObject, SA_iGUILayoutElement
@@ -12,10 +10,10 @@ namespace SA.Foundation.Editor
 
         public abstract void OnGUI();
         public virtual void OnLayoutEnable() { }
-        public virtual void OnAwake() {}
+        public virtual void OnAwake() { }
 
-
-        public void SetPosition(Rect position) {
+        public void SetPosition(Rect position)
+        {
             m_position = position;
         }
     }
