@@ -1159,7 +1159,7 @@ Transform:
   m_GameObject: {fileID: 73631489}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0015625, y: 0.0015625, z: 0.0015625}
+  m_LocalScale: {x: 0.0013513514, y: 0.0013513514, z: 0.0013513514}
   m_Children:
   - {fileID: 1602290306}
   - {fileID: 1384485020}
@@ -8499,7 +8499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &584204208
 Transform:
   m_ObjectHideFlags: 0
@@ -18615,7 +18615,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219892710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalPosition: {x: 0, y: 60, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1124817241}
@@ -18653,18 +18653,18 @@ MonoBehaviour:
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
   mWidth: 700
-  mHeight: 28
+  mHeight: 60
   mDepth: 22
   mMat: {fileID: 0}
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 25
+  aspectRatio: 11.666667
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 12800000, guid: ec0a0a2e1a76f5e4db449f38d7bd05ab, type: 3}
   mFont: {fileID: 0}
   mText: "\u300EMidnight in Museum\u300F\uC744 \uC990\uAE30\uACE0 \uACC4\uC2E0\uAC00\uC694?"
-  mFontSize: 28
+  mFontSize: 30
   mFontStyle: 1
   mAlignment: 0
   mEncoding: 1
@@ -28564,6 +28564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34c8c27186909e54b802f305d553afa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _logoutHistory: 0
 --- !u!114 &1801886463
 MonoBehaviour:
   m_ObjectHideFlags: 0

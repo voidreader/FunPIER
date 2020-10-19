@@ -83,18 +83,30 @@ public class LobbyManager : MonoBehaviour {
 
     void ControlEscape() {
 
+        
+        // 게임 플레이 도중. 
         if (inGameTopGroup.gameObject.activeSelf)
-            return;
+        {
+            if (PageManager.main.pageStack.Count > 0)
+            {
+                PageManager.main.pageStack.Pop().Close();
+                return;
+            }
 
+            InGame.main.QuitInGame();
 
-
-        if(PageManager.main.pageStack.Count > 0) {
-            PageManager.main.pageStack.Pop().Close();
-            return;
         }
+        else // 로비. 
+        {
+            if (PageManager.main.pageStack.Count > 0)
+            {
+                PageManager.main.pageStack.Pop().Close();
+                return;
+            }
 
-        PageManager.main.OpenDoubleButtonMessage(Message.ExitGame, QuitProcess, delegate { });
-
+            // 게임 종료 팝업을 오픈 
+            PageManager.main.OpenDoubleButtonMessage(Message.ExitGame, QuitProcess, delegate { });
+        }
     }
 
     void QuitProcess() {

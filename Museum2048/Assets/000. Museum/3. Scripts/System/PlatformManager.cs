@@ -39,6 +39,8 @@ public class PlatformManager : MonoBehaviour
 {
     public static PlatformManager main = null;
 
+    
+
     string leaderboardCarID = "CgkIgYf6gpcYEAIQCg";
     string leaderboardWineID = "CgkIgYf6gpcYEAIQCw";
     string leaderboardVikingID = "CgkIgYf6gpcYEAIQDA";
@@ -61,8 +63,11 @@ public class PlatformManager : MonoBehaviour
     string ah_make12 = "CgkIgYf6gpcYEAIQCQ";
 
 
+    [SerializeField] int _logoutHistory = 0; // GPGS 로그아웃 기록  deafult 0 
+    
 
-
+    // readonly string LOGIN_HISTORY = "loginHistory";
+    readonly string LOGOUT_HISTORY = "logoutHistory";
 
     private void Awake() {
         main = this;
@@ -72,7 +77,8 @@ public class PlatformManager : MonoBehaviour
     void Start()    {
 
         // InitFacebook(); // 페이스북 초기화
-
+        
+        
     }
 
 #region 공통 메소드  iOS & Google Play
@@ -84,6 +90,8 @@ public class PlatformManager : MonoBehaviour
 
         Debug.Log("!!! InitPlatformService Start... ");
 
+        _logoutHistory = PlayerPrefs.GetInt(LOGOUT_HISTORY); // 로그아웃 히스토리 
+
 #if UNITY_ANDROID
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
         PlayGamesPlatform.InitializeInstance(config);
@@ -93,12 +101,17 @@ public class PlatformManager : MonoBehaviour
         GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
 #endif
 
+        // 로그아웃 기록이 있으면 게임 실행시 로그인 하지 않음. 
+        if (_logoutHistory > 0)
+            return;
+
         SignInGameService();
     }
 
     public void SignInGameService()
     {
         Debug.Log("!!! SignInGameService Start... ");
+
 
         if (!Social.localUser.authenticated)
         {
@@ -107,6 +120,7 @@ public class PlatformManager : MonoBehaviour
                 if (bSuccess)
                 {
                     Debug.Log("Success : " + Social.localUser.userName);
+                    SaveLogoutHistory(false);
 
 
                     Social.LoadAchievements(achievements => {
@@ -131,7 +145,8 @@ public class PlatformManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Fall");
+                    Debug.Log("Fall"); // 실패나 취소시. 
+                    SaveLogoutHistory(true); // 다시 로그인을 자동으로 시도하지 않음.
                     
                 }
             });
@@ -277,6 +292,21 @@ public class PlatformManager : MonoBehaviour
             else
                 Debug.Log("Unlock Achievement Fail : " + targetID);
         });
+    }
+
+
+    /// <summary>
+    /// 로그아웃 히스토리. 
+    /// </summary>
+    /// <param name="__flag"></param>
+    public void SaveLogoutHistory(bool __flag)
+    {
+        if (__flag)
+            PlayerPrefs.SetInt(LOGOUT_HISTORY, 1);
+        else
+            PlayerPrefs.SetInt(LOGOUT_HISTORY, 0);
+
+        PlayerPrefs.Save();
     }
 
     // 공통메소드 끝 
