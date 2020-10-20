@@ -8,6 +8,7 @@ public class TitleManager : MonoBehaviour {
     public GameObject copyright;
     public UISprite LocalizedTitleSprite;
     bool isTallScreen = false;
+    public SystemLanguage titleLang = SystemLanguage.Korean;
 
     // Start is called before the first frame update
     void Start() {
@@ -35,15 +36,30 @@ public class TitleManager : MonoBehaviour {
         if (!ES2.Exists(ConstBox.KeySavedLang))
         {
 
+            Debug.Log("Application.systemLanguage : " + Application.systemLanguage.ToString());
+
+
             if (Application.systemLanguage == SystemLanguage.Korean)
                 LocalizedTitleSprite.spriteName = "title_kor";
             else if (Application.systemLanguage == SystemLanguage.Japanese)
                 LocalizedTitleSprite.spriteName = "title_jp";
             else
                 LocalizedTitleSprite.spriteName = "title_eng";
+
+            if (Application.systemLanguage == SystemLanguage.Korean)
+                titleLang = SystemLanguage.Korean;
+            else if (Application.systemLanguage == SystemLanguage.Japanese)
+                titleLang = SystemLanguage.Japanese;
+            else
+                titleLang = SystemLanguage.English;
+
+            PierSystem.SaveLanguage(titleLang.ToString());
+
         }
         else
         {
+            Debug.Log("LoadLanguage : " + PierSystem.LoadLanguage());
+
             if (PierSystem.LoadLanguage() == SystemLanguage.Korean)
                 LocalizedTitleSprite.spriteName = "title_kor";
             else if (PierSystem.LoadLanguage() == SystemLanguage.Japanese)

@@ -12,6 +12,8 @@ public class PageOption : UILayer {
 
     public int lockCount = 0;
 
+    [SerializeField] GameObject _btnAD_Test;
+
 
     public override UILayer Init(UILayerEnum type, Transform parent, Action pOpen, Action pClose) {
 
@@ -20,6 +22,9 @@ public class PageOption : UILayer {
         
         _btnRestore.SetActive(true);
 #endif
+
+        _btnAD_Test.SetActive(PierSystem.main.AdminPlay);
+
 
 
         CheckVolumeState();
@@ -128,5 +133,10 @@ public class PageOption : UILayer {
         PierSystem.main.iceMuseumStep = PierSystem.main.MaxIceMuseumStep;
 
         PierSystem.main.SaveProfile();
+    }
+
+    public void OpenAD()
+    {
+        AdsControl.main.ShowWatchAd(delegate { });
     }
 }

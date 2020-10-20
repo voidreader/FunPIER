@@ -42,8 +42,17 @@ public class AdsControl : MonoBehaviour
         Debug.Log("Google admob appID :: " + appID);
 
         // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize(appID);
+        // MobileAds.Initialize(appID);
+        MobileAds.Initialize(AdmobInitCallback);
+
+
     }
+
+    void AdmobInitCallback(InitializationStatus __stat)
+    {
+        Debug.Log("AdmobInitCallback : " + __stat.ToString());
+    }
+
 
 #region Banner
 
