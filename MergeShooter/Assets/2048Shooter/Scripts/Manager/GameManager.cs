@@ -5,8 +5,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Toolkit;
 #if UNITY_ANDROID
-using GooglePlayGames;
-using GooglePlayGames.BasicApi;
+// using GooglePlayGames;
+// using GooglePlayGames.BasicApi;
 #else
 using UnityEngine.SocialPlatforms.GameCenter;
 #endif
@@ -151,18 +151,18 @@ public class GameManager : MonoSingleton<GameManager>
 
 #if UNITY_ANDROID
         // Create client configuration
-        PlayGamesClientConfiguration config = new 
-            PlayGamesClientConfiguration.Builder()
-            .Build();
+        // PlayGamesClientConfiguration config = new 
+        //     PlayGamesClientConfiguration.Builder()
+        //     .Build();
 
-        // Enable debugging output (recommended)
-        PlayGamesPlatform.DebugLogEnabled = true;
+        // // Enable debugging output (recommended)
+        // PlayGamesPlatform.DebugLogEnabled = true;
         
-        // Initialize and activate the platform
-        PlayGamesPlatform.InitializeInstance(config);
-        PlayGamesPlatform.Activate();
+        // // Initialize and activate the platform
+        // PlayGamesPlatform.InitializeInstance(config);
+        // PlayGamesPlatform.Activate();
 #elif UNITY_IOS
-        GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
+        // GameCenterPlatform.ShowDefaultAchievementCompletionBanner(true);
  
         // bool deviceIsIpad = UnityEngine.iOS.Device.generation.ToString().Contains("iPad");
         
@@ -650,8 +650,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void GameShare()
     {
-        NativeShare.Share(
-            Singleton<Localization>.instance.GetLable("ShareWords", 0) + " #ShootnMerge https://play.google.com/store/apps/details?id="+Application.identifier,Application.persistentDataPath + "/Shoot2048-GameOver-Screen.png", "", "", "image/png", true, "");
+        // NativeShare.Share(
+        //     Singleton<Localization>.instance.GetLable("ShareWords", 0) + " #ShootnMerge https://play.google.com/store/apps/details?id="+Application.identifier,Application.persistentDataPath + "/Shoot2048-GameOver-Screen.png", "", "", "image/png", true, "");
     }
 
    
@@ -698,90 +698,17 @@ public class GameManager : MonoSingleton<GameManager>
 
     public void SignIn() 
     {
-#if UNITY_ANDROID
-        if (!PlayGamesPlatform.Instance.localUser.authenticated) {
-            // Sign in with Play Game Services, showing the consent dialog
-            // by setting the second parameter to isSilent=false.
-            PlayGamesPlatform.Instance.Authenticate(SignInCallback, false);
-        } else {
-            SignInCallback(true);
-        }
-#elif UNITY_IOS
-        if(!Social.localUser.authenticated)
-            Social.localUser.Authenticate(SignInCallback);
-        else
-        {
-            SignInCallback(true);
-        } 
-#endif
+
     }
 
     public void SignInCallback(bool success) 
     {
-#if UNITY_ANDROID
-        if (success) 
-        {
-            if (PlayGamesPlatform.Instance.localUser.authenticated) 
-                //PlayGamesPlatform.Instance.ShowLeaderboardUI();
-                SendScore();
-            else {
-                UnityEngine.Debug.Log("Cannot show leaderboard: not authenticated");
-            }
-        } 
-        else 
-        {
 
-        }
-#elif UNITY_IOS
-        if (success) 
-        {
-            if(Social.localUser.authenticated)
-                SendScore();     
-        }   
-#endif
     }
 
     void SendScore()
     {
-        string boardId = null;
-        int HScore = GameDataManager.Instance.MaxScore;
-#if UNITY_ANDROID
-        if(GameDataManager.Instance.PlayMode == 0)
-            boardId = GPGSIds.leaderboard_classicmode;
-        else
-            boardId = GPGSIds.leaderboard_advancedmode;
 
-        if (PlayGamesPlatform.Instance.localUser.authenticated) {
-            PlayGamesPlatform.Instance.ReportScore (HScore, boardId, (bool success) => {
-                PlayGamesPlatform.Instance.ShowLeaderboardUI (boardId);
-            });
-        } else {
-            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder ().Build ();
-            GooglePlayGames.PlayGamesPlatform.InitializeInstance (config);
-            //GooglePlayGames.PlayGamesPlatform.DebugLogEnabled = true;
-            GooglePlayGames.PlayGamesPlatform.Activate ();
-            PlayGamesPlatform.Instance.localUser.Authenticate((bool success) => {
-                PlayGamesPlatform.Instance.ReportScore (HScore, boardId, (bool success2) => {
-                    PlayGamesPlatform.Instance.ShowLeaderboardUI (boardId);
-                });
-            });
-        }
-
-#elif UNITY_IOS
-        if(GameDataManager.Instance.PlayMode == 0)
-            boardId = "bestscore";
-        else
-            boardId = "AdvancedMode";
-
-        Social.ReportScore(HScore, boardId, (bool success) =>
-            {
-                if (success)
-                {
-                    Social.ShowLeaderboardUI();
-                }
-            });
-        
-#endif
     }
 
     private void Update()

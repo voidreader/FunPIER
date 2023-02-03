@@ -32,7 +32,7 @@ public class AdManager : MonoBehaviour
     public ApiInfor IosApiInfor;
 
     public AdmobManager Admob;
-    public UnityAdsManager Unity;
+    // public UnityAdsManager Unity;
 
     [HideInInspector] public ApiInfor ApiInfor;
 
@@ -67,16 +67,16 @@ public class AdManager : MonoBehaviour
     private void InitAds()
     {
 
-        Debug.Log("============= InitAds");
+        // Debug.Log("============= InitAds");
 
-        Admob = new AdmobManager();
-        Admob.InitAdmob(ApiInfor);
+        // Admob = new AdmobManager();
+        // Admob.InitAdmob(ApiInfor);
 
-        if (ApiInfor.UnityId != string.Empty)
-        {
-            Unity = new UnityAdsManager();
-            Unity.Init(ApiInfor.UnityId);
-        }
+        // if (ApiInfor.UnityId != string.Empty)
+        // {
+        //     Unity = new UnityAdsManager();
+        //     Unity.Init(ApiInfor.UnityId);
+        // }
     }
 
     public void ShowBanner()
@@ -119,46 +119,46 @@ public class AdManager : MonoBehaviour
 
     public bool IsRewardLoaded()
     {
-        if (IsEditor())
-        {
-            if (Unity != null)
-                return Unity.IsVideoAvailable();
-        }
-        else
-        {
-            if (Admob != null)
-            {
-                if (Admob.IsRewardLoaded())
-                    return true;
-                if (Unity != null)
-                    return Unity.IsVideoAvailable();
-            }
-        }
+        // if (IsEditor())
+        // {
+        //     if (Unity != null)
+        //         return Unity.IsVideoAvailable();
+        // }
+        // else
+        // {
+        //     if (Admob != null)
+        //     {
+        //         if (Admob.IsRewardLoaded())
+        //             return true;
+        //         if (Unity != null)
+        //             return Unity.IsVideoAvailable();
+        //     }
+        // }
 
         return false;
     }
 
     public void ShowReward(Action<bool> onClosed)
     {
-        if (IsEditor())
-        {
-            if (Unity != null)
-                if (Unity.IsVideoAvailable())
-                    Unity.ShowRewardedAd(onClosed);
-        }
-        else
-        {
-            if (Admob != null)
-            {
-                if (Admob.IsRewardLoaded())
-                    Admob.ShowReward(onClosed);
-                else if (Unity != null)
-                {
-                    if (Unity.IsVideoAvailable())
-                        Unity.ShowRewardedAd(onClosed);
-                }
-            }
-        }
+        // if (IsEditor())
+        // {
+        //     if (Unity != null)
+        //         if (Unity.IsVideoAvailable())
+        //             Unity.ShowRewardedAd(onClosed);
+        // }
+        // else
+        // {
+        //     if (Admob != null)
+        //     {
+        //         if (Admob.IsRewardLoaded())
+        //             Admob.ShowReward(onClosed);
+        //         else if (Unity != null)
+        //         {
+        //             if (Unity.IsVideoAvailable())
+        //                 Unity.ShowRewardedAd(onClosed);
+        //         }
+        //     }
+        // }
     }
 
 

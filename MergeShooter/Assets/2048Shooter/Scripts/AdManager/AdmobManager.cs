@@ -23,7 +23,7 @@ public class AdmobManager
     private float _lastTimeShowInterstitial;
 
     // REWARD
-    private RewardBasedVideoAd rewardBasedVideo;
+    private RewardedAd rewardedAd;
     private bool _isRewardRequesting;
     private bool _isRewardShowing;
     private bool _isInited;
@@ -34,38 +34,39 @@ public class AdmobManager
 
     public void InitAdmob(ApiInfor infor)
     {
-        _apiInfor = infor;
+        // _apiInfor = infor;
 
-        if (infor.AppId != string.Empty)
-        {
-            infor.AppId.CorrectString();
-            MobileAds.Initialize(infor.AppId);
-        }
+        // if (infor.AppId != string.Empty)
+        // {
+        //     infor.AppId.CorrectString();
+        //     MobileAds.Initialize(infor.AppId);
+        // }
 
-        if (_apiInfor.IsUseBanner && !AdManager.IsRemoveAds)
-        {
-            _apiInfor.BannerId.CorrectString();
-            RequestBanner();
-        }
+        // if (_apiInfor.IsUseBanner && !AdManager.IsRemoveAds)
+        // {
+        //     _apiInfor.BannerId.CorrectString();
+        //     RequestBanner();
+        // }
 
-        if (_apiInfor.IsUseInterstitial && !AdManager.IsRemoveAds)
-        {
-            _apiInfor.InterstitialId.CorrectString();
-            RequestInterstitial();
-            _lastTimeShowInterstitial = Time.time - infor.InterstitialInterval;
-        }
+        // if (_apiInfor.IsUseInterstitial && !AdManager.IsRemoveAds)
+        // {
+        //     _apiInfor.InterstitialId.CorrectString();
+        //     RequestInterstitial();
+        //     _lastTimeShowInterstitial = Time.time - infor.InterstitialInterval;
+        // }
 
-        if (_apiInfor.IsUseReward)
-        {
-            _apiInfor.RewardId.CorrectString();
-            RequestReward();
-        }
+        // if (_apiInfor.IsUseReward)
+        // {
+        //     _apiInfor.RewardId.CorrectString();
+        //     RequestReward();
+        // }
     }
 
     #region BANNER
 
     private void RequestBanner()
     {
+        /*
         if (_isBannerRequesting)
             return;
 
@@ -122,6 +123,7 @@ public class AdmobManager
 
         // Load the banner with the request.
         _bannerView.LoadAd(GetAdRequest());
+        */
     }
 
     public bool IsBannerLoaded()
@@ -152,7 +154,7 @@ public class AdmobManager
 
     private void RequestInterstitial()
     {
-//        Debug.Log("requesting " + _isInterstitialAdRequesting);
+        /*
         if (_isInterstitialAdRequesting)
             return;
 
@@ -211,6 +213,7 @@ public class AdmobManager
 
         // Load the banner with the request.
         _interstitialAd.LoadAd(GetAdRequest());
+        */
     }
 
     IEnumerator CompleteMethodInterstitial()
@@ -274,6 +277,7 @@ public class AdmobManager
 
     private void RequestReward()
     {
+        /*
         if (_isRewardRequesting || _isRewardShowing)
             return;
         _isRewarded = false;
@@ -340,6 +344,7 @@ public class AdmobManager
         }
 
         rewardBasedVideo.LoadAd(GetAdRequest(), _apiInfor.RewardId);
+        */
     }
 
     IEnumerator CompleteMethodRewardedVideo(bool isRewarded)
@@ -357,15 +362,16 @@ public class AdmobManager
 
     public bool IsRewardLoaded()
     {
-        if (rewardBasedVideo.IsLoaded())
-            return true;
+        // if (rewardBasedVideo.IsLoaded())
+        //     return true;
 
-        RequestReward();
+        // RequestReward();
         return false;
     }
 
     public void ShowReward(Action<bool> onClose)
     {
+        /*
         if (rewardBasedVideo == null)
         {
             Debug.Log("rewardBasedVideo null");
@@ -383,12 +389,15 @@ public class AdmobManager
         }
         else
             RequestReward();
+        */
     }
 
     #endregion
 
     private AdRequest GetAdRequest()
     {
+        return null;
+        /*
         var request = new AdRequest.Builder();
 
         // Add test device
@@ -405,6 +414,7 @@ public class AdmobManager
             request.AddExtra("max_ad_content_rating", _apiInfor.MaxAdContentRating.ToString());
 
         return request.Build();
+        */
     }
 
     private void LogBanner(string paramaterValue)
