@@ -10,3 +10,6 @@
 - ElectroCity : [머지 일레트로닉](https://play.google.com/store/apps/details?id=com.utplus.electrocity&hl=ko&gl=US)
 
 ### ⚙️ 개발 환경
+- `Unity 2017~2018 & C#`
+- `NGUI`
+- **기타 SDK** : `Admob, Unity Ads, IronSource Facebook, 
