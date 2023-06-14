@@ -1,0 +1,90 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1000011456485940}
+  m_IsPrefabParent: 1
+--- !u!1 &1000011456485940
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4000013009755778}
+  - component: {fileID: 114000010454013204}
+  m_Layer: 0
+  m_Name: HTDefines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4000013009755778
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011456485940}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114000010454013204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011456485940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be9d1cfcee1019d409b505bbaac82dfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _preventMultiClient: 1
+  _3DSoundFallOffDistance: 100
+  _frameLimit_PC: 0
+  _resolutionFix_PC: 0
+  _resolutionPC_Width: 1280
+  _resolutionPC_Height: 720
+  _resolutionPC_FullScreen: 1
+  _frameLimit_AOS: 30
+  _frameLimit_IOS: 30
+  _resolutionFix_Mobile: 1
+  _resolutionMobile_Width: 1280
+  _resolutionMobile_Height: 720
+  _resolusionMobile_FixRatio: 0
+  _mobileIsNeverSleep: 1
+  _platform_GooglePlay: 1
+  _platform_iOSGameCenter: 1
+  _autoGCWhenFrame_Min: 30
+  _autoGCWhenFrame_Max: 60
+  _autoGCWhenDeltaTime: 0.05
+  _tableFileFolder: 
+  _userTableSettings: []
+  _table_LocalstringKey: 
+  _uiPrefabFolder: Prefabs/UI
+  _uiDefaultMessageBox: Popup_MessageBox
+  _ui_BlankSprite: {fileID: 0}
+  _ui_DefaultFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  _ui_RegistedFont: []
+  _network_EntityPosLerpTime: 0.1
+  _input_Axis_Horizontal: Horizontal
+  _input_Axis_Vertical: Vertical
+  _input_Use_Joystick: 1
+  _input_Axis_Trigger: Trigger
+  _input_Buttons: []
+  _input_UseMousePicking_PC: 0
+  _input_UseMousePicking_Mobile: 0
+  _input_Interact_Close: Cancel
+  _downSamplingRate: 0.5
